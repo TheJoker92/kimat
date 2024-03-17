@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/style/colors.scss";
+@import "assets/style/flex-box.scss";
+@import "assets/style/margin.scss";
+@import "assets/style/padding.scss";
+@import "assets/style/dimension.scss";
+
+html {
+    margin: 0px;
+}
+
+body {
+    margin: 0px;
+    background-image: URL("assets/home-bkg.avif");
+    background-size: 100vw 100vh;
+}
+
+* {
+    font-family:courier, courier new, serif;
+}
