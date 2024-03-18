@@ -1,0 +1,36 @@
+.container {
+    width: 40vw;
+    min-width: 400px;
+    height: 40vh;
+    border-radius:30px;
+}
+
+.divider {
+    height: 100%;
+    width: 1%;
+    background: rgb(155, 155, 171);
+    opacity: 60%;
+}
+
+.front {
+    background-size: cover;
+    background-repeat: no-repeat;
+    width:48%;
+    height: 100%;
+    opacity: 100%;
+}
+
+.back {
+    background-color: white;
+    width:51%;
+    opacity: 70%;
+    height: 100%;
+}
+
+.recover-password {
+    cursor: pointer;
+}
+
+.recover-password:hover {
+    color: rgb(36, 101, 65);
+}
