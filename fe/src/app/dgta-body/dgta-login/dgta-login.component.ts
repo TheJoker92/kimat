@@ -3,6 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSignIn } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../http.service';
 import { LoadingService } from '../../dgta-loading/loading.service';
+import { SessionService } from '../../session.service';
 
 
 @Component({
@@ -21,7 +22,9 @@ export class DgtaLoginComponent {
   email = ""
   password = ""
 
-  constructor(private http: HttpService, private loadingService: LoadingService) { }
+  constructor(private http: HttpService, 
+              private loadingService: LoadingService,
+              private sessionService: SessionService) { }
 
   editEmail(e: any) {
     this.email = e.target.value
@@ -53,6 +56,7 @@ export class DgtaLoginComponent {
             alert("La password inserita non è corretta.")
           } else {
             alert("Accesso effettuato correttamente")
+            this.sessionService.saveSession("user", response)
           }
         },
         error: (error) => {

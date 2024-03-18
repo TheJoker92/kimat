@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS, cross_origin
+
 import json
 import pysolr
 import requests
 from werkzeug.routing import BaseConverter
 
 app = Flask(__name__, static_folder="/Users/ADMIN/Desktop/projects/dgta/browser")
+cors = CORS(app, origins = ["*"])
 
 SOLR_URL = "127.0.0.1"
 SOLR_PORT = "8984"
