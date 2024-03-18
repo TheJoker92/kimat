@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory
-
+import json
 import pysolr
 import requests
 from werkzeug.routing import BaseConverter
@@ -24,13 +24,13 @@ app.url_map.converters['regex'] = RegexConverter
 def angular():
     return send_from_directory("browser", "index.html")
 
-@app.route("/<regex('.*\.(js|css|avif|scss|jpeg|gif)'):path>")
+@app.route("/<regex('.*\.(js|css|avif|scss|jpeg|json)'):path>")
 def angular_src(path):
     print(path)
     return send_from_directory("browser", path)
 
 # Create operation
-@app.route('/users/create', methods=['POST'])
+@app.route('/api/users/create', methods=['POST'])
 def create_user():
     print("START USER CREATE")
     data = request.json
@@ -55,7 +55,7 @@ def create_user():
             # solr.add([data])
 
             r = requests.post(BASE_URL + "/users/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
-            print(f"Status Code: {r.status_code}, Response: {r.json()}")
+            return r.json()
         except Exception as e:
             response = {
                 "message": "",
@@ -67,30 +67,104 @@ def create_user():
 
 
 # Read operation
-@app.route('/users/read/<id>', methods=['GET'])
-def read_user(id):
-    try:
-        result = solr.search(f'id:{id}')
-        if len(result) == 0:
-            return jsonify({'error': 'User not found'}), 404
-        return jsonify(result.docs[0])
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+@app.route('/api/users/login', methods=['POST'])
+def read_user():
+    print("START USER LOGIN")
+    data = request.json
+    
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+            response = {
+                "message": "DATA ACCESS",
+                "error": "",
+                "code": 200
+            }
+
+            # solr.add([data])
+            responseRaw = requests.get(BASE_URL + "/users/select?indent=true&q.op=OR&q=emailqry%3A%22" + data["emailqry"] + "%22&useParams=", verify=False)
+
+            # Decode the content from bytes to string and then parse as JSON
+            response_json = json.loads(responseRaw.content.decode('utf-8'))
+            responseRaw = response_json.get('response', {}).get('docs', [])
+            # Now you can access response_docs as a list containing the documents
+            # Do whatever you need to do with response_docs
+
+
+            if len(responseRaw) > 0:
+                if responseRaw[0]["password"][0] == data["password"]:
+                    response = {
+                        "email": responseRaw[0]["email"][0],
+                        "password": responseRaw[0]["password"][0],
+                        "firstName": responseRaw[0]["firstName"][0],
+                        "lastName": responseRaw[0]["lastName"][0],
+                        "role": responseRaw[0]["role"][0]
+                    }
+                else:
+                    response = {
+                    "message": "",
+                    "error": "password mismatch",
+                    "code": 502
+                }
+            else:
+
+                response = {
+                    "message": "",
+                    "error": "NO USER",
+                    "code": 501
+                }
+
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return response
 
 
 # Update operation
-@app.route('/users/update/<id>', methods=['PUT'])
-def update_user(id):
+@app.route('/api/users/update', methods=['PUT'])
+def update_user():
+    print("START USER UPDATE")
     data = request.json
-    if not data:
-        return jsonify({'error': 'No data provided'}), 400
+
+    print(data)
     
-    try:
-        solr.delete(id=id)
-        solr.add([data])
-        return jsonify({'success': 'User updated successfully'})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+            response = {
+                "message": "DATA UPDATED",
+                "error": "",
+                "code": 200
+            }
+
+            # solr.add([data])
+
+            r = requests.post(BASE_URL + "/users/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+            print(f"Status Code: {r.status_code}, Response: {r.json()}")
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return jsonify(response), 500
 
 
 # Delete operation

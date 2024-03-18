@@ -13,13 +13,13 @@
         </div>
         <div class="column-top-left">
             <label for="">email</label>
-            <input type="text">
+            <input (input)="editEmail($event)" id="email" type="text">
         </div>
         <div class="column-top-left">
             <label for="">password</label>
-            <input type="password">
+            <input (input)="editPassword($event)" type="password">
         </div>
         <p class="recover-password">Recupera credenziali</p>
-        <button class="mt10px">ENTRA</button>
+        <button class="mt10px" (click)="logIn()">ENTRA</button>
     </div>
 </div>

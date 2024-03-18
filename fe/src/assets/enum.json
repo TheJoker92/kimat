@@ -1,0 +1,16 @@
+{
+    "roles": {
+        "admin": "admin",
+        "user": "user",
+        "support": "support"
+    },
+    "endpoints": {
+        "user": {
+            "login": "login"
+        }
+    },
+    "error": {
+        "501": "Utente non trovato",
+        "502": "Password non coincide"
+    }
+}
