@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KimatLoginComponent } from './kimat-login.component';
+import { DgtaBodyComponent } from './dgta-body.component';
 
-describe('KimatLoginComponent', () => {
-  let component: KimatLoginComponent;
-  let fixture: ComponentFixture<KimatLoginComponent>;
+describe('DgtaBodyComponent', () => {
+  let component: DgtaBodyComponent;
+  let fixture: ComponentFixture<DgtaBodyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KimatLoginComponent]
+      imports: [DgtaBodyComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(KimatLoginComponent);
+    fixture = TestBed.createComponent(DgtaBodyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

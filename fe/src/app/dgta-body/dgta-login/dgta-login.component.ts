@@ -4,12 +4,14 @@ import { faSignIn } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
-  selector: 'kimat-login',
+  selector: 'dgta-login',
   standalone: true,
   imports: [FontAwesomeModule],
-  templateUrl: './kimat-login.component.html',
-  styleUrl: './kimat-login.component.scss'
+  templateUrl: './dgta-login.component.html',
+  styleUrl: './dgta-login.component.scss'
 })
-export class KimatLoginComponent {
+export class DgtaLoginComponent {
   faSignIn = faSignIn
+
+  dgta = "dgt@"
 }

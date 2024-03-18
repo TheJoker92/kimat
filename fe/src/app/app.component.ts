@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { KimatHeaderComponent } from './kimat-header/kimat-header.component';
-import { KimatBodyComponent } from './kimat-body/kimat-body.component';
+import { DgtaHeaderComponent } from './dgta-header/dgta-header.component';
+import { DgtaBodyComponent } from './dgta-body/dgta-body.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, KimatHeaderComponent, KimatBodyComponent],
+  imports: [CommonModule, RouterOutlet, DgtaHeaderComponent, DgtaBodyComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

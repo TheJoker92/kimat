@@ -4,7 +4,7 @@ import pysolr
 import requests
 from werkzeug.routing import BaseConverter
 
-app = Flask(__name__, static_folder="/Users/ADMIN/Desktop/projects/kimat/browser")
+app = Flask(__name__, static_folder="/Users/ADMIN/Desktop/projects/dgta/browser")
 
 SOLR_URL = "127.0.0.1"
 SOLR_PORT = "8984"
@@ -24,7 +24,7 @@ app.url_map.converters['regex'] = RegexConverter
 def angular():
     return send_from_directory("browser", "index.html")
 
-@app.route("/<regex('.*\.(js|css|avif|scss)'):path>")
+@app.route("/<regex('.*\.(js|css|avif|scss|jpeg|gif)'):path>")
 def angular_src(path):
     print(path)
     return send_from_directory("browser", path)

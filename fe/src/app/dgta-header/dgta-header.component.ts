@@ -3,12 +3,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'kimat-header',
+  selector: 'dgta-header',
   standalone: true,
   imports: [FontAwesomeModule],
-  templateUrl: './kimat-header.component.html',
-  styleUrl: './kimat-header.component.scss'
+  templateUrl: './dgta-header.component.html',
+  styleUrl: './dgta-header.component.scss'
 })
-export class KimatHeaderComponent {
+export class DgtaHeaderComponent {
   faBook = faBook;
+
+  dgta = "dgt@"
 }
