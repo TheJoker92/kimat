@@ -1,4 +1,65 @@
 <div class="w-100 h-100c">
-    <h2 class="ml10px">RACCOLTE</h2>
-    <dgta-home-card></dgta-home-card>
+    <div class="row-center-left">
+        <h2 class="ml10px">RACCOLTE</h2> <dgta-home-card [isAdd]="true"></dgta-home-card>
+    </div>
+    <div class="ml10px row-center-space-between p10px">
+        <div class="w20p h20px">
+            <h4>
+                <div class="column-left-center">
+                    nome
+                    <small class="opacity-0">(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="w10p h20px">
+            <h4>
+                <div class="column-center-center">
+                    documenti
+                    <small class="opacity-0">(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="w10p h20px">
+            <h4 class="w75p">
+                <div class="column-center-center">
+                    barcode
+                    <small class="opacity-0">(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="w10p h20px">
+            <h4 class="w55p">
+                <div class="column-center-center">
+                    cronologia
+                    <small class="opacity-0">(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="w10p h20px">
+            <h4 class="w35p">
+                <div class="column-center-center">
+                    collocamento 
+                    <small>(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="w10p h20px">
+            <h4 class="w10p">
+                <div class="column-center-center">
+                    proprietario/i
+                </div>
+                <small class="opacity-0">(fisico)</small>
+            </h4>
+        </div>
+        <div class="w10p h20px">
+            <h4 class="w10p">
+                <div class="column-center-center">
+                </div>
+                <small class="opacity-0">(fisico)</small>
+            </h4>
+        </div>
+    </div>
+    <div class="column-top-right">
+        <dgta-home-card class="row-center h10vh" *ngFor="let catalogue of catalogues" [catalogue]="catalogue"></dgta-home-card>   
+    </div>
 </div>

@@ -1,8 +1,44 @@
-<div class="card-container row-center-center p10px" (click)="openModalCatalogueFormModal()">
-    <fa-icon class="color-green font-size-100px" [icon]="faPlus"></fa-icon>
+<div *ngIf="isAdd" class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
+    <fa-icon class="cursor-pointer color-green font-size-100px" [icon]="faFolderPlus"></fa-icon>
+</div>
+<div *ngIf="!isAdd" class="card-container row-center-space-between p10px w100vw">
+    <div class="w20p">
+        <div class="row-center-left">
+            <fa-icon class="cursor-pointer color-yellow-folder font-size-3em" (mouseover)="onMouseOverFolder()"
+                (mouseleave)="onMouseLeftFolder()" [icon]="faFolder"></fa-icon>
+            <div class="column-left-left ml5px w8vw">
+                <strong class="">{{ catalogue.title }}</strong>
+                {{ catalogue.topic }}
+
+            </div>
+        </div>
+    </div>
+    <div class="row-center-left">
+        <fa-icon class="cursor-pointer font-size-25em"  [icon]="faFileLines"></fa-icon>
+    </div>
+    <div class="row-center-left">
+            <fa-icon class="cursor-pointer font-size-25em"  [icon]="faBarcode" (click)="openViewBarcodeModal()"></fa-icon>
+    </div>
+    <div class="row-center-left">
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faClockRotateLeft"></fa-icon>
+    </div>
+    <div class="row-center-left">
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faMapMarker"></fa-icon>
+
+    </div>
+    <div class="row-center-left">
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faUsers"></fa-icon>
+    </div>
+    <div class="row-center-left">
+        <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash"></fa-icon>
+</div>
 </div>
 
-<dgta-home-card-catalogue-form-modal 
-    *ngIf="isOpenCatalogueFormModal"
-    (closeModalE)="closeCatalogueFormModal()"
-></dgta-home-card-catalogue-form-modal>
+
+<dgta-home-card-catalogue-form-modal *ngIf="isOpenCatalogueFormModal"
+    (closeCatalogueFormModalE)="closeCatalogueFormModal()"></dgta-home-card-catalogue-form-modal>
+
+<dgta-barcode-modal *ngIf="isOpenViewBarcodeModal"
+    [catalogue]="catalogue"
+    (closeBarcodeViewModalE)="closeViewBarcodeModal()"
+></dgta-barcode-modal>

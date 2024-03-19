@@ -4,6 +4,7 @@ import { faSignIn } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../http.service';
 import { LoadingService } from '../../dgta-loading/loading.service';
 import { SessionService } from '../../session.service';
+import { PageEnum } from '../../interfaces/IPageNavigation';
 
 
 @Component({
@@ -57,6 +58,9 @@ export class DgtaLoginComponent {
           } else {
             alert("Accesso effettuato correttamente")
             this.sessionService.saveSession("user", response)
+
+            this.sessionService.pageNavigation.push(PageEnum.HOME)
+            this.sessionService.saveSession("pageNavigation", PageEnum.HOME)
             window.location.reload()
           }
         },

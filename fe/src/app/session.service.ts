@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IUser } from './interfaces/IUser';
 import { IDocument } from './interfaces/IDocument';
+import { IPageNavigation, PageEnum } from './interfaces/IPageNavigation';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class SessionService {
 
   user: IUser | undefined
   documentSelected: IDocument | undefined
+  pageNavigation: PageEnum[] = [PageEnum.LOGIN]
 
   constructor() {
     if (localStorage.getItem("session")) {
@@ -16,6 +18,7 @@ export class SessionService {
 
       this.user = sessionTmp.user
       this.documentSelected = sessionTmp.documentSelected
+      this.pageNavigation = sessionTmp.pageNavigation
     }
   }
 

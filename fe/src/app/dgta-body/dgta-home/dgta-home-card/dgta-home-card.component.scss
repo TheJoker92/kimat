@@ -1,13 +1,16 @@
 .card-container {
-    width: 8vw;
+    width: 90vw;
     height: 8vw;
-    border: 0.3cm rgb(10, 98, 10) solid;
     margin:10px;
     border-radius: 10px;
-    cursor: pointer;
 }
 
-.card-container:hover {
+.border-add {
+    border: 0.3cm rgb(10, 98, 10) solid;
+
+}
+
+.border-add:hover {
     border: 0.3cm rgb(12, 114, 12) solid;
 }
 

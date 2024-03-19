@@ -15,7 +15,7 @@ import { LoadingService } from '../../../../dgta-loading/loading.service';
 })
 
 export class DgtaHomeCardCatalogueFormModalComponent {
-  @Output() closeModalE = new EventEmitter()
+  @Output() closeCatalogueFormModalE = new EventEmitter()
   title: string = ""
   data: any = rawData
   topic: string = this.data.topics[0]
@@ -60,6 +60,6 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   }
 
   cancel() {
-    this.closeModalE.emit()
+    this.closeCatalogueFormModalE.emit()
   }
 }
