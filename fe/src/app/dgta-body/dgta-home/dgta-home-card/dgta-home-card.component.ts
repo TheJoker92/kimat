@@ -30,6 +30,7 @@ export class DgtaHomeCardComponent {
   isOpenCatalogueFormModal = false
   isOpenViewBarcodeModal = false
 
+  constructor() { }
 
   openModalCatalogueFormModal() {
     this.isOpenCatalogueFormModal = true

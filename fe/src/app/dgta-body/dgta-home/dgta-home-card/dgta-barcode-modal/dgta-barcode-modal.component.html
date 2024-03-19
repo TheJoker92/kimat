@@ -4,9 +4,12 @@
 <div class="container">
     <div class="box-form column-center-spacebetween">
         <h3 class="row-center-center">{{ catalogue.title }}</h3>
-        <div class="box-form row-center-center">
-            <button class="mt10px" (click)="cancel()">ANNULLA</button>
-            <button class="mt10px" (click)="print()">STAMPA</button>
+        <div class="box-form column-center-center">
+            <ngx-barcode6 [bc-format]="'CODE128'" [id]="catalogue.id!" [bc-value]="catalogue.id!" [bc-display-value]="true"></ngx-barcode6>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                <button class="mt10px" (click)="print()">STAMPA</button>
+            </div>
         </div>
     </div>
 </div>
