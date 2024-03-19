@@ -248,6 +248,7 @@ def getCatalogues():
         if len(responseRaw) > 0:
             for documentRaw in responseRaw:
                 document = {
+                    "id": documentRaw["id"],
                     "title": documentRaw["title"][0],
                     "topic": documentRaw["topic"][0]
                 }
