@@ -57,6 +57,7 @@ export class DgtaLoginComponent {
           } else {
             alert("Accesso effettuato correttamente")
             this.sessionService.saveSession("user", response)
+            window.location.reload()
           }
         },
         error: (error) => {

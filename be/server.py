@@ -180,5 +180,92 @@ def delete_user(id):
         return jsonify({'error': str(e)}), 500
 
 
+# Create operation
+@app.route('/api/catalogues/add', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def create_catalogue():
+    print("START CATALOGUE ADD")
+    data = request.json
+
+    print(data)
+    
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+            response = {
+                "message": "DATA ADDED",
+                "error": "",
+                "code": 200
+            }
+
+            # solr.add([data])
+
+            r = requests.post(BASE_URL + "/catalogues/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+            return r.json()
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return jsonify(response), 500
+
+
+# Read operation
+@app.route('/api/catalogues/getCatalogues', methods=['GET'])
+def getCatalogues():
+    print("START USER LOGIN")
+    data = request.json
+    
+    response = {}
+    
+    try:
+        response = {
+            "message": "DATA ACCESS",
+            "error": "",
+            "code": 200
+        }
+
+        # solr.add([data])
+        responseRaw = requests.get(BASE_URL + "/catalogues/select?indent=true&q.op=OR&q=*%3A*&useParams=", verify=False)
+        print(responseRaw)
+        # Decode the content from bytes to string and then parse as JSON
+        response_json = json.loads(responseRaw.content.decode('utf-8'))
+        responseRaw = response_json.get('response', {}).get('docs', [])
+        # Now you can access response_docs as a list containing the documents
+        # Do whatever you need to do with response_docs
+
+
+        
+        documents = []
+        if len(responseRaw) > 0:
+            for documentRaw in responseRaw:
+                document = {
+                    "title": documentRaw["title"][0],
+                    "topic": documentRaw["topic"][0]
+                }
+
+                documents.append(document)
+        
+        response = {
+            "documents": documents
+        }
+    except Exception as e:
+        response = {
+            "message": "",
+            "error": str(e),
+            "code": 500
+        }
+    
+    return response
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'))

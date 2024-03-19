@@ -7,10 +7,36 @@
     "endpoints": {
         "user": {
             "login": "login"
+        },
+        "catalogue": {
+            "add": "add",
+            "getCatalogues": "getCatalogues"
         }
     },
     "error": {
         "501": "Utente non trovato",
         "502": "Password non coincide"
-    }
+    },
+    "topics": [
+        "Storia",
+        "Scienze Naturali",
+        "Scienze Fisiche",
+        "Matematica",
+        "Tecnologia",
+        "Medicina e Salute",
+        "Psicologia",
+        "Filosofia",
+        "Letteratura",
+        "Arte e Design",
+        "Economia",
+        "Politica e Relazioni Internazionali",
+        "Ambiente e Sostenibilità",
+        "Educazione",
+        "Religione e Spiritualità",
+        "Viaggi e Avventura",
+        "Cucina e Alimentazione",
+        "Musica e Spettacolo",
+        "Sport e Fitness",
+        "Manuale di Istruzioni e Guide Pratiche"
+    ]
 }

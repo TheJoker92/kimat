@@ -11,8 +11,11 @@ html {
 
 body {
     margin: 0px;
-    background-image: URL("assets/home-bkg.avif");
     background-size: 100vw 100vh;
+}
+
+.bkg-login {
+    background-image: URL("assets/home-bkg.avif");
 }
 
 * {

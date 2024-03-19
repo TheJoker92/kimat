@@ -1,5 +1,6 @@
-<div class="row-center-center w-100 h-100">
-    <dgta-login></dgta-login>
+<div class="row-center-center w-100 h-100" [ngClass]="{'bkg-login':!sessionService.user}">
+    <dgta-login *ngIf="!sessionService.user"></dgta-login>
+    <dgta-home *ngIf="sessionService.user"></dgta-home>
 </div>
 
 <dgta-loading *ngIf="loadingService.isLoading"></dgta-loading>

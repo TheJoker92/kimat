@@ -1,7 +1,13 @@
-<div class="bkg-green row-center-center p10px font-size-larger color-white">
-    <fa-icon class="p3px" [icon]="faBook"></fa-icon>
-    <div>
-        {{ dgta }}
+<div class="row-center-space-between bkg-green w-100">
+    <div class="row-center-center p10px font-size-larger color-white">
+        <fa-icon class="p3px" [icon]="faBook"></fa-icon>
+        <div>
+            {{ dgta }}
+        </div>
+    </div>
+    <div *ngIf="sessionService.user" class="mr10px exit" (click)="logout()">
+        <fa-icon class="p3px" [icon]="faSignOut"></fa-icon>
+        ESCI
     </div>
 </div>
 <div class="bkg-green-light w-100vw h20px">

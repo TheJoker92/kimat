@@ -1,0 +1,8 @@
+<div class="card-container row-center-center p10px" (click)="openModalCatalogueFormModal()">
+    <fa-icon class="color-green font-size-100px" [icon]="faPlus"></fa-icon>
+</div>
+
+<dgta-home-card-catalogue-form-modal 
+    *ngIf="isOpenCatalogueFormModal"
+    (closeModalE)="closeCatalogueFormModal()"
+></dgta-home-card-catalogue-form-modal>

@@ -1,0 +1,26 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <h3 class="row-center-center">INSERISCI DATI RACCOLTA</h3>
+        <div class="box-form column-center-center">
+
+            <div class="field column-top-left form-field-size">
+                <label for="">Titolo</label>
+                <input class="form-field-size" (input)="editTitle($event)" type="text">
+            </div>
+            <div class="field column-top-left form-field-size">
+                <label for="">Argomento</label>
+                <select (input)="onSelectTopic($event)" class="form-field-size" name="cars" id="cars">
+                    <option class="form-field-size" *ngFor="let topic of data.topics" [value]="topic">{{ topic }}
+                    </option>
+                </select>
+            </div>
+            <div>
+                <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                <button class="mt10px" (click)="addCatalogue()">AGGIUNGI</button>
+            </div>
+        </div>
+    </div>
+</div>

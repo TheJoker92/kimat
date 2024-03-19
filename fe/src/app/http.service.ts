@@ -35,4 +35,15 @@ export class HttpService {
   login(payload: any) {
     return this.http.post(this.buildURL("users/", this.data.user.login), payload, this.httpOptions)
   }
+
+  /**
+   * CATALOGUES
+   */
+  getCatalogues() {
+    return this.http.get(this.buildURL("catalogues/", this.data.catalogue.getCatalogues))
+  }
+  
+  addCatalogue(payload: any) {
+    return this.http.post(this.buildURL("catalogues/", this.data.catalogue.add), payload, this.httpOptions)
+  }
 }

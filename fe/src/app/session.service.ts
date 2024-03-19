@@ -7,12 +7,12 @@ import { IDocument } from './interfaces/IDocument';
 })
 export class SessionService {
 
-  user: IUser = {}
-  documentSelected: IDocument = {}
+  user: IUser | undefined
+  documentSelected: IDocument | undefined
 
   constructor() {
-    if (sessionStorage.getItem("sessionTmp")) {
-      let sessionTmp: SessionService = JSON.parse(sessionStorage.getItem("sessionTmp")!)
+    if (localStorage.getItem("session")) {
+      let sessionTmp: SessionService = JSON.parse(localStorage.getItem("session")!)
 
       this.user = sessionTmp.user
       this.documentSelected = sessionTmp.documentSelected
@@ -22,12 +22,13 @@ export class SessionService {
   saveSession(label: string, value: any) {
     (this as any)[label] = value
 
-    console.log((this as any)[label])
-    // sessionStorage.setItem("session", JSON.stringify(this))
+    console.log("saveSession", (this as any)[label])
+    localStorage.setItem("session", JSON.stringify(this))
   }
 
   deleteSession() {
-    sessionStorage.setItem("session", "")
+    localStorage.setItem("session", "")
+    window.location.reload()
 
   }
 }
