@@ -247,12 +247,16 @@ def getCatalogues():
         documents = []
         if len(responseRaw) > 0:
             for documentRaw in responseRaw:
-                document = {
-                    "id": documentRaw["id"],
-                    "title": documentRaw["title"][0],
-                    "topic": documentRaw["topic"][0]
-                }
+                document = { }
 
+                keysRaw = list(documentRaw.keys())
+                for keyRaw in keysRaw:
+
+                    if keyRaw in ["id", "_version_"]:
+                        document[keyRaw] = documentRaw[keyRaw]
+                    else:
+                        document[keyRaw] = documentRaw[keyRaw][0]
+                
                 documents.append(document)
         
         response = {
@@ -266,6 +270,41 @@ def getCatalogues():
         }
     
     return response
+
+@app.route('/api/catalogues/update', methods=['PUT'])
+def update_catalogue():
+    print("START USER UPDATE")
+    data = request.json
+
+    print(data)
+    
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+            response = {
+                "message": "DATA UPDATED",
+                "error": "",
+                "code": 200
+            }
+
+            # solr.add([data])
+
+            r = requests.post(BASE_URL + "/catalogues/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+            print(f"Status Code: {r.status_code}, Response: {r.json()}")
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return jsonify(response), 500
 
 
 if __name__ == '__main__':
