@@ -1,0 +1,19 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <h3 class="row-center-center">Proprietario/i di '{{ catalogue.title }}'</h3>
+        <div class="box-form column-center-center">
+            <div *ngFor="let owner of owners">
+                <div>
+                    {{ owner.firstName }} {{ owner.lastName }} 
+                </div>
+            </div>
+
+            <div class="row-center-center">
+                <button class="mt10px" (click)="cancel()">CHIUDI</button>
+            </div>
+        </div>
+    </div>
+</div>

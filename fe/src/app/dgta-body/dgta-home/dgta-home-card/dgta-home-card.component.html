@@ -2,7 +2,7 @@
     <fa-icon class="cursor-pointer color-green font-size-15em" [icon]="faFolderPlus"></fa-icon>
 </div>
 <div *ngIf="!isAdd" class="card-container row-center-space-between p10px w100vw">
-    <div class="row-center-left">
+    <div class="row-center-left w75px">
         <fa-icon class="cursor-pointer color-yellow-folder font-size-3em" (mouseover)="onMouseOverFolder()"
             (mouseleave)="onMouseLeftFolder()" [icon]="faFolder"></fa-icon>
         <div class="column-left-left ml5px w8vw">
@@ -30,7 +30,7 @@
 
     </div>
     <div class="row-center-left">
-        <fa-icon class="cursor-pointer font-size-25em" [icon]="faUsers"></fa-icon>
+        <fa-icon class="cursor-pointer font-size-25em" [icon]="faUsers" (click)="openOwnersModal()"></fa-icon>
     </div>
     <div class="row-center-left">
         <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash" (click)="deleteCatalogue()"></fa-icon>
@@ -43,3 +43,6 @@
 
 <dgta-barcode-modal *ngIf="isOpenViewBarcodeModal" [catalogue]="catalogue"
     (closeBarcodeViewModalE)="closeViewBarcodeModal()"></dgta-barcode-modal>
+
+<dgta-owners-modal *ngIf="isOpenOwnersModal" [catalogue]="catalogue"
+    (closeOwnersModalE)="closeOwnersModal()"></dgta-owners-modal>
