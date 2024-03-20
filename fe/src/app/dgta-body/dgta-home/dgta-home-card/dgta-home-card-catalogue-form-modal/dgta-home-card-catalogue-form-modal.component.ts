@@ -81,20 +81,20 @@ export class DgtaHomeCardCatalogueFormModalComponent {
     if (this.title && (this.owners && this.owners.length > 0) && (this.topics && this.topics.length > 0) && 
         this.place.palace && this.place.floor && this.place.room && this.place.sector && this.place.rack && this.place.position) {
 
-      let payload: ICatalogue = {
+      let payload: any = {
         title: this.title,
-        topics: this.topics,
-        documents: [],
-        owners: this.owners,
-        history: [
+        topics: JSON.stringify(this.topics),
+        documents: JSON.stringify([]),
+        owners: JSON.stringify(this.owners),
+        history: JSON.stringify([
           {
             id: "0",
             actionLog: ActionLogEnum.CREATION_CATALOGUE,
             date: new Date().toISOString(),
             user: this.sessionService.user,
           }
-        ],
-        placement: [this.place]
+        ]),
+        placement: JSON.stringify([this.place])
       }
 
       console.log(payload)

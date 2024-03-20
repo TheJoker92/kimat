@@ -20,7 +20,20 @@ export class DgtaHomeComponent {
               private http: HttpService) {
     this.http.getCatalogues().subscribe({
       next: (response: any) => {
-        this.catalogues = response.documents!
+        
+        for (let document of response.documents!) {
+          let catalogue: any = {}
+          for (let keyDocument of Object.keys(document)) {
+            if (this.isParsable(document[keyDocument])) {
+              catalogue[keyDocument] =  JSON.parse(document[keyDocument])
+            } else {
+              catalogue[keyDocument] = document[keyDocument]
+            }
+          }
+
+          this.catalogues.push(catalogue)
+        }
+        
 
         console.log(this.catalogues)
       },
@@ -30,5 +43,17 @@ export class DgtaHomeComponent {
     })
   }
 
+  isParsable(inputString: string): boolean {
+    try {
+        // Try to parse the string into an object
+        JSON.parse(inputString);
+        return true; // If successful, return true
+    } catch (error) {
+        return false; // If parsing fails, return false
+    }
+  
+  }
 
 }
+
+

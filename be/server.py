@@ -267,7 +267,8 @@ def create_catalogue():
             # solr.add([data])
 
             r = requests.post(BASE_URL + "/catalogues/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
-            return r.json()
+            print(data)
+            return response
         except Exception as e:
             response = {
                 "message": "",
@@ -315,7 +316,7 @@ def getCatalogues():
                     if keyRaw in ["id", "_version_"]:
                         document[keyRaw] = documentRaw[keyRaw]
                     else:
-                        document[keyRaw] = documentRaw[keyRaw][0]
+                        document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
                 
                 documents.append(document)
         
