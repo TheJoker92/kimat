@@ -1,5 +1,5 @@
 <div *ngIf="isAdd" class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
-    <fa-icon class="cursor-pointer color-green font-size-100px" [icon]="faFolderPlus"></fa-icon>
+    <fa-icon class="cursor-pointer color-green font-size-15em" [icon]="faFolderPlus"></fa-icon>
 </div>
 <div *ngIf="!isAdd" class="card-container row-center-space-between p10px w100vw">
     <div class="w20p">
@@ -8,7 +8,7 @@
                 (mouseleave)="onMouseLeftFolder()" [icon]="faFolder"></fa-icon>
             <div class="column-left-left ml5px w8vw">
                 <strong class="">{{ catalogue.title }}</strong>
-                {{ catalogue.topic }}
+                {{ catalogue.topics }}
 
             </div>
         </div>

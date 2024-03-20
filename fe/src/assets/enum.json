@@ -6,7 +6,8 @@
     },
     "endpoints": {
         "user": {
-            "login": "login"
+            "login": "login",
+            "getUser": "getUser"
         },
         "catalogue": {
             "add": "add",

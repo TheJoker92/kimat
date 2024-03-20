@@ -132,6 +132,65 @@ def read_user():
     
     return response
 
+@app.route('/api/users/getUser', methods=['POST'])
+def get_user():
+    print("START GET USER")
+    data = request.json
+    
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+            response = {
+                "message": "DATA ACCESS",
+                "error": "",
+                "code": 200
+            }
+
+            # solr.add([data])
+            responseRaw = requests.get(BASE_URL + "/users/select?indent=true&q.op=OR&q=*%3A*&useParams=", verify=False)
+
+            # Decode the content from bytes to string and then parse as JSON
+            response_json = json.loads(responseRaw.content.decode('utf-8'))
+            usersRaw = response_json.get('response', {}).get('docs', [])
+
+            users = []
+
+            if len(usersRaw) > 0:
+                for userRaw in usersRaw:
+                    print(userRaw)
+                    user = { }
+
+                    keysRaw = list(userRaw.keys())
+                    for keyRaw in keysRaw:
+
+                        if keyRaw in ["id", "_version_"]:
+                            user[keyRaw] = userRaw[keyRaw]
+                        else:
+                            user[keyRaw] = userRaw[keyRaw][0]
+                    
+                    users.append(user)
+        
+            response = {
+                "users": users
+            }
+            # Now you can access response_docs as a list containing the documents
+            # Do whatever you need to do with response_docs
+
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return response
+
 
 # Update operation
 @app.route('/api/users/update', methods=['PUT'])
@@ -305,6 +364,68 @@ def update_catalogue():
             }
     
     return jsonify(response), 500
+
+@app.route('/api/catalogues/delete', methods=['POST'])
+def deleteCatalogue():
+    print("START GET USER")
+    data = request.json
+    
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+            response = {
+                "message": "DATA ACCESS",
+                "error": "",
+                "code": 200
+            }
+
+            payload = "<add><delete><query>id:\"" + data.id+ "\"</query></delete></add>"
+
+            # solr.add([data])
+            responseRaw = requests.post(BASE_URL + "/catalogues/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", payload, verify=False)
+
+            # Decode the content from bytes to string and then parse as JSON
+            response_json = json.loads(responseRaw.content.decode('utf-8'))
+            usersRaw = response_json.get('response', {}).get('docs', [])
+
+            users = []
+
+            if len(usersRaw) > 0:
+                for userRaw in usersRaw:
+                    print(userRaw)
+                    user = { }
+
+                    keysRaw = list(userRaw.keys())
+                    for keyRaw in keysRaw:
+
+                        if keyRaw in ["id", "_version_"]:
+                            user[keyRaw] = userRaw[keyRaw]
+                        else:
+                            user[keyRaw] = userRaw[keyRaw][0]
+                    
+                    users.append(user)
+        
+            response = {
+                "users": users
+            }
+            # Now you can access response_docs as a list containing the documents
+            # Do whatever you need to do with response_docs
+
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return response
+
 
 
 if __name__ == '__main__':

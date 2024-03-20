@@ -6,21 +6,53 @@
         <h3 class="row-center-center">INSERISCI DATI RACCOLTA</h3>
         <div class="box-form column-center-center">
 
-            <div class="field column-top-left form-field-size">
-                <label for="">Titolo</label>
+            <div class="field column-top-left form-field-size mb10px">
+                <label for=""><strong>Titolo</strong></label>
                 <input class="form-field-size" (input)="editTitle($event)" type="text">
             </div>
-            <div class="field column-top-left form-field-size">
-                <label for="">Argomento</label>
-                <select (input)="onSelectTopic($event)" class="form-field-size" name="cars" id="cars">
-                    <option class="form-field-size" *ngFor="let topic of data.topics" [value]="topic">{{ topic }}
-                    </option>
-                </select>
+            <div class="field column-top-left form-field-size mb10px">
+                <label for=""><strong>Argomento/i</strong></label>
+                <div *ngFor="let topic of topics" class="mb10px">
+                    <div>
+                        <label class="mb5px">{{ topic }}</label>
+                        <fa-icon class="p3px" [icon]="faTrash" (click)="deleteTopic(topic)"></fa-icon>
+                    </div>
+                </div>
+                <div class="row-center-space-between">
+                    <div>
+                        <select (input)="onSelectTopic($event)" class="form-field-size w172px">
+                            <option class="form-field-size" *ngFor="let topicOpt of allowedTopics" [value]="topicOpt" [selected]="topicOpt == topic">{{ topicOpt
+                                }}
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <fa-icon class="p3px" [icon]="faCheckSquare" (click)="addTopic()"></fa-icon>
+                    </div>
+
+                </div>
             </div>
-            <div>
-                <button class="mt10px" (click)="cancel()">ANNULLA</button>
-                <button class="mt10px" (click)="addCatalogue()">AGGIUNGI</button>
+            <div class="field column-top-left form-field-size" class="mb10px">
+                <label class="mb5px"><strong>Proprietario/i</strong></label>
+                <div *ngFor="let owner of owners" class="mb10px">
+                    <label class="mb5px">{{ owner.firstName }} {{ owner.lastName }}</label>
+                </div>
+                <div class="row-center-space-between">
+                    <div>
+                        <select (input)="onSelectOwner($event)" class="form-field-size w172px">
+                            <option class="form-field-size" *ngFor="let user of users" [value]="user.id">{{
+                                user.firstName }} {{ user.lastName }}
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <fa-icon class="p3px" [icon]="faCheckSquare"></fa-icon>
+                    </div>
+                </div>
+                <div>
+                    <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                    <button class="mt10px" (click)="addCatalogue()">AGGIUNGI</button>
+                </div>
             </div>
         </div>
     </div>
-</div>

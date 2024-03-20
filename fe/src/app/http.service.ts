@@ -36,6 +36,10 @@ export class HttpService {
     return this.http.post(this.buildURL("users/", this.data.user.login), payload, this.httpOptions)
   }
 
+  getUser(payload: any) {
+    return this.http.post(this.buildURL("users/", this.data.user.getUser), payload, this.httpOptions)
+  }
+
   /**
    * CATALOGUES
    */
