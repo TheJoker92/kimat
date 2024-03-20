@@ -11,7 +11,8 @@
         },
         "catalogue": {
             "add": "add",
-            "getCatalogues": "getCatalogues"
+            "getCatalogues": "getCatalogues",
+            "delete": "delete"
         }
     },
     "error": {

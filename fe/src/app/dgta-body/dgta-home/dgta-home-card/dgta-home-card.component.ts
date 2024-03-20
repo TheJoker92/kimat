@@ -5,6 +5,7 @@ import { DgtaHomeCardCatalogueFormModalComponent } from './dgta-home-card-catalo
 import { CommonModule } from '@angular/common';
 import { ICatalogue } from '../../../interfaces/ICatalogue';
 import { DgtaBarcodeModalComponent } from './dgta-barcode-modal/dgta-barcode-modal.component';
+import { HttpService } from '../../../http.service';
 
 @Component({
   selector: 'dgta-home-card',
@@ -30,7 +31,7 @@ export class DgtaHomeCardComponent {
   isOpenCatalogueFormModal = false
   isOpenViewBarcodeModal = false
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   openModalCatalogueFormModal() {
     this.isOpenCatalogueFormModal = true
@@ -54,5 +55,25 @@ export class DgtaHomeCardComponent {
 
   closeViewBarcodeModal() {
     this.isOpenViewBarcodeModal = false
+  }
+
+  deleteCatalogue() {
+    let payload = {
+      id: this.catalogue.id
+    }
+    this.http.deleteCatalogue(payload).subscribe({
+      next: (response: any) => {
+        if(response.code == 200) {
+          alert("L'operazione è riuscita")
+          window.location.reload()
+        } else {
+          alert("Qualcosa è andato storto")
+        }
+      },
+      error: (error: any) => {
+        console.error(error)
+      }
+    })
+    
   }
 }

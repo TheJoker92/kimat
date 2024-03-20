@@ -381,41 +381,18 @@ def deleteCatalogue():
     else:
         try:
             response = {
-                "message": "DATA ACCESS",
+                "message": "DATA REMOVED",
                 "error": "",
                 "code": 200
             }
 
-            payload = "<add><delete><query>id:\"" + data.id+ "\"</query></delete></add>"
+            payload = "<delete><query>id:\"" + data["id"]+ "\"</query></delete>"
 
             # solr.add([data])
-            responseRaw = requests.post(BASE_URL + "/catalogues/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", payload, verify=False)
+            headers = {'Content-type': 'application/xml'}
+            responseRaw = requests.post(BASE_URL + "/catalogues/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", headers=headers, data=payload, verify=False)
 
-            # Decode the content from bytes to string and then parse as JSON
-            response_json = json.loads(responseRaw.content.decode('utf-8'))
-            usersRaw = response_json.get('response', {}).get('docs', [])
-
-            users = []
-
-            if len(usersRaw) > 0:
-                for userRaw in usersRaw:
-                    print(userRaw)
-                    user = { }
-
-                    keysRaw = list(userRaw.keys())
-                    for keyRaw in keysRaw:
-                        if keyRaw in ["password"]:
-                            continue
-                        if keyRaw in ["id", "_version_"]:
-                            user[keyRaw] = userRaw[keyRaw]
-                        else:
-                            user[keyRaw] = userRaw[keyRaw][0]
-                    
-                    users.append(user)
-        
-            response = {
-                "users": users
-            }
+            print(responseRaw.content)
             # Now you can access response_docs as a list containing the documents
             # Do whatever you need to do with response_docs
 

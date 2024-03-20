@@ -6,11 +6,13 @@
         <h3 class="row-center-center">INSERISCI DATI RACCOLTA</h3>
         <div class="box-form column-center-center">
 
-            <div class="field column-top-left form-field-size mb10px">
-                <label for=""><strong>Titolo</strong></label>
-                <input class="form-field-size" (input)="editTitle($event)" type="text">
+            <div class="mb10px">
+                <div class="column-top-left w220px">
+                    <label for=""><strong>Titolo</strong></label>
+                    <input class="form-field-size" (input)="editTitle($event)" type="text">
+                </div>
             </div>
-            <div class="field column-top-left form-field-size mb10px">
+            <div class="mb10px">
                 <label for=""><strong>Argomento/i</strong></label>
                 <div *ngFor="let topic of topics" class="mb10px">
                     <div>
@@ -27,12 +29,12 @@
                         </select>
                     </div>
                     <div>
-                        <fa-icon class="p3px" [icon]="faCheckSquare" (click)="addTopic()"></fa-icon>
+                        <fa-icon class="p3px color-green-light" [icon]="faCheckSquare" (click)="addTopic()"></fa-icon>
                     </div>
 
                 </div>
             </div>
-            <div class="field column-top-left form-field-size" class="mb10px">
+            <div class="mb10px">
                 <label class="mb5px"><strong>Proprietario/i</strong></label>
                 <div *ngFor="let owner of owners" class="mb10px">
                     <div class="row-center-space-between">
@@ -49,10 +51,37 @@
                         </select>
                     </div>
                     <div>
-                        <fa-icon class="p3px" [icon]="faCheckSquare" (click)="addOwner()"></fa-icon>
+                        <fa-icon class="p3px color-green-light" [icon]="faCheckSquare" (click)="addOwner()"></fa-icon>
                     </div>
                 </div>
-                <div>
+                <div class="mb10px">
+                    <h4>Collocamento</h4>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Edificio</strong></label>
+                        <input class="form-field-size" (input)="editLocation('palace',$event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Piano</strong></label>
+                        <input class="form-field-size" (input)="editLocation('floor', $event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Stanza</strong></label>
+                        <input class="form-field-size" (input)="editLocation('room', $event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Settore</strong></label>
+                        <input class="form-field-size" (input)="editLocation('sector', $event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Scaffale</strong></label>
+                        <input class="form-field-size" (input)="editLocation('rack', $event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Posizione</strong></label>
+                        <input class="form-field-size" (input)="editLocation('position', $event)" type="text">
+                    </div>
+                </div>
+                <div class="row-center-center">
                     <button class="mt10px" (click)="cancel()">ANNULLA</button>
                     <button class="mt10px" (click)="addCatalogue()">AGGIUNGI</button>
                 </div>

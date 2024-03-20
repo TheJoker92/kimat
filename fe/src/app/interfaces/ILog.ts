@@ -2,13 +2,13 @@ import { IUser } from "./IUser"
 
 export interface ILog {
     id?: string
-    action?: string
+    actionLog?: string
     resourceId?: string
     user?: IUser
     date?: string
 }
 
-export enum ActionEnum {
+export enum ActionLogEnum {
     RESOURCE_ACCESS = "resource access",
     LOGIN = "login",
     CREATION_CATALOGUE = "catalogue creation"
