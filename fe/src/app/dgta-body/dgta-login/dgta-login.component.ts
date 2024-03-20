@@ -58,6 +58,7 @@ export class DgtaLoginComponent {
           } else {
             alert("Accesso effettuato correttamente")
             this.sessionService.saveSession("user", response)
+            console.log(response)
 
             this.sessionService.pageNavigation.push(PageEnum.HOME)
             this.sessionService.saveSession("pageNavigation", PageEnum.HOME)

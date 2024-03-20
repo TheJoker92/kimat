@@ -20,7 +20,7 @@
                 </div>
                 <div class="row-center-space-between">
                     <div>
-                        <select (input)="onSelectTopic($event)" class="form-field-size w172px">
+                        <select (change)="onSelectTopic($event)" class="form-field-size w172px">
                             <option class="form-field-size" *ngFor="let topicOpt of allowedTopics" [value]="topicOpt" [selected]="topicOpt == topic">{{ topicOpt
                                 }}
                             </option>
@@ -35,18 +35,21 @@
             <div class="field column-top-left form-field-size" class="mb10px">
                 <label class="mb5px"><strong>Proprietario/i</strong></label>
                 <div *ngFor="let owner of owners" class="mb10px">
-                    <label class="mb5px">{{ owner.firstName }} {{ owner.lastName }}</label>
+                    <div class="row-center-space-between">
+                        <label class="mb5px">{{ owner.firstName }} {{ owner.lastName }}</label>
+                        <fa-icon class="p3px" [icon]="faTrash" (click)="deleteOwner(owner)"></fa-icon>
+                    </div>
                 </div>
                 <div class="row-center-space-between">
                     <div>
-                        <select (input)="onSelectOwner($event)" class="form-field-size w172px">
-                            <option class="form-field-size" *ngFor="let user of users" [value]="user.id">{{
-                                user.firstName }} {{ user.lastName }}
+                        <select (change)="onSelectOwner($event)" class="form-field-size w172px">
+                            <option class="form-field-size" *ngFor="let owner of allowedOwners" [value]="owner.id">{{
+                                owner.firstName }} {{ owner.lastName }}
                             </option>
                         </select>
                     </div>
                     <div>
-                        <fa-icon class="p3px" [icon]="faCheckSquare"></fa-icon>
+                        <fa-icon class="p3px" [icon]="faCheckSquare" (click)="addOwner()"></fa-icon>
                     </div>
                 </div>
                 <div>

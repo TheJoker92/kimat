@@ -29,6 +29,8 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   topic: string = ""
   users: IUser[] = []
   owners: IUser[] = []
+  allowedOwners: IUser[] = []
+  owner: IUser = {}
 
   place: IPlace = {}
 
@@ -36,12 +38,12 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   faTrash = faTrash
 
   constructor(public sessionService: SessionService,
-              private http: HttpService,
-              private loadingService: LoadingService) {
-                this.allowedTopics = this.data.topics
-                this.topic = this.allowedTopics[0]
-                this.getUsers()
-              }
+    private http: HttpService,
+    private loadingService: LoadingService) {
+    this.allowedTopics = this.data.topics
+    this.topic = this.allowedTopics[0]
+    this.getUsers()
+  }
 
   editTitle(e: any) {
     this.title = e.target.value
@@ -53,14 +55,14 @@ export class DgtaHomeCardCatalogueFormModalComponent {
 
   deleteTopic(value: string) {
     this.topics = this.topics.filter((topic: string) => topic != value)
-    
+
     this.allowedTopics = this.data.topics
 
-    for (let index=0; index < this.topics.length; index++) {
+    for (let index = 0; index < this.topics.length; index++) {
       console.log(this.topics[index])
       this.allowedTopics = this.allowedTopics.filter((dataTopic: string) => dataTopic != this.topics[index] || this.topics[index] != value)
     }
-    
+
     this.topic = this.allowedTopics[0]
   }
   addTopic() {
@@ -93,13 +95,13 @@ export class DgtaHomeCardCatalogueFormModalComponent {
         ],
         placement: [this.place]
       }
-  
+
       this.loadingService.isLoading = true
       this.http.addCatalogue(payload).subscribe({
         next: (response) => {
           this.loadingService.isLoading = false
           alert("Hai aggiunto un nuovo catalogo")
-  
+
           window.location.reload()
         },
         error: (error) => {
@@ -120,8 +122,10 @@ export class DgtaHomeCardCatalogueFormModalComponent {
 
     this.http.getUser(payload).subscribe({
       next: (response: any) => {
-        this.users = response.users.filter((user: IUser) => user.id != this.sessionService.user!.id)
-        this.owners = [this.sessionService.user!]
+        this.allowedOwners = response.users.filter((user: IUser) => user.id != this.sessionService.user!.id)
+        this.data.owners = response.users
+        this.owners = response.users.filter((user: IUser) => user.id == this.sessionService.user!.id)
+        this.owner = this.data.owners[0]
       }
     })
   }
@@ -130,7 +134,28 @@ export class DgtaHomeCardCatalogueFormModalComponent {
     this.closeCatalogueFormModalE.emit()
   }
 
-  onSelectOwner(e: any) {
+  addOwner() {
+    console.log(this.owner)
+    this.owners.push(this.owner)
+    this.allowedOwners = this.allowedOwners.filter((owner: IUser) => owner != this.owner)
+    if(this.allowedOwners.length) this.owner = this.allowedOwners[0]
+  }
 
+  onSelectOwner(e: any) {
+    this.owner = this.allowedOwners.find((owner: IUser) => owner.id == e.target.value)!
+    console.log(this.owner)
+  }
+
+
+  deleteOwner(owner: IUser) {
+    this.owners = this.owners.filter((ownerRow: IUser) => ownerRow.id != owner.id)
+
+    this.allowedOwners = this.data.owners
+
+    for (let index = 0; index < this.owners.length; index++) {
+      this.allowedOwners = this.allowedOwners.filter((dataOwner: IUser) => dataOwner.id != this.owners[index].id || this.owners[index].id != owner.id)
+    }
+
+    this.owner = this.allowedOwners[0]
   }
 }

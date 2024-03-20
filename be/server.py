@@ -103,6 +103,7 @@ def read_user():
             if len(responseRaw) > 0:
                 if responseRaw[0]["password"][0] == data["password"]:
                     response = {
+                        "id": responseRaw[0]["id"],
                         "email": responseRaw[0]["email"][0],
                         "password": responseRaw[0]["password"][0],
                         "firstName": responseRaw[0]["firstName"][0],
@@ -403,7 +404,8 @@ def deleteCatalogue():
 
                     keysRaw = list(userRaw.keys())
                     for keyRaw in keysRaw:
-
+                        if keyRaw in ["password"]:
+                            continue
                         if keyRaw in ["id", "_version_"]:
                             user[keyRaw] = userRaw[keyRaw]
                         else:
