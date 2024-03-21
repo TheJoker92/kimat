@@ -1,0 +1,24 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <h3 class="row-center-center">Cronologia di '{{ catalogue.title }}'</h3>
+        <div class="box-form column-center-center">
+            <div *ngFor="let log of history" class="row-center-space-between mb10px w80p">
+                <div>
+                    {{ log.actionLog | defaultDash}}
+                </div>
+                <div>
+                    {{ getUserFullName(log) | defaultDash }}
+                </div>
+                <div>
+                    {{ formatDate(log.date!) | defaultDash}}
+                </div>
+            </div>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="closeHistoryModal()">CHIUDI</button>
+            </div>
+        </div>
+    </div>
+</div>

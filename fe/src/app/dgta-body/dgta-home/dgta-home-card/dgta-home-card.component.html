@@ -23,7 +23,7 @@
         <fa-icon class="cursor-pointer font-size-25em" [icon]="faBarcode" (click)="openViewBarcodeModal()"></fa-icon>
     </div>
     <div class="row-center-left">
-        <fa-icon class="cursor-pointer font-size-25em" [icon]="faClockRotateLeft"></fa-icon>
+        <fa-icon class="cursor-pointer font-size-25em" [icon]="faClockRotateLeft" (click)="openHistoryModal()"></fa-icon>
     </div>
     <div class="row-center-left">
         <fa-icon class="cursor-pointer font-size-25em" [icon]="faMapMarker" (click)="openCollocationModal()"></fa-icon>
@@ -48,4 +48,7 @@
     (closeOwnersModalE)="closeOwnersModal()"></dgta-owners-modal>
 
 <dgta-collocation-modal *ngIf="isOpenCollocationModal" [catalogue]="catalogue"
-    (closeOwnersModalE)="closeOwnersModal()"></dgta-collocation-modal>
+    (closeCollocationModalE)="closeCollocationModal()"></dgta-collocation-modal>
+
+<dgta-history-modal *ngIf="isOpenHistoryModal"  [catalogue]="catalogue"
+(closeHistoryModalE)="closeHistoryModal()"></dgta-history-modal>
