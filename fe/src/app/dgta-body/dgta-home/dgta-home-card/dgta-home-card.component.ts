@@ -7,11 +7,12 @@ import { ICatalogue } from '../../../interfaces/ICatalogue';
 import { DgtaBarcodeModalComponent } from './dgta-barcode-modal/dgta-barcode-modal.component';
 import { HttpService } from '../../../http.service';
 import { DgtaOwnersModalComponent } from './dgta-owners-modal/dgta-owners-modal.component';
+import { DgtaCollocationModalComponent } from './dgta-collocation-modal/dgta-collocation-modal.component';
 
 @Component({
   selector: 'dgta-home-card',
   standalone: true,
-  imports: [FontAwesomeModule, DgtaHomeCardCatalogueFormModalComponent, CommonModule, DgtaBarcodeModalComponent, DgtaOwnersModalComponent],
+  imports: [FontAwesomeModule, DgtaHomeCardCatalogueFormModalComponent, CommonModule, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent],
   templateUrl: './dgta-home-card.component.html',
   styleUrl: './dgta-home-card.component.scss'
 })
@@ -32,6 +33,7 @@ export class DgtaHomeCardComponent {
   isOpenCatalogueFormModal = false
   isOpenViewBarcodeModal = false
   isOpenOwnersModal = false
+  isOpenCollocationModal = false
 
   constructor(private http: HttpService) { }
 
@@ -85,5 +87,13 @@ export class DgtaHomeCardComponent {
 
   closeOwnersModal() {
     this.isOpenOwnersModal = false
+  }
+
+  openCollocationModal() {
+    this.isOpenCollocationModal = true
+  }
+
+  closeCollocationModal() {
+    this.isOpenCollocationModal = false
   }
 }

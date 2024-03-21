@@ -5,4 +5,5 @@ export interface IPlace {
     sector?: string
     rack?: string
     position?: string
+    date?: string
 }

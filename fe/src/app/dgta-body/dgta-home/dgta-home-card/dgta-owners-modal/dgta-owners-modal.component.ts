@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class DgtaOwnersModalComponent {
   @Input() catalogue: ICatalogue = {}
-  @Output() closeOwnerModalE = new EventEmitter()
+  @Output() closeOwnersModalE = new EventEmitter()
 
   owners: IUser[] = []
 
@@ -23,6 +23,10 @@ export class DgtaOwnersModalComponent {
   }
 
   cancel() {
-    this.closeOwnerModalE.emit()
+    this.closeOwnersModalE.emit()
+  }
+
+  getStringSendEmail(email: string) {
+    return "mailto:" + email + "?subject = Feedback&body = Message"
   }
 }
