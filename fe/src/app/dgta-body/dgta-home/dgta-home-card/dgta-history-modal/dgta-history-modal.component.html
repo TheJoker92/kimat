@@ -5,6 +5,17 @@
     <div class="box-form column-center-spacebetween">
         <h3 class="row-center-center">Cronologia di '{{ catalogue.title }}'</h3>
         <div class="box-form column-center-center">
+            <div class="row-center-space-between mb10px w80p">
+                <h4>
+                    azione
+                </h4>
+                <h4>
+                    nome
+                </h4>
+                <h4>
+                    data
+                </h4>                
+            </div>
             <div *ngFor="let log of history" class="row-center-space-between mb10px w80p">
                 <div>
                     {{ log.actionLog | defaultDash}}

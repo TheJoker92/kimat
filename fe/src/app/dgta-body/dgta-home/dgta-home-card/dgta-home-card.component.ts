@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faTrash, faFileLines, faBarcode, faClockRotateLeft, faUsers, faFolderClosed, faFolderOpen, faFolderPlus, faMapMarker } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faFileLines, faBarcode, faClockRotateLeft, faUsers, faFolderClosed, faFolderOpen, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 import { DgtaHomeCardCatalogueFormModalComponent } from './dgta-home-card-catalogue-form-modal/dgta-home-card-catalogue-form-modal.component';
 import { CommonModule } from '@angular/common';
 import { ICatalogue } from '../../../interfaces/ICatalogue';
@@ -20,8 +20,10 @@ import { DgtaHistoryModalComponent } from './dgta-history-modal/dgta-history-mod
 export class DgtaHomeCardComponent {
 
   @Input() isAdd = false
-  @Input() catalogue: ICatalogue = {}
-  faFolderPlus = faFolderPlus
+  @Input() catalogues: ICatalogue[] = []
+
+  catalogue: ICatalogue = {}
+
   faFolder = faFolderClosed
   faUsers = faUsers
   faMapMarker = faMapMarker
@@ -31,7 +33,6 @@ export class DgtaHomeCardComponent {
   faTrash = faTrash
 
 
-  isOpenCatalogueFormModal = false
   isOpenViewBarcodeModal = false
   isOpenOwnersModal = false
   isOpenCollocationModal = false
@@ -39,33 +40,29 @@ export class DgtaHomeCardComponent {
 
   constructor(private http: HttpService) { }
 
-  openModalCatalogueFormModal() {
-    this.isOpenCatalogueFormModal = true
-  }
+  // onMouseOverFolder() {
+  //   this.faFolder = faFolderOpen
+  // }
 
-  closeCatalogueFormModal() {
-    this.isOpenCatalogueFormModal = false
-  }
+  // onMouseLeftFolder() {
+  //   this.faFolder = faFolderClosed
+  // }
 
-  onMouseOverFolder() {
-    this.faFolder = faFolderOpen
-  }
-
-  onMouseLeftFolder() {
-    this.faFolder = faFolderClosed
-  }
-
-  openViewBarcodeModal() {
+  openViewBarcodeModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
     this.isOpenViewBarcodeModal = true
   }
 
   closeViewBarcodeModal() {
+    this.catalogue = {}
     this.isOpenViewBarcodeModal = false
   }
 
-  deleteCatalogue() {
+  deleteCatalogue(catalogue: ICatalogue) {
+    this.catalogue = {}
+
     let payload = {
-      id: this.catalogue.id
+      id: catalogue.id
     }
     this.http.deleteCatalogue(payload).subscribe({
       next: (response: any) => {
@@ -83,27 +80,33 @@ export class DgtaHomeCardComponent {
     
   }
 
-  openOwnersModal() {
+  openOwnersModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
     this.isOpenOwnersModal = true
   }
 
   closeOwnersModal() {
+    this.catalogue = {}
     this.isOpenOwnersModal = false
   }
 
-  openCollocationModal() {
+  openCollocationModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
     this.isOpenCollocationModal = true
   }
 
   closeCollocationModal() {
+    this.catalogue = {}
     this.isOpenCollocationModal = false
   }
 
-  openHistoryModal() {
+  openHistoryModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
     this.isOpenHistoryModal = true
   }
 
   closeHistoryModal() {
+    this.catalogue = {}
     this.isOpenHistoryModal = false
   }
 }

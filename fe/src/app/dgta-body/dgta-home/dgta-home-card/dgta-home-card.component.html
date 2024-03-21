@@ -1,45 +1,107 @@
-<div *ngIf="isAdd" class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
-    <fa-icon class="cursor-pointer color-green font-size-15em" [icon]="faFolderPlus"></fa-icon>
-</div>
-<div *ngIf="!isAdd" class="card-container row-center-space-between p10px w100vw">
-    <div class="row-center-left w75px">
-        <fa-icon class="cursor-pointer color-yellow-folder font-size-3em" (mouseover)="onMouseOverFolder()"
-            (mouseleave)="onMouseLeftFolder()" [icon]="faFolder"></fa-icon>
-        <div class="column-left-left ml5px w8vw">
-            <strong class="">{{ catalogue.title }}</strong>
+<div class="card-container column-center-center p10px">
+    <div class="ml10px row-center-space-between p10px w100p">
+        <div class="h20px w20p">
+            <h4 class="w100px">
+                <div class="column-left-center">
+                    nome
+                    <small class="opacity-0">(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="h20px w10p">
+            <h4>
+                <div class="column-left-center">
+                    argomento/i
+                    <small class="opacity-0">(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="h20px w10p">
+            <h4>
+                <div class="column-center-center">
+                    documenti
+                    <small class="opacity-0">(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="h20px w10p">
+            <h4>
+                <div class="column-center-center">
+                    barcode
+                    <small class="opacity-0">(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="h20px w10p">
+            <h4>
+                <div class="column-center-center">
+                    cronologia
+                    <small class="opacity-0">(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="h20px w10p">
+            <h4>
+                <div class="column-center-center">
+                    collocamento
+                    <small>(fisico)</small>
+                </div>
+            </h4>
+        </div>
+        <div class="h20px w10p">
+            <h4>
+                <div class="column-center-center">
+                    proprietario/i
+                </div>
+                <small class="opacity-0">(fisico)</small>
+            </h4>
+        </div>
+        <div class="h20px w10p">
+            <h4>
+                <div class="column-center-center">
+                </div>
+                <small class="opacity-0">(fisico)</small>
+            </h4>
         </div>
     </div>
-    <div class="row-center-left">
-        <div class="column-left-left">
-            <div *ngFor="let topic of catalogue.topics">
-                {{ topic }}
+    <div *ngFor="let catalogue of catalogues" class="row-center-space-between w100p mt40px">
+        <div class="row-center-left w20p">
+            <fa-icon class="cursor-pointer color-yellow-folder font-size-3em" [icon]="faFolder"></fa-icon>
+            <div class="column-left-left ml5px">
+                <strong class="">{{ catalogue.title }}</strong>
             </div>
         </div>
-    </div>
-    <div class="row-center-left">
-        <fa-icon class="cursor-pointer font-size-25em" [icon]="faFileLines"></fa-icon>
-    </div>
-    <div class="row-center-left">
-        <fa-icon class="cursor-pointer font-size-25em" [icon]="faBarcode" (click)="openViewBarcodeModal()"></fa-icon>
-    </div>
-    <div class="row-center-left">
-        <fa-icon class="cursor-pointer font-size-25em" [icon]="faClockRotateLeft" (click)="openHistoryModal()"></fa-icon>
-    </div>
-    <div class="row-center-left">
-        <fa-icon class="cursor-pointer font-size-25em" [icon]="faMapMarker" (click)="openCollocationModal()"></fa-icon>
+        <div class="row-center-left w10p">
+            <div class="column-left-left">
+                <div *ngFor="let topic of catalogue.topics">
+                    {{ topic }}
+                </div>
+            </div>
+        </div>
+        <div class="row-center-center w10p">
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faFileLines"></fa-icon>
+        </div>
+        <div class="row-center-center w10p">
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faBarcode"
+                (click)="openViewBarcodeModal(catalogue)"></fa-icon>
+        </div>
+        <div class="row-center-center w10p">
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faClockRotateLeft"
+                (click)="openHistoryModal(catalogue)"></fa-icon>
+        </div>
+        <div class="row-center-center w10p">
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faMapMarker"
+                (click)="openCollocationModal(catalogue)"></fa-icon>
 
-    </div>
-    <div class="row-center-left">
-        <fa-icon class="cursor-pointer font-size-25em" [icon]="faUsers" (click)="openOwnersModal()"></fa-icon>
-    </div>
-    <div class="row-center-left">
-        <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash" (click)="deleteCatalogue()"></fa-icon>
+        </div>
+        <div class="row-center-center w10p">
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faUsers" (click)="openOwnersModal(catalogue)"></fa-icon>
+        </div>
+        <div class="row-center-center w10p">
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash" (click)="deleteCatalogue(catalogue)"></fa-icon>
+        </div>
     </div>
 </div>
-
-
-<dgta-home-card-catalogue-form-modal *ngIf="isOpenCatalogueFormModal"
-    (closeCatalogueFormModalE)="closeCatalogueFormModal()"></dgta-home-card-catalogue-form-modal>
 
 <dgta-barcode-modal *ngIf="isOpenViewBarcodeModal" [catalogue]="catalogue"
     (closeBarcodeViewModalE)="closeViewBarcodeModal()"></dgta-barcode-modal>
@@ -50,5 +112,5 @@
 <dgta-collocation-modal *ngIf="isOpenCollocationModal" [catalogue]="catalogue"
     (closeCollocationModalE)="closeCollocationModal()"></dgta-collocation-modal>
 
-<dgta-history-modal *ngIf="isOpenHistoryModal"  [catalogue]="catalogue"
-(closeHistoryModalE)="closeHistoryModal()"></dgta-history-modal>
+<dgta-history-modal *ngIf="isOpenHistoryModal" [catalogue]="catalogue"
+    (closeHistoryModalE)="closeHistoryModal()"></dgta-history-modal>
