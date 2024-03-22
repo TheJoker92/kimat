@@ -9,11 +9,12 @@ import { HttpService } from '../../../http.service';
 import { DgtaOwnersModalComponent } from './dgta-owners-modal/dgta-owners-modal.component';
 import { DgtaCollocationModalComponent } from './dgta-collocation-modal/dgta-collocation-modal.component';
 import { DgtaHistoryModalComponent } from './dgta-history-modal/dgta-history-modal.component';
+import { DgtaDocumentsModalComponent } from './dgta-documents-modal/dgta-documents-modal.component';
 
 @Component({
   selector: 'dgta-home-card',
   standalone: true,
-  imports: [FontAwesomeModule, DgtaHomeCardCatalogueFormModalComponent, CommonModule, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent],
+  imports: [FontAwesomeModule, DgtaHomeCardCatalogueFormModalComponent, CommonModule, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent, DgtaDocumentsModalComponent],
   templateUrl: './dgta-home-card.component.html',
   styleUrl: './dgta-home-card.component.scss'
 })
@@ -37,7 +38,8 @@ export class DgtaHomeCardComponent {
   isOpenOwnersModal = false
   isOpenCollocationModal = false
   isOpenHistoryModal = false
-
+  isOpenDocumentsModal = false
+  
   constructor(private http: HttpService) { }
 
   // onMouseOverFolder() {
@@ -108,5 +110,15 @@ export class DgtaHomeCardComponent {
   closeHistoryModal() {
     this.catalogue = {}
     this.isOpenHistoryModal = false
+  }
+
+  openDocumentsModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
+    this.isOpenDocumentsModal = true
+  }
+
+  closeDocumentsModal() {
+    this.catalogue = {}
+    this.isOpenDocumentsModal = false
   }
 }

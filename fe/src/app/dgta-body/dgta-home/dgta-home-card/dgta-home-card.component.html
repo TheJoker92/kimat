@@ -79,7 +79,8 @@
             </div>
         </div>
         <div class="row-center-center w10p">
-            <fa-icon class="cursor-pointer font-size-25em" [icon]="faFileLines"></fa-icon>
+            <fa-icon class="cursor-pointer font-size-25em" [icon]="faFileLines"
+            (click)="openDocumentsModal(catalogue)"></fa-icon>
         </div>
         <div class="row-center-center w10p">
             <fa-icon class="cursor-pointer font-size-25em" [icon]="faBarcode"
@@ -114,3 +115,7 @@
 
 <dgta-history-modal *ngIf="isOpenHistoryModal" [catalogue]="catalogue"
     (closeHistoryModalE)="closeHistoryModal()"></dgta-history-modal>
+
+<dgta-documents-modal *ngIf="isOpenDocumentsModal" [catalogue]="catalogue"
+    (closeDocumentsModalE)="closeDocumentsModal()"
+></dgta-documents-modal>

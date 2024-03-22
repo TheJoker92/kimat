@@ -1,0 +1,25 @@
+.container {
+    position: absolute;
+    left:0%;
+    top:68px;
+    width: 100vw;
+    height: calc(100vh - 68px);
+    display: flex;
+    background-color: white;
+}
+
+
+.box-form {
+    background: white;
+    width: 100vw;
+    min-width: 275px;
+    height: 15vw;
+    min-height: 350px;
+    border-radius: 15px;
+}
+
+.form-field-size {
+    width: 15vw;
+    max-width: 200px;
+    min-width: 200px;
+}

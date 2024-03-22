@@ -1,0 +1,81 @@
+<div class="container column-top-left">
+    <div class="row-center-left">
+        <h2 class="ml10px">{{ catalogue.title }} - {{ catalogue.id }}</h2> 
+    </div>
+    <div class="row-left-left p10px" (click)="openModalDocuemntFormModal()">
+        <strong>
+            Documenti
+        </strong>
+        <fa-icon class="cursor-pointer color-green font-size-15em" [icon]="faFolderPlus"></fa-icon>
+    </div>
+    <div class="box-form column-center-spacebetween">
+        <div class="ml10px row-center-space-between p10px w100p">
+            <div class="h20px w10p">
+                <h4 class="w100px">
+                    <div class="column-left-center">
+                        nome
+                        <small class="opacity-0">(fisico)</small>
+                    </div>
+                </h4>
+            </div>
+            <div class="h20px w10p">
+                <h4>
+                    <div class="column-left-center">
+                        visualizza
+                        <small class="opacity-0">(fisico)</small>
+                    </div>
+                </h4>
+            </div>
+            <div class="h20px w10p">
+                <h4>
+                    <div class="column-center-center">
+                        ocr
+                        <small class="opacity-0">(fisico)</small>
+                    </div>
+                </h4>
+            </div>
+            <div class="h20px w10p">
+                <h4>
+                    <div class="column-center-center">
+                        metadati
+                        <small class="opacity-0">(fisico)</small>
+                    </div>
+                </h4>
+            </div>
+            <div class="h20px w10p">
+                <h4>
+                    <div class="column-center-center">
+                        cronologia
+                        <small class="opacity-0">(fisico)</small>
+                    </div>
+                </h4>
+            </div>
+            <div class="h20px w10p">
+                <h4>
+                    <div class="column-center-center">
+                        collocamento
+                        <small>(fisico)</small>
+                    </div>
+                </h4>
+            </div>
+            <div class="h20px w10p">
+                <h4>
+                    <div class="column-center-center">
+                        proprietario/i
+                    </div>
+                    <small class="opacity-0">(fisico)</small>
+                </h4>
+            </div>
+            <div class="h20px w10p">
+                <h4>
+                    <div class="column-center-center">
+                    </div>
+                    <small class="opacity-0">(fisico)</small>
+                </h4>
+            </div>
+        </div>
+        <div class="row-center-center">
+            <button class="mt10px" (click)="close()">CHIUDI</button>
+        </div>
+    </div>
+</div>
