@@ -6,6 +6,10 @@ import pysolr
 import requests
 from werkzeug.routing import BaseConverter
 
+import os
+from datetime import datetime
+import base64
+
 app = Flask(__name__, static_folder="/Users/ADMIN/Desktop/projects/dgta/browser")
 cors = CORS(app, origins = ["*"])
 
@@ -277,6 +281,66 @@ def create_catalogue():
             }
     
     return jsonify(response), 500
+
+
+# Create operation
+@app.route('/api/documents/add', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def create_document():
+    print("START DOCUMENT ADD")
+    data = request.json
+
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+
+            response = {
+                "message": "DATA ADDED",
+                "error": "",
+                "code": 200
+            }
+
+            # solr.add([data])
+
+            base_folders = "folders"
+            full_folder_path = base_folders + "/" + data["parentId"]
+            full_filename_path = full_folder_path + "/" + data["name"] + ".pdf"
+            if not(os.path.exists(full_folder_path)):
+                os.mkdir(full_folder_path) 
+
+
+            if (os.path.exists(full_filename_path)):
+                os.rename(full_filename_path, full_folder_path + "/" + data["name"] + "_" + str(datetime.today().timestamp()))
+
+            attachment = json.loads(data["attachments"])[0]
+
+            print(attachment)
+            with open(full_filename_path, 'wb') as theFile:
+                theFile.write(base64.b64decode(attachment["base64"]))
+
+            
+            data["attachments"] = full_filename_path
+
+
+            r = requests.post(BASE_URL + "/documents/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+
+            print(r)
+            return response
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return jsonify(response), 500
+
 
 
 # Read operation

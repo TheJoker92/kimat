@@ -40,5 +40,20 @@
         "Musica e Spettacolo",
         "Sport e Fitness",
         "Manuale di Istruzioni e Guide Pratiche"
-    ]
+    ],
+    "documentState": {
+        "acceptance": "Accettazione",
+        "disinfection": "Sanificazione",
+        "normalization": "Normalizzazione",
+        "scan": "Scansione",
+        "digitalArchive": "Archiviazione digitale",
+        "certification": "Attestazione notarile",
+        "collocation": "Collocazione",
+        "completed": "Completato"
+    },
+    "deviceState": {
+        "available": "Disponibile",
+        "busy": "Occupato"
+    }
+
 }

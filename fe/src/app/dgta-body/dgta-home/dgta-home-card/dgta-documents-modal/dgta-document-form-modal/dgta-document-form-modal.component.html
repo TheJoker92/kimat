@@ -13,42 +13,87 @@
                 </div>
             </div>
             <div class="mb10px">
-                <div class="column-top-left">
-                    <label for=""><strong>file pdf</strong><small>(non obbligatorio)</small></label>
-                    <input id="file-pdf" type="file" class="form-field-size">
-                    <button (click)="loadFile('pdf')">CARICA</button>
+                <label for=""><strong>Argomento/i</strong></label>
+                <div *ngFor="let topic of topics" class="mb10px">
+                    <div>
+                        <label class="mb5px">{{ topic }}</label>
+                        <fa-icon class="p3px" [icon]="faTrash" (click)="deleteTopic(topic)"></fa-icon>
+                    </div>
+                </div>
+                <div class="row-center-space-between">
+                    <div>
+                        <select (change)="onSelectTopic($event)" class="form-field-size w172px">
+                            <option class="form-field-size" *ngFor="let topicOpt of allowedTopics" [value]="topicOpt" [selected]="topicOpt == topic">{{ topicOpt
+                                }}
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <fa-icon class="p3px color-green-light" [icon]="faCheckSquare" (click)="addTopic()"></fa-icon>
+                    </div>
                 </div>
             </div>
             <div class="mb10px">
-                <h4>Collocamento</h4>
                 <div class="column-top-left">
-                    <label for=""><strong>Edificio</strong></label>
-                    <input class="form-field-size" (input)="editLocation('palace',$event)" type="text">
-                </div>
-                <div class="column-top-left">
-                    <label for=""><strong>Piano</strong></label>
-                    <input class="form-field-size" (input)="editLocation('floor', $event)" type="text">
-                </div>
-                <div class="column-top-left">
-                    <label for=""><strong>Stanza</strong></label>
-                    <input class="form-field-size" (input)="editLocation('room', $event)" type="text">
-                </div>
-                <div class="column-top-left">
-                    <label for=""><strong>Settore</strong></label>
-                    <input class="form-field-size" (input)="editLocation('sector', $event)" type="text">
-                </div>
-                <div class="column-top-left">
-                    <label for=""><strong>Scaffale</strong></label>
-                    <input class="form-field-size" (input)="editLocation('rack', $event)" type="text">
-                </div>
-                <div class="column-top-left">
-                    <label for=""><strong>Posizione</strong></label>
-                    <input class="form-field-size" (input)="editLocation('position', $event)" type="text">
+                    <label for=""><strong>file pdf</strong><small>(non obbligatorio)</small></label>
+                    <input id="file-pdf" type="file" class="form-field-size" (input)="onUploadFile($event)" accept=".pdf">
+                    <div class="row-center-space-between w100p">
+                        <button (click)="loadFile('pdf')">CARICA</button> <small *ngIf="attachmentPdf.base64">caricato</small>
+                    </div>
                 </div>
             </div>
-            <div class="row-center-center">
-                <button class="mt10px" (click)="cancel()">ANNULLA</button>
-                <button class="mt10px" (click)="addDocument()">AGGIUNGI</button>
+            <div class="mb10px">
+                <label class="mb5px"><strong>Proprietario/i</strong></label>
+                <div *ngFor="let owner of owners" class="mb10px">
+                    <div class="row-center-space-between">
+                        <label class="mb5px">{{ owner.firstName }} {{ owner.lastName }}</label>
+                        <fa-icon class="p3px" [icon]="faTrash" (click)="deleteOwner(owner)"></fa-icon>
+                    </div>
+                </div>
+                <div class="row-center-space-between">
+                    <div>
+                        <select #userSelect (change)="onSelectOwner($event)" class="form-field-size w172px" [value]="owner.id">
+                            <option class="form-field-size" *ngFor="let allowedOwner of allowedOwners" [value]="allowedOwner.id" 
+                                    [selected]="owner.id == allowedOwner.id">
+                                    {{ allowedOwner.firstName }} {{ allowedOwner.lastName }}
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <fa-icon class="p3px color-green-light" [icon]="faCheckSquare" (click)="addOwner()"></fa-icon>
+                    </div>
+                </div>
+                <div class="mb10px">
+                    <h4>Collocamento</h4>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Edificio</strong></label>
+                        <input class="form-field-size" (input)="editLocation('palace',$event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Piano</strong></label>
+                        <input class="form-field-size" (input)="editLocation('floor', $event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Stanza</strong></label>
+                        <input class="form-field-size" (input)="editLocation('room', $event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Settore</strong></label>
+                        <input class="form-field-size" (input)="editLocation('sector', $event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Scaffale</strong></label>
+                        <input class="form-field-size" (input)="editLocation('rack', $event)" type="text">
+                    </div>
+                    <div class="column-top-left w220px">
+                        <label for=""><strong>Posizione</strong></label>
+                        <input class="form-field-size" (input)="editLocation('position', $event)" type="text">
+                    </div>
+                </div>
+                <div class="row-center-center">
+                    <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                    <button class="mt10px" (click)="addDocument()">AGGIUNGI</button>
+                </div>
             </div>
         </div>
     </div>

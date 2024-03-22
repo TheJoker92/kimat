@@ -54,4 +54,19 @@ export class HttpService {
   deleteCatalogue(payload: any) {
     return this.http.post(this.buildURL("catalogues/", this.data.catalogue.delete), payload, this.httpOptions)
   }
+
+  /**
+   * DOCUMENTS
+   */
+  getDocuments() {
+    return this.http.get(this.buildURL("documents/", this.data.catalogue.getCatalogues))
+  }
+  
+  addDocument(payload: any) {
+    return this.http.post(this.buildURL("documents/", this.data.catalogue.add), payload, this.httpOptions)
+  }
+
+  deleteDocuments(payload: any) {
+    return this.http.post(this.buildURL("documents/", this.data.catalogue.delete), payload, this.httpOptions)
+  }
 }

@@ -71,7 +71,7 @@ export class DgtaHomeCardCatalogueFormModalComponent {
       this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
       this.topic = this.allowedTopics[0]
     } else if (this.topics.length >= 4) {
-      alert("Puoi aggiungere fino a tre argomenti")
+      alert("Puoi aggiungere fino a quattro argomenti")
     } else if (!this.topic) {
       alert("Selezionare un argomento")
     }
