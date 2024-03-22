@@ -2,7 +2,7 @@
     <div class="row-center-left">
         <h2 class="ml10px">{{ catalogue.title }} - {{ catalogue.id }}</h2> 
     </div>
-    <div class="row-left-left p10px" (click)="openModalDocuemntFormModal()">
+    <div class="row-left-left p10px" (click)="openModalDocumentFormModal()">
         <strong>
             Documenti
         </strong>
@@ -69,6 +69,14 @@
             <div class="h20px w10p">
                 <h4>
                     <div class="column-center-center">
+                        dispositivo/i
+                    </div>
+                    <small class="opacity-0">(fisico)</small>
+                </h4>
+            </div>
+            <div class="h20px w10p">
+                <h4>
+                    <div class="column-center-center">
                     </div>
                     <small class="opacity-0">(fisico)</small>
                 </h4>
@@ -79,3 +87,7 @@
         </div>
     </div>
 </div>
+
+<dgta-document-form-modal *ngIf="isOpenDocumentFormModal"
+[catalogue]="catalogue"
+(closeDocumentFormModalE)="closeModalDocuemntFormModal()"></dgta-document-form-modal>

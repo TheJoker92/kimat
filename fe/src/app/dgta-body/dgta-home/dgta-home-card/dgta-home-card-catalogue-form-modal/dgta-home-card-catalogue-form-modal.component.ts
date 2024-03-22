@@ -78,8 +78,8 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   }
 
   addCatalogue() {
-    if (this.title && (this.owners && this.owners.length > 0) && (this.topics && this.topics.length > 0) && 
-        this.place.palace && this.place.floor && this.place.room && this.place.sector && this.place.rack && this.place.position) {
+    if (this.title && (this.owners && this.owners.length > 0) && (this.topics && this.topics.length > 0) &&
+      this.place.palace && this.place.floor && this.place.room && this.place.sector && this.place.rack && this.place.position) {
 
       let payload: any = {
         title: this.title,
@@ -137,9 +137,10 @@ export class DgtaHomeCardCatalogueFormModalComponent {
 
     this.http.getUser(payload).subscribe({
       next: (response: any) => {
-        this.allowedOwners = response.users.filter((user: IUser) => user.id != this.sessionService.user!.id)
-        this.data.owners = response.users
+        this.allowedOwners = JSON.parse(JSON.stringify(response.users.filter((user: IUser) => user.id != this.sessionService.user!.id)))
+        this.data.owners = JSON.parse(JSON.stringify(response.users))
         this.owners = response.users.filter((user: IUser) => user.id == this.sessionService.user!.id)
+
         this.owner = this.data.owners[0]
       }
     })
@@ -150,31 +151,43 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   }
 
   addOwner() {
-    console.log(this.owner)
-    this.owners.push(this.owner)
-    this.allowedOwners = this.allowedOwners.filter((owner: IUser) => owner != this.owner)
-    if(this.allowedOwners.length) this.owner = this.allowedOwners[0]
+    if(this.owner && this.owners.filter((owner: IUser) => owner.id == this.owner.id).length) {
+      this.owner = this.allowedOwners[0]
+    }
+    
+    if (this.allowedOwners.length && this.owner.id) {
+      this.owners.push(this.owner)
+
+      this.allowedOwners = this.data.owners
+      for (let owner of this.owners) {
+
+        this.allowedOwners = this.allowedOwners.filter((rawOwner: IUser) => rawOwner.id != owner.id)
+      }
+
+      console.log("ADD ALLOW", this.allowedOwners)
+    } else if(!this.owner.id) {
+      
+    } else {
+      alert("Non ci sono utenti da aggiungere")
+    }
+
   }
 
   onSelectOwner(e: any) {
     this.owner = this.allowedOwners.find((owner: IUser) => owner.id == e.target.value)!
-    console.log(this.owner)
   }
 
 
   deleteOwner(owner: IUser) {
     this.owners = this.owners.filter((ownerRow: IUser) => ownerRow.id != owner.id)
 
-    this.allowedOwners = this.data.owners
+    this.allowedOwners.push(owner)
 
-    for (let index = 0; index < this.owners.length; index++) {
-      this.allowedOwners = this.allowedOwners.filter((dataOwner: IUser) => dataOwner.id != this.owners[index].id || this.owners[index].id != owner.id)
-    }
+    this.allowedOwners = JSON.parse(JSON.stringify(this.allowedOwners))
 
-    this.owner = this.allowedOwners[0]
   }
 
-  editLocation(label:string, e: any) {
+  editLocation(label: string, e: any) {
     this.place[label] = e.target.value
     console.log(this.place)
   }

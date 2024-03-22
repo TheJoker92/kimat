@@ -44,9 +44,10 @@
                 </div>
                 <div class="row-center-space-between">
                     <div>
-                        <select (change)="onSelectOwner($event)" class="form-field-size w172px">
-                            <option class="form-field-size" *ngFor="let owner of allowedOwners" [value]="owner.id">{{
-                                owner.firstName }} {{ owner.lastName }}
+                        <select #userSelect (change)="onSelectOwner($event)" class="form-field-size w172px" [value]="owner.id">
+                            <option class="form-field-size" *ngFor="let allowedOwner of allowedOwners" [value]="allowedOwner.id" 
+                                    [selected]="owner.id == allowedOwner.id">
+                                    {{ allowedOwner.firstName }} {{ allowedOwner.lastName }}
                             </option>
                         </select>
                     </div>

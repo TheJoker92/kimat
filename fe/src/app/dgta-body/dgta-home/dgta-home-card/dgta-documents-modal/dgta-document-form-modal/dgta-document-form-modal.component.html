@@ -1,0 +1,55 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <h3 class="row-center-center">INSERISCI DATI DOCUMENTO</h3>
+        <div class="box-form column-center-center">
+
+            <div class="mb10px">
+                <div class="column-top-left">
+                    <label for=""><strong>Nome</strong></label>
+                    <input class="form-field-size" (input)="editName($event)" type="text">
+                </div>
+            </div>
+            <div class="mb10px">
+                <div class="column-top-left">
+                    <label for=""><strong>file pdf</strong><small>(non obbligatorio)</small></label>
+                    <input id="file-pdf" type="file" class="form-field-size">
+                    <button (click)="loadFile('pdf')">CARICA</button>
+                </div>
+            </div>
+            <div class="mb10px">
+                <h4>Collocamento</h4>
+                <div class="column-top-left">
+                    <label for=""><strong>Edificio</strong></label>
+                    <input class="form-field-size" (input)="editLocation('palace',$event)" type="text">
+                </div>
+                <div class="column-top-left">
+                    <label for=""><strong>Piano</strong></label>
+                    <input class="form-field-size" (input)="editLocation('floor', $event)" type="text">
+                </div>
+                <div class="column-top-left">
+                    <label for=""><strong>Stanza</strong></label>
+                    <input class="form-field-size" (input)="editLocation('room', $event)" type="text">
+                </div>
+                <div class="column-top-left">
+                    <label for=""><strong>Settore</strong></label>
+                    <input class="form-field-size" (input)="editLocation('sector', $event)" type="text">
+                </div>
+                <div class="column-top-left">
+                    <label for=""><strong>Scaffale</strong></label>
+                    <input class="form-field-size" (input)="editLocation('rack', $event)" type="text">
+                </div>
+                <div class="column-top-left">
+                    <label for=""><strong>Posizione</strong></label>
+                    <input class="form-field-size" (input)="editLocation('position', $event)" type="text">
+                </div>
+            </div>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                <button class="mt10px" (click)="addDocument()">AGGIUNGI</button>
+            </div>
+        </div>
+    </div>
+</div>
