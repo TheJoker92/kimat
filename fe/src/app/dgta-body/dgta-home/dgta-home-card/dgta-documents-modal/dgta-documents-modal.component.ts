@@ -58,6 +58,10 @@ export class DgtaDocumentsModalComponent {
   
   constructor(private http: HttpService,
               private loadingService: LoadingService) {
+    
+  }
+
+  ngOnInit() {
     this.getDocuments()
   }
 
@@ -74,8 +78,13 @@ export class DgtaDocumentsModalComponent {
   }
 
   getDocuments() {
+    let payload = {
+      parentId: this.catalogue.id
+    }
+
+
     this.loadingService.isLoading = true
-    this.http.getDocuments().subscribe({
+    this.http.getDocuments(payload).subscribe({
       next: (response: any) => {
         this.loadingService.isLoading = false
 

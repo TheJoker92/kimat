@@ -58,8 +58,8 @@ export class HttpService {
   /**
    * DOCUMENTS
    */
-  getDocuments() {
-    return this.http.get(this.buildURL("documents/", this.data.document.getDocuments))
+  getDocuments(payload: any) {
+    return this.http.post(this.buildURL("documents/", this.data.document.getDocuments), payload, this.httpOptions)
   }
   
   addDocument(payload: any) {

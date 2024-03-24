@@ -473,7 +473,7 @@ def deleteCatalogue():
     return response
 
 # Read operation
-@app.route('/api/documents/getDocuments', methods=['GET'])
+@app.route('/api/documents/getDocuments', methods=['POST'])
 def getDocuments():
     print("START GET DOCUMENTS")
     data = request.json
@@ -488,7 +488,8 @@ def getDocuments():
         }
 
         # solr.add([data])
-        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=OR&q=*%3A*&useParams=", verify=False)
+        
+        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=parentId%3A" + data["parentId"] + "&useParams=", verify=False)
         print(responseRaw)
         # Decode the content from bytes to string and then parse as JSON
         response_json = json.loads(responseRaw.content.decode('utf-8'))
