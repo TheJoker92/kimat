@@ -98,8 +98,10 @@
                 <strong>{{ document.name }}</strong>
             </div>
             <div class="row-center-center w12vw">
-                <div *ngFor="let topic of document.topics">
-                    {{ topic }}
+                <div class="column-center-center">
+                    <div *ngFor="let topic of document.topics">
+                        {{ topic }}
+                    </div>
                 </div>
             </div>
             <div class="row-center-center w10vw">
