@@ -10,5 +10,6 @@ export interface ICatalogue {
     documents?: IDocument[]
     owners?: IUser[],
     history?: ILog[],
-    placement?: IPlace[]
+    placement?: IPlace[],
+    data?: string
 }

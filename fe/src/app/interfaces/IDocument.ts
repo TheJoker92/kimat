@@ -1,5 +1,7 @@
 import { IDevice } from "./IDevice"
 import { ILog } from "./ILog"
+import { IPlace } from "./IPlace"
+import { IUser } from "./IUser"
 
 export interface IDocument {
     parentId?: string
@@ -8,7 +10,11 @@ export interface IDocument {
     history?: ILog[]
     creation_date?: string   
     deviceIds?: string[]
-    state: IDocumentState[]
+    state?: IDocumentState[]
+    name?: string
+    topics?: string[],
+    placement?: IPlace[]
+    owners?: IUser[]
 }
 
 export interface IAttachment{

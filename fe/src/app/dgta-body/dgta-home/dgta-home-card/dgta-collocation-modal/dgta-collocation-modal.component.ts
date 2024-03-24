@@ -24,7 +24,7 @@ export class DgtaCollocationModalComponent {
   }
 
   ngOnInit() {
-    this.catalogue.placement![0]["date"] = this.formatDate(this.catalogue.history![0].date!)
+    this.catalogue.placement![0]["date"] = this.catalogue.history![0].date!
     console.log(this.catalogue.placement)
   }
 

@@ -1,6 +1,6 @@
 <div class="container column-top-left">
     <div class="row-center-left">
-        <h2 class="ml10px">{{ catalogue.title }} - {{ catalogue.id }}</h2> 
+        <h2 class="ml10px">{{ catalogue.title }} - {{ catalogue.id }}</h2>
     </div>
     <div class="row-left-left p10px" (click)="openModalDocumentFormModal()">
         <strong>
@@ -10,23 +10,25 @@
     </div>
     <div class="box-form column-center-spacebetween">
         <div class="ml10px row-center-space-between p10px w100p">
-            <div class="h20px w10p">
-                <h4 class="w100px">
+            <div class="h20px w16vw">
+                <h4>
                     <div class="column-left-center">
-                        nome
+                        <div>
+                            nome
+                        </div>
                         <small class="opacity-0">(fisico)</small>
                     </div>
                 </h4>
             </div>
-            <div class="h20px w10p">
+            <div class="h20px w10vw">
                 <h4>
-                    <div class="column-left-center">
+                    <div class="column-center-center">
                         argomento/i
                         <small class="opacity-0">(fisico)</small>
                     </div>
                 </h4>
             </div>
-            <div class="h20px w10p">
+            <div class="h20px w10vw">
                 <h4>
                     <div class="column-center-center">
                         allegato/i
@@ -34,7 +36,7 @@
                     </div>
                 </h4>
             </div>
-            <div class="h20px w10p">
+            <div class="h20px w10vw">
                 <h4>
                     <div class="column-center-center">
                         barcode
@@ -42,7 +44,7 @@
                     </div>
                 </h4>
             </div>
-            <div class="h20px w10p">
+            <div class="h20px w10vw">
                 <h4>
                     <div class="column-center-center">
                         stato
@@ -50,7 +52,7 @@
                     </div>
                 </h4>
             </div>
-            <div class="h20px w10p">
+            <div class="h20px w10vw">
                 <h4>
                     <div class="column-center-center">
                         cronologia
@@ -58,7 +60,7 @@
                     </div>
                 </h4>
             </div>
-            <div class="h20px w10p">
+            <div class="h20px w10vw">
                 <h4>
                     <div class="column-center-center">
                         collocamento
@@ -66,7 +68,7 @@
                     </div>
                 </h4>
             </div>
-            <div class="h20px w10p">
+            <div class="h20px w10vw">
                 <h4>
                     <div class="column-center-center">
                         proprietario/i
@@ -74,15 +76,15 @@
                     <small class="opacity-0">(fisico)</small>
                 </h4>
             </div>
-            <div class="h20px w10p">
+            <!-- <div class="h20px w10vw">
                 <h4>
                     <div class="column-center-center">
                         dispositivo/i
                     </div>
                     <small class="opacity-0">(fisico)</small>
                 </h4>
-            </div>
-            <div class="h20px w10p">
+            </div> -->
+            <div class="h20px w10vw">
                 <h4>
                     <div class="column-center-center">
                     </div>
@@ -90,12 +92,70 @@
                 </h4>
             </div>
         </div>
+
+        <div *ngFor="let document of documents" class="row-center-space-between mt40px p10px">
+            <div class="row-center-left w16vw">
+                <strong>{{ document.name }}</strong>
+            </div>
+            <div class="row-center-center w12vw">
+                <div *ngFor="let topic of document.topics">
+                    {{ topic }}
+                </div>
+            </div>
+            <div class="row-center-center w10vw">
+                <fa-icon class="cursor-pointer font-size-25em" [icon]="faFileLines"
+                    (click)="openAttachmentsModal(document)"></fa-icon>
+            </div>
+            <div class="row-center-center w10vw">
+                <fa-icon class="cursor-pointer font-size-25em" [icon]="faBarcode"
+                    (click)="openViewBarcodeModal(document)"></fa-icon>
+            </div>
+            <div class="row-center-center w10vw">
+                <div class="column-center-center">
+                    {{ document.state![document.state!.length - 1] }}
+                </div>
+            </div>
+            <div class="row-center-center w10vw">
+                <fa-icon class="cursor-pointer font-size-25em" [icon]="faClockRotateLeft"
+                    (click)="openHistoryModal(document)"></fa-icon>
+            </div>
+            <div class="row-center-center w10vw">
+                <fa-icon class="cursor-pointer font-size-25em" [icon]="faMapMarker"
+                    (click)="openCollocationModal(document)"></fa-icon>
+
+            </div>
+            <div class="row-center-center w10vw">
+                <fa-icon class="cursor-pointer font-size-25em" [icon]="faUsers"
+                    (click)="openOwnersModal(catalogue)"></fa-icon>
+            </div>
+            <!-- <div class="row-center-center w10vw">
+                <fa-icon class="cursor-pointer font-size-25em" [icon]="faCameraRetro"
+                    (click)="openOwnersModal(catalogue)"></fa-icon>
+            </div> -->
+            <div class="row-center-center w10vw">
+                <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash"
+                    (click)="deleteDocument(document)"></fa-icon>
+            </div>
+        </div>
+
+        <dgta-owners-document-modal *ngIf="isOpenOwnersModal" [document]="document"
+            (closeOwnersModalE)="closeOwnersModal(document)"></dgta-owners-document-modal>
+
+        <dgta-collocation-document-modal *ngIf="isOpenCollocationModal" [document]="document"
+            (closeCollocationModalE)="closeCollocationModal(document)"
+            (getDocumentsE)="getDocuments()"></dgta-collocation-document-modal>
+
+            <dgta-history-document-modal *ngIf="isOpenHistoryDocumentModal" [document]="document"
+            (closeHistoryModalE)="closeHistoryModal()"></dgta-history-document-modal>
+        
+            <dgta-barcode-document-modal *ngIf="isOpenViewBarcodeModal" [document]="document"
+                (closeBarcodeViewModalE)="closeViewBarcodeModal(document)"></dgta-barcode-document-modal>
+               
         <div class="row-center-center">
             <button class="mt10px" (click)="close()">CHIUDI</button>
         </div>
     </div>
 </div>
 
-<dgta-document-form-modal *ngIf="isOpenDocumentFormModal"
-[catalogue]="catalogue"
-(closeDocumentFormModalE)="closeModalDocuemntFormModal()"></dgta-document-form-modal>
+<dgta-document-form-modal *ngIf="isOpenDocumentFormModal" [catalogue]="catalogue" (emitterGetDocuments)="getDocuments()"
+    (closeDocumentFormModalE)="closeModalDocuemntFormModal()"></dgta-document-form-modal>

@@ -1,0 +1,37 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+       <h3 class="row-center-center">Cronologia di '{{ document.name }}'</h3>
+        <div class="box-form column-center-center">
+            <div class="row-center-space-between mb10px w80p">
+                <h4>
+                    azione
+                </h4>
+                <h4>
+                    nome
+                </h4>
+                <h4>
+                    data
+                </h4>                
+            </div>
+            <div *ngFor="let log of history" class="row-center-space-between mb10px w80p">
+                {{        logReader(log)
+                }} 
+                <div>
+                    {{ log.actionLog | defaultDash}}
+                </div>
+                <div>
+                    {{ getUserFullName(log) | defaultDash }}
+                </div>
+                <div>
+                    {{ formatDate(log.date!) | defaultDash}}
+                </div>
+            </div>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="closeHistoryModal()">CHIUDI</button>
+            </div>
+        </div>
+    </div>
+</div>

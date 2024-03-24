@@ -26,6 +26,8 @@ export class DgtaHomeComponent {
               private http: HttpService) {
     this.http.getCatalogues().subscribe({
       next: (response: any) => {
+
+        this.catalogues = []
         
         for (let document of response.documents!) {
           let catalogue: any = {}

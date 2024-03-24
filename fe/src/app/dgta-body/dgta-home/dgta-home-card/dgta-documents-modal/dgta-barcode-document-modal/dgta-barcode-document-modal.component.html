@@ -1,0 +1,22 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <h3 class="row-center-center">{{ document.name }}</h3>
+        <div class="box-form column-center-center">
+            <strong>
+                Barcode catalogo
+            </strong>
+            <ngx-barcode6 [bc-format]="'CODE128'" [id]="document.parentId!" [bc-value]="document.parentId!" [bc-display-value]="true"></ngx-barcode6>
+            <strong>
+                Barcode documento
+            </strong>
+            <ngx-barcode6 [bc-format]="'CODE128'" [id]="document.id!" [bc-value]="document.id!" [bc-display-value]="true"></ngx-barcode6>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                <button class="mt10px" (click)="print()">STAMPA</button>
+            </div>
+        </div>
+    </div>
+</div>

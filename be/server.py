@@ -308,24 +308,26 @@ def create_document():
 
             # solr.add([data])
 
-            base_folders = "folders"
-            full_folder_path = base_folders + "/" + data["parentId"]
-            full_filename_path = full_folder_path + "/" + data["name"] + ".pdf"
-            if not(os.path.exists(full_folder_path)):
-                os.mkdir(full_folder_path) 
+            if (data["attachments"] and len(json.loads(data["attachments"])) and len(json.loads(data["attachments"])[0].keys())):
+                base_folders = "folders"
+                full_folder_path = base_folders + "/" + data["parentId"]
+                full_filename_path = full_folder_path + "/" + data["name"] + ".pdf"
+                if not(os.path.exists(full_folder_path)):
+                    os.mkdir(full_folder_path) 
 
 
-            if (os.path.exists(full_filename_path)):
-                os.rename(full_filename_path, full_folder_path + "/" + data["name"] + "_" + str(datetime.today().timestamp()))
+                if (os.path.exists(full_filename_path)):
+                    os.rename(full_filename_path, full_folder_path + "/" + data["name"] + "_" + str(datetime.today().timestamp()))
 
-            attachment = json.loads(data["attachments"])[0]
+                attachment = json.loads(data["attachments"])[0]
 
-            print(attachment)
-            with open(full_filename_path, 'wb') as theFile:
-                theFile.write(base64.b64decode(attachment["base64"]))
+                print(attachment)
+                with open(full_filename_path, 'wb') as theFile:
+                    theFile.write(base64.b64decode(attachment["base64"]))
 
+                
+                data["attachments"] = full_filename_path
             
-            data["attachments"] = full_filename_path
 
 
             r = requests.post(BASE_URL + "/documents/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
@@ -346,7 +348,7 @@ def create_document():
 # Read operation
 @app.route('/api/catalogues/getCatalogues', methods=['GET'])
 def getCatalogues():
-    print("START USER LOGIN")
+    print("START GET CATALOGUES")
     data = request.json
     
     response = {}
@@ -433,7 +435,7 @@ def update_catalogue():
 
 @app.route('/api/catalogues/delete', methods=['POST'])
 def deleteCatalogue():
-    print("START GET USER")
+    print("START DELETE DOCUMENT")
     data = request.json
     
     response = {}
@@ -470,6 +472,98 @@ def deleteCatalogue():
     
     return response
 
+# Read operation
+@app.route('/api/documents/getDocuments', methods=['GET'])
+def getDocuments():
+    print("START GET DOCUMENTS")
+    data = request.json
+    
+    response = {}
+    
+    try:
+        response = {
+            "message": "DATA ACCESS",
+            "error": "",
+            "code": 200
+        }
+
+        # solr.add([data])
+        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=OR&q=*%3A*&useParams=", verify=False)
+        print(responseRaw)
+        # Decode the content from bytes to string and then parse as JSON
+        response_json = json.loads(responseRaw.content.decode('utf-8'))
+        responseRaw = response_json.get('response', {}).get('docs', [])
+        # Now you can access response_docs as a list containing the documents
+        # Do whatever you need to do with response_docs
+
+
+        
+        documents = []
+        if len(responseRaw) > 0:
+            for documentRaw in responseRaw:
+                document = { }
+
+                keysRaw = list(documentRaw.keys())
+                for keyRaw in keysRaw:
+
+                    if keyRaw in ["id", "_version_"]:
+                        document[keyRaw] = documentRaw[keyRaw]
+                    else:
+                        document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
+                
+                documents.append(document)
+        
+        response = {
+            "documents": documents
+        }
+    except Exception as e:
+        response = {
+            "message": "",
+            "error": str(e),
+            "code": 500
+        }
+    
+    return response
+
+
+@app.route('/api/documents/delete', methods=['POST'])
+def deleteDocument():
+    print("START DELETE DOCUMENT")
+    data = request.json
+    
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+            response = {
+                "message": "DATA REMOVED",
+                "error": "",
+                "code": 200
+            }
+
+            payload = "<delete><query>id:\"" + data["id"]+ "\"</query></delete>"
+
+            # solr.add([data])
+            headers = {'Content-type': 'application/xml'}
+            responseRaw = requests.post(BASE_URL + "/documents/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", headers=headers, data=payload, verify=False)
+
+            print(responseRaw.content)
+            # Now you can access response_docs as a list containing the documents
+            # Do whatever you need to do with response_docs
+
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return response
 
 
 if __name__ == '__main__':

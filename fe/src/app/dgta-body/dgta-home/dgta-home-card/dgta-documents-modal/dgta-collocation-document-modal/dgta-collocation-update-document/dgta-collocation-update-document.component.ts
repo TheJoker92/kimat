@@ -1,25 +1,28 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as rawData from '../../../../../../assets/enum.json';
 import { faCheckSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { LoadingService } from '../../../../../dgta-loading/loading.service';
-import { HttpService } from '../../../../../http.service';
-import { ActionLogEnum } from '../../../../../interfaces/ILog';
-import { IPlace } from '../../../../../interfaces/IPlace';
-import { IUser } from '../../../../../interfaces/IUser';
-import { SessionService } from '../../../../../session.service';
-import { ICatalogue } from '../../../../../interfaces/ICatalogue';
+import { IDocument } from '../../../../../../interfaces/IDocument';
+import { CommonModule } from '@angular/common';
+import { DefaultDashPipe } from '../../../../../../default-dash.pipe';
+import { LoadingService } from '../../../../../../dgta-loading/loading.service';
+import { HttpService } from '../../../../../../http.service';
+import { ICatalogue } from '../../../../../../interfaces/ICatalogue';
+import { ActionLogEnum } from '../../../../../../interfaces/ILog';
+import { IPlace } from '../../../../../../interfaces/IPlace';
+import { SessionService } from '../../../../../../session.service';
+import { DgtaUpdateCollocationModalComponent } from '../../../dgta-collocation-modal/dgta-update-collocation-modal/dgta-update-collocation-modal.component';
 
 @Component({
-  selector: 'dgta-update-collocation-modal',
+  selector: 'dgta-collocation-update-document',
   standalone: true,
-  imports: [],
-  templateUrl: './dgta-update-collocation-modal.component.html',
-  styleUrl: './dgta-update-collocation-modal.component.scss'
+  imports: [CommonModule, DefaultDashPipe, DgtaUpdateCollocationModalComponent],
+  templateUrl: './dgta-collocation-update-document.component.html',
+  styleUrl: './dgta-collocation-update-document.component.scss'
 })
-export class DgtaUpdateCollocationModalComponent {
-  @Input() catalogue: ICatalogue = {}
+export class DgtaCollocationUpdateDocumentComponent {
+  @Input() document: IDocument = {}
   @Output() closeUpdateCollocationModalE = new EventEmitter()
-  
+  @Output() getDocumentsE = new EventEmitter()
 
   place: IPlace | any = {}
 
@@ -29,49 +32,55 @@ export class DgtaUpdateCollocationModalComponent {
   constructor(public sessionService: SessionService,
     private http: HttpService,
     private loadingService: LoadingService) {
-    this.pullCatalogue()
-  }
+
+    }
 
   
 
-  updateCatalogue() {
+  updateDocument() {
     if (this.place.palace && this.place.floor && this.place.room && this.place.sector && this.place.rack && this.place.position) {
-
       this.place["date"] = new Date().toISOString()
 
-      let placement = this.catalogue.placement!
+      this.place = JSON.parse(JSON.stringify(this.place))
+
+      let placement = this.document.placement!
       placement.push(this.place)
       placement = JSON.parse(JSON.stringify(placement))
 
-      let history = this.catalogue.history!
+      let history = this.document.history!
       history.push({
-        id: this.catalogue.history!.length.toString(),
+        id: this.document.history!.length.toString(),
         date: new Date().toISOString(),
         user: this.sessionService.user,
-        resourceId: this.catalogue.id,
-        actionLog: ActionLogEnum.UPDATE_CATALOGUE
+        resourceId: this.document.id,
+        actionLog: ActionLogEnum.UPDATE_DOCUMENT
       })
 
       history = JSON.parse(JSON.stringify(history))
 
       let payload: any = {
-        id: this.catalogue.id,
-        title: this.catalogue.title,
-        topics: JSON.stringify(this.catalogue.topics),
-        documents: JSON.stringify([]),
-        owners: JSON.stringify(this.catalogue.owners),
-        history: JSON.stringify(history),
-        placement: JSON.stringify(placement),
+        "parentId": this.document.parentId,
+        "id": this.document.id,
+        "name": this.document.name,
+        "history": JSON.stringify(history),
+        "attachments": JSON.stringify(this.document.attachments),
+        "deviceIds": JSON.stringify(this.document.deviceIds),
+        "state": JSON.stringify(this.document.state),
+        "topics": JSON.stringify(this.document.topics),
+        "placement": JSON.stringify(placement),
+        "owners": JSON.stringify(this.document.owners),
       }
 
       this.loadingService.isLoading = true
-      this.http.addCatalogue(payload).subscribe({
+      this.http.addDocument(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
 
           if (response.code == 200) {
             alert("Hai aggiornato il catalogo")
-            window.location.reload()
+            this.loadingService.isLoading = false
+            this.getDocumentsE.emit()
+            this.closeUpdateCollocationModalE.emit()
           } else {
             alert("Errore server. Contattare il supporto.")
           }
@@ -97,36 +106,6 @@ export class DgtaUpdateCollocationModalComponent {
   editLocation(label:string, e: any) {
     this.place[label] = e.target.value
     console.log(this.place)
-  }
-
-  pullCatalogue() {
-    this.loadingService.isLoading = true
-
-    this.http.getCatalogues().subscribe({
-      next: (response: any) => {
-        let catalogueArray = response.documents!.filter((catalogue: ICatalogue) => catalogue.id == this.catalogue.id)
-        
-        for (let document of catalogueArray) {
-          let catalogue: any = {}
-          for (let keyDocument of Object.keys(document)) {
-            if (this.isParsable(document[keyDocument])) {
-              catalogue[keyDocument] =  JSON.parse(document[keyDocument])
-            } else {
-              catalogue[keyDocument] = document[keyDocument]
-            }
-          }
-
-          this.catalogue = catalogue
-
-        }
-
-        this.loadingService.isLoading = false
-        
-      },
-      error: (error) => {
-        console.error(error)
-      }
-    })
   }
 
   isParsable(inputString: string): boolean {

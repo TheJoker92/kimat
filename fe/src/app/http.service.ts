@@ -59,14 +59,14 @@ export class HttpService {
    * DOCUMENTS
    */
   getDocuments() {
-    return this.http.get(this.buildURL("documents/", this.data.catalogue.getCatalogues))
+    return this.http.get(this.buildURL("documents/", this.data.document.getDocuments))
   }
   
   addDocument(payload: any) {
-    return this.http.post(this.buildURL("documents/", this.data.catalogue.add), payload, this.httpOptions)
+    return this.http.post(this.buildURL("documents/", this.data.document.add), payload, this.httpOptions)
   }
 
   deleteDocuments(payload: any) {
-    return this.http.post(this.buildURL("documents/", this.data.catalogue.delete), payload, this.httpOptions)
+    return this.http.post(this.buildURL("documents/", this.data.document.delete), payload, this.httpOptions)
   }
 }

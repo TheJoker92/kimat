@@ -13,6 +13,11 @@
             "add": "add",
             "getCatalogues": "getCatalogues",
             "delete": "delete"
+        },
+        "document": {
+            "add": "add",
+            "getDocuments": "getDocuments",
+            "delete": "delete"
         }
     },
     "error": {

@@ -40,7 +40,7 @@
                 </h4>
             </div>
         </div>
-        <div *ngFor="let place of catalogue.placement">
+        <div *ngFor="let place of document.placement">
             <div class="ml10px row-center-space-between p10px">
                 <div class="h20px w10p row-center-center row-center-center">
                         {{ place.palace | defaultDash }}
@@ -71,7 +71,10 @@
         </div>
     </div>
 </div>
-<dgta-update-collocation-modal *ngIf="isOpenUpdateCollocationModal"
-    [catalogue]="catalogue"
+
+<dgta-collocation-update-document *ngIf="isOpenUpdateCollocationModal"
+    [document]="document"
     (closeUpdateCollocationModalE)="closeUpdateCollocationModal()"
-></dgta-update-collocation-modal>
+    (getDocumentsE)="getDocumentsEmitter()"
+></dgta-collocation-update-document>
+

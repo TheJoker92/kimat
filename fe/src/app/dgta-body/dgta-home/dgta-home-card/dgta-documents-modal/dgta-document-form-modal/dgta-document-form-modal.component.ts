@@ -23,6 +23,7 @@ import { LoadingService } from '../../../../../dgta-loading/loading.service';
 export class DgtaDocumentFormModalComponent {
   @Input() catalogue: ICatalogue = {}
   @Output() closeDocumentFormModalE = new EventEmitter()
+  @Output() emitterGetDocuments = new EventEmitter()
 
   topics: string[] = []
 
@@ -93,45 +94,59 @@ export class DgtaDocumentFormModalComponent {
   }
 
   addDocument() {
-    let parentId = this.catalogue.id
+    if (!this.name) {
+      alert("Inserire il nome di un documento")
+    } else if (this.topics.length == 0) {
+      alert("Indicare un almeno un argomento")
+    } else if (this.owners.length == 0) {
+      alert("Indicare almeno un proprietario")
+    } else if (!this.place.palace || !this.place.floor || !this.place.room || !this.place.sector || !this.place.rack || !this.place.position) {
+      alert("Compilare tutti i campi del collocamento")
+    } else {
 
-    let history: ILog = {
-      id: "0",
-      date: new Date().toISOString(),
-      actionLog: ActionLogEnum.CREATION_DOCUMENT
-    }
-
-    let payload: any = {
-      "parentId": parentId,
-      "name": this.name,
-      "history": JSON.stringify([history]),
-      "attachments": JSON.stringify([this.attachmentPdf]),
-      "deviceIds": JSON.stringify([]),
-      "state": this.rawData.documentState.acceptance,
-      "topics": JSON.stringify(this.topics)
-
-    }
-
-    console.log(payload)
-
-    this.loadingService.isLoading = true
-    this.http.addDocument(payload).subscribe({
-      next: (response: any) => {
-        this.loadingService.isLoading = false
-
-          if (response.code == 200) {
-            alert("Hai aggiornato il catalogo")
-            
-            // this.getDocuments()
-          } else {
-            alert("Errore server. Contattare il supporto.")
-          }
-      },
-      error: (error: any) => {
-        this.loadingService.isLoading = false
-        console.error(error)
+      let parentId = this.catalogue.id
+  
+      let history: ILog = {
+        id: "0",
+        date: new Date().toISOString(),
+        actionLog: ActionLogEnum.CREATION_DOCUMENT,
+        user: this.sessionService.user
       }
-    })
+  
+      let payload: any = {
+        "parentId": parentId,
+        "name": this.name,
+        "history": JSON.stringify([history]),
+        "attachments": JSON.stringify([this.attachmentPdf]),
+        "deviceIds": JSON.stringify([]),
+        "state": JSON.stringify([this.rawData.documentState.acceptance]),
+        "topics": JSON.stringify(this.topics),
+        "placement": JSON.stringify([this.place]),
+        "owners": JSON.stringify(this.owners)
+      }
+  
+      console.log(payload)
+  
+      this.loadingService.isLoading = true
+      this.http.addDocument(payload).subscribe({
+        next: (response: any) => {
+          this.loadingService.isLoading = false
+  
+            if (response.code == 200) {
+              alert("Hai aggiornato il catalogo")
+              
+              this.emitterGetDocuments.emit()
+              this.closeDocumentFormModalE.emit()
+            } else {
+              alert("Errore server. Contattare il supporto.")
+            }
+        },
+        error: (error: any) => {
+          this.loadingService.isLoading = false
+          console.error(error)
+        }
+      })
+    }
   }
 
   loadFile(ext: string) {
