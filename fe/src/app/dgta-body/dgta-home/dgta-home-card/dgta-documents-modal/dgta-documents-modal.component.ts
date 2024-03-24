@@ -12,11 +12,12 @@ import { DgtaOwnersDocumentModalComponent } from './dgta-owners-document-modal/d
 import { DgtaCollocationDocumentModalComponent } from './dgta-collocation-document-modal/dgta-collocation-document-modal.component';
 import { DgtaHistoryDocumentModalComponent } from './dgta-history-document-modal/dgta-history-document-modal.component';
 import { DgtaBarcodeDocumentModalComponent } from './dgta-barcode-document-modal/dgta-barcode-document-modal.component';
+import { DgtaStateDocumentModalComponent } from './dgta-state-document-modal/dgta-state-document-modal.component';
 
 @Component({
   selector: 'dgta-documents-modal',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent],
+  imports: [CommonModule, FontAwesomeModule, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent],
   templateUrl: './dgta-documents-modal.component.html',
   styleUrl: './dgta-documents-modal.component.scss'
 })
@@ -53,7 +54,8 @@ export class DgtaDocumentsModalComponent {
   isOpenHistoryDocumentModal = false
   isOpenCollocationModal = false
   isOpenOwnersModal = false
-
+  isOpenStateModal = false
+  
   constructor(private http: HttpService,
               private loadingService: LoadingService) {
     this.getDocuments()
@@ -161,6 +163,16 @@ export class DgtaDocumentsModalComponent {
   closeOwnersModal(document: IDocument) {
     this.document = {}
     this.isOpenOwnersModal = false
+  }
+
+  openStateModal(document: IDocument) {
+    this.document = document
+    this.isOpenStateModal = true
+  }
+
+  closeStateModal(document:IDocument) {
+    this.document = {}
+    this.isOpenStateModal = false
   }
 
   deleteDocument(document: IDocument) {

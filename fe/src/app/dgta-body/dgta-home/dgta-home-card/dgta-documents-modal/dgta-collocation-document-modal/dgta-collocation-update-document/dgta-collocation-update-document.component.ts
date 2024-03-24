@@ -65,7 +65,7 @@ export class DgtaCollocationUpdateDocumentComponent {
         "history": JSON.stringify(history),
         "attachments": JSON.stringify(this.document.attachments),
         "deviceIds": JSON.stringify(this.document.deviceIds),
-        "state": JSON.stringify(this.document.state),
+        "states": JSON.stringify(this.document.states),
         "topics": JSON.stringify(this.document.topics),
         "placement": JSON.stringify(placement),
         "owners": JSON.stringify(this.document.owners),

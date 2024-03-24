@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 
 import * as data from '../../../../../../assets/enum.json'
 import { ActionLogEnum, ILog } from '../../../../../interfaces/ILog';
-import { IAttachment, IDocument } from '../../../../../interfaces/IDocument';
+import { IAttachment, IDocument, IDocumentState } from '../../../../../interfaces/IDocument';
 import { LoadingService } from '../../../../../dgta-loading/loading.service';
 
 @Component({
@@ -105,41 +105,48 @@ export class DgtaDocumentFormModalComponent {
     } else {
 
       let parentId = this.catalogue.id
-  
+
       let history: ILog = {
         id: "0",
         date: new Date().toISOString(),
         actionLog: ActionLogEnum.CREATION_DOCUMENT,
         user: this.sessionService.user
       }
-  
+
+      let state: IDocumentState = {
+        id: "0",
+        stateValue: this.rawData.documentState.acceptance,
+        user: this.sessionService.user,
+        date: new Date().toISOString()
+      }
+
       let payload: any = {
         "parentId": parentId,
         "name": this.name,
         "history": JSON.stringify([history]),
         "attachments": JSON.stringify([this.attachmentPdf]),
         "deviceIds": JSON.stringify([]),
-        "state": JSON.stringify([this.rawData.documentState.acceptance]),
+        "states": JSON.stringify([state]),
         "topics": JSON.stringify(this.topics),
         "placement": JSON.stringify([this.place]),
         "owners": JSON.stringify(this.owners)
       }
-  
+
       console.log(payload)
-  
+
       this.loadingService.isLoading = true
       this.http.addDocument(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
-  
-            if (response.code == 200) {
-              alert("Hai aggiornato il catalogo")
-              
-              this.emitterGetDocuments.emit()
-              this.closeDocumentFormModalE.emit()
-            } else {
-              alert("Errore server. Contattare il supporto.")
-            }
+
+          if (response.code == 200) {
+            alert("Hai aggiornato il catalogo")
+
+            this.emitterGetDocuments.emit()
+            this.closeDocumentFormModalE.emit()
+          } else {
+            alert("Errore server. Contattare il supporto.")
+          }
         },
         error: (error: any) => {
           this.loadingService.isLoading = false
@@ -163,7 +170,7 @@ export class DgtaDocumentFormModalComponent {
           name: file.name,
           mimeType: file.type,
           base64: e.target.result.replace("data:application/pdf;base64,", "")
-        }      
+        }
       };
 
       reader.readAsDataURL(file);

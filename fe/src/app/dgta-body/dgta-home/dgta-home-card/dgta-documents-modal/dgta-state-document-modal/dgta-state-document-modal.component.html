@@ -1,0 +1,40 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <h3 class="row-center-center">Sequenza di stati '{{ document.name }}'</h3>
+        <div class="box-form column-center-center">
+            <div class="row-center-space-between mb10px w80p">
+                <h4>
+                    azione
+                </h4>
+                <h4>
+                    operatore
+                </h4>
+                <h4>
+                    data
+                </h4>                
+            </div>
+            <div *ngFor="let state of states" class="row-center-space-between mb10px w80p">
+                <div class="w220px">
+                    {{ state.stateValue | defaultDash}}
+                </div>
+                <div class="w220px">
+                    {{ getUserFullName(state) | defaultDash }}
+                </div>
+                <div>
+                    {{ formatDate(state.date!) | defaultDash}}
+                </div>
+            </div>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="close()">CHIUDI</button>
+                <button class="mt10px" (click)="openUpdateStateDocument()">AGGIORNA</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<dgta-update-state-document-modal *ngIf="isOpenUpdateStateDocument"
+[document]="document"
+(closeUpdateStateModalE)="closeUpdateStateDocument()"></dgta-update-state-document-modal>

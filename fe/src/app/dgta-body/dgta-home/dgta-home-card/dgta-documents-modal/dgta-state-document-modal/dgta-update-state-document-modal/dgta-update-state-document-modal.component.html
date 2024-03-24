@@ -1,0 +1,24 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <h3 class="row-center-center">INSERISCI IL NUOVO STATO</h3>
+        <div class="box-form column-center-center">
+            <div class="mb10px">
+                <div class="column-top-left w220px">
+                    <label for=""><strong>Stato</strong></label>
+                    <select (change)="onSelectState($event)" class="form-field-size w172px" [value]="stateValue">
+                        <option class="form-field-size" *ngFor="let stateValueOpt of stateValues" [value]="stateValueOpt" [selected]="stateValueOpt == stateValue">{{ stateValueOpt
+                            }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="close()">ANNULLA</button>
+                <button class="mt10px" (click)="updateDocument()">CONFERMA</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -111,8 +111,8 @@
                     (click)="openViewBarcodeModal(document)"></fa-icon>
             </div>
             <div class="row-center-center w10vw">
-                <div class="column-center-center">
-                    {{ document.state![document.state!.length - 1] }}
+                <div class="column-center-center stateValue" (click)="openStateModal(document)">
+                    {{ document.states![document.states!.length - 1].stateValue }}
                 </div>
             </div>
             <div class="row-center-center w10vw">
@@ -145,12 +145,16 @@
             (closeCollocationModalE)="closeCollocationModal(document)"
             (getDocumentsE)="getDocuments()"></dgta-collocation-document-modal>
 
-            <dgta-history-document-modal *ngIf="isOpenHistoryDocumentModal" [document]="document"
+        <dgta-history-document-modal *ngIf="isOpenHistoryDocumentModal" [document]="document"
             (closeHistoryModalE)="closeHistoryModal()"></dgta-history-document-modal>
-        
-            <dgta-barcode-document-modal *ngIf="isOpenViewBarcodeModal" [document]="document"
-                (closeBarcodeViewModalE)="closeViewBarcodeModal(document)"></dgta-barcode-document-modal>
-               
+
+        <dgta-barcode-document-modal *ngIf="isOpenViewBarcodeModal" [document]="document"
+            (closeBarcodeViewModalE)="closeViewBarcodeModal(document)"></dgta-barcode-document-modal>
+
+        <dgta-state-document-modal *ngIf="isOpenStateModal" [document]="document"
+            (closeStateModalE)="closeStateModal(document)"
+            (getDocumentsE)="getDocuments()"></dgta-state-document-modal>
+
         <div class="row-center-center">
             <button class="mt10px" (click)="close()">CHIUDI</button>
         </div>

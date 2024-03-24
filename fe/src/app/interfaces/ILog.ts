@@ -11,8 +11,10 @@ export interface ILog {
 export enum ActionLogEnum {
     RESOURCE_ACCESS = "resource access",
     LOGIN = "login",
-    CREATION_CATALOGUE = "catalogue creation",
-    UPDATE_CATALOGUE = "update catalogue",
-    CREATION_DOCUMENT = "create document",
-    UPDATE_DOCUMENT = "update document"
+    CREATION_CATALOGUE = "crea catalogo",
+    UPDATE_CATALOGUE = "aggiorna catalogue",
+    CREATION_DOCUMENT = "crea documento",
+    UPDATE_DOCUMENT = "aggiorna documento",
+    UPDATE_DOCUMENT_STATE = "aggiorna stato documento" 
+
 }

@@ -10,7 +10,7 @@ export interface IDocument {
     history?: ILog[]
     creation_date?: string   
     deviceIds?: string[]
-    state?: IDocumentState[]
+    states?: IDocumentState[]
     name?: string
     topics?: string[],
     placement?: IPlace[]
@@ -26,5 +26,6 @@ export interface IAttachment{
 export interface IDocumentState {
     id?: string
     stateValue?: string
+    user?: IUser
     date?: string
 }
