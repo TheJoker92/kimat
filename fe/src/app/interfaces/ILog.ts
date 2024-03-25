@@ -14,7 +14,8 @@ export enum ActionLogEnum {
     CREATION_CATALOGUE = "crea catalogo",
     UPDATE_CATALOGUE = "aggiorna catalogue",
     CREATION_DOCUMENT = "crea documento",
-    UPDATE_DOCUMENT = "aggiorna documento",
-    UPDATE_DOCUMENT_STATE = "aggiorna stato documento" 
+    UPDATE_DOCUMENT = "aggiornato documento",
+    UPDATE_DOCUMENT_STATE = "aggiornato stato documento",
+    UPDATE_DOCUMENT_LAST_VIEW = "ultima visualizzazione"
 
 }

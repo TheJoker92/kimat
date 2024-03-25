@@ -11,7 +11,6 @@
 
 .box-form {
     background: white;
-    width: 100vw;
     min-width: 275px;
     height: 15vw;
     min-height: 350px;
@@ -33,4 +32,8 @@
    background-color: grey;
    width: 66vw;
    padding: 5px;
+}
+
+.bold {
+    font-weight: bold;
 }

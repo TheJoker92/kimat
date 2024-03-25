@@ -9,6 +9,7 @@ from werkzeug.routing import BaseConverter
 import os
 from datetime import datetime
 import base64
+import PyPDF2
 
 app = Flask(__name__, static_folder="/Users/ADMIN/Desktop/projects/dgta/browser")
 cors = CORS(app, origins = ["*"])
@@ -40,10 +41,12 @@ def resource_src(ext, id):
     file_path = "/Users/ADMIN/Desktop/projects/kimat/be/folders/" + id + "/" + id + "." + ext
 
     result = {}
-    
+    numOfPages = 0
     if (os.path.exists(file_path)):
         with open(file_path, "rb") as file:
             encoded_string = base64.b64encode(file.read())
+            pdfReader = PyPDF2.PdfReader(file)
+            numOfPages = len(pdfReader.pages)
             file.close()
 
         prefix = "data:[<mediatype>];base64,"
@@ -52,7 +55,8 @@ def resource_src(ext, id):
             prefix = prefix.replace("[<mediatype>]", "application/pdf")
 
         result = {
-            "base64": prefix + encoded_string.decode('utf-8')
+            "base64": prefix + encoded_string.decode('utf-8'),
+            "numOfPages": numOfPages
         }
     else:
         result = {

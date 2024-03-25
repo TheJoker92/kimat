@@ -1,21 +1,79 @@
 <div class="overlay">
 
 </div>
-<div class="container" [ngClass]="{'opacity': isOpenAddAttachmentModal}">
-    <div class="box-form column-center-spacebetween">
-        <h4  class="ml10px">{{ document.name }}</h4>
-        <div class="file-viewer-container">
-            <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false" style="width: 66vw; height: 100vh"></pdf-viewer>
+<div class="container column-top-left" [ngClass]="{'opacity': isOpenAddAttachmentModal}">
+    <div class="row-center-center ml10px">
+        <button class="mt10px" (click)="close()">CHIUDI</button>
+        <button class="mt10px" (click)="openAddAttachmentModal()">RICOLLOCA</button>
+    </div>
+    <div class="row-center-left">
+        <div class="box-form column-center-left">
+            <h4 class="ml10px">{{ document.name }}</h4>
+            <div class="file-viewer-container">
+                <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false"
+                    style="width: 66vw; height: 100vh"></pdf-viewer>
+            </div>
         </div>
-        <div class="row-center-center">
-            <button class="mt10px" (click)="close()">CHIUDI</button>
-            <button class="mt10px" (click)="openAddAttachmentModal()">RICOLLOCA</button>
+        <div class="column-left-left ml10px">
+            <h4>Informazioni generali</h4>
+            <div class="row-center-left">
+                Nome: {{ document.name }}
+            </div>
+            <div>
+                Numero di pagine: {{ numOfPages }}
+            </div>
+            <div class="row-center-left">
+                <div class="column-top-left">
+                    Posizione:
+                    <small>(fisica)</small>
+                </div>
+                    <div class="column-top-left mt10px mb10px">
+                        <div>
+                            edificio: {{ document.placement![0].palace }}
+                        </div>
+                        <div>
+                            piano: {{ document.placement![0].floor }}
+                        </div>
+                        <div>
+                            stanza: {{ document.placement![0].room }}
+                        </div>
+                        <div>
+                            scaffale: {{ document.placement![0].rack }}
+                        </div>
+                        <div>
+                            settore: {{ document.placement![0].sector }}
+                        </div>
+                        <div>
+                            posizione{{ document.placement![0].position }}
+                        </div>
+
+                    </div>
+            </div>
+            <div>
+                Data di creazione: {{ formatDate(document.history![0]!.date!) }}
+            </div>
+            <div class="row-center-left mt10px">
+                <div class="column-left-left">
+                    <strong>
+                        proprietario/i:
+                    </strong>
+                    <div *ngFor="let owner of document.owners">
+                        {{ owner.firstName }} {{ owner.lastName }}
+                    </div>
+                </div>
+            </div>
+            <div class="row-center-left">
+                <div class="column-left-left">
+                    <strong>ultima visualizzazione:</strong>
+                    <div>{{ getLastViewFullName() }}</div>
+                    <div>{{ getLastViewtDate() }}</div>
+                </div>
+                
+            </div>
         </div>
     </div>
-</div>
-<!-- <dgta-add-attachment-modal *ngIf="isOpenAddAttachmentModal"
+    <!-- <dgta-add-attachment-modal *ngIf="isOpenAddAttachmentModal"
     [document]="document"
     (closeUpdateCollocationModalE)="closeAddAttachmentModal()"
     (getDocumentsE)="getDocumentsEmitter()"
 ></dgta-add-attachment-modal> -->
-

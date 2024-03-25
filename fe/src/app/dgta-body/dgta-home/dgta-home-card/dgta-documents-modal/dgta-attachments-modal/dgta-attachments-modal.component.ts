@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IDocument } from '../../../../../interfaces/IDocument';
 import { CommonModule } from '@angular/common';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ActionLogEnum, ILog } from '../../../../../interfaces/ILog';
 
 @Component({
   selector: 'dgta-attachments-modal',
@@ -19,8 +20,18 @@ export class DgtaAttachmentsModalComponent {
   isOpenAddAttachmentModal = false
   srcPdf = ""
 
+  numOfPages: string = ""
+
+  lastView: ILog = {}
+
   ngOnInit() {
     this.getPdf()
+
+    let history = this.document.history!
+    if (history.length > 1) {
+      let historyTmp = history.filter((log:ILog) => log.actionLog == ActionLogEnum.UPDATE_DOCUMENT_LAST_VIEW)
+      this.lastView = historyTmp[historyTmp.length - 2]
+    }
   }
 
   getPdf() {
@@ -33,6 +44,8 @@ export class DgtaAttachmentsModalComponent {
         this.srcPdf = ""
       } else {
         this.srcPdf = result.base64
+
+        this.numOfPages = result.numOfPages
       }
     })
   }
@@ -51,5 +64,32 @@ export class DgtaAttachmentsModalComponent {
 
   close() {
     this.closeAttahcmentsModalE.emit()
+  }
+
+  getLastViewFullName() {
+    let fullname = "-"
+
+    if(this.lastView && this.lastView.user) {
+      fullname = this.lastView.user.firstName + " " + this.lastView.user.lastName
+    }
+
+    return fullname
+  }
+
+  getLastViewtDate() {
+    let date = ""
+
+    if(this.lastView && this.lastView.date) {
+      date = this.formatDate(this.lastView.date)
+    }
+
+    return date
+  }
+
+  formatDate (date: string) {
+    let dateArray = date.split("T")[0].split("-")
+
+    let hourArray = date.split("T")[1].split(":")
+    return dateArray[2] + "-" + dateArray[1]+ "-" + dateArray[0]
   }
 }

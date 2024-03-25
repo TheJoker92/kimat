@@ -16,6 +16,8 @@ import { DgtaStateDocumentModalComponent } from './dgta-state-document-modal/dgt
 import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DgtaAttachmentsModalComponent } from './dgta-attachments-modal/dgta-attachments-modal.component';
+import { ActionLogEnum } from '../../../../interfaces/ILog';
+import { SessionService } from '../../../../session.service';
 
 @Component({
   selector: 'dgta-documents-modal',
@@ -44,12 +46,12 @@ export class DgtaDocumentsModalComponent {
   faCameraRetro = faCameraRetro
 
   documents: IDocument[] = []
-  
+
   htmlColumnns: any = {
 
   }
-  
-  
+
+
   path: any
 
   isOpenAttachmentModal = false
@@ -58,11 +60,11 @@ export class DgtaDocumentsModalComponent {
   isOpenCollocationModal = false
   isOpenOwnersModal = false
   isOpenStateModal = false
-  
+
   constructor(private http: HttpService,
-    private sanitizer: DomSanitizer,
-              private loadingService: LoadingService) {
-    
+    private sessionService: SessionService,
+    private loadingService: LoadingService) {
+
   }
 
   ngOnInit() {
@@ -98,17 +100,18 @@ export class DgtaDocumentsModalComponent {
           let document: any = {}
           for (let keyDocument of Object.keys(documentRaw)) {
             if (this.isParsable(documentRaw[keyDocument])) {
-              document[keyDocument] =  JSON.parse(documentRaw[keyDocument])
+              document[keyDocument] = JSON.parse(documentRaw[keyDocument])
             } else {
               document[keyDocument] = documentRaw[keyDocument]
             }
           }
 
           this.documents.push(document)
-          console.log(document, documentRaw)
+          
+          this.document = this.documents.find((document: IDocument) => document.id == this.document.id)!
         }
 
-        
+
       },
       error: (error: any) => {
         console.error(error)
@@ -120,94 +123,138 @@ export class DgtaDocumentsModalComponent {
 
   isParsable(inputString: string): boolean {
     try {
-        // Try to parse the string into an object
-        JSON.parse(inputString);
-        return true; // If successful, return true
+      // Try to parse the string into an object
+      JSON.parse(inputString);
+      return true; // If successful, return true
     } catch (error) {
-        return false; // If parsing fails, return false
+      return false; // If parsing fails, return false
     }
-  
+
   }
 
   openAttachmentsModal(document: IDocument) {
     this.document = document
-    this.isOpenAttachmentModal = true
-  }
 
-  closeAttachmentsModal(document: IDocument) {
-    this.document = {}
-    this.isOpenAttachmentModal = false
-  }
+    let history = this.document.history!
+    history.push({
+      id: this.document.history!.length.toString(),
+      date: new Date().toISOString(),
+      user: this.sessionService.user,
+      resourceId: this.document.id,
+      actionLog: ActionLogEnum.UPDATE_DOCUMENT_LAST_VIEW
+    })
 
-  openViewBarcodeModal(document: IDocument) {
-    this.document = document
-    this.isOpenViewBarcodeModal = true
-  }
+    history = JSON.parse(JSON.stringify(history))
 
-  closeViewBarcodeModal(document: IDocument) {
-    this.document = {}
-    this.isOpenViewBarcodeModal = false
-  }
-
-  openHistoryModal(document: IDocument) {
-    this.document = document
-    this.isOpenHistoryDocumentModal = true
-  }
-
-  closeHistoryModal() {
-    this.document = {}
-    this.isOpenHistoryDocumentModal = false
-  }
-
-  openCollocationModal(document: IDocument) {
-    this.document = document
-    this.isOpenCollocationModal = true
-  }
-
-  closeCollocationModal(document: IDocument) {
-    this.document = {}
-    this.isOpenCollocationModal = false
-  }
-
-  openOwnersModal(document: IDocument) {
-    this.document = document
-    this.isOpenOwnersModal = true
-  }
-
-  closeOwnersModal(document: IDocument) {
-    this.document = {}
-    this.isOpenOwnersModal = false
-  }
-
-  openStateModal(document: IDocument) {
-    this.document = document
-    this.isOpenStateModal = true
-  }
-
-  closeStateModal(document:IDocument) {
-    this.document = {}
-    this.isOpenStateModal = false
-  }
-
-  deleteDocument(document: IDocument) {
-    this.document = {}
-
-    let payload = {
-      id: document.id
+    let payload: any = {
+      "parentId": this.document.parentId,
+      "id": this.document.id,
+      "name": this.document.name,
+      "history": JSON.stringify(history),
+      "attachments": JSON.stringify(this.document.attachments),
+      "deviceIds": JSON.stringify(this.document.deviceIds),
+      "states": JSON.stringify(this.document.states),
+      "topics": JSON.stringify(this.document.topics),
+      "placement": JSON.stringify(this.document.placement),
+      "owners": JSON.stringify(this.document.owners),
     }
-    this.http.deleteDocuments(payload).subscribe({
+
+    this.loadingService.isLoading = true
+    this.http.addDocument(payload).subscribe({
       next: (response: any) => {
-        if(response.code == 200) {
-          alert("L'operazione è riuscita")
+        this.loadingService.isLoading = false
+
+        if (response.code == 200) {
+          alert("Hai aggiornato il catalogo")
+          this.loadingService.isLoading = false
           this.getDocuments()
+          this.isOpenAttachmentModal = true
         } else {
-          alert("Qualcosa è andato storto")
+          alert("Errore server. Contattare il supporto.")
         }
       },
-      error: (error: any) => {
+      error: (error) => {
+        this.loadingService.isLoading = false
+        alert("L'operazione è fallita. Riprova.")
         console.error(error)
       }
     })
-    
+}
+
+closeAttachmentsModal(document: IDocument) {
+  this.document = {}
+  this.isOpenAttachmentModal = false
+}
+
+openViewBarcodeModal(document: IDocument) {
+  this.document = document
+  this.isOpenViewBarcodeModal = true
+}
+
+closeViewBarcodeModal(document: IDocument) {
+  this.document = {}
+  this.isOpenViewBarcodeModal = false
+}
+
+openHistoryModal(document: IDocument) {
+  this.document = document
+  this.isOpenHistoryDocumentModal = true
+}
+
+closeHistoryModal() {
+  this.document = {}
+  this.isOpenHistoryDocumentModal = false
+}
+
+openCollocationModal(document: IDocument) {
+  this.document = document
+  this.isOpenCollocationModal = true
+}
+
+closeCollocationModal(document: IDocument) {
+  this.document = {}
+  this.isOpenCollocationModal = false
+}
+
+openOwnersModal(document: IDocument) {
+  this.document = document
+  this.isOpenOwnersModal = true
+}
+
+closeOwnersModal(document: IDocument) {
+  this.document = {}
+  this.isOpenOwnersModal = false
+}
+
+openStateModal(document: IDocument) {
+  this.document = document
+  this.isOpenStateModal = true
+}
+
+closeStateModal(document: IDocument) {
+  this.document = {}
+  this.isOpenStateModal = false
+}
+
+deleteDocument(document: IDocument) {
+  this.document = {}
+
+  let payload = {
+    id: document.id
   }
+  this.http.deleteDocuments(payload).subscribe({
+    next: (response: any) => {
+      if (response.code == 200) {
+        alert("L'operazione è riuscita")
+        this.getDocuments()
+      } else {
+        alert("Qualcosa è andato storto")
+      }
+    },
+    error: (error: any) => {
+      console.error(error)
+    }
+  })
+
+}
 }
