@@ -69,4 +69,9 @@ export class HttpService {
   deleteDocuments(payload: any) {
     return this.http.post(this.buildURL("documents/", this.data.document.delete), payload, this.httpOptions)
   }
+
+  getOcr(payload: any) {
+    return this.http.post(this.buildURL("documents/", this.data.document.ocr), payload, this.httpOptions)
+
+  }
 }

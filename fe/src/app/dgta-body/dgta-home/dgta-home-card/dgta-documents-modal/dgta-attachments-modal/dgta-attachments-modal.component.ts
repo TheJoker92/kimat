@@ -3,6 +3,8 @@ import { IDocument } from '../../../../../interfaces/IDocument';
 import { CommonModule } from '@angular/common';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ActionLogEnum, ILog } from '../../../../../interfaces/ILog';
+import { HttpService } from '../../../../../http.service';
+import { LoadingService } from '../../../../../dgta-loading/loading.service';
 
 @Component({
   selector: 'dgta-attachments-modal',
@@ -24,6 +26,8 @@ export class DgtaAttachmentsModalComponent {
 
   lastView: ILog = {}
 
+  constructor (private http: HttpService,
+              private loadingService: LoadingService) {}
   ngOnInit() {
     this.getPdf()
 
@@ -91,5 +95,23 @@ export class DgtaAttachmentsModalComponent {
 
     let hourArray = date.split("T")[1].split(":")
     return dateArray[2] + "-" + dateArray[1]+ "-" + dateArray[0]
+  }
+
+  getOcr() {
+    let payload = {
+      id: this.document.id
+    }
+
+    this.loadingService.isLoading = true
+    this.http.getOcr(payload).subscribe({
+      next: (response) => {
+        this.loadingService.isLoading = false
+        console.log(response)
+      },
+      error: (error) => {
+        this.loadingService.isLoading = false
+        console.error(error)
+      }
+    })
   }
 }

@@ -11,6 +11,10 @@ from datetime import datetime
 import base64
 import PyPDF2
 
+import pytesseract
+from pdf2image import convert_from_path
+
+
 app = Flask(__name__, static_folder="/Users/ADMIN/Desktop/projects/dgta/browser")
 cors = CORS(app, origins = ["*"])
 
@@ -36,6 +40,21 @@ def angular():
 def angular_src(path):
     return send_from_directory("browser", path)
 
+@app.route("/api/documents/ocr", methods=['POST'])
+def get_ocr():
+    print("START OCR")
+    data = request.json
+
+    print(data)
+    id = data["id"]
+    
+    file_path = "/Users/ADMIN/Desktop/projects/kimat/be/folders/" + id + "/" + id + ".pdf"    
+    print(file_path)
+    text = extract_text_from_pdf(file_path)
+    print(text)
+
+    return {"text": text}
+
 @app.route("/<ext>/<id>")
 def resource_src(ext, id):
     file_path = "/Users/ADMIN/Desktop/projects/kimat/be/folders/" + id + "/" + id + "." + ext
@@ -56,7 +75,7 @@ def resource_src(ext, id):
 
         result = {
             "base64": prefix + encoded_string.decode('utf-8'),
-            "numOfPages": numOfPages
+            "numOfPages": numOfPages,
         }
     else:
         result = {
@@ -595,6 +614,19 @@ def deleteDocument():
     
     return response
 
+
+def extract_text_from_pdf(pdf_path):
+    # Convert PDF to image
+    pages = convert_from_path(pdf_path, 500)
+     
+    # Extract text from each page using Tesseract OCR
+    text_data = ''
+    for page in pages:
+        text = pytesseract.image_to_string(page)
+        text_data += text + '\n'
+     
+    # Return the text data
+    return text_data
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'))

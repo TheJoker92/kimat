@@ -3,3 +3,5 @@ flask==2.0.3
 werkzeug==2.0.3
 flask-cors
 PyPDF2==3.0.1
+pytesseract==0.3.8
+pdf2image==1.17.0
