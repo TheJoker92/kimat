@@ -168,7 +168,7 @@ export class DgtaDocumentFormModalComponent {
       reader.onload = (e: any) => {
         this.attachmentPdf = {
           name: file.name,
-          mimeType: file.type,
+          ext: "pdf",
           base64: e.target.result.replace("data:application/pdf;base64,", "")
         }
       };

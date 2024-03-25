@@ -33,8 +33,32 @@ def angular():
 
 @app.route("/<regex('.*\.(js|css|avif|scss|jpeg|json)'):path>")
 def angular_src(path):
-    print(path)
     return send_from_directory("browser", path)
+
+@app.route("/<ext>/<id>")
+def resource_src(ext, id):
+    file_path = "/Users/ADMIN/Desktop/projects/kimat/be/folders/" + id + "/" + id + "." + ext
+
+    result = {}
+    
+    if (os.path.exists(file_path)):
+        with open(file_path, "rb") as file:
+            encoded_string = base64.b64encode(file.read())
+            file.close()
+
+        prefix = "data:[<mediatype>];base64,"
+
+        if ext == "pdf":
+            prefix = prefix.replace("[<mediatype>]", "application/pdf")
+
+        result = {
+            "base64": prefix + encoded_string.decode('utf-8')
+        }
+    else:
+        result = {
+            "error": True
+        }
+    return result
 
 # Create operation
 @app.route('/api/users/create', methods=['POST'])
@@ -308,27 +332,28 @@ def create_document():
 
             # solr.add([data])
 
-            if (data["attachments"] and len(json.loads(data["attachments"])) and len(json.loads(data["attachments"])[0].keys())):
-                base_folders = "folders"
-                full_folder_path = base_folders + "/" + data["parentId"]
-                full_filename_path = full_folder_path + "/" + data["name"] + ".pdf"
-                if not(os.path.exists(full_folder_path)):
-                    os.mkdir(full_folder_path) 
+            if (data["attachments"] and len(json.loads(data["attachments"]))):
+                attachmentsObj = json.loads(data["attachments"])
+                                            
+                for attachment in attachmentsObj:
+                    if len(attachment.keys()):
+                        base_folders = "folders"
+                        full_folder_path = base_folders + "/" + data["parentId"]
+                        full_filename_path = full_folder_path + "/" + data["id"] + "." + attachment["ext"]
+                        if not(os.path.exists(full_folder_path)):
+                            os.mkdir(full_folder_path) 
 
 
-                if (os.path.exists(full_filename_path)):
-                    os.rename(full_filename_path, full_folder_path + "/" + data["name"] + "_" + str(datetime.today().timestamp()))
+                        if (os.path.exists(full_filename_path)):
+                            os.rename(full_filename_path, full_folder_path + "/" + data["name"] + "_" + str(datetime.today().timestamp()))
 
-                attachment = json.loads(data["attachments"])[0]
+                        
+                        with open(full_filename_path, 'wb') as theFile:
+                            theFile.write(base64.b64decode(attachment["base64"]))
 
-                print(attachment)
-                with open(full_filename_path, 'wb') as theFile:
-                    theFile.write(base64.b64decode(attachment["base64"]))
-
-                
-                data["attachments"] = full_filename_path
+                        
+                        data["attachments"] = full_filename_path
             
-
 
             r = requests.post(BASE_URL + "/documents/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
 

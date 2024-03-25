@@ -19,7 +19,7 @@ export interface IDocument {
 
 export interface IAttachment{
     name?: string
-    mimeType?: string
+    ext?: string
     base64?: string
 }
 

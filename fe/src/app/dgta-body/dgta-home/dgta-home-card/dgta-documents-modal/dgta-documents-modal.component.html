@@ -154,8 +154,9 @@
             (closeBarcodeViewModalE)="closeViewBarcodeModal(document)"></dgta-barcode-document-modal>
 
         <dgta-state-document-modal *ngIf="isOpenStateModal" [document]="document"
-            (closeStateModalE)="closeStateModal(document)"
-            (getDocumentsE)="getDocuments()"></dgta-state-document-modal>
+            (closeStateModalE)="closeStateModal(document)" (getDocumentsE)="getDocuments()"></dgta-state-document-modal>
+        <dgta-attachments-modal *ngIf="isOpenAttachmentModal" [document]="document"
+            (closeAttahcmentsModalE)="closeAttachmentsModal(document)" (getDocumentsE)="getDocuments()"></dgta-attachments-modal>    
 
         <div class="row-center-center">
             <button class="mt10px" (click)="close()">CHIUDI</button>

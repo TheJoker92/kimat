@@ -13,11 +13,14 @@ import { DgtaCollocationDocumentModalComponent } from './dgta-collocation-docume
 import { DgtaHistoryDocumentModalComponent } from './dgta-history-document-modal/dgta-history-document-modal.component';
 import { DgtaBarcodeDocumentModalComponent } from './dgta-barcode-document-modal/dgta-barcode-document-modal.component';
 import { DgtaStateDocumentModalComponent } from './dgta-state-document-modal/dgta-state-document-modal.component';
+import { DomSanitizer } from '@angular/platform-browser';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { DgtaAttachmentsModalComponent } from './dgta-attachments-modal/dgta-attachments-modal.component';
 
 @Component({
   selector: 'dgta-documents-modal',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent],
+  imports: [CommonModule, FontAwesomeModule, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent, PdfViewerModule, DgtaAttachmentsModalComponent],
   templateUrl: './dgta-documents-modal.component.html',
   styleUrl: './dgta-documents-modal.component.scss'
 })
@@ -47,7 +50,7 @@ export class DgtaDocumentsModalComponent {
   }
   
   
-
+  path: any
 
   isOpenAttachmentModal = false
   isOpenViewBarcodeModal = false
@@ -57,12 +60,14 @@ export class DgtaDocumentsModalComponent {
   isOpenStateModal = false
   
   constructor(private http: HttpService,
+    private sanitizer: DomSanitizer,
               private loadingService: LoadingService) {
     
   }
 
   ngOnInit() {
     this.getDocuments()
+
   }
 
   close() {

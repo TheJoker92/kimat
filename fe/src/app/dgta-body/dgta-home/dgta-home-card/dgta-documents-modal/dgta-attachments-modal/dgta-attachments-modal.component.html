@@ -1,0 +1,21 @@
+<div class="overlay">
+
+</div>
+<div class="container" [ngClass]="{'opacity': isOpenAddAttachmentModal}">
+    <div class="box-form column-center-spacebetween">
+        <h4  class="ml10px">{{ document.name }}</h4>
+        <div class="file-viewer-container">
+            <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false" style="width: 66vw; height: 100vh"></pdf-viewer>
+        </div>
+        <div class="row-center-center">
+            <button class="mt10px" (click)="close()">CHIUDI</button>
+            <button class="mt10px" (click)="openAddAttachmentModal()">RICOLLOCA</button>
+        </div>
+    </div>
+</div>
+<!-- <dgta-add-attachment-modal *ngIf="isOpenAddAttachmentModal"
+    [document]="document"
+    (closeUpdateCollocationModalE)="closeAddAttachmentModal()"
+    (getDocumentsE)="getDocumentsEmitter()"
+></dgta-add-attachment-modal> -->
+
