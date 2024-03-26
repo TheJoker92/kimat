@@ -12,6 +12,8 @@ export class SessionService {
   documentSelected: IDocument | undefined
   pageNavigation: PageEnum[] = [PageEnum.LOGIN]
 
+  terms: any = {}
+
   constructor() {
     if (localStorage.getItem("session")) {
       let sessionTmp: SessionService = JSON.parse(localStorage.getItem("session")!)

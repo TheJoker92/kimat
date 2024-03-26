@@ -7,11 +7,13 @@ import { CommonModule } from '@angular/common';
 import { DgtaHomeCardCatalogueFormModalComponent } from './dgta-home-card/dgta-home-card-catalogue-form-modal/dgta-home-card-catalogue-form-modal.component';
 import { faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DgtaSearchCatalogueComponent } from './dgta-search-catalogue/dgta-search-catalogue.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'dgta-home',
   standalone: true,
-  imports: [DgtaHomeCardComponent, CommonModule, DgtaHomeCardCatalogueFormModalComponent, FontAwesomeModule],
+  imports: [DgtaHomeCardComponent, CommonModule, DgtaHomeCardCatalogueFormModalComponent, FontAwesomeModule, DgtaSearchCatalogueComponent],
   templateUrl: './dgta-home.component.html',
   styleUrl: './dgta-home.component.scss'
 })
@@ -22,9 +24,35 @@ export class DgtaHomeComponent {
 
   catalogues: ICatalogue[] = []
 
+  term = ""
+
   constructor(public sessionService: SessionService,
               private http: HttpService) {
-    this.http.getCatalogues().subscribe({
+    this.getCatalogues()
+  }
+
+  isParsable(inputString: string): boolean {
+    try {
+        // Try to parse the string into an object
+        JSON.parse(inputString);
+        return true; // If successful, return true
+    } catch (error) {
+        return false; // If parsing fails, return false
+    }
+  
+  }
+
+  openModalCatalogueFormModal() {
+    this.isOpenCatalogueFormModal = true
+  }
+
+  closeCatalogueFormModal() {
+    this.isOpenCatalogueFormModal = false
+  }
+
+  getCatalogues() {
+
+    this.http.getCatalogues(this.sessionService.terms).subscribe({
       next: (response: any) => {
 
         this.catalogues = []
@@ -49,25 +77,6 @@ export class DgtaHomeComponent {
         console.error(error)
       }
     })
-  }
-
-  isParsable(inputString: string): boolean {
-    try {
-        // Try to parse the string into an object
-        JSON.parse(inputString);
-        return true; // If successful, return true
-    } catch (error) {
-        return false; // If parsing fails, return false
-    }
-  
-  }
-
-  openModalCatalogueFormModal() {
-    this.isOpenCatalogueFormModal = true
-  }
-
-  closeCatalogueFormModal() {
-    this.isOpenCatalogueFormModal = false
   }
 
 }

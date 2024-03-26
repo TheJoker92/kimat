@@ -1,5 +1,5 @@
 <div class="card-container column-center-center p10px">
-    <div class="ml10px row-center-space-between p10px w100p">
+    <!-- <div class="ml10px row-center-space-between p10px w100p">
         <div class="h20px w10p">
             <h4 class="w100px">
                 <div class="column-left-center">
@@ -63,15 +63,15 @@
                 <small class="opacity-0">(fisico)</small>
             </h4>
         </div>
-    </div>
-    <div *ngFor="let catalogue of catalogues" class="row-center-space-between w100p mt40px">
-        <div class="row-center-left w10p">
+    </div> -->
+    <div *ngFor="let catalogue of catalogues" class="row-center-space-between w100p mt20px">
+        <div class="row-center-left">
             <fa-icon class="cursor-pointer color-yellow-folder font-size-3em" [icon]="faFolder"></fa-icon>
             <div class="column-left-left ml5px">
                 <strong class="">{{ catalogue.title }}</strong>
             </div>
         </div>
-        <div class="row-center-left w10p">
+        <!-- <div class="row-center-left w10p">
             <div class="column-left-left">
                 <div *ngFor="let topic of catalogue.topics">
                     {{ topic }}
@@ -100,7 +100,7 @@
         </div>
         <div class="row-center-center w10p">
             <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash" (click)="deleteCatalogue(catalogue)"></fa-icon>
-        </div>
+        </div> -->
     </div>
 </div>
 

@@ -43,8 +43,8 @@ export class HttpService {
   /**
    * CATALOGUES
    */
-  getCatalogues() {
-    return this.http.get(this.buildURL("catalogues/", this.data.catalogue.getCatalogues))
+  getCatalogues(payload: any) {
+    return this.http.post(this.buildURL("catalogues/", this.data.catalogue.getCatalogues), payload)
   }
   
   addCatalogue(payload: any) {

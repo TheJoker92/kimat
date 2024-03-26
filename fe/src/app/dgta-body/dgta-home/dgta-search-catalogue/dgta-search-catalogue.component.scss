@@ -1,0 +1,21 @@
+input {
+    border: none;
+    width: 100%;
+}
+
+input:focus {
+    border: none;
+    outline: none;
+}
+
+.search-container {
+    border: 1px solid black;
+    width:50%;
+    max-width: 300px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 40px;
+    font-size: medium;
+}

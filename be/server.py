@@ -435,7 +435,7 @@ def create_document():
 
 
 # Read operation
-@app.route('/api/catalogues/getCatalogues', methods=['GET'])
+@app.route('/api/catalogues/getCatalogues', methods=['POST'])
 def getCatalogues():
     print("START GET CATALOGUES")
     data = request.json
@@ -449,8 +449,19 @@ def getCatalogues():
             "code": 200
         }
 
+        print(data)
+
+        query = ""
+        if "title" in data.keys():
+            query = "title%3A" + data["title"]
+            print("A")
+        else:
+            query = "*%3A*"
+            print("B")
+
+
         # solr.add([data])
-        responseRaw = requests.get(BASE_URL + "/catalogues/select?indent=true&q.op=OR&q=*%3A*&useParams=", verify=False)
+        responseRaw = requests.get(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&useParams=", verify=False)
         print(responseRaw)
         # Decode the content from bytes to string and then parse as JSON
         response_json = json.loads(responseRaw.content.decode('utf-8'))
