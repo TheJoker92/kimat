@@ -453,9 +453,9 @@ def getCatalogues():
 
         query = ""
         if "title" in data.keys():
-            if "%20" in data["title"]:
-                data["title"] = "%22" + data["title"] + "%22"
-            query += "title%3A" + data["title"] + "%0A"
+            if " " in data["title"]:
+                data["title"] = "(" + data["title"] + ")"
+            query += "title%3A" + data["title"].replace(" ","%20") + "%0A"
             print("A")
         else:
             query += "*%3A*%0A"
@@ -465,6 +465,9 @@ def getCatalogues():
         else:
             query += "*%3A*"
 
+        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
+        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
+        print(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&useParams=")
 
         # solr.add([data])
         responseRaw = requests.get(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&useParams=", verify=False)

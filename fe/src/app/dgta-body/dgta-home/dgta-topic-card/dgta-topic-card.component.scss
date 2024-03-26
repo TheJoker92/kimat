@@ -16,87 +16,129 @@
 
 .color-tutti {
     background-image: linear-gradient(to right, rgb(221, 55, 55) , rgb(232, 100, 22));
+    filter: brightness(1.2);
 }
 
-.color-storia{
-    background-image: linear-gradient(to right, rgb(204, 0, 102) , rgb(255, 51, 153));
+.color-storia {
+    background-image: linear-gradient(to right, rgb(128, 0, 0), rgb(153, 51, 51));
+    box-shadow: 0 2px 4px rgba(128, 0, 0, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-scienze-naturali{
-    background-image: linear-gradient(to right, rgb(0, 153, 51) , rgb(0, 204, 102));
+.color-scienze-naturali {
+    background-image: linear-gradient(to right, rgb(0, 51, 0), rgb(51, 102, 51));
+    box-shadow: 0 2px 4px rgba(0, 51, 0, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-scienze-fisiche{
-    background-image: linear-gradient(to right, rgb(0, 102, 204) , rgb(51, 153, 255));
+.color-scienze-fisiche {
+    background-image: linear-gradient(to right, rgb(0, 0, 51), rgb(51, 51, 102));
+    box-shadow: 0 2px 4px rgba(0, 0, 51, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-matematica{
-    background-image: linear-gradient(to right, rgb(102, 0, 204) , rgb(153, 51, 255));
+.color-matematica {
+    background-image: linear-gradient(to right, rgb(102, 0, 102), rgb(153, 51, 153));
+    box-shadow: 0 2px 4px rgba(102, 0, 102, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-tecnologia{
-    background-image: linear-gradient(to right, rgb(0, 51, 102) , rgb(0, 102, 204));
+.color-tecnologia {
+    background-image: linear-gradient(to right, rgb(0, 51, 102), rgb(51, 102, 153));
+    box-shadow: 0 2px 4px rgba(0, 51, 102, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-medicina-e-salute{
-    background-image: linear-gradient(to right, rgb(204, 51, 0) , rgb(255, 102, 51));
+.color-medicina-e-salute {
+    background-image: linear-gradient(to right, rgb(51, 0, 51), rgb(102, 51, 102));
+    box-shadow: 0 2px 4px rgba(51, 0, 51, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-psicologia{
-    background-image: linear-gradient(to right, rgb(204, 102, 0) , rgb(255, 153, 0));
+.color-psicologia {
+    background-image: linear-gradient(to right, rgb(51, 51, 0), rgb(102, 102, 51));
+    box-shadow: 0 2px 4px rgba(51, 51, 0, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-filosofia{
-    background-image: linear-gradient(to right, rgb(204, 0, 204) , rgb(255, 51, 255));
+.color-filosofia {
+    background-image: linear-gradient(to right, rgb(102, 51, 0), rgb(153, 102, 51));
+    box-shadow: 0 2px 4px rgba(102, 51, 0, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-letteratura{
-    background-image: linear-gradient(to right, rgb(204, 204, 0) , rgb(255, 255, 51));
+.color-letteratura {
+    background-image: linear-gradient(to right, rgb(51, 0, 0), rgb(102, 51, 51));
+    box-shadow: 0 2px 4px rgba(51, 0, 0, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-arte-e-design{
-    background-image: linear-gradient(to right, rgb(0, 153, 153) , rgb(51, 204, 204));
+.color-arte-e-design {
+    background-image: linear-gradient(to right, rgb(0, 51, 51), rgb(51, 102, 102));
+    box-shadow: 0 2px 4px rgba(0, 51, 51, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-economia{
-    background-image: linear-gradient(to right, rgb(0, 102, 102) , rgb(0, 153, 153));
+.color-economia {
+    background-image: linear-gradient(to right, rgb(51, 0, 102), rgb(102, 51, 153));
+    box-shadow: 0 2px 4px rgba(51, 0, 102, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-politica-e-relazioni-internazionali{
-    background-image: linear-gradient(to right, rgb(0, 51, 102) , rgb(0, 102, 153));
+.color-politica-e-relazioni-internazionali {
+    background-image: linear-gradient(to right, rgb(0, 51, 102), rgb(51, 102, 153));
+    box-shadow: 0 2px 4px rgba(0, 51, 102, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-ambiente-e-sostenibilità{
-    background-image: linear-gradient(to right, rgb(51, 153, 51) , rgb(102, 204, 102));
+.color-ambiente-e-sostenibilita {
+    background-image: linear-gradient(to right, rgb(51, 0, 51), rgb(102, 51, 102));
+    box-shadow: 0 2px 4px rgba(51, 0, 51, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-educazione{
-    background-image: linear-gradient(to right, rgb(204, 102, 204) , rgb(255, 153, 255));
+.color-educazione {
+    background-image: linear-gradient(to right, rgb(51, 51, 0), rgb(102, 102, 51));
+    box-shadow: 0 2px 4px rgba(51, 51, 0, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-religione-e-spiritualità{
-    background-image: linear-gradient(to right, rgb(102, 51, 0) , rgb(153, 102, 51));
+.color-religione-e-spiritualita {
+    background-image: linear-gradient(to right, rgb(102, 51, 102), rgb(153, 102, 153));
+    box-shadow: 0 2px 4px rgba(102, 51, 102, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-viaggi-e-avventura{
-    background-image: linear-gradient(to right, rgb(153, 0, 0) , rgb(204, 51, 51));
+.color-viaggi-e-avventura {
+    background-image: linear-gradient(to right, rgb(51, 102, 102), rgb(102, 153, 153));
+    box-shadow: 0 2px 4px rgba(51, 102, 102, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-cucina-e-alimentazione{
-    background-image: linear-gradient(to right, rgb(204, 51, 51) , rgb(255, 102, 102));
+.color-cucina-e-alimentazione {
+    background-image: linear-gradient(to right, rgb(102, 102, 51), rgb(153, 153, 102));
+    box-shadow: 0 2px 4px rgba(102, 102, 51, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-musica-e-spettacolo{
-    background-image: linear-gradient(to right, rgb(102, 0, 102) , rgb(153, 51, 153));
+.color-musica-e-spettacolo {
+    background-image: linear-gradient(to right, rgb(102, 51, 51), rgb(153, 102, 102));
+    box-shadow: 0 2px 4px rgba(102, 51, 51, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-sport-e-fitness{
-    background-image: linear-gradient(to right, rgb(0, 102, 51) , rgb(0, 153, 102));
+.color-sport-e-fitness {
+    background-image: linear-gradient(to right, rgb(51, 102, 51), rgb(102, 153, 102));
+    box-shadow: 0 2px 4px rgba(51, 102, 51, 0.5);
+    filter: brightness(1.2);
 }
 
-.color-manuale-di-istruzioni-e-guide-pratiche{
-    background-image: linear-gradient(to right, rgb(102, 51, 0) , rgb(153, 102, 51));
+.color-manuale-di-istruzioni-e-guide-pratiche {
+    background-image: linear-gradient(to right, rgb(51, 51, 102), rgb(102, 102, 153));
+    box-shadow: 0 2px 4px rgba(51, 51, 102, 0.5);
+    filter: brightness(1.2);
 }
+
 
 .text-container {
     // color: white;
