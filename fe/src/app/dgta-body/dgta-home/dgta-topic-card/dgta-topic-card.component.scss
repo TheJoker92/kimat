@@ -1,0 +1,104 @@
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: small;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    justify-content: start;
+    color: white
+}
+
+.container {
+    height:80px;
+}
+
+.color-tutti {
+    background-image: linear-gradient(to right, rgb(221, 55, 55) , rgb(232, 100, 22));
+}
+
+.color-storia{
+    background-image: linear-gradient(to right, rgb(204, 0, 102) , rgb(255, 51, 153));
+}
+
+.color-scienze-naturali{
+    background-image: linear-gradient(to right, rgb(0, 153, 51) , rgb(0, 204, 102));
+}
+
+.color-scienze-fisiche{
+    background-image: linear-gradient(to right, rgb(0, 102, 204) , rgb(51, 153, 255));
+}
+
+.color-matematica{
+    background-image: linear-gradient(to right, rgb(102, 0, 204) , rgb(153, 51, 255));
+}
+
+.color-tecnologia{
+    background-image: linear-gradient(to right, rgb(0, 51, 102) , rgb(0, 102, 204));
+}
+
+.color-medicina-e-salute{
+    background-image: linear-gradient(to right, rgb(204, 51, 0) , rgb(255, 102, 51));
+}
+
+.color-psicologia{
+    background-image: linear-gradient(to right, rgb(204, 102, 0) , rgb(255, 153, 0));
+}
+
+.color-filosofia{
+    background-image: linear-gradient(to right, rgb(204, 0, 204) , rgb(255, 51, 255));
+}
+
+.color-letteratura{
+    background-image: linear-gradient(to right, rgb(204, 204, 0) , rgb(255, 255, 51));
+}
+
+.color-arte-e-design{
+    background-image: linear-gradient(to right, rgb(0, 153, 153) , rgb(51, 204, 204));
+}
+
+.color-economia{
+    background-image: linear-gradient(to right, rgb(0, 102, 102) , rgb(0, 153, 153));
+}
+
+.color-politica-e-relazioni-internazionali{
+    background-image: linear-gradient(to right, rgb(0, 51, 102) , rgb(0, 102, 153));
+}
+
+.color-ambiente-e-sostenibilità{
+    background-image: linear-gradient(to right, rgb(51, 153, 51) , rgb(102, 204, 102));
+}
+
+.color-educazione{
+    background-image: linear-gradient(to right, rgb(204, 102, 204) , rgb(255, 153, 255));
+}
+
+.color-religione-e-spiritualità{
+    background-image: linear-gradient(to right, rgb(102, 51, 0) , rgb(153, 102, 51));
+}
+
+.color-viaggi-e-avventura{
+    background-image: linear-gradient(to right, rgb(153, 0, 0) , rgb(204, 51, 51));
+}
+
+.color-cucina-e-alimentazione{
+    background-image: linear-gradient(to right, rgb(204, 51, 51) , rgb(255, 102, 102));
+}
+
+.color-musica-e-spettacolo{
+    background-image: linear-gradient(to right, rgb(102, 0, 102) , rgb(153, 51, 153));
+}
+
+.color-sport-e-fitness{
+    background-image: linear-gradient(to right, rgb(0, 102, 51) , rgb(0, 153, 102));
+}
+
+.color-manuale-di-istruzioni-e-guide-pratiche{
+    background-image: linear-gradient(to right, rgb(102, 51, 0) , rgb(153, 102, 51));
+}
+
+.text-container {
+    // color: white;
+    font-size: large;
+}

@@ -9,11 +9,12 @@ import { faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DgtaSearchCatalogueComponent } from './dgta-search-catalogue/dgta-search-catalogue.component';
 import { Subscription } from 'rxjs';
+import { DgtaTopicCardComponent } from './dgta-topic-card/dgta-topic-card.component';
 
 @Component({
   selector: 'dgta-home',
   standalone: true,
-  imports: [DgtaHomeCardComponent, CommonModule, DgtaHomeCardCatalogueFormModalComponent, FontAwesomeModule, DgtaSearchCatalogueComponent],
+  imports: [DgtaHomeCardComponent, CommonModule, DgtaTopicCardComponent, DgtaHomeCardCatalogueFormModalComponent, FontAwesomeModule, DgtaSearchCatalogueComponent],
   templateUrl: './dgta-home.component.html',
   styleUrl: './dgta-home.component.scss'
 })
@@ -24,7 +25,11 @@ export class DgtaHomeComponent {
 
   catalogues: ICatalogue[] = []
 
+  showTopics = true
+
   term = ""
+
+  toggleTopicsLabel = "nascondi categorie"
 
   constructor(public sessionService: SessionService,
               private http: HttpService) {
@@ -79,6 +84,15 @@ export class DgtaHomeComponent {
     })
   }
 
+  toggleTopics() {
+    if(this.showTopics) {
+      this.showTopics = false
+      this.toggleTopicsLabel = "mostra categorie"
+    } else {
+      this.showTopics = true
+      this.toggleTopicsLabel = "nascondi categorie"
+    }
+  }
 }
 
 

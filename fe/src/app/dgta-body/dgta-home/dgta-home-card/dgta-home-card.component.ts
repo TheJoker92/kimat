@@ -10,11 +10,12 @@ import { DgtaOwnersModalComponent } from './dgta-owners-modal/dgta-owners-modal.
 import { DgtaCollocationModalComponent } from './dgta-collocation-modal/dgta-collocation-modal.component';
 import { DgtaHistoryModalComponent } from './dgta-history-modal/dgta-history-modal.component';
 import { DgtaDocumentsModalComponent } from './dgta-documents-modal/dgta-documents-modal.component';
+import { DgtaTopicCardComponent } from '../dgta-topic-card/dgta-topic-card.component';
 
 @Component({
   selector: 'dgta-home-card',
   standalone: true,
-  imports: [FontAwesomeModule, DgtaHomeCardCatalogueFormModalComponent, CommonModule, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent, DgtaDocumentsModalComponent],
+  imports: [FontAwesomeModule, DgtaHomeCardCatalogueFormModalComponent, CommonModule, DgtaTopicCardComponent, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent, DgtaDocumentsModalComponent],
   templateUrl: './dgta-home-card.component.html',
   styleUrl: './dgta-home-card.component.scss'
 })

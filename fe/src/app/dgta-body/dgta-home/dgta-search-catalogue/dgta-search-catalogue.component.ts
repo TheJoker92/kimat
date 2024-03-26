@@ -20,9 +20,8 @@ export class DgtaSearchCatalogueComponent {
   }
 
   onSearch(e: any) {
-    this.sessionService.terms = {
-      title: encodeURI("*" + e.target.value + "*")
-    }
+    this.sessionService.terms["title"] = encodeURI("*" + e.target.value + "*")
+    
     this.getCataloguesE.emit()
   }
 }

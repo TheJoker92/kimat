@@ -453,11 +453,17 @@ def getCatalogues():
 
         query = ""
         if "title" in data.keys():
-            query = "title%3A" + data["title"]
+            if "%20" in data["title"]:
+                data["title"] = "%22" + data["title"] + "%22"
+            query += "title%3A" + data["title"] + "%0A"
             print("A")
         else:
-            query = "*%3A*"
-            print("B")
+            query += "*%3A*%0A"
+        
+        if "topics" in data.keys():
+            query += "topics%3A%22" + data["topics"] + "%22"
+        else:
+            query += "*%3A*"
 
 
         # solr.add([data])
