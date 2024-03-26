@@ -1,0 +1,366 @@
+Le leggi Newtoniane del moto
+as
+
+Le forze sono vettor1
+
+o legge d’inerzia: un corpo non soggetto ad alcuna sollecitazione
+esterna mantiene il suo stato di quiete o di moto rettilineo uniforme
+
+¢ Moto accelerato: agisce una Forza
+¢ Nel moto circolare agisce una Forza
+e Definizione sistema inerziale*
+
+*Se la forza che agisce su un corpo é€ nulla, é possibile trovare sistemi di riferimento
+rispetto ai quali quel corpo non subisce alcuna accelerazione
+
+Un corpo soggetto a un sistema di forze la cul risultante sia diversa da zero
+e soggetto ad accelerazione
+
+esiste una proporzionalita diretta tra forza
+risultante applicata ed accelerazione prodotta
+esprimibile attraverso la relazione
+
+la massa é stata scelta come grandezza fondamentale nel S.I
+
+m si misura in kg (nel SI), g (10 kg), ....
+la forza é una grandezza derivata
+
+F si misura in N (nel SD, IN= lkg m/s’, Idyne=10°N, Ikg =9.8N
+
+il kg peso (1kgp): la forza con cui la terra attrae un corpo di massa pari ad lkg
+
+La grandezza fisica “Forza”
+
+I] dinamometro é uno strumento che sfruttando la capacita di deformazione di una
+molla permette eseguire una misura statica della forza.
+
+u
+
+y
+ni
+
+fi
+aT [fa
+
+a
+
+ll fest tial
+
+an
+
+per | ete
+
+CHING
+i Ie i Mat l )
+ele
+
+Ll
+
+suit |
+i |
+I
+Ll
+
+oh
+
+[het |e ase
+eaten
+
+i
+
+Peso di riferimento
+
+|
+
+Due pesi sono uguali se producono lo stesso allungamento della molla, un peso doppio
+triplo...infatti allunga la molla del doppio, triplo....Segnati questi allungamenti si
+costruisce una scala graduata con cui misurare una qualsiasi forza incognita
+
+Riassumendo:
+
+eQuicte => F. = () .
+eMoto rettilineo uniforme => li. =0
+¢Moto rett. unif. Accelerato => Ff. = cos tan fe
+eMot bolico di iettil ro
+oto parabolico di un proiettile xm 0)
+
+—
+
+ris, y
+
+Forza gravitazionale e forza peso
+
+Legge di Gravitazione Universale
+
+(Newton)
+
+verficie dellaTerra G=6.67-10''Nm* ke~
+
+M,, massa della Terra
+
+F-= R raggio della Terra
+" ~ = p= forza peso
+f =mg=p P y P
+, | Modulo: mg
+p
+
+Direzione: verticale
+
+Verso:verso 1l centro della terra
+
+Le forze non possono esistere isolate ; quando si manifesta una forza c’é sempre il
+suo partner in qualche posto dell’ universo
+
+el_e forze nascono sempre in coppia
+
+eCiascuna forza della coppia é uguale ed
+
+opposta all’altra forza ed ha la sua stessa A @-  - —
+
+linea d’azione Fap
+
+e[’azione e la reazione non sono mai
+applicate allo stesso corpo ma agiscono Pape Fea
+sempre su corpi diversi
+
+ef_’azione e la reazione sono tra loro
+interscambiabili
+
+F
+
+< a sOna
+NNOAQAQAARAATANNMM:NNN
+
+suolo
+
+Forze di contatto e forze a distanza
+
+Un corpo fermo su un tavolo rimane fermo anche se sappiamo essere
+sempre presente la forza peso => la risultante delle forze agenti é zero
+
+| ~~] Omero
+
+Ulna
+* una forza di contatto ‘2 che un muscolo che si contrae esercita su un Osso
+
+Sono forze a distanza ad esempio la forza gravitazionale e la forza elettrica
+
++ cael
+om
+
+
+La bilancia misura il nostro peso?
+
+(a)| (mot to scale)
+
+K Parker
+
+a) Fermi sulla bilancia la forza peso W é uguale ed opposta alla forza di reazione
+esercitata dalla bilancia e la risultante sulla persona é una forza nulla
+
+b) La forza di reazione é dovuta alla pressione dei piedi R’sulla bilancia mentre il
+peso é dovuto alla gravita; R’=-R é¢ cio che indica la bilancia
+
+c) La persona piega le ginocchia e le lascia accelerare verso il basso cosi che la forza
+di reazione é ridotta R<W (la bilancia segnera’ un valore piu basso)
+
+d) Quando si estendono le ginocchia esse premono 1 piedi piu fortemente sulla
+bilancia e la forza di reazione R>W (la bilancia segnera un valore piu alto)
+
+Forze di contatto: la tensione e l'attrito
+
+R reazione: forza esercitata dal corpo sulla fune
+
+1 f. forza esercitata dalla fune sulla massa m
+
+ms
+
+Corpo in tensione T=F,=F, a
+. . F, F,
+Corpo in compressione C=F.=F, —_»(—__ 4 > —
+
+Una fune esercita sul corpo una forza di
+trazione T
+
+| | =< we... an
+WRISTS ere ea :
+t
+
+
+Forza d’attrito: forza che una superficie esercita su un corpo a contatto con essa
+Reazione vincolare —!— alla superficie
+
+Forza d’attrito Vi alla superficie
+
+Pm me ee ee ee ee ee
+
+’p
+
+L’attrito é una forza che si oppone sempre al moto
+
+Il blocco non si muove finche F,,,, non supera un’altra forza che si oppone (F,)
+
+Se F, supera un certo valore (u.N) allora F, non riesce
+
+app
+piu ad equilibrarla e il blocco si mette in moto
+
+u, coefficiente di attrito statico ( dipende dal tipo di superfici a contatto)
+
+Nel caso di un corpo in movimento —=> — Feu,N |
+
+u, # Ul rappresenta il coefficiente di attrito dinamico
+S
+
+10
+
+Riassumendo:
+
+ek N per una data coppia di superfici ¢ proporzionale alla forza normale N
+
+r max LU,
+
+¢Dipende attraverso wu, (0 u,) dal tipo di superfici ma non dall’area di contatto
+
+eLa forza d’attrito per un corpo in movimento é minore dell’attrito statico Ua < Us
+
+Le relazioni ricavate non sono leggi fondamentali della fisica ma
+
+leggi empiriche approssimate
+
+11
+
+Da tener presente:
+
+1. Abbiamo indicato la forza d’attrito agente sul corpo che si trova al di sopra della
+superficie di contatto ma anche per l’attrito vale il Terzo Principio della Dinamica
+e quindi una forza uguale e contraria a quella finqui indicata agisce sulla
+superficie di contatto
+
+2. La forza d’attrito é sempre contraria al moto relativo dei due corpi a contatto
+(puo essere concorde al moto di uno dei due corpi in un altro sistema di
+riferimento)
+
+3. L/’attrito puo trascinare un corpo; l’aderenza tra le superfici a contatto frena il
+movimento dei solidi ma d’altra parte permette al solido “‘passivo” di essere
+trascinato dal solido “‘“motore’”’.
+
+4. Inunsolido che rotola il verso delle forze d’attrito statico non é definito una volta
+per tutte ma dipende dalle condizioni di sollecitazione. Ad esempio se
+un’automobile viene messa in moto dal motore la forza d’attrito statico sulle ruote
+motrici ha verso opposto a quello che avrebbe se l’automobile in panne, fosse
+Spinta da dietro da una persona
+
+12
+
+Le forze di attrito nei fluidi: forze viscose e generalmente molto piccole rispetto all’ attrito tra
+
+superfici solide
+
+ME es IG Osso Materiale poroso
+elastico di supporto
+
+Membrana Solido rigido
+sinoviale
+
+_ Fluido
+sinoviale
+
+Cartilagine
+articolare
+
+Lubrificante
+(fiuido sinoviale)
+
+Osso
+
+(db)
+
+(a)
+Quando si cammina le giunture delle gambe sono ben lubrificate dal fluido smoviale
+che spremuto attraverso la cartilagine riveste le giunture, questo lubrificante tende ad
+essere assorbito quando la giuntura é ferma aumentando I|’attrito e facilitando la
+
+posizione fissa.
+
+13
+
+Interazioni fondamentali
+Tutte le forze sono riconducibili a 4 interazioni fondamentali
+Gravitazionall
+Interazione fra masse.
+Attrattiva, raggio d’azione infinito
+Domina la dinamica celeste.
+forza peso ecc.
+
+Elettromagnetiche
+
+Interazioni fra cariche elettriche.
+Attrattiva o repulsiva, raggio
+infinito. Domina interazion1
+atomiche/molecolari ecc.
+
+Y
+fi
+
+hw wears! ake
+Se te
+ek al ee
+
+4 |
+, ’ \ a ~*~ “i Mad
+N/V Nadel
+” ; an
+' id fi
+' J '
+i P| f i}
+
+j
+
+Nh i \
+a,  S-
+t+ mene ee ee
+
+N\A
+
+aval
+=.
+
+Forti Interazione fra quark. Molto
+complessa. Corto raggio
+
+(<10-!° m) Domina struttura e
+interazioni nucleari, dinamica
+stellare, primi istanti dell’ universo
+
+9
+
+Interazione fra ‘cariche deboli
+Decadimento beta. Importante
+nella dinamica stellare.
+
+
+Esempi
+Due blocchi da 1ON sono collegati con una corda tesa e appoggiano su una superficie.
+Ul coefficiente di attrito statico u.=0.6. Calcolare:
+
+ela forza minima Fa necessaria per muovere il sistema
+
+ela tensione sulla corda di collegamento nel momento in cui il corpo comincia a
+muoversi
+
+AANANAAAANAAAAARARANY
+
+Un blocco da 1ON poggia su un piano
+inclinato (come in figura ) ed é fermo.
+Calcolare:
+
+ele forze di contatto e di attrito che agiscono
+sul blocco
+
+ei1 minimo valore del coefficiente di attrito tra
+il blocco e il piano affinché il blocco stia
+fermo
+
+15
+

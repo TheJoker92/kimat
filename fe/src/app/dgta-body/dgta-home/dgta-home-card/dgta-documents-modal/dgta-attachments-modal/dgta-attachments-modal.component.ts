@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IDocument } from '../../../../../interfaces/IDocument';
+import { IAttachment, IDocument } from '../../../../../interfaces/IDocument';
 import { CommonModule } from '@angular/common';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ActionLogEnum, ILog } from '../../../../../interfaces/ILog';
 import { HttpService } from '../../../../../http.service';
 import { LoadingService } from '../../../../../dgta-loading/loading.service';
+import { SessionService } from '../../../../../session.service';
 
 @Component({
   selector: 'dgta-attachments-modal',
@@ -19,6 +20,8 @@ export class DgtaAttachmentsModalComponent {
   @Output() getDocumentsE = new EventEmitter()
   @Output() closeAttahcmentsModalE = new EventEmitter()
   
+  attachmentPdf: IAttachment = {}
+
   isOpenAddAttachmentModal = false
   srcPdf = ""
 
@@ -27,7 +30,14 @@ export class DgtaAttachmentsModalComponent {
   lastView: ILog = {}
 
   constructor (private http: HttpService,
+              private sessionService: SessionService,
               private loadingService: LoadingService) {}
+
+  ngOnChanges() {
+
+    console.log("CHANGE", this.document)
+  }
+              
   ngOnInit() {
     this.getPdf()
 
@@ -113,5 +123,79 @@ export class DgtaAttachmentsModalComponent {
         console.error(error)
       }
     })
+  }
+
+  addDocument() {
+      let history: ILog = {
+        id: this.document.history?.length.toString(),
+        date: new Date().toISOString(),
+        actionLog: ActionLogEnum.UPDATE_DOCUMENT_ATTACHMENT,
+        user: this.sessionService.user
+      } 
+
+      let payload: any = {
+        "id": this.document.id,
+        "parentId": this.document.parentId,
+        "name": this.document.name,
+        "history": JSON.stringify([history]),
+        "attachments": JSON.stringify([this.attachmentPdf]),
+        "deviceIds": JSON.stringify([]),
+        "states": JSON.stringify(this.document.states),
+        "topics": JSON.stringify(this.document.topics),
+        "placement": JSON.stringify(this.document.placement),
+        "owners": JSON.stringify(this.document.owners)
+      }
+
+      console.log(payload)
+
+      this.loadingService.isLoading = true
+      this.http.addDocument(payload).subscribe({
+        next: (response: any) => {
+          this.loadingService.isLoading = false
+
+          if (response.code == 200) {
+            alert("Hai aggiornato il catalogo")
+
+            this.getPdf() 
+
+            this.getDocumentsE.emit()
+          } else {
+            alert("Errore server. Contattare il supporto.")
+          }
+        },
+        error: (error: any) => {
+          this.loadingService.isLoading = false
+          console.error(error)
+        }
+      })
+    
+  }
+
+  loadFile(ext: string) {
+    document.getElementById("file-" + ext)?.click()
+  }
+
+  onUploadFile(e: any) {
+    let file = e.target.files[0]
+    if (file && file.type == "application/pdf") {
+      const reader = new FileReader();
+
+      console.log(this.document)
+
+      reader.onload = (e: any) => {
+        this.attachmentPdf = {
+          name: file.name,
+          ext: "pdf",
+          base64: e.target.result.replace("data:application/pdf;base64,", "")
+        }
+
+        this.addDocument()
+      };
+
+      reader.readAsDataURL(file);
+
+    } else if (file.type != "application/pdf") {
+      alert("Caricare soltanto file pdf")
+    }
   }
 }

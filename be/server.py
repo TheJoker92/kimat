@@ -13,8 +13,12 @@ import PyPDF2
 
 import pytesseract
 from pdf2image import convert_from_path
-
-
+import nltk
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
+nltk.download('universal_tagset')
 app = Flask(__name__, static_folder="/Users/ADMIN/Desktop/projects/dgta/browser")
 cors = CORS(app, origins = ["*"])
 
@@ -47,13 +51,46 @@ def get_ocr():
 
     print(data)
     id = data["id"]
-    
-    file_path = "/Users/ADMIN/Desktop/projects/kimat/be/folders/" + id + "/" + id + ".pdf"    
-    print(file_path)
-    text = extract_text_from_pdf(file_path)
-    print(text)
 
-    return {"text": text}
+    file_path_noext = "/Users/ADMIN/Desktop/projects/kimat/be/folders/" + id + "/" + id  
+    if (os.path.exists(file_path_noext + ".txt")):
+        with open(file_path_noext + ".txt", 'r') as theFile:
+            text = theFile.read()
+            theFile.close()
+    else:
+        text = extract_text_from_pdf(file_path_noext + ".pdf")
+        with open(file_path_noext  + ".txt", 'w') as theFile:
+            theFile.write(text)
+            theFile.close()
+    
+        
+    # Tokenize the text into sentences
+    sentences = nltk.sent_tokenize(text)
+
+    # Iterate through each sentence
+    for sentence in sentences:
+        # Tokenize words in the sentence
+        words = nltk.word_tokenize(sentence)
+        
+        # Perform POS tagging on the words
+        tagged_words = nltk.pos_tag(words)
+        
+        # Perform Named Entity Recognition (NER)
+        named_entities = nltk.ne_chunk(tagged_words)
+        
+        # Print named entities
+        for entity in named_entities:
+            if hasattr(entity, 'label'):
+                print("Entity:", " ".join(c[0] for c in entity.leaves()), "Type:", entity.label())
+
+    return {
+        "text": text,
+        "ocr": {
+                # "tokens": tokens,
+                # "tagged": tagged,
+                "namedEntities": named_entities
+            }
+    }
 
 @app.route("/<ext>/<id>")
 def resource_src(ext, id):
@@ -73,9 +110,10 @@ def resource_src(ext, id):
         if ext == "pdf":
             prefix = prefix.replace("[<mediatype>]", "application/pdf")
 
+
         result = {
             "base64": prefix + encoded_string.decode('utf-8'),
-            "numOfPages": numOfPages,
+            "numOfPages": numOfPages
         }
     else:
         result = {
@@ -347,6 +385,7 @@ def create_document():
     else:
         try:
 
+            print(data)
             response = {
                 "message": "DATA ADDED",
                 "error": "",
@@ -355,22 +394,24 @@ def create_document():
 
             # solr.add([data])
 
+            r = requests.post(BASE_URL + "/documents/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+
+            print(r.json())
+
             if (data["attachments"] and len(json.loads(data["attachments"]))):
                 attachmentsObj = json.loads(data["attachments"])
                                             
                 for attachment in attachmentsObj:
                     if len(attachment.keys()):
                         base_folders = "folders"
-                        full_folder_path = base_folders + "/" + data["parentId"]
+                        full_folder_path = base_folders + "/" + data["id"]
                         full_filename_path = full_folder_path + "/" + data["id"] + "." + attachment["ext"]
                         if not(os.path.exists(full_folder_path)):
                             os.mkdir(full_folder_path) 
 
-
                         if (os.path.exists(full_filename_path)):
                             os.rename(full_filename_path, full_folder_path + "/" + data["name"] + "_" + str(datetime.today().timestamp()))
 
-                        
                         with open(full_filename_path, 'wb') as theFile:
                             theFile.write(base64.b64decode(attachment["base64"]))
 
@@ -378,11 +419,11 @@ def create_document():
                         data["attachments"] = full_filename_path
             
 
-            r = requests.post(BASE_URL + "/documents/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
-
-            print(r)
+            
             return response
         except Exception as e:
+
+            print(e)
             response = {
                 "message": "",
                 "error": str(e),

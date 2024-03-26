@@ -108,7 +108,7 @@ export class DgtaDocumentsModalComponent {
 
           this.documents.push(document)
           
-          this.document = this.documents.find((document: IDocument) => document.id == this.document.id)!
+          this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
         }
 
 

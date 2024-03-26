@@ -5,8 +5,14 @@
     <div class="row-center-center ml10px">
         <button class="mt10px" (click)="close()">CHIUDI</button>
         <button class="mt10px" (click)="getOcr()">OCR</button>
+        <button (click)="loadFile('pdf')">CARICA FILE</button>
+        <input id="file-pdf" type="file" class="form-field-size" (input)="onUploadFile($event)" accept=".pdf">
+                    
     </div>
-    <div class="row-center-left">
+    <div *ngIf="!srcPdf" class="row-center-left">
+        Non è stato caricato nessun documento
+    </div>
+    <div *ngIf="srcPdf" class="row-center-left">
         <div class="box-form column-center-left">
             <h4 class="ml10px">{{ document.name }}</h4>
             <div class="file-viewer-container">
