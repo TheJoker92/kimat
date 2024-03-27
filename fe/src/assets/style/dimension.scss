@@ -74,6 +74,10 @@
     font-size: 2.5em;
 }
 
+.font-size-20em {
+    font-size: 2em;
+}
+
 .w33p {
     width: 33%;
 }
@@ -180,4 +184,31 @@ dgta-home-card {
 
 .w50p {
     width: 50%;
+}
+
+.w80px {
+    width: 80px;
+}
+
+ngx-barcode6 svg {
+    max-width: 500px;
+    width: 70vw;
+
+}
+
+.w300px {
+    width: 300px;
+}
+
+.w90p {
+    width: 90%;
+}
+
+.h40px {
+    height: 400px;
+}
+
+dgta-home {
+    overflow: auto;
+    height: 81vh;
 }

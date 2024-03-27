@@ -1,15 +1,20 @@
 .container {
-    position: absolute;
+    position: fixed;
     left:0%;
-    top:68px;
+    top:0%;
     width: 100vw;
-    height: calc(100vh - 68px);
+    height: 100%;
     display: flex;
     background-color: white;
 }
 
+* {
+    color: black;
+}
+
 
 .box-form {
+    color: black;
     background: white;
     width: 100vw;
     min-width: 275px;

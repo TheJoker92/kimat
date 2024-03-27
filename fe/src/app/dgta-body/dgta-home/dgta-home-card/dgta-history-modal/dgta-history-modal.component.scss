@@ -1,5 +1,5 @@
 .overlay {
-    position: absolute;
+    position: fixed;
     left:0%;
     top:0%;
     width: 100vw;
@@ -12,7 +12,7 @@
 }
 
 .container {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     top:0%;
@@ -25,9 +25,9 @@
 
 .box-form {
     background: white;
-    width: 650px;
+    color: black;
+    width: 367px;
     min-width: 275px;
-    height: 15vw;
     min-height: 350px;
     border-radius: 15px;
 }

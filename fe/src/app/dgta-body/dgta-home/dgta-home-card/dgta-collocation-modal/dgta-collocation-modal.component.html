@@ -2,76 +2,80 @@
 
 </div>
 <div class="container" [ngClass]="{'opacity': isOpenUpdateCollocationModal}">
-    <div class="box-form column-center-spacebetween">
-        <div class="ml10px row-center-space-between p10px">
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    palazzo
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    piano
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    stanza
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    settore
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    scaffale
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    posizione
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    data
-                </h4>
+    <div class="box-form column-center-center">
+        <div class="row-center-space-between">
+            <div class="column-top-left">
+                <h3>Luogo di {{ catalogue.title }}</h3>
+                <div class="ml10px column-top-left p10px w300px">
+                    <h4>
+                        Corrente
+                    </h4>
+                    <div class="row-center-center w90p">
+                        <div class="ml10px column-top-left p10px w300px">
+                            <div class="h20px row-center-center row-center-center">
+                                {{ currentPlace.palace | defaultDash }}
+                            </div>
+                            <div class="h20px row-center-center row-center-center">
+                                {{ currentPlace.floor | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ currentPlace.room | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ currentPlace.sector | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ currentPlace.rack | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ currentPlace.position | defaultDash}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div *ngFor="let place of catalogue.placement">
-            <div class="ml10px row-center-space-between p10px">
-                <div class="h20px w10p row-center-center row-center-center">
+        <div class="collocation-container w90p">
+            <h4>
+                storico
+            </h4>
+            <div *ngFor="let place of catalogue.placement; index as i" class="row-center-center w90p">
+                <div>
+
+                </div>
+                <div>
+                    {{i+1}}
+                </div>
+                <div class="ml10px column-top-left p10px w300px">
+                    <div class="h20px row-center-center row-center-center">
                         {{ place.palace | defaultDash }}
-                </div>
-                <div class="h20px w10p row-center-center row-center-center">
+                    </div>
+                    <div class="h20px row-center-center row-center-center">
                         {{ place.floor | defaultDash}}
+                    </div>
+                    <div class="h20px row-center-center">
+                        {{ place.room | defaultDash}}
+                    </div>
+                    <div class="h20px row-center-center">
+                        {{ place.sector | defaultDash}}
+                    </div>
+                    <div class="h20px row-center-center">
+                        {{ place.rack | defaultDash}}
+                    </div>
+                    <div class="h20px row-center-center">
+                        {{ place.position | defaultDash}}
+                    </div>
                 </div>
-                <div class="h20px w10p row-center-center">
-                        {{ place.room  | defaultDash}}
-                </div>
-                <div class="h20px w10p row-center-center">
-                        {{ place.sector  | defaultDash}}
-                </div>
-                <div class="h20px w10p row-center-center">
-                    {{ place.rack  | defaultDash}}
-                </div>
-                <div class="h20px w10p row-center-center">
-                    {{ place.position | defaultDash}}
-                </div>
-                <div class="h20px w10p row-center-center">
+                <div class="h20px row-center-center w100p">
                     {{ formatDate(place.date!) | defaultDash}}
                 </div>
             </div>
         </div>
-        <div class="row-center-center">
+        <div class="row-center-center mb10px">
             <button class="mt10px" (click)="close()">CHIUDI</button>
             <button class="mt10px" (click)="openUpdateCollocationModal()">RICOLLOCA</button>
         </div>
     </div>
 </div>
-<dgta-update-collocation-modal *ngIf="isOpenUpdateCollocationModal"
-    [catalogue]="catalogue"
-    (closeUpdateCollocationModalE)="closeUpdateCollocationModal()"
-></dgta-update-collocation-modal>
+<dgta-update-collocation-modal *ngIf="isOpenUpdateCollocationModal" [catalogue]="catalogue"
+    (closeUpdateCollocationModalE)="closeUpdateCollocationModal()"></dgta-update-collocation-modal>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IUser } from './interfaces/IUser';
 import { IDocument } from './interfaces/IDocument';
 import { IPageNavigation, PageEnum } from './interfaces/IPageNavigation';
+import { ICatalogue } from './interfaces/ICatalogue';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,13 @@ export class SessionService {
   pageNavigation: PageEnum[] = [PageEnum.LOGIN]
 
   terms: any = {}
+
+  catalogue: ICatalogue = {}
+  isOpenOwnersModal: boolean = false
+  isOpenCollocationModal: boolean = false
+  isOpenHistoryModal: boolean = false
+  isOpenDocumentsModal: boolean = false
+  isOpenViewBarcodeModal: boolean = false
 
   constructor() {
     if (localStorage.getItem("session")) {

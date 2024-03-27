@@ -1,3 +1,15 @@
+.row-left-space-between {
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
+}
+
+.row-left-space-evenly {
+    display: flex;
+    align-items: left;
+    justify-content: space-evenly;
+}
+
 .row-top-left {
     display: flex;
     align-items: flex-start;

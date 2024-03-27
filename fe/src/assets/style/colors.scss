@@ -27,6 +27,15 @@
 }
 
 body {
-    background-color: green !important;
-    color: white;
+    background-image: linear-gradient(to right, black , rgb(27, 26, 26));
+    filter: brightness(1.2);    color: white;
+}
+
+.box-form {
+    color: black;
+}
+
+.bkg-grey {
+    background-image: linear-gradient(to right, rgb(113, 110, 110) , rgb(72, 61, 61));
+    filter: brightness(1.2);    color: white;
 }

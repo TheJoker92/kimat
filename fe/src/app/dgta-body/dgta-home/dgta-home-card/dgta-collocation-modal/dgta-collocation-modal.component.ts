@@ -20,12 +20,16 @@ export class DgtaCollocationModalComponent {
 
   places: IPlace[] = []
 
+  currentPlace: IPlace = {}
+
   constructor() {
   }
 
   ngOnInit() {
     this.catalogue.placement![0]["date"] = this.catalogue.history![0].date!
     console.log(this.catalogue.placement)
+
+    this.currentPlace = this.catalogue.placement![this.catalogue.placement!.length -1]
   }
 
   close() {

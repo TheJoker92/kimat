@@ -1,4 +1,4 @@
-<div class="card-container column-center-center p10px">
+<div class="card-container column-center-centerx">
     <!-- <div class="ml10px row-center-space-between p10px w100p">
         <div class="h20px w10p">
             <h4 class="w100px">
@@ -64,43 +64,70 @@
             </h4>
         </div>
     </div> -->
-    <div *ngFor="let catalogue of catalogues" class="row-center-space-between w100p mt20px">
-        <div class="row-center-left">
-            <fa-icon class="cursor-pointer color-yellow-folder font-size-3em" [icon]="faFolder"></fa-icon>
-            <div class="column-left-left ml5px">
-                <strong class="">{{ catalogue.title }}</strong>
-            </div>
-        </div>
-        <!-- <div class="row-center-left w10p">
-            <div class="column-left-left">
-                <div *ngFor="let topic of catalogue.topics">
-                    {{ topic }}
+    <div *ngFor="let catalogue of catalogues" class="row-center-space-between w100p mt20px catalogue-container">
+        <div class="column-top-left w100p">
+            <div class="row-center-space-between ml10px w100p">
+                <div class="row-center-space-between">
+                    <div class="row-center-left">
+                        <fa-icon class="cursor-pointer color-yellow-folder font-size-3em" [icon]="faFolder"></fa-icon>
+                        <div class="column-left-left ml5px w200px">
+                            <strong class="">{{ catalogue.title }}</strong>
+                        </div>
+                        <!-- <div class="row-center-left w10p">
+                            <div class="column-left-left">
+                                <div *ngFor="let topic of catalogue.topics">
+                                    {{ topic }}
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="row-center-center w10p">
+                    <fa-icon class="cursor-pointer font-size-20em mr30px" [icon]="faTrash"
+                        (click)="deleteCatalogue(catalogue)"></fa-icon>
                 </div>
             </div>
-        </div>
-        <div class="row-center-center w10p">
-            <fa-icon class="cursor-pointer font-size-25em" [icon]="faFileLines"
-            (click)="openDocumentsModal(catalogue)"></fa-icon>
-        </div>
-        <div class="row-center-center w10p">
-            <fa-icon class="cursor-pointer font-size-25em" [icon]="faBarcode"
-                (click)="openViewBarcodeModal(catalogue)"></fa-icon>
-        </div>
-        <div class="row-center-center w10p">
-            <fa-icon class="cursor-pointer font-size-25em" [icon]="faClockRotateLeft"
-                (click)="openHistoryModal(catalogue)"></fa-icon>
-        </div>
-        <div class="row-center-center w10p">
-            <fa-icon class="cursor-pointer font-size-25em" [icon]="faMapMarker"
-                (click)="openCollocationModal(catalogue)"></fa-icon>
+            <div class="p10px  row-center-center w100p bkg-grey ml40px mr40px">
+                <div class="row-left-space-evenly w100p ml15px mr15px">
+                    <div class="row-center-center w10p">
+                        <div class="column-center-center">
+                            <fa-icon class="cursor-pointer font-size-20em" [icon]="faFileLines"
+                                (click)="openDocumentsModal(catalogue)"></fa-icon>
+                            <small>documenti</small>
+                        </div>
+                    </div>
+                    <div class="row-center-center w10p">
+                        <div class="column-center-center">
+                            <fa-icon class="cursor-pointer font-size-20em" [icon]="faBarcode"
+                            (click)="openViewBarcodeModal(catalogue)"></fa-icon>
+                            <small>barcode</small>
+                        </div>
+                    </div>
+                    <div class="row-center-center w10p">
+                        <div class="column-center-center">
+                            <fa-icon class="cursor-pointer font-size-20em" [icon]="faClockRotateLeft"
+                            (click)="openHistoryModal(catalogue)"></fa-icon>
+                            <small>cronologia</small>
+                        </div>
+                    </div>
+                    <div class="row-center-center w10p">
+                        <div class="column-center-center">
+                            <fa-icon class="cursor-pointer font-size-20em" [icon]="faMapMarker"
+                            (click)="openCollocationModal(catalogue)"></fa-icon>
+                            <small>posizione</small>
+                        </div>
+                    </div>
+                    <div class="row-center-center w10p">
+                        <div class="column-center-center">
+                            <fa-icon class="cursor-pointer font-size-20em" [icon]="faUsers"
+                            (click)="openOwnersModal(catalogue)"></fa-icon>
+                            <small>utenti</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
-        <div class="row-center-center w10p">
-            <fa-icon class="cursor-pointer font-size-25em" [icon]="faUsers" (click)="openOwnersModal(catalogue)"></fa-icon>
-        </div>
-        <div class="row-center-center w10p">
-            <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash" (click)="deleteCatalogue(catalogue)"></fa-icon>
-        </div> -->
     </div>
 </div>
 
@@ -116,7 +143,5 @@
 <dgta-history-modal *ngIf="isOpenHistoryModal" [catalogue]="catalogue"
     (closeHistoryModalE)="closeHistoryModal()"></dgta-history-modal>
 
-<dgta-documents-modal *ngIf="isOpenDocumentsModal" 
-    [catalogue]="catalogue"
-    (closeDocumentsModalE)="closeDocumentsModal()"
-></dgta-documents-modal>
+<dgta-documents-modal *ngIf="isOpenDocumentsModal" [catalogue]="catalogue"
+    (closeDocumentsModalE)="closeDocumentsModal()"></dgta-documents-modal>

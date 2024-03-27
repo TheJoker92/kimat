@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faTrash, faFileLines, faBarcode, faClockRotateLeft, faUsers, faFolderClosed, faFolderOpen, faMapMarker } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faTrash, faFileLines, faBarcode, faClockRotateLeft, faUsers, faFolderClosed, faFolderOpen, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 import { DgtaHomeCardCatalogueFormModalComponent } from './dgta-home-card-catalogue-form-modal/dgta-home-card-catalogue-form-modal.component';
 import { CommonModule } from '@angular/common';
 import { ICatalogue } from '../../../interfaces/ICatalogue';
@@ -33,6 +33,7 @@ export class DgtaHomeCardComponent {
   faBarcode = faBarcode
   faFileLines = faFileLines
   faTrash = faTrash
+  faInfoCircle = faInfoCircle
 
 
   isOpenViewBarcodeModal = false
@@ -40,7 +41,8 @@ export class DgtaHomeCardComponent {
   isOpenCollocationModal = false
   isOpenHistoryModal = false
   isOpenDocumentsModal = false
-  
+  isOpenInfoCatalogueModal = false
+
   constructor(private http: HttpService) { }
 
   // onMouseOverFolder() {
@@ -121,5 +123,15 @@ export class DgtaHomeCardComponent {
   closeDocumentsModal() {
     this.catalogue = {}
     this.isOpenDocumentsModal = false
+  }
+
+  openCatalogueInfo(catalogue: ICatalogue) {
+    this.catalogue = catalogue
+    this.isOpenInfoCatalogueModal = true
+  }
+
+  closeCatalogueInfo() {
+    this.catalogue = {}
+    this.isOpenInfoCatalogueModal = false
   }
 }
