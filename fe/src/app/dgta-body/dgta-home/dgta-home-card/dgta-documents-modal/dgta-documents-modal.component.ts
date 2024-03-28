@@ -18,11 +18,12 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DgtaAttachmentsModalComponent } from './dgta-attachments-modal/dgta-attachments-modal.component';
 import { ActionLogEnum } from '../../../../interfaces/ILog';
 import { SessionService } from '../../../../session.service';
+import { DgtaTopicCardComponent } from '../../dgta-topic-card/dgta-topic-card.component';
 
 @Component({
   selector: 'dgta-documents-modal',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent, PdfViewerModule, DgtaAttachmentsModalComponent],
+  imports: [CommonModule, FontAwesomeModule, DgtaTopicCardComponent, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent, PdfViewerModule, DgtaAttachmentsModalComponent],
   templateUrl: './dgta-documents-modal.component.html',
   styleUrl: './dgta-documents-modal.component.scss'
 })
@@ -51,6 +52,11 @@ export class DgtaDocumentsModalComponent {
 
   }
 
+  showTopics = true
+
+  term = ""
+
+  toggleTopicsLabel = "nascondi categorie"
 
   path: any
 
@@ -185,7 +191,7 @@ export class DgtaDocumentsModalComponent {
         this.loadingService.isLoading = false
 
         if (response.code == 200) {
-          alert("Hai aggiornato il catalogo")
+          alert("Accesso inserito in registro")
           this.loadingService.isLoading = false
           this.getDocuments()
           this.isOpenAttachmentModal = true
@@ -276,5 +282,22 @@ deleteDocument(document: IDocument) {
     }
   })
 
+}
+
+toggleTopics() {
+  if(this.showTopics) {
+    this.showTopics = false
+    this.toggleTopicsLabel = "mostra categorie"
+  } else {
+    this.showTopics = true
+    this.toggleTopicsLabel = "nascondi categorie"
+  }
+}
+
+hideTopics() {
+  if(this.showTopics) {
+    this.showTopics = false
+    this.toggleTopicsLabel = "mostra categorie"
+  }
 }
 }

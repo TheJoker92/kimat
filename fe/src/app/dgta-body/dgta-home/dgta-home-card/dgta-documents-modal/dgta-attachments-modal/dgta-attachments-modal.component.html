@@ -2,10 +2,10 @@
 
 </div>
 <div class="container column-top-left" [ngClass]="{'opacity': isOpenAddAttachmentModal}">
-    <div class="row-center-center ml10px">
+    <div class="row-bottom-center ml10px">
         <button class="mt10px" (click)="close()">CHIUDI</button>
         <button class="mt10px" (click)="getOcr()">OCR</button>
-        <button (click)="loadFile('pdf')">CARICA FILE</button>
+        <button class="nowrap" (click)="loadFile('pdf')">CARICA FILE</button>
         <input id="file-pdf" type="file" class="form-field-size" (input)="onUploadFile($event)" accept=".pdf">
                     
     </div>
@@ -17,7 +17,7 @@
             <h4 class="ml10px">{{ document.name }}</h4>
             <div class="file-viewer-container">
                 <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false"
-                    style="width: 66vw; height: 100vh"></pdf-viewer>
+                    style="width: 100vw; height: 100vh"></pdf-viewer>
             </div>
         </div>
         <div class="column-left-left ml10px">

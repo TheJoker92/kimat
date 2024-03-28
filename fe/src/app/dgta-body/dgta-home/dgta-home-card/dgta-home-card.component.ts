@@ -11,6 +11,7 @@ import { DgtaCollocationModalComponent } from './dgta-collocation-modal/dgta-col
 import { DgtaHistoryModalComponent } from './dgta-history-modal/dgta-history-modal.component';
 import { DgtaDocumentsModalComponent } from './dgta-documents-modal/dgta-documents-modal.component';
 import { DgtaTopicCardComponent } from '../dgta-topic-card/dgta-topic-card.component';
+import { SessionService } from '../../../session.service';
 
 @Component({
   selector: 'dgta-home-card',
@@ -43,7 +44,8 @@ export class DgtaHomeCardComponent {
   isOpenDocumentsModal = false
   isOpenInfoCatalogueModal = false
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService,
+              public sessionService: SessionService) { }
 
   // onMouseOverFolder() {
   //   this.faFolder = faFolderOpen
@@ -118,11 +120,13 @@ export class DgtaHomeCardComponent {
   openDocumentsModal(catalogue: ICatalogue) {
     this.catalogue = catalogue
     this.isOpenDocumentsModal = true
+    this.sessionService.isOpenDocumentsModal = true
   }
 
   closeDocumentsModal() {
     this.catalogue = {}
     this.isOpenDocumentsModal = false
+    this.sessionService.isOpenDocumentsModal = false
   }
 
   openCatalogueInfo(catalogue: ICatalogue) {

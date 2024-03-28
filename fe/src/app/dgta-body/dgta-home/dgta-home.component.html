@@ -8,11 +8,13 @@
         </div>
     </div>
     <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong>
-    <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap" 
+    <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
+                    [ngClass]="{'display-none':sessionService.isOpenDocumentsModal}" 
                     [catalogues]="catalogues"
                     (getCataloguesByTopicE)="getCatalogues()"></dgta-topic-card>
     <div class="column-top-right">
-        <dgta-home-card class="row-center h10vh" [catalogues]="catalogues"
+        <dgta-home-card class="row-center h10vh" 
+        [catalogues]="catalogues"
         ></dgta-home-card>   
     </div>
 </div>

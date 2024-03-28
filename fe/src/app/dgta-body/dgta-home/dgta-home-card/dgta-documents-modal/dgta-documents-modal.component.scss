@@ -5,11 +5,9 @@
     width: 100vw;
     height: 100%;
     display: flex;
-    background-color: white;
-}
-
-* {
-    color: black;
+    background-image: linear-gradient(to right, black , rgb(27, 26, 26));
+    filter: brightness(1.2);    
+    color: white;
 }
 
 
@@ -32,4 +30,14 @@
 .stateValue:hover {
     cursor: pointer;
     color: rgb(12, 114, 12);
+}
+
+
+.document-container {
+    width: 100%;
+}
+
+.document-container:hover {
+    background: rgb(2, 73, 2);
+    cursor: pointer;
 }
