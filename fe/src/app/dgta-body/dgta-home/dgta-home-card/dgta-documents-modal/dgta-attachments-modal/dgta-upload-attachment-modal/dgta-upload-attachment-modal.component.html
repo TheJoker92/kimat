@@ -11,7 +11,11 @@
                 <p>oppure</p>
                 <h3 class="row-center-center">CARICA FILE DA DISPOSITIVO</h3>
                 <div class="box-form column-center-center">
-                    <button class="nowrap" (click)="openCameraAcquireModal()">ACQUISISCI DA CAMERA</button>
+                    <div *ngIf="attachmentPdf.base64">
+                        caricato
+                    </div>
+                    <!-- <button class="nowrap" (click)="openCameraAcquireModal()">ACQUISISCI DA CAMERA</button> -->
+                    <button class="nowrap" (click)="openScannerListModal()">ACQUISISCI</button>
                 </div>
 
             </div>
@@ -22,5 +26,8 @@
         </div>
     </div>
 
-    <dgta-camera-acquire-modal *ngIf="isOpenCameraAcquireModal"
-        (closeCameraAcquireModalE)="closeCameraAcquireModal()"></dgta-camera-acquire-modal>
+    <dgta-camera-acquire-modal *ngIf="isOpenCameraAcquireModal" (closeCameraAcquireModalE)="closeCameraAcquireModal()"
+        (uploadAttachmentE)="uploadFromCamera($event)"></dgta-camera-acquire-modal>
+
+    <dgta-scannerlist-modal *ngIf="isOpenScannerListModal"
+                            (closeScannerListModalE)="closeScannerListModal()"></dgta-scannerlist-modal>

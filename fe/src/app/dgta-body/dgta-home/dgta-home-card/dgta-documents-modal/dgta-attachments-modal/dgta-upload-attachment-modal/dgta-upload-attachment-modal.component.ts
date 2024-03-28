@@ -7,11 +7,12 @@ import { IPlace } from '../../../../../../interfaces/IPlace';
 import { SessionService } from '../../../../../../session.service';
 import { CommonModule } from '@angular/common';
 import { DgtaCameraAcquireModalComponent } from './dgta-camera-acquire-modal/dgta-camera-acquire-modal.component';
+import { DgtaScannerlistModalComponent } from './dgta-scannerlist-modal/dgta-scannerlist-modal.component';
 
 @Component({
   selector: 'dgta-upload-attachment-modal',
   standalone: true,
-  imports: [CommonModule, DgtaCameraAcquireModalComponent],
+  imports: [CommonModule, DgtaCameraAcquireModalComponent, DgtaScannerlistModalComponent],
   templateUrl: './dgta-upload-attachment-modal.component.html',
   styleUrl: './dgta-upload-attachment-modal.component.scss'
 })
@@ -25,6 +26,7 @@ export class DgtaUploadAttachmentModalComponent {
   place: IPlace | any = {}
 
   isOpenCameraAcquireModal = false
+  isOpenScannerListModal = false
 
   constructor(public sessionService: SessionService,
     private http: HttpService,
@@ -78,5 +80,25 @@ export class DgtaUploadAttachmentModalComponent {
 
   closeCameraAcquireModal() {
     this.isOpenCameraAcquireModal = false
+  }
+
+  openScannerListModal() {
+    this.isOpenScannerListModal = true
+  }
+
+  closeScannerListModal() {
+    this.isOpenScannerListModal = false
+  }
+
+  uploadFromCamera(base64: string) {
+    this.attachmentPdf = {
+      base64: base64,
+      device: {
+        model: window.navigator.userAgent,
+        vendor: window.navigator.userAgent,
+        type: "camera"
+      },
+
+    }
   }
 }

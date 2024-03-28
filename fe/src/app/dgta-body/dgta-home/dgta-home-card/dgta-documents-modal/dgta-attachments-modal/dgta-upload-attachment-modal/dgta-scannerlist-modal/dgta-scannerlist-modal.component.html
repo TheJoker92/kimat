@@ -1,0 +1,21 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <div>
+            <div class="box-form column-center-center">
+                <h3 class="row-center-center">LISTA SCANNER</h3>
+                <div *ngFor="let scanner of scanners">
+
+                </div>
+
+            </div>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                <button class="mt10px" (click)="updateDocument()">CONFERMA</button>
+            </div>
+        </div>
+    </div>
+
+    

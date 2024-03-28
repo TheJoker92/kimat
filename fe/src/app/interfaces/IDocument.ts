@@ -1,3 +1,4 @@
+import { IDevice } from "./IDevice"
 import { ILog } from "./ILog"
 import { IPlace } from "./IPlace"
 import { IUser } from "./IUser"
@@ -29,10 +30,4 @@ export interface IDocumentState {
     stateValue?: string
     user?: IUser
     date?: string
-}
-
-export interface IDevice {
-    id?: string
-    vendor: string
-    model: string
 }

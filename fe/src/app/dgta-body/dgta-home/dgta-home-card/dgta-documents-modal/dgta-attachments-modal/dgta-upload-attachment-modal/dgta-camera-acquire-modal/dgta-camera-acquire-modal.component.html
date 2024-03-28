@@ -8,10 +8,22 @@
                 <h3 class="row-center-center">Acquisisci da camera</h3>
                 <video autoplay class="grey"></video>
                 <img src="">
-                <canvas style="display:none;"></canvas>
+                <canvas id="canvas-camera" style="display:none;"></canvas>
+            </div>
+            <div class="row-center-left scroll-x">
+                <div *ngIf="imageSrcList.length == 0" class="row-center-center">Non hai acquisito immagini</div>
+
+                <div *ngFor="let imageSrc of imageSrcList; index as i" class="row-center-center w100p">
+                    <img [id]="getImgIndex(i)" class="w30p" [src]="imageSrc" alt="">
+                    <div class="mb10px flex row-left-space-around">
+                        <div class="pointer red h-100" (click)="deleteImg(imageSrc)">elimina</div>
+                        <div class="pointer h-100" (click)="deleteImg(imageSrc)" (mouseenter)="zoomIn(i)" (mouseleave)="zoomOut(i)">zoom</div>
+                    </div>
+                </div>
             </div>
             <div class="row-center-center">
                 <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                <button class="mt10px" (click)="getPhoto()">ACQUISISCI</button> 
                 <button class="mt10px" (click)="updateDocument()">CONFERMA</button>
             </div>
         </div>

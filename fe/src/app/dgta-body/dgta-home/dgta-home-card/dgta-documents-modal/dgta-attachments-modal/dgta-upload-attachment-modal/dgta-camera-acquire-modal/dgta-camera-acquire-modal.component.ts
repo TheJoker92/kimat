@@ -1,16 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'dgta-camera-acquire-modal',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dgta-camera-acquire-modal.component.html',
   styleUrl: './dgta-camera-acquire-modal.component.scss'
 })
 export class DgtaCameraAcquireModalComponent {
 
   @Output() closeCameraAcquireModalE = new EventEmitter()
-  @Output() uploadAttachmentE = new EventEmitter()
+  @Output() uploadAttachmentE= new EventEmitter<string>()
   canvas: any
   video: any
   context: any
@@ -19,7 +21,7 @@ export class DgtaCameraAcquireModalComponent {
 
   ngOnInit() {
     this.video = document.querySelector('video')!;
-    this.canvas = document.querySelector('canvas')!;
+    this.canvas = document.querySelector('#canvas-camera')!;
     this.context = this.canvas.getContext('2d')!;
     var localMediaStream: any = null;
 
@@ -56,12 +58,62 @@ export class DgtaCameraAcquireModalComponent {
           track.stop(); // This stops the track
       });
     }
-    
+
     this.closeCameraAcquireModalE.emit()
   }
 
-  updateDocument() {
+  getPhoto() {
+    // Set the canvas size to match the video feed
+    this.canvas.width = this.video.videoWidth;
+    this.canvas.height = this.video.videoHeight;
 
+    // Draw the current video frame on the canvas
+    this.context.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+
+    // Convert the canvas content to a data URL representing the captured image
+    const imageDataUrl = this.canvas.toDataURL('application/pdf');
+
+    this.imageSrcList.push(imageDataUrl)
+
+    this.imageSrcList = JSON.parse(JSON.stringify(this.imageSrcList))
+  }
+
+  deleteImg(imageSrc: string) {
+    this.imageSrcList = this.imageSrcList.filter((acquiredImageSrc) => imageSrc != acquiredImageSrc)
+  }
+
+  getImgIndex(index: number) {
+    return "img" + index.toString()
+  }
+
+  zoomIn(index: number) {
+    document.getElementById(this.getImgIndex(index))?.setAttribute("class", "w-100 zoom")
+  }
+
+  zoomOut(index: number) {
+    document.getElementById(this.getImgIndex(index))?.setAttribute("class", "w-100")
+  }
+
+  mergeImagesToPdf(images: string[]): string {
+    let pdf = new jsPDF();
+
+    for (let pageNum = 0; pageNum < images.length; pageNum++) {
+      let image = images[pageNum]
+
+      pdf = pdf.addImage(image, 'png', 10, 10, 190, 0);
+
+      if ( pageNum < images.length - 1) {
+        pdf = pdf.addPage()
+      }
+    }
+
+    return pdf.output('dataurlstring')
+          
+  }
+
+  updateDocument() {
+    let dataURIPdf = this.mergeImagesToPdf(this.imageSrcList).replace("filename=generated.pdf;", "")
+    this.uploadAttachmentE.emit(dataURIPdf)
   }
 }
 
