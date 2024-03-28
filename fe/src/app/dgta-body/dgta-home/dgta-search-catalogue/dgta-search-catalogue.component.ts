@@ -12,6 +12,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 })
 export class DgtaSearchCatalogueComponent {
   @Output() getCataloguesE = new EventEmitter()
+  @Output() hideTopicsE = new EventEmitter()
+
 
   faSearch = faSearch
 
@@ -23,5 +25,6 @@ export class DgtaSearchCatalogueComponent {
     this.sessionService.terms["title"] = "*" + e.target.value + "*"
     
     this.getCataloguesE.emit()
+    this.hideTopicsE.emit()
   }
 }

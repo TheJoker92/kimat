@@ -10,6 +10,12 @@
     justify-content: space-evenly;
 }
 
+.row-left-space-around {
+    display: flex;
+    align-items: left;
+    justify-content: space-around;
+}
+
 .row-top-left {
     display: flex;
     align-items: flex-start;

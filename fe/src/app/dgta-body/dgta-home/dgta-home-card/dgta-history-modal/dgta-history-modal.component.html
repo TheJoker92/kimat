@@ -3,7 +3,7 @@
 </div>
 <div class="container">
     <div class="box-form column-center-spacebetween">
-        <h3 class="row-center-center">Cronologia di '{{ catalogue.title }}'</h3>
+        <h3 class="row-center-center">Storico di '{{ catalogue.title }}'</h3>
         <div *ngFor="let log of history" class="column-top-left mt10px ml10px w80p">
             <div class="row-center-space-between">
                 <strong>{{ log.actionLog | defaultDash}}</strong>

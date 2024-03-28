@@ -93,6 +93,13 @@ export class DgtaHomeComponent {
       this.toggleTopicsLabel = "nascondi categorie"
     }
   }
+
+  hideTopics() {
+    if(this.showTopics) {
+      this.showTopics = false
+      this.toggleTopicsLabel = "mostra categorie"
+    }
+  }
 }
 
 
