@@ -5,11 +5,13 @@ import { LoadingService } from '../../../../../../dgta-loading/loading.service';
 import { HttpService } from '../../../../../../http.service';
 import { IPlace } from '../../../../../../interfaces/IPlace';
 import { SessionService } from '../../../../../../session.service';
+import { CommonModule } from '@angular/common';
+import { DgtaCameraAcquireModalComponent } from './dgta-camera-acquire-modal/dgta-camera-acquire-modal.component';
 
 @Component({
   selector: 'dgta-upload-attachment-modal',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, DgtaCameraAcquireModalComponent],
   templateUrl: './dgta-upload-attachment-modal.component.html',
   styleUrl: './dgta-upload-attachment-modal.component.scss'
 })
@@ -21,6 +23,8 @@ export class DgtaUploadAttachmentModalComponent {
   attachmentPdf: IAttachment = {}
 
   place: IPlace | any = {}
+
+  isOpenCameraAcquireModal = false
 
   constructor(public sessionService: SessionService,
     private http: HttpService,
@@ -66,5 +70,13 @@ export class DgtaUploadAttachmentModalComponent {
 
   updateDocument() {
     this.attachmentPdfE.emit(this.attachmentPdf)
+  }
+
+  openCameraAcquireModal() {
+    this.isOpenCameraAcquireModal = true
+  }
+
+  closeCameraAcquireModal() {
+    this.isOpenCameraAcquireModal = false
   }
 }

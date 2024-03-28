@@ -11,7 +11,7 @@
                 <p>oppure</p>
                 <h3 class="row-center-center">CARICA FILE DA DISPOSITIVO</h3>
                 <div class="box-form column-center-center">
-                    <button class="nowrap" (click)="loadFile('pdf')">ACQUISISCI</button>
+                    <button class="nowrap" (click)="openCameraAcquireModal()">ACQUISISCI DA CAMERA</button>
                 </div>
 
             </div>
@@ -21,3 +21,6 @@
             </div>
         </div>
     </div>
+
+    <dgta-camera-acquire-modal *ngIf="isOpenCameraAcquireModal"
+        (closeCameraAcquireModalE)="closeCameraAcquireModal()"></dgta-camera-acquire-modal>
