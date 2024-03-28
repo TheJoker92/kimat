@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ICatalogue } from '../../../../interfaces/ICatalogue';
 import { faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -63,13 +63,33 @@ export class DgtaDocumentsModalComponent {
 
   constructor(private http: HttpService,
     private sessionService: SessionService,
-    private loadingService: LoadingService) {
-
+    private loadingService: LoadingService,
+    private elementRef: ElementRef,
+    private cdRef:ChangeDetectorRef) {
+    
+     
   }
 
   ngOnInit() {
     this.getDocuments()
 
+  }
+
+  ngAfterViewInit() {
+    
+
+  }
+
+  smoothscroll() {
+    var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+
+    if (currentScroll > 0) {
+
+        window.requestAnimationFrame(this.smoothscroll);
+
+        window.scrollTo(0, currentScroll - (currentScroll / 8));
+
+    }
   }
 
   close() {
