@@ -1,4 +1,3 @@
-import { IDevice } from "./IDevice"
 import { ILog } from "./ILog"
 import { IPlace } from "./IPlace"
 import { IUser } from "./IUser"
@@ -21,6 +20,8 @@ export interface IAttachment{
     name?: string
     ext?: string
     base64?: string
+    device?: IDevice
+    user?: IUser
 }
 
 export interface IDocumentState {
@@ -28,4 +29,10 @@ export interface IDocumentState {
     stateValue?: string
     user?: IUser
     date?: string
+}
+
+export interface IDevice {
+    id?: string
+    vendor: string
+    model: string
 }

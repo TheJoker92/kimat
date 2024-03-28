@@ -1,12 +1,11 @@
 <div class="overlay">
 
 </div>
-<div class="container column-top-left" [ngClass]="{'opacity': isOpenAddAttachmentModal}">
+<div class="container column-top-left">
     <div class="row-bottom-center ml10px">
         <button class="mt10px" (click)="close()">CHIUDI</button>
+        <button class="nowrap" (click)="openUpdateAttachmentModal()">CARICA FILE</button>
         <button class="mt10px" (click)="getOcr()">OCR</button>
-        <button class="nowrap" (click)="loadFile('pdf')">CARICA FILE</button>
-        <input id="file-pdf" type="file" class="form-field-size" (input)="onUploadFile($event)" accept=".pdf">
                     
     </div>
     <div *ngIf="!srcPdf" class="row-center-left">
@@ -78,8 +77,8 @@
             </div>
         </div>
     </div>
-    <!-- <dgta-add-attachment-modal *ngIf="isOpenAddAttachmentModal"
+<dgta-upload-attachment-modal *ngIf="isOpenUploadAttachmentModal"
     [document]="document"
-    (closeUpdateCollocationModalE)="closeAddAttachmentModal()"
-    (getDocumentsE)="getDocumentsEmitter()"
-></dgta-add-attachment-modal> -->
+    (closeUpdateCollocationModalE)="closeUploadAttachmentModal()"
+    (attachmentPdfE)="attachmentPdfEmitter($event)"
+></dgta-upload-attachment-modal>

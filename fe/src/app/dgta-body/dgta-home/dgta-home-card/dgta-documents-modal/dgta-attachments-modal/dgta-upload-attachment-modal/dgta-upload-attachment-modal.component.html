@@ -1,0 +1,23 @@
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <div>
+            <div class="box-form column-center-center">
+                <h3 class="row-center-center">CARICA FILE LOCALE</h3>
+                <button class="nowrap" (click)="loadFile('pdf')">CARICA FILE</button>
+                <input id="file-pdf" type="file" class="form-field-size" (input)="onUploadFile($event)" accept=".pdf">
+                <p>oppure</p>
+                <h3 class="row-center-center">CARICA FILE DA DISPOSITIVO</h3>
+                <div class="box-form column-center-center">
+                    <button class="nowrap" (click)="loadFile('pdf')">ACQUISISCI</button>
+                </div>
+
+            </div>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                <button class="mt10px" (click)="updateDocument()">CONFERMA</button>
+            </div>
+        </div>
+    </div>

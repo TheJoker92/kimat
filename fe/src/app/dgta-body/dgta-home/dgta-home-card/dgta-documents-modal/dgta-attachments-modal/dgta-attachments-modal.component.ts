@@ -6,11 +6,12 @@ import { ActionLogEnum, ILog } from '../../../../../interfaces/ILog';
 import { HttpService } from '../../../../../http.service';
 import { LoadingService } from '../../../../../dgta-loading/loading.service';
 import { SessionService } from '../../../../../session.service';
+import { DgtaUploadAttachmentModalComponent } from './dgta-upload-attachment-modal/dgta-upload-attachment-modal.component';
 
 @Component({
   selector: 'dgta-attachments-modal',
   standalone: true,
-  imports: [CommonModule, PdfViewerModule],
+  imports: [CommonModule, PdfViewerModule, DgtaUploadAttachmentModalComponent],
   templateUrl: './dgta-attachments-modal.component.html',
   styleUrl: './dgta-attachments-modal.component.scss'
 })
@@ -22,7 +23,7 @@ export class DgtaAttachmentsModalComponent {
   
   attachmentPdf: IAttachment = {}
 
-  isOpenAddAttachmentModal = false
+  isOpenUploadAttachmentModal = false
   srcPdf = ""
 
   numOfPages: string = ""
@@ -68,12 +69,12 @@ export class DgtaAttachmentsModalComponent {
     this.getDocumentsE.emit()
   }
 
-  closeAddAttachmentModal() {
-    this.isOpenAddAttachmentModal = false
+  closeUploadAttachmentModal() {
+    this.isOpenUploadAttachmentModal = false
   }
 
-  openAddAttachmentModal() {
-    this.isOpenAddAttachmentModal = true
+  openUploadAttachmentModal() {
+    this.isOpenUploadAttachmentModal = true
   }
 
   close() {
@@ -125,7 +126,7 @@ export class DgtaAttachmentsModalComponent {
     })
   }
 
-  addDocument() {
+  uploadAttachmentDocument() {
       let history: ILog = {
         id: this.document.history?.length.toString(),
         date: new Date().toISOString(),
@@ -171,31 +172,13 @@ export class DgtaAttachmentsModalComponent {
     
   }
 
-  loadFile(ext: string) {
-    document.getElementById("file-" + ext)?.click()
+  openUpdateAttachmentModal() {
+    this.isOpenUploadAttachmentModal = true
   }
 
-  onUploadFile(e: any) {
-    let file = e.target.files[0]
-    if (file && file.type == "application/pdf") {
-      const reader = new FileReader();
+  attachmentPdfEmitter(attachmentPdf: IAttachment) {
+    this.attachmentPdf = attachmentPdf
 
-      console.log(this.document)
-
-      reader.onload = (e: any) => {
-        this.attachmentPdf = {
-          name: file.name,
-          ext: "pdf",
-          base64: e.target.result.replace("data:application/pdf;base64,", "")
-        }
-
-        this.addDocument()
-      };
-
-      reader.readAsDataURL(file);
-
-    } else if (file.type != "application/pdf") {
-      alert("Caricare soltanto file pdf")
-    }
+    this.uploadAttachmentDocument()
   }
 }

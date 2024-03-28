@@ -17,6 +17,7 @@ export enum ActionLogEnum {
     UPDATE_DOCUMENT = "aggiornato documento",
     UPDATE_DOCUMENT_STATE = "aggiornato stato documento",
     UPDATE_DOCUMENT_LAST_VIEW = "ultima visualizzazione",
-    UPDATE_DOCUMENT_ATTACHMENT = "aggiunto allegato"
+    UPDATE_DOCUMENT_ATTACHMENT = "aggiunto allegato",
+    UPDATE_DOCUMENT_COLLOCATION = "aggiornata la posizione"
 
 }

@@ -53,7 +53,7 @@ export class DgtaCollocationUpdateDocumentComponent {
         date: new Date().toISOString(),
         user: this.sessionService.user,
         resourceId: this.document.id,
-        actionLog: ActionLogEnum.UPDATE_DOCUMENT
+        actionLog: ActionLogEnum.UPDATE_DOCUMENT_COLLOCATION
       })
 
       history = JSON.parse(JSON.stringify(history))
