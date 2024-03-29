@@ -1,1 +1,29 @@
-<p>dgta-ocr-modal works!</p>
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <div>
+            <div class="box-form column-center-center">
+                <h3 class="row-center-center">DATI ESTRATTI</h3>
+                <div class="row-center-left">
+                    <label>Tipo documento:</label> {{ deliberazioneTemaplateJSON.documentType }}
+                </div>
+                <div class="row-center-left">
+                    <label for="">Deliberazione N.</label> {{deliberazioneTemaplateJSON.numero }}
+                </div>
+                <div class="row-center-left">
+                    <label>Oggetto: </label> {{deliberazioneTemaplateJSON.oggetto }}
+                </div>
+                <div class="row-center-left">
+                    <label>Data: </label> {{deliberazioneTemaplateJSON.data }}
+                </div>
+                <div class="row-center-left">
+                    <label>Ora: </label> {{deliberazioneTemaplateJSON.oreStr }}
+                </div>
+            </div>
+            <div class="row-center-center">
+                <button class="mt10px" (click)="close()">CHIUDI</button>
+            </div>
+        </div>
+    </div>

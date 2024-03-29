@@ -82,3 +82,9 @@
     (closeUpdateCollocationModalE)="closeUploadAttachmentModal()"
     (attachmentPdfE)="attachmentPdfEmitter($event)"
 ></dgta-upload-attachment-modal>
+
+<dgta-ocr-modal *ngIf="isOpenOcrModal"
+[ocrText]="ocrText"
+(closeOcrModalE)="closeOcrModal()">
+
+</dgta-ocr-modal>

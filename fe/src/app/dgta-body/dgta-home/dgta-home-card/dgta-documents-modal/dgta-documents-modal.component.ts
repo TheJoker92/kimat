@@ -136,7 +136,7 @@ export class DgtaDocumentsModalComponent {
           
           console.log("AAAA", this.documents)
           this.documents = JSON.parse(JSON.stringify(this.documents))
-          this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
+          // this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
         }
 
 

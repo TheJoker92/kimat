@@ -7,11 +7,12 @@ import { HttpService } from '../../../../../http.service';
 import { LoadingService } from '../../../../../dgta-loading/loading.service';
 import { SessionService } from '../../../../../session.service';
 import { DgtaUploadAttachmentModalComponent } from './dgta-upload-attachment-modal/dgta-upload-attachment-modal.component';
+import { DgtaOcrModalComponent } from './dgta-ocr-modal/dgta-ocr-modal.component';
 
 @Component({
   selector: 'dgta-attachments-modal',
   standalone: true,
-  imports: [CommonModule, PdfViewerModule, DgtaUploadAttachmentModalComponent],
+  imports: [CommonModule, PdfViewerModule, DgtaUploadAttachmentModalComponent, DgtaOcrModalComponent],
   templateUrl: './dgta-attachments-modal.component.html',
   styleUrl: './dgta-attachments-modal.component.scss'
 })
@@ -22,7 +23,7 @@ export class DgtaAttachmentsModalComponent {
   @Output() closeAttahcmentsModalE = new EventEmitter()
   
   ocrText: string = ""
-
+  isOpenOcrModal = false
   attachmentPdf: IAttachment = {}
 
   isOpenUploadAttachmentModal = false
@@ -122,6 +123,7 @@ export class DgtaAttachmentsModalComponent {
       next: (response: any) => {
         this.loadingService.isLoading = false
         this.ocrText = response.text
+        this.isOpenOcrModal = true
       },
       error: (error) => {
         this.loadingService.isLoading = false
@@ -232,5 +234,9 @@ export class DgtaAttachmentsModalComponent {
     }
 
     return token
+  }
+
+  closeOcrModal() {
+    this.isOpenOcrModal = false
   }
 }

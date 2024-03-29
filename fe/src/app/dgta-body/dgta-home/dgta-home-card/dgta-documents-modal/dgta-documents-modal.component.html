@@ -20,7 +20,7 @@
         <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong>
         <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
             (getCataloguesByTopicE)="getDocuments()"></dgta-topic-card>
-        <div *ngFor="let document of documents" class="column-top-right">
+        <div *ngFor="let documentListed of documents" class="column-top-right">
             <div class="column-top-left w100p">
                 <div class="row-center-space-between  w100p">
                     <div class="row-center-space-between document-container p10px">
@@ -28,7 +28,7 @@
                             <fa-icon class="cursor-pointer color-yellow-folder font-size-3em"
                                 [icon]="faFolder"></fa-icon>
                             <div class="column-left-left ml5px w200px">
-                                <strong class="">{{ document.name }}</strong>
+                                <strong class="">{{ documentListed.name }}</strong>
                             </div>
                             <!-- <div class="row-center-left w10p">
                                 <div class="column-left-left">
@@ -40,7 +40,7 @@
                         </div>
                         <div class="row-center-center w10p">
                             <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash"
-                                (click)="deleteDocument(document)"></fa-icon>
+                                (click)="deleteDocument(documentListed)"></fa-icon>
                         </div>
                     </div>
                 </div>
@@ -49,28 +49,28 @@
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <fa-icon class="cursor-pointer font-size-20em" [icon]="faFileLines"
-                                    (click)="openAttachmentsModal(document)"></fa-icon>
+                                    (click)="openAttachmentsModal(documentListed)"></fa-icon>
                                 <small>documenti</small>
                             </div>
                         </div>
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <fa-icon class="cursor-pointer font-size-20em" [icon]="faBarcode"
-                                    (click)="openViewBarcodeModal(document)"></fa-icon>
+                                    (click)="openViewBarcodeModal(documentListed)"></fa-icon>
                                 <small>barcode</small>
                             </div>
                         </div>
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <fa-icon class="cursor-pointer font-size-20em" [icon]="faClockRotateLeft"
-                                    (click)="openHistoryModal(document)"></fa-icon>
+                                    (click)="openHistoryModal(documentListed)"></fa-icon>
                                 <small>storico</small>
                             </div>
                         </div>
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <fa-icon class="cursor-pointer font-size-20em" [icon]="faMapMarker"
-                                    (click)="openCollocationModal(document)"></fa-icon>
+                                    (click)="openCollocationModal(documentListed)"></fa-icon>
                                 <small>posizione</small>
                             </div>
                         </div>
@@ -87,7 +87,11 @@
 
             </div>
 
-            <dgta-owners-document-modal *ngIf="isOpenOwnersModal" [document]="document"
+            
+        </div>
+    </div>
+
+    <dgta-owners-document-modal *ngIf="isOpenOwnersModal" [document]="document"
                 (closeOwnersModalE)="closeOwnersModal(document)"></dgta-owners-document-modal>
 
             <dgta-collocation-document-modal *ngIf="isOpenCollocationModal" [document]="document"
@@ -106,10 +110,6 @@
             <dgta-attachments-modal *ngIf="isOpenAttachmentModal" [document]="document"
                 (closeAttahcmentsModalE)="closeAttachmentsModal(document)"
                 (getDocumentsE)="getDocuments()"></dgta-attachments-modal>
-
-
-        </div>
-    </div>
 
     <dgta-document-form-modal *ngIf="isOpenDocumentFormModal" [catalogue]="catalogue"
         (emitterGetDocumentsE)="getDocuments()"
