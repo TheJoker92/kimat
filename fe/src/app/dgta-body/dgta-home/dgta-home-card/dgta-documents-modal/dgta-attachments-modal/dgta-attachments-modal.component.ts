@@ -21,6 +21,8 @@ export class DgtaAttachmentsModalComponent {
   @Output() getDocumentsE = new EventEmitter()
   @Output() closeAttahcmentsModalE = new EventEmitter()
   
+  ocrText: string = ""
+
   attachmentPdf: IAttachment = {}
 
   isOpenUploadAttachmentModal = false
@@ -50,11 +52,12 @@ export class DgtaAttachmentsModalComponent {
   }
 
   getPdf() {
+    this.loadingService.isLoading = true
     fetch("https://127.0.0.1:8000/pdf/" + this.document.id!).then((result) => {
       return result.json()
     })
     .then((result) => {
-      console.log(result)
+      
       if (result.error) {
         this.srcPdf = ""
       } else {
@@ -62,6 +65,7 @@ export class DgtaAttachmentsModalComponent {
 
         this.numOfPages = result.numOfPages
       }
+      this.loadingService.isLoading = false
     })
   }
 
@@ -115,9 +119,9 @@ export class DgtaAttachmentsModalComponent {
 
     this.loadingService.isLoading = true
     this.http.getOcr(payload).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.loadingService.isLoading = false
-        console.log(response)
+        this.ocrText = response.text
       },
       error: (error) => {
         this.loadingService.isLoading = false
@@ -127,18 +131,11 @@ export class DgtaAttachmentsModalComponent {
   }
 
   uploadAttachmentDocument() {
-      let history: ILog = {
-        id: this.document.history?.length.toString(),
-        date: new Date().toISOString(),
-        actionLog: ActionLogEnum.UPDATE_DOCUMENT_ATTACHMENT,
-        user: this.sessionService.user
-      } 
-
       let payload: any = {
         "id": this.document.id,
         "parentId": this.document.parentId,
         "name": this.document.name,
-        "history": JSON.stringify([history]),
+        "history": JSON.stringify(this.document.history),
         "attachments": JSON.stringify([this.attachmentPdf]),
         "deviceIds": JSON.stringify([]),
         "states": JSON.stringify(this.document.states),
@@ -150,14 +147,58 @@ export class DgtaAttachmentsModalComponent {
       console.log(payload)
 
       this.loadingService.isLoading = true
-      this.http.addDocument(payload).subscribe({
+      this.http.uploadFile(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
 
           if (response.code == 200) {
-            alert("Hai aggiornato il catalogo")
+            let history: ILog = {
+              id: this.document.history?.length.toString(),
+              date: new Date().toISOString(),
+              actionLog: ActionLogEnum.UPDATE_DOCUMENT_ATTACHMENT,
+              user: this.sessionService.user
+            } 
 
-            this.getPdf() 
+            let attachmentSolr = this.attachmentPdf
+            delete attachmentSolr["base64"]
+            attachmentSolr = JSON.parse(JSON.stringify(attachmentSolr))
+      
+            let payload: any = {
+              "id": this.document.id,
+              "parentId": this.document.parentId,
+              "name": this.document.name,
+              "history": JSON.stringify([history]),
+              "attachments": JSON.stringify([attachmentSolr]),
+              "deviceIds": JSON.stringify([]),
+              "states": JSON.stringify(this.document.states),
+              "topics": JSON.stringify(this.document.topics),
+              "placement": JSON.stringify(this.document.placement),
+              "owners": JSON.stringify(this.document.owners)
+            }
+      
+            console.log(payload)
+      
+            this.loadingService.isLoading = true
+            this.http.addDocument(payload).subscribe({
+              next: (response: any) => {
+                this.loadingService.isLoading = false
+      
+                if (response.code == 200) {
+                  alert("Hai aggiornato il catalogo")
+      
+                  this.getPdf() 
+      
+                  this.getDocumentsE.emit()
+                } else {
+                  alert("Errore server. Contattare il supporto.")
+                }
+              },
+              error: (error: any) => {
+                this.loadingService.isLoading = false
+                console.error(error)
+              }
+            })
+            
 
             this.getDocumentsE.emit()
           } else {
@@ -180,5 +221,16 @@ export class DgtaAttachmentsModalComponent {
     this.attachmentPdf = attachmentPdf
 
     this.uploadAttachmentDocument()
+  }
+
+  getPositionLabel(label: string) {
+    let token = " - "
+
+    if(this.document.placement && this.document.placement[0]) {
+      let placement: any[] = this.document.placement
+       token = placement[0][label]
+    }
+
+    return token
   }
 }

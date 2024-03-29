@@ -66,6 +66,10 @@ export class HttpService {
     return this.http.post(this.buildURL("documents/", this.data.document.add), payload, this.httpOptions)
   }
 
+  uploadFile(payload: any) {
+    return this.http.post(this.buildURL("documents/", this.data.document.base64), payload, this.httpOptions)
+  }
+
   deleteDocuments(payload: any) {
     return this.http.post(this.buildURL("documents/", this.data.document.delete), payload, this.httpOptions)
   }

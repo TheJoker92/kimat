@@ -22,6 +22,16 @@
     align-items: center;
 }
 
+.box-form-multiple {
+    background: white;
+    width: 30vw;
+    min-width: 475px;
+    height: 200px;
+    min-height: 200px;
+    border-radius: 15px;
+    color: black;
+}
+
 .box-form {
     background: white;
     width: 30vw;
@@ -29,6 +39,7 @@
     height: 15vw;
     min-height: 700px;
     border-radius: 15px;
+    color: black;
 }
 
 .form-field-size {
@@ -39,4 +50,9 @@
 
 fa-icon {
     cursor: pointer;
+}
+
+.activeTab {
+    background: rgb(10, 98, 10);
+    color: white;
 }

@@ -18,7 +18,8 @@
             "add": "add",
             "getDocuments": "getDocuments",
             "delete": "delete",
-            "ocr": "ocr"
+            "ocr": "ocr",
+            "base64": "base64"
         }
     },
     "error": {

@@ -368,7 +368,8 @@ def create_catalogue():
     return jsonify(response), 500
 
 
-# Create operation
+# Documents operation
+
 @app.route('/api/documents/add', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def create_document():
@@ -392,11 +393,45 @@ def create_document():
                 "code": 200
             }
 
-            # solr.add([data])
-
             r = requests.post(BASE_URL + "/documents/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
 
             print(r.json())
+
+            return response
+        except Exception as e:
+
+            print(e)
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return jsonify(response), 500
+
+@app.route('/api/documents/base64', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def upload_document():
+    print("START DOCUMENT ADD")
+    data = request.json
+
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+
+            print(data)
+            response = {
+                "message": "DATA ADDED",
+                "error": "",
+                "code": 200
+            }
+
 
             if (data["attachments"] and len(json.loads(data["attachments"]))):
                 attachmentsObj = json.loads(data["attachments"])
@@ -597,8 +632,22 @@ def getDocuments():
         }
 
         # solr.add([data])
+
+        query = "parentId%3A" + data["parentId"]
+        if "name" in data.keys():
+            if " " in data["name"]:
+                data["name"] = "(" + data["name"] + ")"
+            query += "%2C%0Aname%3A" + data["name"].replace(" ","%20") + "%0A"
+            print("A")
         
-        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=parentId%3A" + data["parentId"] + "&useParams=", verify=False)
+
+        print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&useParams=")
+        
+
+        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
+        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
+        
+        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&useParams=", verify=False)
         print(responseRaw)
         # Decode the content from bytes to string and then parse as JSON
         response_json = json.loads(responseRaw.content.decode('utf-8'))

@@ -22,8 +22,12 @@ import { LoadingService } from '../../../../../dgta-loading/loading.service';
 })
 export class DgtaDocumentFormModalComponent {
   @Input() catalogue: ICatalogue = {}
+  @Input() documents: IDocument[] = []
+
   @Output() closeDocumentFormModalE = new EventEmitter()
-  @Output() emitterGetDocuments = new EventEmitter()
+  @Output() emitterGetDocumentsE = new EventEmitter()
+
+  failedUploading: string[] = []
 
   topics: string[] = []
 
@@ -45,6 +49,11 @@ export class DgtaDocumentFormModalComponent {
   dataUser: any = {}
 
   attachmentPdf: IAttachment = {}
+  attachmentsPdf: IAttachment[] = []
+  isSingle = true
+  isMultiple = false
+
+  multipleFiles: any[] = []
 
   constructor(private http: HttpService,
     private sessionService: SessionService,
@@ -142,7 +151,7 @@ export class DgtaDocumentFormModalComponent {
           if (response.code == 200) {
             alert("Hai aggiornato il catalogo")
 
-            this.emitterGetDocuments.emit()
+            this.emitterGetDocumentsE.emit()
             this.closeDocumentFormModalE.emit()
           } else {
             alert("Errore server. Contattare il supporto.")
@@ -237,5 +246,253 @@ export class DgtaDocumentFormModalComponent {
         this.owner = this.dataUser.owners[0]
       }
     })
+  }
+
+  toggleIsSingle() {
+    this.isSingle = true
+    this.isMultiple = false
+  }
+
+  toggleIsMultiple() {
+    this.isSingle = false
+    this.isMultiple = true
+  }
+
+  onUploadFiles(e: any) {
+    for (let file of e.target.files) {
+      if (file && file.type == "application/pdf") {
+
+        this.multipleFiles.push(file)
+
+      } else if (file.type != "application/pdf") {
+        alert("Caricare soltanto file pdf")
+      }
+    }
+  }
+
+  addDocumentMultiple() {
+    this.addDocumentMultipleFirstStep(0)
+
+  }
+
+  addDocumentMultipleFirstStep(index: number) {
+    let file = this.multipleFiles[index]
+    let parentId = this.catalogue.id
+
+    let history: ILog = {
+      id: "0",
+      date: new Date().toISOString(),
+      actionLog: ActionLogEnum.CREATION_DOCUMENT,
+      user: this.sessionService.user
+    }
+
+    let state: IDocumentState = {
+      id: "0",
+      stateValue: this.rawData.documentState.acceptance,
+      user: this.sessionService.user,
+      date: new Date().toISOString()
+    }
+
+    // let attachments: IAttachment[] = []
+    // if(attachmentPdf) {
+    //   attachments = [attachmentPdf]
+    // }
+
+    let payload: any = {
+      "parentId": parentId,
+      "name": file.name.replace(".pdf", ""),
+      "history": JSON.stringify([history]),
+      "attachments": JSON.stringify([]),
+      "deviceIds": JSON.stringify([]),
+      "states": JSON.stringify([state]),
+      "topics": JSON.stringify([]),
+      "placement": JSON.stringify([]),
+      "owners": JSON.stringify([this.sessionService.user])
+    }
+
+    console.log(payload)
+
+    this.loadingService.isLoading = true
+    this.http.addDocument(payload).subscribe({
+      next: (response: any) => {
+        this.loadingService.isLoading = false
+
+        if (response.code == 200) {
+          // alert("Hai aggiornato il catalogo")
+
+          // this.emitterGetDocuments.emit()
+
+          let payload = {
+            parentId: this.catalogue.id,
+            name: file.name.replace(".pdf", "")
+          }
+
+          this.loadingService.isLoading = true
+          setTimeout(() => {
+            this.http.getDocuments(payload).subscribe({
+              next: (response: any) => {
+                this.loadingService.isLoading = false
+  
+                let documents = []
+                for (let documentRaw of response.documents!) {
+                  let document: any = {}
+                  for (let keyDocument of Object.keys(documentRaw)) {
+                    if (this.isParsable(documentRaw[keyDocument])) {
+                      document[keyDocument] = JSON.parse(documentRaw[keyDocument])
+                    } else {
+                      document[keyDocument] = documentRaw[keyDocument]
+                    }
+                  }
+  
+                  documents.push(document)
+                }
+  
+                documents = JSON.parse(JSON.stringify(documents))
+  
+                let documentF: IDocument = documents.find((documentFromList: IDocument) => documentFromList.name == file.name.replace(".pdf", ""))!
+                console.log("AAA", documentF, documents, file.name.replace(".pdf", ""))
+                if (documentF) {
+                  this.addDocumentMultipleSecondStep(documentF, index)
+                } else {
+                  this.failedUploading.push(file.name)
+                  this.addDocumentMultipleFirstStep(index + 1)
+                }
+              }
+            })
+          },5000)
+        } else {
+          alert("Errore server. Contattare il supporto.")
+        }
+      },
+      error: (error: any) => {
+        this.loadingService.isLoading = false
+        console.error(error)
+      }
+    })
+
+  }
+
+  isParsable(inputString: string): boolean {
+    try {
+      // Try to parse the string into an object
+      JSON.parse(inputString);
+      return true; // If successful, return true
+    } catch (error) {
+      return false; // If parsing fails, return false
+    }
+
+  }
+
+
+  addDocumentMultipleSecondStep(document: IDocument, index: number) {
+    let file = this.multipleFiles[index]
+
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+
+      let attachmentPdf = {
+        name: file.name,
+        ext: "pdf",
+      }
+
+      let parentId = this.catalogue.id
+
+      let history: ILog = {
+        id: document.history!.length.toString(),
+        date: new Date().toISOString(),
+        actionLog: ActionLogEnum.UPDATE_DOCUMENT_ATTACHMENT,
+        user: this.sessionService.user
+      }
+
+
+      let payload: any = {
+        "parentId": parentId,
+        "id": document.id,
+        "name": document.name,
+        "history": JSON.stringify([history]),
+        "attachments": JSON.stringify([attachmentPdf]),
+        "deviceIds": JSON.stringify([]),
+        "states": JSON.stringify(document.states),
+        "topics": JSON.stringify(document.topics),
+        "placement": JSON.stringify(document.placement),
+        "owners": JSON.stringify(document.owners)
+      }
+
+      this.http.addDocument(payload).subscribe({
+        next: (response: any) => {
+
+            if (response.code == 200) {
+              let attachmentPdf = {
+                name: file.name,
+                ext: "pdf",
+                base64: e.target.result.replace("data:application/pdf;base64,", "")
+              }
+
+              let parentId = this.catalogue.id
+
+              let payload: any = {
+                "parentId": parentId,
+                "id": document.id,
+                "name": document.name,
+                "history": JSON.stringify(document.history),
+                "attachments": JSON.stringify([attachmentPdf]),
+                "deviceIds": JSON.stringify([]),
+                "states": JSON.stringify(document.states),
+                "topics": JSON.stringify(document.topics),
+                "placement": JSON.stringify(document.placement),
+                "owners": JSON.stringify(document.owners)
+              }
+
+              console.log(payload)
+
+              this.loadingService.isLoading = true
+
+              setTimeout(() => {
+                this.http.uploadFile(payload).subscribe({
+                  next: (response: any) => {
+                      if (response.code == 200) {
+                        index += 1
+                        this.loadingService.isLoading = false
+                        if (index < this.multipleFiles.length) {
+                          this.addDocumentMultipleFirstStep(index)
+                        } else {
+                          alert("Hai aggiornato il catalogo")
+  
+                          if (this.failedUploading.length) {
+                            let msg = "Errore per caricare i seguenti file:\n"
+    
+                            for (let notUploadedFile of this.failedUploading) {
+                              msg += notUploadedFile + "\n"
+                            }
+                            alert(msg)
+                          }
+                          this.emitterGetDocumentsE.emit()
+                          this.closeDocumentFormModalE.emit()
+  
+                        }
+                      }
+                  }
+                })
+              },5000)
+              
+
+            } else {
+              alert("Errore server. Contattare il supporto.")
+            }
+
+
+        },
+        error: (error: any) => {
+          this.loadingService.isLoading = false
+          console.error(error)
+        }
+      })
+
+
+    };
+
+    reader.readAsDataURL(file);
+
   }
 }
