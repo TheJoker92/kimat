@@ -95,7 +95,7 @@
                 (closeOwnersModalE)="closeOwnersModal(document)"></dgta-owners-document-modal>
 
             <dgta-collocation-document-modal *ngIf="isOpenCollocationModal" [document]="document"
-                (closeCollocationModalE)="closeCollocationModal(document)"
+                (closeCollocationModalE)="closeCollocationModal($event)"
                 (getDocumentsE)="getDocuments()"></dgta-collocation-document-modal>
 
             <dgta-history-document-modal *ngIf="isOpenHistoryDocumentModal" [document]="document"

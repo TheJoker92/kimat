@@ -239,9 +239,19 @@ openCollocationModal(document: IDocument) {
   this.isOpenCollocationModal = true
 }
 
-closeCollocationModal(document: IDocument) {
-  this.document = {}
+closeCollocationModal(update?: any) {
   this.isOpenCollocationModal = false
+
+  if(update) {
+    console.log("length BEFORE", this.document.placement)
+    this.document = this.documents.find((rawDocument: IDocument) => this.document.id == rawDocument.id)!
+    console.log("length AFTER", this.document.placement)
+    setTimeout(() => {
+      this.isOpenCollocationModal = true
+    },100)
+
+
+  }
 }
 
 openOwnersModal(document: IDocument) {

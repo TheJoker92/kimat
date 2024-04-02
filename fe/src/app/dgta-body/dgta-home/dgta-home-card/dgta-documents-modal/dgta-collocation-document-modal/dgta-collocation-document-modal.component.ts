@@ -23,16 +23,29 @@ export class DgtaCollocationDocumentModalComponent {
 
   places: IPlace[] = []
 
+  currentPlace: IPlace = {}
+
+  isVoidCollocationHistory = false
+
   constructor() {
   }
 
   ngOnInit() {
-    this.document.placement![0]["date"] = this.document.history![0].date!
-    console.log(this.document.placement)
+    if (this.document.placement && this.document.placement.length) {
+
+      this.document.placement![0]["date"] = this.document.history![0].date!
+      console.log(this.document.placement)
+  
+      this.currentPlace = this.document.placement![this.document.placement!.length -1]
+  
+      console.log(this.document.placement)
+    } else {
+      this.isVoidCollocationHistory = true
+    }
   }
 
-  close() {
-    this.closeCollocationModalE.emit()
+  close(update?: boolean) {
+    this.closeCollocationModalE.emit(update)
   }
 
   formatDate (date: string) {
@@ -50,5 +63,6 @@ export class DgtaCollocationDocumentModalComponent {
 
   getDocumentsEmitter() {
     this.getDocumentsE.emit()
+    this.close(true)
   }
 }

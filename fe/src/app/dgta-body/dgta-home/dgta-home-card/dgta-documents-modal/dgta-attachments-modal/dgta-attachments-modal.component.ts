@@ -54,7 +54,7 @@ export class DgtaAttachmentsModalComponent {
 
   getPdf() {
     this.loadingService.isLoading = true
-    fetch("https://127.0.0.1:8000/pdf/" + this.document.id!).then((result) => {
+    fetch(this.http.BASE_URL + "pdf/" + this.document.id!).then((result) => {
       return result.json()
     })
     .then((result) => {

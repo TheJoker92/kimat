@@ -2,70 +2,76 @@
 
 </div>
 <div class="container" [ngClass]="{'opacity': isOpenUpdateCollocationModal}">
-    <div class="box-form column-center-spacebetween">
-        <div class="ml10px row-center-space-between p10px">
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    palazzo
-                </h4>
+    <div class="box-form column-center-center p10px">
+        <h3 class="ml10px">{{ document.name }}</h3>
+        <div class="row-center-space-between">
+            <div *ngIf="isVoidCollocationHistory" class="row-center-center">
+                Non è stato dato nessun collocamento.
             </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    piano
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    stanza
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    settore
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    scaffale
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    posizione
-                </h4>
-            </div>
-            <div class="h20px w10p row-center-center">
-                <h4>
-                    data
-                </h4>
-            </div>
-        </div>
-        <div *ngFor="let place of document.placement">
-            <div class="ml10px row-center-space-between p10px">
-                <div class="h20px w10p row-center-center row-center-center">
-                        {{ place.palace | defaultDash }}
+            <div *ngIf="!isVoidCollocationHistory" class="column-top-left w300px">
+                <div class="column-top-left w300px">
+                    <h4>
+                        Corrente
+                    </h4>
+                    <div class="row-center-center w90p">
+                        <div class="w100p nowrap">
+                            {{ formatDate(currentPlace.date!) | defaultDash}}
+                        </div>
+                        <div class="column-top-left w300px">
+                            <div class="h20px row-center-center row-center-center">
+                                {{ currentPlace.palace | defaultDash }}
+                            </div>
+                            <div class="h20px row-center-center row-center-center">
+                                {{ currentPlace.floor | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ currentPlace.room | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ currentPlace.sector | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ currentPlace.rack | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ currentPlace.position | defaultDash}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="h20px w10p row-center-center row-center-center">
-                        {{ place.floor | defaultDash}}
-                </div>
-                <div class="h20px w10p row-center-center">
-                        {{ place.room  | defaultDash}}
-                </div>
-                <div class="h20px w10p row-center-center">
-                        {{ place.sector  | defaultDash}}
-                </div>
-                <div class="h20px w10p row-center-center">
-                    {{ place.rack  | defaultDash}}
-                </div>
-                <div class="h20px w10p row-center-center">
-                    {{ place.position | defaultDash}}
-                </div>
-                <div class="h20px w10p row-center-center">
-                    {{ formatDate(place.date!) | defaultDash}}
+                <h4 class="row-c">
+                    storico
+                </h4>
+                <div class="collocation-container w90p overflow-auto h128px">
+                    <div *ngFor="let place of document.placement; index as i" class="row-center-center w90p">
+                        <div class="w100p nowrap">
+                            {{ formatDate(place.date!) | defaultDash}}
+                        </div>
+                        <div class="ml10px column-top-left p10px w300px">
+                            <div class="h20px row-center-center row-center-center">
+                                {{ place.palace | defaultDash }}
+                            </div>
+                            <div class="h20px row-center-center row-center-center">
+                                {{ place.floor | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ place.room | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ place.sector | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ place.rack | defaultDash}}
+                            </div>
+                            <div class="h20px row-center-center">
+                                {{ place.position | defaultDash}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row-center-center">
+        </div>        
+        <div class="row-center-center mb10px">
             <button class="mt10px" (click)="close()">CHIUDI</button>
             <button class="mt10px" (click)="openUpdateCollocationModal()">RICOLLOCA</button>
         </div>

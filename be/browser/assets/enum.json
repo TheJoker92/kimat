@@ -17,7 +17,9 @@
         "document": {
             "add": "add",
             "getDocuments": "getDocuments",
-            "delete": "delete"
+            "delete": "delete",
+            "ocr": "ocr",
+            "base64": "base64"
         }
     },
     "error": {

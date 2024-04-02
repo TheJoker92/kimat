@@ -3,18 +3,21 @@
 </div>
 <div class="container">
     <div class="box-form column-center-spacebetween">
-        <h3 class="row-center-center">Storico di '{{ catalogue.title }}'</h3>
-        <div *ngFor="let log of history" class="column-top-left mt10px ml10px w80p">
-            <div class="row-center-space-between">
-                <strong>{{ log.actionLog | defaultDash}}</strong>
-            </div>
-            <div class="row-center-space-between">
-                <div>
-                    {{ getUserFullName(log) | defaultDash }}
+        <h3 class="row-center-center ml10px">Storico di '{{ catalogue.title }}'</h3>
+        <div class="h450px overflow-auto">
+
+            <div *ngFor="let log of history" class="column-top-left mt10px ml10px w80p">
+                <div class="row-center-space-between">
+                    <strong>{{ log.actionLog | defaultDash}}</strong>
                 </div>
-            </div>
-            <div class="row-center-space-between">
-                {{ formatDate(log.date!) | defaultDash}}
+                <div class="row-center-space-between">
+                    <div>
+                        {{ getUserFullName(log) | defaultDash }}
+                    </div>
+                </div>
+                <div class="row-center-space-between">
+                    {{ formatDate(log.date!) | defaultDash}}
+                </div>
             </div>
         </div>
         <div class="box-form column-center-center">
