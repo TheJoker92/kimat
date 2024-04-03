@@ -512,7 +512,10 @@ export class DgtaDocumentFormModalComponent {
           "id": document.id,
           "name": document.name,
           "history": JSON.stringify(document.history),
-          "attachments": JSON.stringify(document.attachments),
+          "attachments": JSON.stringify({
+            name: document.name,
+            ext: "pdf"
+          }),
           "deviceIds": JSON.stringify([]),
           "states": JSON.stringify(document.states),
           "topics": JSON.stringify([deliberazioneTemaplateJSON]),
