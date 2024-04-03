@@ -507,25 +507,26 @@ export class DgtaDocumentFormModalComponent {
 
         deliberazioneTemaplateJSON.data = this.getDayNumber(deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(deliberazioneTemaplateJSON.annoStr)
 
+        let payload: any = {
+          "parentId": document.parentId,
+          "id": document.id,
+          "name": document.name,
+          "history": JSON.stringify(document.history),
+          "attachments": JSON.stringify(document.attachments),
+          "deviceIds": JSON.stringify([]),
+          "states": JSON.stringify(document.states),
+          "topics": JSON.stringify([deliberazioneTemaplateJSON]),
+          "placement": JSON.stringify(document.placement),
+          "owners": JSON.stringify(document.owners)
+        }
+
+        console.log(payload)
         this.http.addDocument(payload).subscribe({
           next: (response: any) => {
 
             if (response.code == 200) {
               
-              let payload: any = {
-                "parentId": document.parentId,
-                "id": document.id,
-                "name": document.name,
-                "history": JSON.stringify(document.history),
-                "attachments": JSON.stringify(document.attachments),
-                "deviceIds": JSON.stringify([]),
-                "states": JSON.stringify(document.states),
-                "topics": JSON.stringify([deliberazioneTemaplateJSON]),
-                "placement": JSON.stringify(document.placement),
-                "owners": JSON.stringify(document.owners)
-              }
-
-              console.log(payload)
+              
 
               this.loadingService.isLoading = true
 
