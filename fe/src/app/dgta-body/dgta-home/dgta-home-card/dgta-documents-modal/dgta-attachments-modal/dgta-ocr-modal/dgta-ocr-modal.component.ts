@@ -18,33 +18,33 @@ export class DgtaOcrModalComponent {
     let ocrTextNormalized = this.ocrText.toUpperCase().replace(/\s/g, "").trim()
     if (ocrTextNormalized.includes("GIUNTACOMUNALE")) {
       this.deliberazioneTemaplateJSON.documentType = "DELIBERAZIONE DELLA GIUNTA COMUNALE"
-       let stringTextElem = ocrTextNormalized.split("DELIBERAZIONEN.")[1]
+      let stringTextElem = ocrTextNormalized.split("DELIBERAZIONEN.")[1]
 
-       let numeroStrTmp: string = stringTextElem[0]
-       for (let index=1; index < stringTextElem.length; index++) {
+      let numeroStrTmp: string = stringTextElem[0]
+      for (let index = 1; index < stringTextElem.length; index++) {
 
-        if ( isNaN(Number(numeroStrTmp))) {
+        if (isNaN(Number(numeroStrTmp))) {
           break
         }
 
         numeroStrTmp += stringTextElem[index]
 
-       } 
-       this.deliberazioneTemaplateJSON.numero = numeroStrTmp.replace(/[^0-9]/g, '')
-
-       this.deliberazioneTemaplateJSON.oggetto = this.ocrText.split("OGGETTO")[1].split("L\u2019")[0]
-
-       let rawDate = ocrTextNormalized.split("L\u2019")[1].split("NELLA")[0]
-
-       this.deliberazioneTemaplateJSON.annoStr = rawDate.split("ANNO")[1].split(",")[0]
-       this.deliberazioneTemaplateJSON.giornoStr = rawDate.split("ADDI")[1].split("DEL")[0]
-       this.deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0]
-       this.deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0]
-       
-
-       this.deliberazioneTemaplateJSON.data = this.getDayNumber(this.deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(this.deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(this.deliberazioneTemaplateJSON.annoStr)
-       console.log(this.deliberazioneTemaplateJSON)    
       }
+      this.deliberazioneTemaplateJSON.numero = numeroStrTmp.replace(/[^0-9]/g, '')
+
+      this.deliberazioneTemaplateJSON.oggetto = this.ocrText.split("OGGETTO")[1].split("L\u2019")[0]
+
+      let rawDate = ocrTextNormalized.split("L\u2019")[1].split("NELLA")[0]
+
+      this.deliberazioneTemaplateJSON.annoStr = rawDate.split("ANNO")[1].split(",")[0]
+      this.deliberazioneTemaplateJSON.giornoStr = rawDate.split("ADDI")[1].split("DEL")[0]
+      this.deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0]
+      this.deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0]
+
+
+      this.deliberazioneTemaplateJSON.data = this.getDayNumber(this.deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(this.deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(this.deliberazioneTemaplateJSON.annoStr)
+      console.log(this.deliberazioneTemaplateJSON)
+    }
 
   }
 
@@ -121,6 +121,6 @@ export class DgtaOcrModalComponent {
     // Using string interpolation and padStart to pad with zero
     const paddedNum: string = num.toString().padStart(2, '0');
     return paddedNum;
-}
+  }
 
 }

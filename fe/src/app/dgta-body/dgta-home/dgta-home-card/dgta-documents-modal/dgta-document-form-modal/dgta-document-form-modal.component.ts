@@ -50,8 +50,8 @@ export class DgtaDocumentFormModalComponent {
 
   attachmentPdf: IAttachment = {}
   attachmentsPdf: IAttachment[] = []
-  isSingle = true
-  isMultiple = false
+  isSingle = false
+  isMultiple = true
 
   multipleFiles: any[] = []
 
@@ -332,7 +332,7 @@ export class DgtaDocumentFormModalComponent {
             this.http.getDocuments(payload).subscribe({
               next: (response: any) => {
                 this.loadingService.isLoading = false
-  
+
                 let documents = []
                 for (let documentRaw of response.documents!) {
                   let document: any = {}
@@ -343,12 +343,12 @@ export class DgtaDocumentFormModalComponent {
                       document[keyDocument] = documentRaw[keyDocument]
                     }
                   }
-  
+
                   documents.push(document)
                 }
-  
+
                 documents = JSON.parse(JSON.stringify(documents))
-  
+
                 let documentF: IDocument = documents.find((documentFromList: IDocument) => documentFromList.name == file.name.replace(".pdf", ""))!
                 console.log("AAA", documentF, documents, file.name.replace(".pdf", ""))
                 if (documentF) {
@@ -359,7 +359,7 @@ export class DgtaDocumentFormModalComponent {
                 }
               }
             })
-          },5000)
+          }, 5000)
         } else {
           alert("Errore server. Contattare il supporto.")
         }
@@ -422,64 +422,47 @@ export class DgtaDocumentFormModalComponent {
       this.http.addDocument(payload).subscribe({
         next: (response: any) => {
 
-            if (response.code == 200) {
-              let attachmentPdf = {
-                name: file.name,
-                ext: "pdf",
-                base64: e.target.result.replace("data:application/pdf;base64,", "")
-              }
-
-              let parentId = this.catalogue.id
-
-              let payload: any = {
-                "parentId": parentId,
-                "id": document.id,
-                "name": document.name,
-                "history": JSON.stringify(document.history),
-                "attachments": JSON.stringify([attachmentPdf]),
-                "deviceIds": JSON.stringify([]),
-                "states": JSON.stringify(document.states),
-                "topics": JSON.stringify(document.topics),
-                "placement": JSON.stringify(document.placement),
-                "owners": JSON.stringify(document.owners)
-              }
-
-              console.log(payload)
-
-              this.loadingService.isLoading = true
-
-              setTimeout(() => {
-                this.http.uploadFile(payload).subscribe({
-                  next: (response: any) => {
-                      if (response.code == 200) {
-                        index += 1
-                        this.loadingService.isLoading = false
-                        if (index < this.multipleFiles.length) {
-                          this.addDocumentMultipleFirstStep(index)
-                        } else {
-                          alert("Hai aggiornato il catalogo")
-  
-                          if (this.failedUploading.length) {
-                            let msg = "Errore per caricare i seguenti file:\n"
-    
-                            for (let notUploadedFile of this.failedUploading) {
-                              msg += notUploadedFile + "\n"
-                            }
-                            alert(msg)
-                          }
-                          this.emitterGetDocumentsE.emit()
-                          this.closeDocumentFormModalE.emit()
-  
-                        }
-                      }
-                  }
-                })
-              },5000)
-              
-
-            } else {
-              alert("Errore server. Contattare il supporto.")
+          if (response.code == 200) {
+            let attachmentPdf = {
+              name: file.name,
+              ext: "pdf",
+              base64: e.target.result.replace("data:application/pdf;base64,", "")
             }
+
+            let parentId = this.catalogue.id
+
+            let payload: any = {
+              "parentId": parentId,
+              "id": document.id,
+              "name": document.name,
+              "history": JSON.stringify(document.history),
+              "attachments": JSON.stringify([attachmentPdf]),
+              "deviceIds": JSON.stringify([]),
+              "states": JSON.stringify(document.states),
+              "topics": JSON.stringify(document.topics),
+              "placement": JSON.stringify(document.placement),
+              "owners": JSON.stringify(document.owners)
+            }
+
+            console.log(payload)
+
+            this.loadingService.isLoading = true
+
+            setTimeout(() => {
+              this.http.uploadFile(payload).subscribe({
+                next: (response: any) => {
+                  if (response.code == 200) {
+                    this.getOcr(document, index)
+
+                  }
+                }
+              })
+            }, 5000)
+
+
+          } else {
+            alert("Errore server. Contattare il supporto.")
+          }
 
 
         },
@@ -495,4 +478,168 @@ export class DgtaDocumentFormModalComponent {
     reader.readAsDataURL(file);
 
   }
+
+  getOcr(document: IDocument, index: number) {
+    let payload = {
+      id: document.id
+    }
+
+    this.loadingService.isLoading = true
+    this.http.getOcr(payload).subscribe({
+      next: (response: any) => {
+        this.loadingService.isLoading = false
+        let ocrText = response.text
+
+        let deliberazioneTemaplateJSON: any = {}
+
+
+        deliberazioneTemaplateJSON.oggetto = ocrText.split("OGGETTO")[1].split("L\u2019")[0]
+
+        let ocrTextNormalized = ocrText.toUpperCase().replace(/\s/g, "").trim()
+
+        let rawDate = ocrTextNormalized.split("L\u2019")[1].split("NELLA")[0]
+
+        deliberazioneTemaplateJSON.annoStr = rawDate.split("ANNO")[1].split(",")[0]
+        deliberazioneTemaplateJSON.giornoStr = rawDate.split("ADDI")[1].split("DEL")[0]
+        deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0]
+        deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0]
+
+
+        deliberazioneTemaplateJSON.data = this.getDayNumber(deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(deliberazioneTemaplateJSON.annoStr)
+
+        this.http.addDocument(payload).subscribe({
+          next: (response: any) => {
+
+            if (response.code == 200) {
+              
+              let payload: any = {
+                "parentId": document.parentId,
+                "id": document.id,
+                "name": document.name,
+                "history": JSON.stringify(document.history),
+                "attachments": JSON.stringify(document.attachments),
+                "deviceIds": JSON.stringify([]),
+                "states": JSON.stringify(document.states),
+                "topics": JSON.stringify([deliberazioneTemaplateJSON]),
+                "placement": JSON.stringify(document.placement),
+                "owners": JSON.stringify(document.owners)
+              }
+
+              console.log(payload)
+
+              this.loadingService.isLoading = true
+
+              setTimeout(() => {
+                index += 1
+                this.loadingService.isLoading = false
+                if (index < this.multipleFiles.length) {
+                  this.addDocumentMultipleFirstStep(index)
+                } else {
+                  alert("Hai aggiornato il catalogo")
+
+                  if (this.failedUploading.length) {
+                    let msg = "Errore per caricare i seguenti file:\n"
+
+                    for (let notUploadedFile of this.failedUploading) {
+                      msg += notUploadedFile + "\n"
+                    }
+                    alert(msg)
+                  }
+                  this.emitterGetDocumentsE.emit()
+                  this.closeDocumentFormModalE.emit()
+
+                }
+              }, 200)
+
+
+            } else {
+              alert("Errore server. Contattare il supporto.")
+            }
+
+
+          },
+          error: (error: any) => {
+            this.loadingService.isLoading = false
+            console.error(error)
+          }
+        })
+
+      },
+      error: (error) => {
+        this.loadingService.isLoading = false
+        console.error(error)
+      }
+    })
+  }
+
+
+
+  getYearNumber(numberStr: string) {
+    let numberArray = numberStr.toLowerCase().split("mila")
+
+    return this.numberJson[numberArray[0]] * 1000 + this.numberJson[numberArray[1]]
+  }
+
+  getDayNumber(dayStr: string) {
+    return this.padWithZero(this.numberJson[dayStr.toLowerCase()])
+  }
+
+  numberJson: any = {
+    uno: 1,
+    due: 2,
+    tre: 3,
+    quattro: 4,
+    cinque: 5,
+    sei: 6,
+    sette: 7,
+    otto: 8,
+    nove: 9,
+    dieci: 10,
+    undici: 11,
+    dodici: 12,
+    tredici: 13,
+    quattordici: 14,
+    quindici: 15,
+    sedici: 16,
+    diciassette: 17,
+    diciotto: 18,
+    diciannove: 19,
+    venti: 20,
+    ventuno: 21,
+    ventidue: 22,
+    ventitre: 23,
+    ventiquattro: 24,
+    venticinque: 25,
+    ventisei: 26,
+    ventisette: 27,
+    ventotto: 28,
+    ventinove: 29,
+    trenta: 30
+  };
+
+  getMonthNumber(monthStr: string) {
+    return this.padWithZero(this.monthJson[monthStr.toLowerCase()])
+  }
+
+  monthJson: any = {
+    gennaio: 1,
+    febbraio: 2,
+    marzo: 3,
+    aprile: 4,
+    maggio: 5,
+    giugno: 6,
+    luglio: 7,
+    agosto: 8,
+    settembre: 9,
+    ottobre: 10,
+    novembre: 11,
+    dicembre: 12,
+  }
+
+  padWithZero(num: number): string {
+    // Using string interpolation and padStart to pad with zero
+    const paddedNum: string = num.toString().padStart(2, '0');
+    return paddedNum;
+  }
+
 }
