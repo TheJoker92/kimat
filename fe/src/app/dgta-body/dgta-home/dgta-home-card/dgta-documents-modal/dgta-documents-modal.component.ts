@@ -71,9 +71,9 @@ export class DgtaDocumentsModalComponent {
     private sessionService: SessionService,
     private loadingService: LoadingService,
     private elementRef: ElementRef,
-    private cdRef:ChangeDetectorRef) {
-    
-     
+    private cdRef: ChangeDetectorRef) {
+
+
   }
 
   ngOnInit() {
@@ -82,7 +82,7 @@ export class DgtaDocumentsModalComponent {
   }
 
   ngAfterViewInit() {
-    
+
 
   }
 
@@ -91,9 +91,9 @@ export class DgtaDocumentsModalComponent {
 
     if (currentScroll > 0) {
 
-        window.requestAnimationFrame(this.smoothscroll);
+      window.requestAnimationFrame(this.smoothscroll);
 
-        window.scrollTo(0, currentScroll - (currentScroll / 8));
+      window.scrollTo(0, currentScroll - (currentScroll / 8));
 
     }
   }
@@ -115,12 +115,12 @@ export class DgtaDocumentsModalComponent {
       parentId: this.catalogue.id
     }
 
-    if(term) {
+    if (term) {
       payload["name"] = term
       // payload["topics"] = term
     }
 
-    if(dates) {
+    if (dates) {
 
     }
 
@@ -141,7 +141,7 @@ export class DgtaDocumentsModalComponent {
           }
 
           this.documents.push(document)
-          
+
           console.log("AAAA", this.documents)
           this.documents = JSON.parse(JSON.stringify(this.documents))
 
@@ -151,16 +151,15 @@ export class DgtaDocumentsModalComponent {
           let payload: any = {
             parentId: this.catalogue.id
           }
-      
-          if(term) {
-            delete payload["name"]
-            payload["topics"] = term
-          }
+
+          delete payload["name"]
+          payload["topics"] = term
+
 
           this.http.getDocuments(payload).subscribe({
             next: (response: any) => {
               this.loadingService.isLoading = false
-      
+
               // this.documents = []
               for (let documentRaw of response.documents!) {
                 let document: any = {}
@@ -170,24 +169,24 @@ export class DgtaDocumentsModalComponent {
                   } else {
                     document[keyDocument] = documentRaw[keyDocument]
                   }
-                  
-                  if (this.documents.filter((presentedDocument:IDocument) => document.id == presentedDocument.id).length == 0) {
+
+                  if (this.documents.filter((presentedDocument: IDocument) => document.id == presentedDocument.id).length == 0) {
                     this.documents.push(document)
                   }
                 }
-      
-                
+
+
                 console.log("AAAA", this.documents)
                 this.documents = JSON.parse(JSON.stringify(this.documents))
                 // this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
               }
-      
-      
+
+
             },
             error: (error: any) => {
               console.error(error)
               this.loadingService.isLoading = false
-      
+
             }
           })
 
@@ -262,109 +261,109 @@ export class DgtaDocumentsModalComponent {
         console.error(error)
       }
     })
-}
-
-closeAttachmentsModal(document: IDocument) {
-  this.document = {}
-  this.isOpenAttachmentModal = false
-}
-
-openViewBarcodeModal(document: IDocument) {
-  this.document = document
-  this.isOpenViewBarcodeModal = true
-}
-
-closeViewBarcodeModal(document: IDocument) {
-  this.document = {}
-  this.isOpenViewBarcodeModal = false
-}
-
-openHistoryModal(document: IDocument) {
-  this.document = document
-  this.isOpenHistoryDocumentModal = true
-}
-
-closeHistoryModal() {
-  this.document = {}
-  this.isOpenHistoryDocumentModal = false
-}
-
-openCollocationModal(document: IDocument) {
-  this.document = document
-  this.isOpenCollocationModal = true
-}
-
-closeCollocationModal(update?: any) {
-  this.isOpenCollocationModal = false
-
-  if(update) {
-    console.log("length BEFORE", this.document.placement)
-    this.document = this.documents.find((rawDocument: IDocument) => this.document.id == rawDocument.id)!
-    console.log("length AFTER", this.document.placement)
-    setTimeout(() => {
-      this.isOpenCollocationModal = true
-    },100)
-
-
   }
-}
 
-openOwnersModal(document: IDocument) {
-  this.document = document
-  this.isOpenOwnersModal = true
-}
-
-closeOwnersModal(document: IDocument) {
-  this.document = {}
-  this.isOpenOwnersModal = false
-}
-
-openStateModal(document: IDocument) {
-  this.document = document
-  this.isOpenStateModal = true
-}
-
-closeStateModal(document: IDocument) {
-  this.document = {}
-  this.isOpenStateModal = false
-}
-
-deleteDocument(document: IDocument) {
-  this.document = {}
-
-  let payload = {
-    id: document.id
+  closeAttachmentsModal(document: IDocument) {
+    this.document = {}
+    this.isOpenAttachmentModal = false
   }
-  this.http.deleteDocuments(payload).subscribe({
-    next: (response: any) => {
-      if (response.code == 200) {
-        alert("L'operazione è riuscita")
-        this.getDocuments()
-      } else {
-        alert("Qualcosa è andato storto")
-      }
-    },
-    error: (error: any) => {
-      console.error(error)
+
+  openViewBarcodeModal(document: IDocument) {
+    this.document = document
+    this.isOpenViewBarcodeModal = true
+  }
+
+  closeViewBarcodeModal(document: IDocument) {
+    this.document = {}
+    this.isOpenViewBarcodeModal = false
+  }
+
+  openHistoryModal(document: IDocument) {
+    this.document = document
+    this.isOpenHistoryDocumentModal = true
+  }
+
+  closeHistoryModal() {
+    this.document = {}
+    this.isOpenHistoryDocumentModal = false
+  }
+
+  openCollocationModal(document: IDocument) {
+    this.document = document
+    this.isOpenCollocationModal = true
+  }
+
+  closeCollocationModal(update?: any) {
+    this.isOpenCollocationModal = false
+
+    if (update) {
+      console.log("length BEFORE", this.document.placement)
+      this.document = this.documents.find((rawDocument: IDocument) => this.document.id == rawDocument.id)!
+      console.log("length AFTER", this.document.placement)
+      setTimeout(() => {
+        this.isOpenCollocationModal = true
+      }, 100)
+
+
     }
-  })
-
-}
-
-toggleTopics() {
-  if(this.showTopics) {
-    this.showTopics = false
-    this.toggleTopicsLabel = "mostra categorie"
-  } else {
-    this.showTopics = true
-    this.toggleTopicsLabel = "nascondi categorie"
   }
-}
 
-hideTopics() {
-  if(this.showTopics) {
-    this.showTopics = false
-    this.toggleTopicsLabel = "mostra categorie"
+  openOwnersModal(document: IDocument) {
+    this.document = document
+    this.isOpenOwnersModal = true
   }
-}
+
+  closeOwnersModal(document: IDocument) {
+    this.document = {}
+    this.isOpenOwnersModal = false
+  }
+
+  openStateModal(document: IDocument) {
+    this.document = document
+    this.isOpenStateModal = true
+  }
+
+  closeStateModal(document: IDocument) {
+    this.document = {}
+    this.isOpenStateModal = false
+  }
+
+  deleteDocument(document: IDocument) {
+    this.document = {}
+
+    let payload = {
+      id: document.id
+    }
+    this.http.deleteDocuments(payload).subscribe({
+      next: (response: any) => {
+        if (response.code == 200) {
+          alert("L'operazione è riuscita")
+          this.getDocuments()
+        } else {
+          alert("Qualcosa è andato storto")
+        }
+      },
+      error: (error: any) => {
+        console.error(error)
+      }
+    })
+
+  }
+
+  toggleTopics() {
+    if (this.showTopics) {
+      this.showTopics = false
+      this.toggleTopicsLabel = "mostra categorie"
+    } else {
+      this.showTopics = true
+      this.toggleTopicsLabel = "nascondi categorie"
+    }
+  }
+
+  hideTopics() {
+    if (this.showTopics) {
+      this.showTopics = false
+      this.toggleTopicsLabel = "mostra categorie"
+    }
+  }
 }
