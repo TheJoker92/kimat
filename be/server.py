@@ -21,8 +21,18 @@ nltk.download('words')
 nltk.download('universal_tagset')
 
 
+flaskstaticFolderPath = ""
+basePathAsset = ""
 
-app = Flask(__name__, static_folder="/Users/ADMIN/Desktop/projects/dgta/browser")
+with open('.env', 'r') as file:
+    # Read all lines from the file and store them in a list
+    lines = file.readlines()
+    flaskstaticFolderPath = lines[0]
+    basePathAsset = lines[1]
+
+
+
+app = Flask(__name__, static_folder=flaskstaticFolderPath)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1000 * 1000
 cors = CORS(app, origins = ["*"])
 
@@ -56,7 +66,7 @@ def get_ocr():
     print(data)
     id = data["id"]
 
-    file_path_noext = "/Users/ADMIN/Desktop/projects/kimat/be/folders/" + id + "/" + id  
+    file_path_noext = basePathAsset + id + "/" + id  
     if (os.path.exists(file_path_noext + ".txt")):
         with open(file_path_noext + ".txt", 'r') as theFile:
             text = theFile.read()
@@ -98,7 +108,7 @@ def get_ocr():
 
 @app.route("/<ext>/<id>")
 def resource_src(ext, id):
-    file_path = "/Users/ADMIN/Desktop/projects/kimat/be/folders/" + id + "/" + id + "." + ext
+    file_path = basePathAsset + id + "/" + id + "." + ext
 
     result = {}
     numOfPages = 0
@@ -639,7 +649,7 @@ def getDocuments():
 
         query = "parentId%3A" + data["parentId"]
         if "name" in data.keys():
-            if " " in data["title"]:
+            if " " in data["name"]:
                 data["name"] = "(" + data["name"] + ")"
             query += "name%3A" + data["name"].replace(" ","%20") + "%0A"
             print("A")
