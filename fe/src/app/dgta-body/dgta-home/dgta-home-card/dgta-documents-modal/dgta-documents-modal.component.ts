@@ -116,7 +116,7 @@ export class DgtaDocumentsModalComponent {
     }
 
     if(term) {
-      payload["attachments"] = term
+      payload["name"] = term
       payload["topics"] = term
     }
 
