@@ -310,7 +310,7 @@ export class DgtaDocumentFormModalComponent {
       "owners": JSON.stringify([this.sessionService.user])
     }
 
-    console.log(payload)
+    console.log("FIRST STEP", index, payload)
 
     this.loadingService.isLoading = true
     this.http.addDocument(payload).subscribe({
@@ -326,6 +326,8 @@ export class DgtaDocumentFormModalComponent {
             parentId: this.catalogue.id,
             name: file.name.replace(".pdf", "")
           }
+
+          console.log("UPLOAD PDF", index, payload)
 
           this.loadingService.isLoading = true
           setTimeout(() => {
@@ -350,7 +352,7 @@ export class DgtaDocumentFormModalComponent {
                 documents = JSON.parse(JSON.stringify(documents))
 
                 let documentF: IDocument = documents.find((documentFromList: IDocument) => documentFromList.name == file.name.replace(".pdf", ""))!
-                console.log("AAA", documentF, documents, file.name.replace(".pdf", ""))
+                // console.log("AAA", documentF, documents, file.name.replace(".pdf", ""))
                 if (documentF) {
                   this.addDocumentMultipleSecondStep(documentF, index)
                 } else {
@@ -419,6 +421,8 @@ export class DgtaDocumentFormModalComponent {
         "owners": JSON.stringify(document.owners)
       }
 
+      console.log("SECOND STEP", index, payload)
+
       this.http.addDocument(payload).subscribe({
         next: (response: any) => {
 
@@ -444,7 +448,7 @@ export class DgtaDocumentFormModalComponent {
               "owners": JSON.stringify(document.owners)
             }
 
-            console.log(payload)
+            console.log("UPLOAD PDF SECOND STEP", index, payload)
 
             this.loadingService.isLoading = true
 
@@ -483,6 +487,8 @@ export class DgtaDocumentFormModalComponent {
     let payload = {
       id: document.id
     }
+
+    console.log("GET OCR", index, payload)
 
     this.loadingService.isLoading = true
     this.http.getOcr(payload).subscribe({

@@ -19,7 +19,11 @@ nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
 nltk.download('words')
 nltk.download('universal_tagset')
+
+
+
 app = Flask(__name__, static_folder="/Users/ADMIN/Desktop/projects/dgta/browser")
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1000 * 1000
 cors = CORS(app, origins = ["*"])
 
 SOLR_URL = "127.0.0.1"
@@ -634,14 +638,18 @@ def getDocuments():
         # solr.add([data])
 
         query = "parentId%3A" + data["parentId"]
-        fieldQuery = ""
         if "name" in data.keys():
-            if " " in data["name"]:
+            if " " in data["title"]:
                 data["name"] = "(" + data["name"] + ")"
-            fieldQuery += "fq=name%3A" + data["name"].replace(" ","%20")
-
+            query += "name%3A" + data["name"].replace(" ","%20") + "%0A"
+            print("A")
+        else:
+            query += "*%3A*%0A"
+        
         if "topics" in data.keys():
-            fieldQuery += "&fq=topics%3A(" + data["topics"] + ")"
+            query += "topics%3A(" + data["topics"] + ")"
+        else:
+            query += "*%3A*"
         
 
         print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&useParams=")
@@ -649,7 +657,7 @@ def getDocuments():
 
         # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
         
-        responseRaw = requests.get(BASE_URL + "/documents/select?" + fieldQuery + "&indent=true&q.op=AND&q=" + query + "&sort=id+asc&useParams=", verify=False)
+        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&useParams=", verify=False)
         print(responseRaw)
         # Decode the content from bytes to string and then parse as JSON
         response_json = json.loads(responseRaw.content.decode('utf-8'))
