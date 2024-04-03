@@ -641,7 +641,7 @@ def getDocuments():
             fieldQuery += "fq=name%3A" + data["name"].replace(" ","%20")
 
         if "topics" in data.keys():
-            fieldQuery += "&fq=topics%3A%22" + data["topics"] + "%22"
+            fieldQuery += "&fq=topics%3A" + data["topics"]
         
 
         print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&useParams=")
