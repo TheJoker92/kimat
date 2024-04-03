@@ -13,17 +13,17 @@ import { DgtaCollocationDocumentModalComponent } from './dgta-collocation-docume
 import { DgtaHistoryDocumentModalComponent } from './dgta-history-document-modal/dgta-history-document-modal.component';
 import { DgtaBarcodeDocumentModalComponent } from './dgta-barcode-document-modal/dgta-barcode-document-modal.component';
 import { DgtaStateDocumentModalComponent } from './dgta-state-document-modal/dgta-state-document-modal.component';
-import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DgtaAttachmentsModalComponent } from './dgta-attachments-modal/dgta-attachments-modal.component';
 import { ActionLogEnum } from '../../../../interfaces/ILog';
 import { SessionService } from '../../../../session.service';
 import { DgtaTopicCardComponent } from '../../dgta-topic-card/dgta-topic-card.component';
+import { DgtaSearchDocumentComponent } from './dgta-search-document/dgta-search-document.component';
 
 @Component({
   selector: 'dgta-documents-modal',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, DgtaTopicCardComponent, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent, PdfViewerModule, DgtaAttachmentsModalComponent],
+  imports: [CommonModule, FontAwesomeModule, DgtaTopicCardComponent, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent, PdfViewerModule, DgtaAttachmentsModalComponent, DgtaSearchDocumentComponent],
   templateUrl: './dgta-documents-modal.component.html',
   styleUrl: './dgta-documents-modal.component.scss'
 })
@@ -110,11 +110,19 @@ export class DgtaDocumentsModalComponent {
     this.isOpenDocumentFormModal = false
   }
 
-  getDocuments() {
-    let payload = {
+  getDocuments(term?: string, dates?: any) {
+    let payload: any = {
       parentId: this.catalogue.id
     }
 
+    if(term) {
+      payload["name"] = term
+      payload["topics"] = term
+    }
+
+    if(dates) {
+
+    }
 
     this.loadingService.isLoading = true
     this.http.getDocuments(payload).subscribe({

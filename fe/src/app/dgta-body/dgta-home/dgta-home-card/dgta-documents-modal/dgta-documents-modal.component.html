@@ -1,25 +1,19 @@
-<!-- <dgta-search-catalogue  (getCataloguesE)="getCatalogues()"
-                        (hideTopicsE)="hideTopics()"></dgta-search-catalogue> -->
-
-
-
-
 <div class="container column-top-left">
     <div class="row-center-center">
         <button class="m10px" (click)="close()">CHIUDI</button>
     </div>
     <div class="w-100 h-100c container-scroll">
-        <div class="row-center-left mb10px">
-        </div>
+            <dgta-search-document  (getDocumentsE)="getDocuments()"
+                        (hideTopicsE)="hideTopics()"></dgta-search-document>
         <div class="row-center-left mb10px">
             <h2 class="ml10px color-white">DOCUMENTI</h2> 
             <div class="row-left-left p10px" (click)="openModalDocumentFormModal()">
                 <fa-icon class="cursor-pointer font-size-15em" [icon]="faFolderPlus"></fa-icon>
             </div>
         </div>
-        <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong>
-        <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
-            (getCataloguesByTopicE)="getDocuments()"></dgta-topic-card>
+        <!-- <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong> -->
+        <!-- <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
+            (getCataloguesByTopicE)="getDocuments()"></dgta-topic-card> -->
         <div *ngFor="let documentListed of documents" class="column-top-right">
             <div class="column-top-left w100p">
                 <div class="row-center-space-between  w100p">

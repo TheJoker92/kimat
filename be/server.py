@@ -638,7 +638,9 @@ def getDocuments():
             if " " in data["name"]:
                 data["name"] = "(" + data["name"] + ")"
             query += "%2C%0Aname%3A" + data["name"].replace(" ","%20") + "%0A"
-            print("A")
+
+        if "topics" in data.keys():
+            query += "topics%3A%22" + data["topics"] + "%22"
         
 
         print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&useParams=")
