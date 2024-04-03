@@ -3,7 +3,7 @@
         <button class="m10px" (click)="close()">CHIUDI</button>
     </div>
     <div class="w-100 h-100c container-scroll">
-            <dgta-search-document  (getDocumentsE)="getDocuments()"
+            <dgta-search-document  (getDocumentsE)="getDocuments($event)"
                         (hideTopicsE)="hideTopics()"></dgta-search-document>
         <div class="row-center-left mb10px">
             <h2 class="ml10px color-white">DOCUMENTI</h2> 
