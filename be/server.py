@@ -647,7 +647,7 @@ def getDocuments():
 
         # solr.add([data])
 
-        query = "parentId%3A" + data["parentId"]
+        query = "parentId%3A" + data["parentId"] + "%0A"
         if "name" in data.keys():
             if " " in data["name"]:
                 data["name"] = "(" + data["name"] + ")"
