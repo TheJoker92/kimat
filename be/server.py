@@ -651,10 +651,10 @@ def getDocuments():
         if "name" in data.keys():
             if " " in data["name"]:
                 data["name"] = "(" + data["name"] + ")"
-            query += "name%3A" + data["name"].replace(" ","%20") + "%0A"
+            query += "name%3A(" + data["name"].replace(" ","%20") + ")"
             print("A")
         else:
-            query += "*%3A*%0A"
+            query += "*%3A*"
         
         if "topics" in data.keys():
             query += "topics%3A(" + data["topics"] + ")"
