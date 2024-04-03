@@ -117,7 +117,7 @@ export class DgtaDocumentsModalComponent {
 
     if(term) {
       payload["attachments"] = term
-      // payload["topics"] = term
+      payload["topics"] = term
     }
 
     if(dates) {
