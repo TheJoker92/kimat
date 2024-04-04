@@ -170,16 +170,16 @@ export class DgtaDocumentsModalComponent {
                     document[keyDocument] = documentRaw[keyDocument]
                   }
 
-                  if (this.documents.filter((presentedDocument: IDocument) => document.id == presentedDocument.id).length == 0) {
-                    this.documents.push(document)
-                  }
                 }
-
+                
+                if (this.documents.filter((presentedDocument: IDocument) => document.id == presentedDocument.id).length == 0) {
+                  this.documents.push(document)
+                }
 
                 console.log("AAAA", this.documents)
                 this.documents = JSON.parse(JSON.stringify(this.documents))
-                // this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
               }
+              // this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
 
 
             },
