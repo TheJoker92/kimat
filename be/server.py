@@ -747,7 +747,7 @@ def deleteDocument():
 
 def extract_text_from_pdf(pdf_path):
     # Convert PDF to image
-    pages = convert_from_path(pdf_path)
+    pages = convert_from_path(pdf_path,400)
      
     # Extract text from each page using Tesseract OCR
     text_data = ''
