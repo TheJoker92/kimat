@@ -19,7 +19,8 @@
             "getDocuments": "getDocuments",
             "delete": "delete",
             "ocr": "ocr",
-            "base64": "base64"
+            "base64": "base64",
+            "getDocumentsByDate": "getDocumentsByDate"
         }
     },
     "error": {

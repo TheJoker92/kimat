@@ -758,6 +758,72 @@ def extract_text_from_pdf(pdf_path):
     # Return the text data
     return text_data
 
+
+# Read operation
+@app.route('/api/documents/getDocumentsByDate', methods=['POST'])
+def getDocumentsByDate():
+    print("START GET DOCUMENTS BY DATE")
+    data = request.json
+    
+    response = {}
+    
+    try:
+        response = {
+            "message": "DATA ACCESS",
+            "error": "",
+            "code": 200
+        }
+
+        # solr.add([data])
+
+        
+        documents = []
+        for date in data["dates"]:
+            query = "parentId%3A" + data["parentId"] + "%0A"
+            query += "topics%3A(" + date + ")"
+        
+
+            print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
+            
+
+            # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
+            
+            responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
+            print(responseRaw)
+            # Decode the content from bytes to string and then parse as JSON
+            response_json = json.loads(responseRaw.content.decode('utf-8'))
+            responseRaw = response_json.get('response', {}).get('docs', [])
+            # Now you can access response_docs as a list containing the documents
+            # Do whatever you need to do with response_docs
+
+
+            
+            if len(responseRaw) > 0:
+                for documentRaw in responseRaw:
+                    document = { }
+
+                    keysRaw = list(documentRaw.keys())
+                    for keyRaw in keysRaw:
+
+                        if keyRaw in ["id", "_version_"]:
+                            document[keyRaw] = documentRaw[keyRaw]
+                        else:
+                            document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
+                    
+                    documents.append(document)
+        
+        response = {
+            "documents": documents
+        }
+    except Exception as e:
+        response = {
+            "message": "",
+            "error": str(e),
+            "code": 500
+        }
+    
+    return response
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'), debug=True)    
     # app.run(host='0.0.0.0', port=8001)

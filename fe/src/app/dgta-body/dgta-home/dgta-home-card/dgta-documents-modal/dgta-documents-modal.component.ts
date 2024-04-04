@@ -20,6 +20,8 @@ import { SessionService } from '../../../../session.service';
 import { DgtaTopicCardComponent } from '../../dgta-topic-card/dgta-topic-card.component';
 import { DgtaSearchDocumentComponent } from './dgta-search-document/dgta-search-document.component';
 
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'dgta-documents-modal',
   standalone: true,
@@ -31,6 +33,8 @@ export class DgtaDocumentsModalComponent {
 
   @Input() catalogue: ICatalogue = {}
   @Output() closeDocumentsModalE = new EventEmitter()
+
+  faSearch = faSearch
 
   document: IDocument = {}
 
@@ -66,6 +70,9 @@ export class DgtaDocumentsModalComponent {
   isOpenCollocationModal = false
   isOpenOwnersModal = false
   isOpenStateModal = false
+
+  startDate: any
+  endDate: any
 
   constructor(private http: HttpService,
     private sessionService: SessionService,
@@ -171,7 +178,7 @@ export class DgtaDocumentsModalComponent {
                   }
 
                 }
-                
+
                 if (this.documents.filter((presentedDocument: IDocument) => document.id == presentedDocument.id).length == 0) {
                   this.documents.push(document)
                 }
@@ -371,4 +378,63 @@ export class DgtaDocumentsModalComponent {
   getTopicElem(documentListed: any, elem: string) {
     return documentListed.topics![0][elem]
   }
+
+  setStartDate(e: any) {
+    this.startDate = e.target.value
+  }
+
+  setEndDate(e: any) {
+    this.endDate = e.target.value
+  }
+
+  formatDate(date: string) {
+    let dateArray = date.split("T")[0].split("-")
+    return dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+  }
+
+  getDocumentsByDates() {
+    const dates = [];
+    let currentDate = this.startDate;
+
+    if (this.startDate && this.endDate) {
+      while (currentDate <= this.endDate) {
+        dates.push("*" + this.formatDate(currentDate.toISOString()) + "*");
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      let payload = {
+        "parentId": this.catalogue.id,
+        "dates": dates
+      }
+
+
+      this.loadingService.isLoading = true
+      this.http.getDocumentsByDates(payload).subscribe({
+        next: (response: any) => {
+          this.loadingService.isLoading = false
+
+          this.documents = []
+          for (let documentRaw of response.documents!) {
+            let document: any = {}
+            for (let keyDocument of Object.keys(documentRaw)) {
+              if (this.isParsable(documentRaw[keyDocument])) {
+                document[keyDocument] = JSON.parse(documentRaw[keyDocument])
+              } else {
+                document[keyDocument] = documentRaw[keyDocument]
+              }
+            }
+
+            this.documents.push(document)
+
+            console.log("AAAA", this.documents)
+            this.documents = JSON.parse(JSON.stringify(this.documents))
+
+          }
+        }
+      })
+    } else {
+      alert("Selezionare una data di inizio e di fine")
+    }
+  }
+
 }
