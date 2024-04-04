@@ -516,10 +516,10 @@ def getCatalogues():
 
         # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
         # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
-        print(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&sort=title+asc&useParams=")
+        print(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&sort=(title%20asc)&useParams=")
 
         # solr.add([data])
-        responseRaw = requests.get(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&sort=title+asc&useParams=", verify=False)
+        responseRaw = requests.get(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&sort=(title%20asc)&useParams=", verify=False)
         print(responseRaw)
         # Decode the content from bytes to string and then parse as JSON
         response_json = json.loads(responseRaw.content.decode('utf-8'))
@@ -658,12 +658,12 @@ def getDocuments():
             query += "topics%3A(" + data["topics"] + ")"
         
 
-        print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name+asc&useParams=")
+        print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=(name%20asc)&useParams=")
         
 
         # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
         
-        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name+asc&useParams=", verify=False)
+        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=(name%20asc)&useParams=", verify=False)
         print(responseRaw)
         # Decode the content from bytes to string and then parse as JSON
         response_json = json.loads(responseRaw.content.decode('utf-8'))
