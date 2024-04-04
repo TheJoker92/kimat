@@ -141,7 +141,8 @@ export class DgtaOcrModalComponent {
     ventisette: 27,
     ventotto: 28,
     ventinove: 29,
-    trenta: 30
+    trenta: 30,
+    trentuno: 31
   };
 
   getMonthNumber(monthStr: string) {
