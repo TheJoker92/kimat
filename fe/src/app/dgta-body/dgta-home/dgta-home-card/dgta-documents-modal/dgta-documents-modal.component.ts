@@ -392,13 +392,13 @@ export class DgtaDocumentsModalComponent {
     return dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
   }
 
-  getDocumentsByDates() {
+  getDocumentsbydate() {
     const dates = [];
-    let currentDate = this.startDate;
+    let currentDate = new Date(this.startDate);
 
     if (this.startDate && this.endDate) {
-      while (currentDate <= this.endDate) {
-        dates.push("*" + this.formatDate(currentDate.toISOString()) + "*");
+      while (currentDate <= new Date(this.endDate)) {
+        dates.push(this.formatDate(currentDate.toISOString()));
         currentDate.setDate(currentDate.getDate() + 1);
       }
 
@@ -409,7 +409,7 @@ export class DgtaDocumentsModalComponent {
 
 
       this.loadingService.isLoading = true
-      this.http.getDocumentsByDates(payload).subscribe({
+      this.http.getDocumentsbydate(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
 
