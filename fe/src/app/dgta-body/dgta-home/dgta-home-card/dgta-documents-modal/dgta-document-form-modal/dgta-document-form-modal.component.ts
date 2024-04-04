@@ -505,12 +505,39 @@ export class DgtaDocumentFormModalComponent {
 
         let rawDate = ocrTextNormalized.split("L\u2019")[1].split("NELLA")[0]
 
+
+      if(!rawDate || !rawDate.includes("ANNO")) {
+        rawDate = ocrTextNormalized.split("LANNO")[1]
+      }
+
+      if(!rawDate || !rawDate.includes("ANNO")) {
+        rawDate = ocrTextNormalized.split("L’")[1]
+      }
+
+      if(!rawDate || !rawDate.includes("ANNO")) {
+        rawDate = ocrText.split("L\u2019")[1].toUpperCase().replace(/\s/g, "").trim()
+      }
+      
+      rawDate = rawDate.split("NELLA")[0]
+
+      if (!rawDate.includes("ANNO")) {
+        rawDate = ocrTextNormalized.split("L'")[1].split("NELLA")[0]
+      }
+
         if (!rawDate.includes("ANNO")) {
           rawDate = ocrTextNormalized.split("L'")[1].split("NELLA")[0]
         }
         deliberazioneTemaplateJSON.annoStr = rawDate.split("ANNO")[1].split(",")[0]
         deliberazioneTemaplateJSON.giornoStr = rawDate.split("ADDI")[1].split("DEL")[0]
         deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0].replace(".",":").replace(",",":")
+        
+        if (!deliberazioneTemaplateJSON.meseStr) {
+          deliberazioneTemaplateJSON.meseStr = rawDate.split("MESEDI")[1]
+        }
+
+        deliberazioneTemaplateJSON.meseStr = deliberazioneTemaplateJSON.meseStr.split("ALLEORE")[0].replace(".", ":").replace(",", ":")
+
+        
         deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0].replace(".",":").replace(",",":")
 
 

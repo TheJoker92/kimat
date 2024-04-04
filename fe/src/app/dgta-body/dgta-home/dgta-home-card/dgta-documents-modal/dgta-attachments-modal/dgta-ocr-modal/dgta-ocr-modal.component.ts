@@ -66,7 +66,13 @@ export class DgtaOcrModalComponent {
 
       this.deliberazioneTemaplateJSON.annoStr = rawDate.split("ANNO")[1].split(",")[0]
       this.deliberazioneTemaplateJSON.giornoStr = rawDate.split("ADDI")[1].split("DEL")[0]
-      this.deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0].replace(".", ":").replace(",", ":")
+      this.deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1]
+
+      if (!this.deliberazioneTemaplateJSON.meseStr) {
+        this.deliberazioneTemaplateJSON.meseStr = rawDate.split("MESEDI")[1]
+      }
+      
+      this.deliberazioneTemaplateJSON.meseStr = this.deliberazioneTemaplateJSON.meseStr.split("ALLEORE")[0].replace(".", ":").replace(",", ":")
       this.deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0].replace(".", ":").replace(",", ":")
 
 
