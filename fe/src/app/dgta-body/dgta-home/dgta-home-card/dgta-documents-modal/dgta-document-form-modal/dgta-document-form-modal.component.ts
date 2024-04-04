@@ -505,10 +505,14 @@ export class DgtaDocumentFormModalComponent {
 
         let rawDate = ocrTextNormalized.split("L\u2019")[1].split("NELLA")[0]
 
+        if (!rawDate.includes("ANNO")) {
+          rawDate = ocrTextNormalized.split("L'")[1].split("NELLA")[0]
+        }
         deliberazioneTemaplateJSON.annoStr = rawDate.split("ANNO")[1].split(",")[0]
         deliberazioneTemaplateJSON.giornoStr = rawDate.split("ADDI")[1].split("DEL")[0]
-        deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0]
-        deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0]
+        deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0].replace(".",":").replace(",",":")
+        deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0].replace(".",":").replace(",",":")
+
 
 
         deliberazioneTemaplateJSON.data = this.getDayNumber(deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(deliberazioneTemaplateJSON.annoStr)

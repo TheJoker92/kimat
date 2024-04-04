@@ -366,4 +366,9 @@ export class DgtaDocumentsModalComponent {
       this.toggleTopicsLabel = "mostra categorie"
     }
   }
+
+
+  getTopicElem(documentListed: any, elem: string) {
+    return documentListed.topics![0][elem]
+  }
 }
