@@ -26,6 +26,9 @@ export class DgtaOcrModalComponent {
     if (ocrTextNormalized.includes("GIUNTACOMUNALE")) {
       this.deliberazioneTemaplateJSON.documentType = "DELIBERAZIONE DELLA GIUNTA COMUNALE"
       let stringTextElem = ocrTextNormalized.split("DELIBERAZIONEN.")[1]
+      if (!stringTextElem) {
+        stringTextElem = ocrTextNormalized.split("DELIBERAZIONEN")[1]
+      }
 
       let numeroStrTmp: string = stringTextElem[0]
       for (let index = 1; index < stringTextElem.length; index++) {
@@ -41,7 +44,21 @@ export class DgtaOcrModalComponent {
 
       this.deliberazioneTemaplateJSON.oggetto = this.ocrText.split("OGGETTO")[1].split("L\u2019")[0]
 
-      let rawDate = ocrTextNormalized.split("L\u2019")[1].split("NELLA")[0]
+      let rawDate = ocrTextNormalized.split("L\u2019")[1]
+      
+      if(!rawDate || !rawDate.includes("ANNO")) {
+        rawDate = ocrTextNormalized.split("LANNO")[1]
+      }
+
+      if(!rawDate || !rawDate.includes("ANNO")) {
+        rawDate = ocrTextNormalized.split("L’")[1]
+      }
+
+      if(!rawDate || !rawDate.includes("ANNO")) {
+        rawDate = this.ocrText.split("L\u2019")[1].toUpperCase().replace(/\s/g, "").trim()
+      }
+      
+      rawDate = rawDate.split("NELLA")[0]
 
       if (!rawDate.includes("ANNO")) {
         rawDate = ocrTextNormalized.split("L'")[1].split("NELLA")[0]
