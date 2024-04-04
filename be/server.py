@@ -78,32 +78,32 @@ def get_ocr():
             theFile.close()
     
         
-    # Tokenize the text into sentences
-    sentences = nltk.sent_tokenize(text)
+    # # Tokenize the text into sentences
+    # sentences = nltk.sent_tokenize(text)
 
-    # Iterate through each sentence
-    for sentence in sentences:
-        # Tokenize words in the sentence
-        words = nltk.word_tokenize(sentence)
+    # # Iterate through each sentence
+    # for sentence in sentences:
+    #     # Tokenize words in the sentence
+    #     words = nltk.word_tokenize(sentence)
         
-        # Perform POS tagging on the words
-        tagged_words = nltk.pos_tag(words)
+    #     # Perform POS tagging on the words
+    #     tagged_words = nltk.pos_tag(words)
         
-        # Perform Named Entity Recognition (NER)
-        named_entities = nltk.ne_chunk(tagged_words)
+    #     # Perform Named Entity Recognition (NER)
+    #     named_entities = nltk.ne_chunk(tagged_words)
         
-        # Print named entities
-        for entity in named_entities:
-            if hasattr(entity, 'label'):
-                print("Entity:", " ".join(c[0] for c in entity.leaves()), "Type:", entity.label())
+    #     # Print named entities
+    #     for entity in named_entities:
+    #         if hasattr(entity, 'label'):
+    #             print("Entity:", " ".join(c[0] for c in entity.leaves()), "Type:", entity.label())
 
     return {
         "text": text,
-        "ocr": {
-                # "tokens": tokens,
-                # "tagged": tagged,
-                "namedEntities": named_entities
-            }
+        # "ocr": {
+        #         # "tokens": tokens,
+        #         # "tagged": tagged,
+        #         "namedEntities": named_entities
+        #     }
     }
 
 @app.route("/<ext>/<id>")
