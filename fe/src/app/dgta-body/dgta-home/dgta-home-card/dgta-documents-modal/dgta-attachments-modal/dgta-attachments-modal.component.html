@@ -84,6 +84,7 @@
 ></dgta-upload-attachment-modal>
 
 <dgta-ocr-modal *ngIf="isOpenOcrModal"
+[document]="document"
 [ocrText]="ocrText"
 (closeOcrModalE)="closeOcrModal()">
 

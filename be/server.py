@@ -61,21 +61,25 @@ def angular_src(path):
 @app.route("/api/documents/ocr", methods=['POST'])
 def get_ocr():
     print("START OCR")
-    data = request.json
+    try:
+        data = request.json
 
-    print(data)
-    id = data["id"]
+        print(data)
+        id = data["id"]
 
-    file_path_noext = basePathAsset + id + "/" + id  
-    if (os.path.exists(file_path_noext + ".txt")):
-        with open(file_path_noext + ".txt", 'r') as theFile:
-            text = theFile.read()
-            theFile.close()
-    else:
-        text = extract_text_from_pdf(file_path_noext + ".pdf")
-        with open(file_path_noext  + ".txt", 'w') as theFile:
-            theFile.write(text)
-            theFile.close()
+        file_path_noext = basePathAsset + id + "/" + id  
+        if (os.path.exists(file_path_noext + ".txt")):
+            with open(file_path_noext + ".txt", 'r') as theFile:
+                text = theFile.read()
+                theFile.close()
+        else:
+            text = extract_text_from_pdf(file_path_noext + ".pdf")
+            with open(file_path_noext  + ".txt", 'w') as theFile:
+                theFile.write(text)
+                theFile.close()
+
+    except Exception:
+        print(Exception)
     
         
     # # Tokenize the text into sentences
@@ -743,7 +747,7 @@ def deleteDocument():
 
 def extract_text_from_pdf(pdf_path):
     # Convert PDF to image
-    pages = convert_from_path(pdf_path, 500)
+    pages = convert_from_path(pdf_path)
      
     # Extract text from each page using Tesseract OCR
     text_data = ''

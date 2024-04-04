@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { HttpService } from '../../../../../../http.service';
+import { IDocument } from '../../../../../../interfaces/IDocument';
 
 @Component({
   selector: 'dgta-ocr-modal',
@@ -8,10 +10,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './dgta-ocr-modal.component.scss'
 })
 export class DgtaOcrModalComponent {
+  @Input() document: IDocument = {}
   @Input() ocrText: string = ""
   @Output() closeOcrModalE = new EventEmitter()
 
   deliberazioneTemaplateJSON: any = {}
+
+  constructor(private http: HttpService) {
+
+  }
 
 
   ngOnInit() {
@@ -42,12 +49,44 @@ export class DgtaOcrModalComponent {
 
       this.deliberazioneTemaplateJSON.annoStr = rawDate.split("ANNO")[1].split(",")[0]
       this.deliberazioneTemaplateJSON.giornoStr = rawDate.split("ADDI")[1].split("DEL")[0]
-      this.deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0].replace(".",":").replace(",",":")
-      this.deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0].replace(".",":").replace(",",":")
+      this.deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0].replace(".", ":").replace(",", ":")
+      this.deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0].replace(".", ":").replace(",", ":")
 
 
       this.deliberazioneTemaplateJSON.data = this.getDayNumber(this.deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(this.deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(this.deliberazioneTemaplateJSON.annoStr)
       console.log(this.deliberazioneTemaplateJSON)
+
+      let payload: any = {
+        "parentId": this.document.parentId,
+        "id": this.document.id,
+        "name": this.document.name,
+        "history": JSON.stringify(this.document.history),
+        "attachments": JSON.stringify({
+          name: this.document.name,
+          ext: "pdf"
+        }),
+        "deviceIds": JSON.stringify([]),
+        "states": JSON.stringify(this.document.states),
+        "topics": JSON.stringify([this.deliberazioneTemaplateJSON]),
+        "placement": JSON.stringify(this.document.placement),
+        "owners": JSON.stringify(this.document.owners)
+      }
+
+      console.log(payload)
+      this.http.addDocument(payload).subscribe({
+        next: (response: any) => {
+
+          if (response.code == 200) {
+            alert("Hai aggiornato il catalogo")
+          } else {
+            alert("Qualcosa è andato storto. Contattare l'assistenza.")
+          }
+        },
+        error: (error) => {
+          console.error(error)
+          alert("Qualcosa è andato storto. Contattare l'assistenza.")
+        }
+      })
     }
 
   }
