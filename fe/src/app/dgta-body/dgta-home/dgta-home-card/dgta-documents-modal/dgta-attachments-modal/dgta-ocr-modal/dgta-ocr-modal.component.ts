@@ -56,37 +56,40 @@ export class DgtaOcrModalComponent {
       this.deliberazioneTemaplateJSON.data = this.getDayNumber(this.deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(this.deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(this.deliberazioneTemaplateJSON.annoStr)
       console.log(this.deliberazioneTemaplateJSON)
 
-      let payload: any = {
-        "parentId": this.document.parentId,
-        "id": this.document.id,
-        "name": this.document.name,
-        "history": JSON.stringify(this.document.history),
-        "attachments": JSON.stringify({
-          name: this.document.name,
-          ext: "pdf"
-        }),
-        "deviceIds": JSON.stringify([]),
-        "states": JSON.stringify(this.document.states),
-        "topics": JSON.stringify([this.deliberazioneTemaplateJSON]),
-        "placement": JSON.stringify(this.document.placement),
-        "owners": JSON.stringify(this.document.owners)
-      }
+      if (this.document.topics!.length == 0) {
 
-      console.log(payload)
-      this.http.addDocument(payload).subscribe({
-        next: (response: any) => {
-
-          if (response.code == 200) {
-            alert("Hai aggiornato il catalogo")
-          } else {
+        let payload: any = {
+          "parentId": this.document.parentId,
+          "id": this.document.id,
+          "name": this.document.name,
+          "history": JSON.stringify(this.document.history),
+          "attachments": JSON.stringify({
+            name: this.document.name,
+            ext: "pdf"
+          }),
+          "deviceIds": JSON.stringify([]),
+          "states": JSON.stringify(this.document.states),
+          "topics": JSON.stringify([this.deliberazioneTemaplateJSON]),
+          "placement": JSON.stringify(this.document.placement),
+          "owners": JSON.stringify(this.document.owners)
+        }
+  
+        console.log(payload)
+        this.http.addDocument(payload).subscribe({
+          next: (response: any) => {
+  
+            if (response.code == 200) {
+              alert("Hai aggiornato il catalogo")
+            } else {
+              alert("Qualcosa è andato storto. Contattare l'assistenza.")
+            }
+          },
+          error: (error) => {
+            console.error(error)
             alert("Qualcosa è andato storto. Contattare l'assistenza.")
           }
-        },
-        error: (error) => {
-          console.error(error)
-          alert("Qualcosa è andato storto. Contattare l'assistenza.")
-        }
-      })
+        })
+      }
     }
 
   }
