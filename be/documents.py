@@ -438,9 +438,11 @@ def extract_massive_text_from_pdf(pdf_path, BASE_URL):
 
             idDocument = text.split("idDocument ")[1]
             document = getDocumentById(idDocument, BASE_URL)
+        
+        # else:
 
 
-        text_data += text + '\n'
+        # text_data += text + '\n'
      
     # Return the text data
     return text_data
