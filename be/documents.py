@@ -472,8 +472,6 @@ def getDocumentById(idDocument, BASE_URL):
         responseRaw = response_json.get('response', {}).get('docs', [])
         # Now you can access response_docs as a list containing the documents
         # Do whatever you need to do with response_docs
-
-
         
         documents = []
         if len(responseRaw) > 0:

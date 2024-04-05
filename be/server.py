@@ -189,6 +189,14 @@ def getDocumentsByDate():
     
     return documents.getDocumentsByDate(data, BASE_URL)
 
+# Read operation
+@app.route('/api/documents/getDocumentsById', methods=['POST'])
+def getDocumentsByDate():
+    print("START GET DOCUMENTS BY DATE")
+    data = request.json
+    
+    return documents.getDocumentById(data["idDocument"], BASE_URL)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'), debug=True)    
     # app.run(host='0.0.0.0', port=8001)
