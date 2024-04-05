@@ -150,7 +150,7 @@ def getDocuments():
 @app.route('/api/documents/add', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def create_document():
-    print("START DOCUMENT ADD")
+    print("START ADD DOCUMENT")
     data = request.json
     
     return jsonify(documents.create_document(data, BASE_URL)), 200
@@ -158,7 +158,7 @@ def create_document():
 @app.route('/api/documents/base64', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def upload_document():
-    print("START DOCUMENT ADD")
+    print("START UPLOAD DOCUMENT DOCUMENT")
     data = request.json
     
     return jsonify(documents.upload_document(data)), 200

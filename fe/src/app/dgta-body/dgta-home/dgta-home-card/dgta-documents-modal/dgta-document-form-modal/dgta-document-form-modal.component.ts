@@ -562,7 +562,7 @@ export class DgtaDocumentFormModalComponent {
           "topics": JSON.stringify([deliberazioneTemaplateJSON]),
           "placement": JSON.stringify(document.placement),
           "owners": JSON.stringify(document.owners),
-          "deliberationDate": deliberazioneTemaplateJSON.dataNoDash.toString()
+          "deliberationDate": deliberazioneTemaplateJSON.dataNoDash
         }
 
         console.log(payload)
