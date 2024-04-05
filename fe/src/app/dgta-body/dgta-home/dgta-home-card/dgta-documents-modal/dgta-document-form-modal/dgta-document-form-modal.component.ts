@@ -543,7 +543,7 @@ export class DgtaDocumentFormModalComponent {
 
 
         deliberazioneTemaplateJSON.data = this.getDayNumber(deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(deliberazioneTemaplateJSON.annoStr)
-
+        deliberazioneTemaplateJSON.dataNoDash = deliberazioneTemaplateJSON.data.replaceAll("-","")
         let payload: any = {
           "parentId": document.parentId,
           "id": document.id,
