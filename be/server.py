@@ -144,7 +144,7 @@ def getDocuments():
     print("START GET DOCUMENTS")
     data = request.json
     
-    return documents.getDocuments(data)
+    return documents.getDocuments(data, BASE_URL)
 
 
 @app.route('/api/documents/add', methods=['POST'])
@@ -179,7 +179,7 @@ def getDocumentsByDate():
     print("START GET DOCUMENTS BY DATE")
     data = request.json
     
-    return documents.getDocumentsByFate(data, BASE_URL)
+    return documents.getDocumentsByDate(data, BASE_URL)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'), debug=True)    
