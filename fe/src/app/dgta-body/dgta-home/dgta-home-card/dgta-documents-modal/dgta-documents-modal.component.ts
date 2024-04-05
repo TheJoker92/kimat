@@ -389,8 +389,9 @@ export class DgtaDocumentsModalComponent {
   }
 
   formatDate(date: string) {
+    //NO  DASH FOR SOLR SEARCH
     let dateArray = date.split("T")[0].split("-")
-    return dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+    return dateArray[2] + dateArray[1] + dateArray[0]
   }
 
   getDocumentsbydate() {
