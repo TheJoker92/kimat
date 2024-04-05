@@ -153,6 +153,7 @@ def upload_document(data):
 
                         with open(full_filename_path, 'wb') as theFile:
                             theFile.write(base64.b64decode(attachment["base64"]))
+                            theFile.close()
 
                         
                         data["attachments"] = full_filename_path
@@ -357,3 +358,140 @@ def getDocumentsByDate(data, BASE_URL):
         }
     
     return response
+
+def massiveUploadFromPapers(data, BASE_URL):
+
+    response = {}
+
+    try:
+
+        if (data["attachments"] and len(json.loads(data["attachments"]))):
+            attachmentsObj = json.loads(data["attachments"])
+            base_folders = "folders"
+            full_folder_path = base_folders + "/tmp/" + data["parentId"]
+                                
+            for attachment in attachmentsObj:
+                if len(attachment.keys()):
+                    
+                    full_filename_path = full_folder_path + "/" + data["parentId"] + "." + attachment["ext"]
+                    if not(os.path.exists(full_folder_path)):
+                        os.mkdir(full_folder_path) 
+
+                    if (os.path.exists(full_filename_path)):
+                        os.rename(full_filename_path, full_folder_path + "/" + data["parentId"] + "_" + str(datetime.today().timestamp()))
+
+                    with open(full_filename_path, 'wb') as theFile:
+                        theFile.write(base64.b64decode(attachment["base64"]))
+
+                    
+                    data["attachments"] = full_filename_path
+
+            file_path_noext = full_folder_path + "/" + data["parentId"]
+            text = extract_massive_text_from_pdf(file_path_noext + ".pdf", BASE_URL)
+            with open(file_path_noext  + ".txt", 'w') as theFile:
+                theFile.write(text)
+                theFile.close()
+    except Exception as e:
+        response = {
+            "message": "",
+            "error": str(e),
+            "code": 500
+        }
+    
+    return response
+
+def extract_massive_text_from_pdf(pdf_path, BASE_URL):
+    # Convert PDF to image
+    pages = convert_from_path(pdf_path,400)
+     
+    # Extract text from each page using Tesseract OCR
+    text_data = ''
+
+    index = 0
+
+    idDocument = ""
+    document = {}
+
+    attachmentBase64 = ""
+    for page in pages:
+        text = pytesseract.image_to_string(page)
+
+        if ('idDocument' in text):
+            if index > 0:
+            
+                base_folders = "folders"
+                full_folder_path = base_folders + "/" + document["id"]
+                full_filename_path = full_folder_path + "/" + document["id"] + ".pdf"
+                if not(os.path.exists(full_folder_path)):
+                    os.mkdir(full_folder_path) 
+
+                if (os.path.exists(full_filename_path)):
+                    os.rename(full_filename_path, full_folder_path + "/" + document["name"] + "_" + str(datetime.today().timestamp()))
+
+                with open(full_filename_path, 'wb') as theFile:
+                    theFile.write(base64.b64decode(attachmentBase64))
+                    theFile.close()
+
+                document = None
+
+                attachmentBase64 = "data:application/pdf;base64,"
+
+            idDocument = text.split("idDocument ")[1]
+            document = getDocumentById(idDocument, BASE_URL)
+
+
+        text_data += text + '\n'
+     
+    # Return the text data
+    return text_data
+    
+
+def getDocumentById(idDocument, BASE_URL):
+    response = {}
+    
+    try:
+        response = {
+            "message": "DATA ACCESS",
+            "error": "",
+            "code": 200
+        }
+
+        # solr.add([data])
+
+        query = "id%3A" + idDocument + "%0A"
+
+        print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
+        # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
+        
+        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
+        print(responseRaw)
+        # Decode the content from bytes to string and then parse as JSON
+        response_json = json.loads(responseRaw.content.decode('utf-8'))
+        responseRaw = response_json.get('response', {}).get('docs', [])
+        # Now you can access response_docs as a list containing the documents
+        # Do whatever you need to do with response_docs
+
+
+        
+        documents = []
+        if len(responseRaw) > 0:
+            for documentRaw in responseRaw:
+                document = { }
+
+                keysRaw = list(documentRaw.keys())
+                for keyRaw in keysRaw:
+
+                    if keyRaw in ["id", "_version_", "deliberationDate"]:
+                        document[keyRaw] = documentRaw[keyRaw]
+                    else:
+                        document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
+                
+                documents.append(document)
+        
+        response = documents[0]
+        
+    except Exception as e:
+        print(e)
+        response = None
+    
+    return response 

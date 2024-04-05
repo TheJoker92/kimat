@@ -163,6 +163,14 @@ def upload_document():
     
     return jsonify(documents.upload_document(data)), 200
 
+@app.route('/api/documents/base64', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def massiveUploadFromPapers():
+    print("START UPLOAD DOCUMENT DOCUMENT")
+    data = request.json
+    
+    return jsonify(documents.massiveUploadFromPapers(data, BASE_URL)), 200
+
 
 @app.route('/api/documents/delete', methods=['POST'])
 def deleteDocument():
