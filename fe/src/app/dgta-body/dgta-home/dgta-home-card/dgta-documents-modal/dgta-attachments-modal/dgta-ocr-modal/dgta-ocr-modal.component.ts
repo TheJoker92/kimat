@@ -96,7 +96,7 @@ export class DgtaOcrModalComponent {
           "topics": JSON.stringify([this.deliberazioneTemaplateJSON]),
           "placement": JSON.stringify(this.document.placement),
           "owners": JSON.stringify(this.document.owners),
-          "deliberationDate": JSON.stringify(this.deliberazioneTemaplateJSON.dataNoDash)
+          "deliberationDate": this.deliberazioneTemaplateJSON.dataNoDash.toString()
         }
   
         console.log(payload)
