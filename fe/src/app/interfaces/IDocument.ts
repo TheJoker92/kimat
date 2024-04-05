@@ -12,9 +12,10 @@ export interface IDocument {
     deviceIds?: string[]
     states?: IDocumentState[]
     name?: string
-    topics?: string[],
+    topics?: string[]
     placement?: IPlace[]
     owners?: IUser[]
+    deliberationDate?: string
 }
 
 export interface IAttachment{

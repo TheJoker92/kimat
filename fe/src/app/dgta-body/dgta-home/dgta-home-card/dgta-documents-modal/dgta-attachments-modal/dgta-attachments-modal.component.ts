@@ -143,7 +143,8 @@ export class DgtaAttachmentsModalComponent {
         "states": JSON.stringify(this.document.states),
         "topics": JSON.stringify(this.document.topics),
         "placement": JSON.stringify(this.document.placement),
-        "owners": JSON.stringify(this.document.owners)
+        "owners": JSON.stringify(this.document.owners),
+        "deliberationDate": this.document.deliberationDate
       }
 
       console.log(payload)
@@ -175,7 +176,8 @@ export class DgtaAttachmentsModalComponent {
               "states": JSON.stringify(this.document.states),
               "topics": JSON.stringify(this.document.topics),
               "placement": JSON.stringify(this.document.placement),
-              "owners": JSON.stringify(this.document.owners)
+              "owners": JSON.stringify(this.document.owners),
+              "deliberationDate": this.document.deliberationDate
             }
       
             console.log(payload)

@@ -314,7 +314,7 @@ def getDocumentsByDate(data, BASE_URL):
         documents = []
         for date in data["dates"]:
             query = "parentId%3A" + data["parentId"] + "%0A"
-            query += "topics_str%3A(" + date + ")"
+            query += "deliberationDate%3A(" + date + ")"
         
 
             print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")

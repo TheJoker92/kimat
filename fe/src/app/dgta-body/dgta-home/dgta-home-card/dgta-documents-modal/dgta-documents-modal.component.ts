@@ -246,6 +246,7 @@ export class DgtaDocumentsModalComponent {
       "topics": JSON.stringify(this.document.topics),
       "placement": JSON.stringify(this.document.placement),
       "owners": JSON.stringify(this.document.owners),
+      "deliberationDate": this.document.deliberationDate
     }
 
     this.loadingService.isLoading = true

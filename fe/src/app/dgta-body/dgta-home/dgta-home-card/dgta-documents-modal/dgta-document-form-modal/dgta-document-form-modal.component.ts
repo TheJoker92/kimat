@@ -138,7 +138,8 @@ export class DgtaDocumentFormModalComponent {
         "states": JSON.stringify([state]),
         "topics": JSON.stringify(this.topics),
         "placement": JSON.stringify([this.place]),
-        "owners": JSON.stringify(this.owners)
+        "owners": JSON.stringify(this.owners),
+        "deliberationDate": ""
       }
 
       console.log(payload)
@@ -307,7 +308,8 @@ export class DgtaDocumentFormModalComponent {
       "states": JSON.stringify([state]),
       "topics": JSON.stringify([]),
       "placement": JSON.stringify([]),
-      "owners": JSON.stringify([this.sessionService.user])
+      "owners": JSON.stringify([this.sessionService.user]),
+      "deliberationDate": ""
     }
 
     console.log("FIRST STEP", index, payload)
@@ -418,7 +420,8 @@ export class DgtaDocumentFormModalComponent {
         "states": JSON.stringify(document.states),
         "topics": JSON.stringify(document.topics),
         "placement": JSON.stringify(document.placement),
-        "owners": JSON.stringify(document.owners)
+        "owners": JSON.stringify(document.owners),
+        "deliberationDate": document.deliberationDate
       }
 
       console.log("SECOND STEP", index, payload)
@@ -445,7 +448,8 @@ export class DgtaDocumentFormModalComponent {
               "states": JSON.stringify(document.states),
               "topics": JSON.stringify(document.topics),
               "placement": JSON.stringify(document.placement),
-              "owners": JSON.stringify(document.owners)
+              "owners": JSON.stringify(document.owners),
+              "deliberationDate": document.deliberationDate
             }
 
             console.log("UPLOAD PDF SECOND STEP", index, payload)
@@ -557,7 +561,8 @@ export class DgtaDocumentFormModalComponent {
           "states": JSON.stringify(document.states),
           "topics": JSON.stringify([deliberazioneTemaplateJSON]),
           "placement": JSON.stringify(document.placement),
-          "owners": JSON.stringify(document.owners)
+          "owners": JSON.stringify(document.owners),
+          "deliberationDate": deliberazioneTemaplateJSON.dataNoDash
         }
 
         console.log(payload)
