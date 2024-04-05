@@ -7,18 +7,7 @@ import requests
 from werkzeug.routing import BaseConverter
 
 import os
-from datetime import datetime
 import base64
-import PyPDF2
-
-import pytesseract
-from pdf2image import convert_from_path
-import nltk
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('maxent_ne_chunker')
-nltk.download('words')
-nltk.download('universal_tagset')
 
 
 flaskstaticFolderPath = ""
@@ -30,6 +19,9 @@ with open('.env', 'r') as file:
     flaskstaticFolderPath = lines[0]
     basePathAsset = lines[1]
 
+import users
+import catalogues
+import documents
 
 
 app = Flask(__name__, static_folder=flaskstaticFolderPath)
@@ -61,120 +53,24 @@ def angular_src(path):
 @app.route("/api/documents/ocr", methods=['POST'])
 def get_ocr():
     print("START OCR")
-    try:
-        data = request.json
-
-        print(data)
-        id = data["id"]
-
-        file_path_noext = basePathAsset + id + "/" + id  
-        if (os.path.exists(file_path_noext + ".txt")):
-            with open(file_path_noext + ".txt", 'r') as theFile:
-                text = theFile.read()
-                theFile.close()
-        else:
-            text = extract_text_from_pdf(file_path_noext + ".pdf")
-            with open(file_path_noext  + ".txt", 'w') as theFile:
-                theFile.write(text)
-                theFile.close()
-
-    except Exception:
-        print(Exception)
     
-        
-    # # Tokenize the text into sentences
-    # sentences = nltk.sent_tokenize(text)
+    data = request.json   
 
-    # # Iterate through each sentence
-    # for sentence in sentences:
-    #     # Tokenize words in the sentence
-    #     words = nltk.word_tokenize(sentence)
-        
-    #     # Perform POS tagging on the words
-    #     tagged_words = nltk.pos_tag(words)
-        
-    #     # Perform Named Entity Recognition (NER)
-    #     named_entities = nltk.ne_chunk(tagged_words)
-        
-    #     # Print named entities
-    #     for entity in named_entities:
-    #         if hasattr(entity, 'label'):
-    #             print("Entity:", " ".join(c[0] for c in entity.leaves()), "Type:", entity.label())
-
-    return {
-        "text": text,
-        # "ocr": {
-        #         # "tokens": tokens,
-        #         # "tagged": tagged,
-        #         "namedEntities": named_entities
-        #     }
-    }
+    return documents.getOcr(data, basePathAsset)
 
 @app.route("/<ext>/<id>")
 def resource_src(ext, id):
-    file_path = basePathAsset + id + "/" + id + "." + ext
-
-    result = {}
-    numOfPages = 0
-    if (os.path.exists(file_path)):
-        with open(file_path, "rb") as file:
-            encoded_string = base64.b64encode(file.read())
-            pdfReader = PyPDF2.PdfReader(file)
-            numOfPages = len(pdfReader.pages)
-            file.close()
-
-        prefix = "data:[<mediatype>];base64,"
-
-        if ext == "pdf":
-            prefix = prefix.replace("[<mediatype>]", "application/pdf")
-
-
-        result = {
-            "base64": prefix + encoded_string.decode('utf-8'),
-            "numOfPages": numOfPages
-        }
-    else:
-        result = {
-            "error": True
-        }
-    return result
+    return resource_src(ext, id, basePathAsset)
 
 # Create operation
 @app.route('/api/users/create', methods=['POST'])
 def create_user():
-    print("START USER CREATE")
+    print("START CREATE USER")
     data = request.json
 
     print(data)
     
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-            response = {
-                "message": "DATA ADDED",
-                "error": "",
-                "code": 200
-            }
-
-            # solr.add([data])
-
-            r = requests.post(BASE_URL + "/users/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
-            return r.json()
-        except Exception as e:
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
-    
-    return jsonify(response), 500
-
+    return jsonify(users.create_user(data, BASE_URL)), 500
 
 # Read operation
 @app.route('/api/users/login', methods=['POST'])
@@ -182,159 +78,23 @@ def read_user():
     print("START USER LOGIN")
     data = request.json
     
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-            response = {
-                "message": "DATA ACCESS",
-                "error": "",
-                "code": 200
-            }
-
-            # solr.add([data])
-            responseRaw = requests.get(BASE_URL + "/users/select?indent=true&q.op=OR&q=emailqry%3A%22" + data["emailqry"] + "%22&useParams=", verify=False)
-
-            # Decode the content from bytes to string and then parse as JSON
-            response_json = json.loads(responseRaw.content.decode('utf-8'))
-            responseRaw = response_json.get('response', {}).get('docs', [])
-            # Now you can access response_docs as a list containing the documents
-            # Do whatever you need to do with response_docs
-
-
-            if len(responseRaw) > 0:
-                if responseRaw[0]["password"][0] == data["password"]:
-                    response = {
-                        "id": responseRaw[0]["id"],
-                        "email": responseRaw[0]["email"][0],
-                        "password": responseRaw[0]["password"][0],
-                        "firstName": responseRaw[0]["firstName"][0],
-                        "lastName": responseRaw[0]["lastName"][0],
-                        "role": responseRaw[0]["role"][0]
-                    }
-                else:
-                    response = {
-                    "message": "",
-                    "error": "password mismatch",
-                    "code": 502
-                }
-            else:
-
-                response = {
-                    "message": "",
-                    "error": "NO USER",
-                    "code": 501
-                }
-
-        except Exception as e:
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
-    
-    return response
+    return users.read_user(data, BASE_URL)
 
 @app.route('/api/users/getUser', methods=['POST'])
 def get_user():
     print("START GET USER")
     data = request.json
     
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-            response = {
-                "message": "DATA ACCESS",
-                "error": "",
-                "code": 200
-            }
-
-            # solr.add([data])
-            responseRaw = requests.get(BASE_URL + "/users/select?indent=true&q.op=OR&q=*%3A*&useParams=", verify=False)
-
-            # Decode the content from bytes to string and then parse as JSON
-            response_json = json.loads(responseRaw.content.decode('utf-8'))
-            usersRaw = response_json.get('response', {}).get('docs', [])
-
-            users = []
-
-            if len(usersRaw) > 0:
-                for userRaw in usersRaw:
-                    print(userRaw)
-                    user = { }
-
-                    keysRaw = list(userRaw.keys())
-                    for keyRaw in keysRaw:
-
-                        if keyRaw in ["id", "_version_"]:
-                            user[keyRaw] = userRaw[keyRaw]
-                        else:
-                            user[keyRaw] = userRaw[keyRaw][0]
-                    
-                    users.append(user)
-        
-            response = {
-                "users": users
-            }
-            # Now you can access response_docs as a list containing the documents
-            # Do whatever you need to do with response_docs
-
-        except Exception as e:
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
-    
-    return response
+    return users.get_user(data, BASE_URL)
 
 
 # Update operation
 @app.route('/api/users/update', methods=['PUT'])
 def update_user():
-    print("START USER UPDATE")
+    print("START UPDATE USER ")
     data = request.json
 
-    print(data)
-    
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-            response = {
-                "message": "DATA UPDATED",
-                "error": "",
-                "code": 200
-            }
-
-            # solr.add([data])
-
-            r = requests.post(BASE_URL + "/users/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
-            print(f"Status Code: {r.status_code}, Response: {r.json()}")
-        except Exception as e:
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
-    
-    return jsonify(response), 500
+    return jsonify(users.get_user(data, BASE_URL)), 500
 
 
 # Delete operation
@@ -346,363 +106,62 @@ def delete_user(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
+#CATALOGUES
 # Create operation
 @app.route('/api/catalogues/add', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def create_catalogue():
-    print("START CATALOGUE ADD")
+    print("START ADD CATALOGUE")
+    data = request.json    
+    
+    return jsonify(catalogues.create_catalogue(data, BASE_URL)), 500
+
+@app.route('/api/catalogues/delete', methods=['POST'])
+def deleteCatalogue():
+    print("START DELETE CATALOGUE")
     data = request.json
-
-    print(data)
     
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-            response = {
-                "message": "DATA ADDED",
-                "error": "",
-                "code": 200
-            }
+    return catalogues.deleteCatalogue(data, BASE_URL)
 
-            # solr.add([data])
-
-            r = requests.post(BASE_URL + "/catalogues/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
-            print(data)
-            return response
-        except Exception as e:
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
-    
-    return jsonify(response), 500
-
-
-# Documents operation
-
-@app.route('/api/documents/add', methods=['POST'])
-@cross_origin(supports_credentials=True)
-def create_document():
-    print("START DOCUMENT ADD")
+@app.route('/api/catalogues/update', methods=['PUT'])
+def update_catalogue():
+    print("START CATALOGUE UPDATE")
     data = request.json
-
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-
-            print(data)
-            response = {
-                "message": "DATA ADDED",
-                "error": "",
-                "code": 200
-            }
-
-            r = requests.post(BASE_URL + "/documents/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
-
-            print(r.json())
-
-            return response
-        except Exception as e:
-
-            print(e)
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
     
-    return jsonify(response), 500
+    return jsonify(catalogues.update_catalogue(data, BASE_URL)), 500
 
-@app.route('/api/documents/base64', methods=['POST'])
-@cross_origin(supports_credentials=True)
-def upload_document():
-    print("START DOCUMENT ADD")
-    data = request.json
-
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-
-            print(data)
-            response = {
-                "message": "DATA ADDED",
-                "error": "",
-                "code": 200
-            }
-
-
-            if (data["attachments"] and len(json.loads(data["attachments"]))):
-                attachmentsObj = json.loads(data["attachments"])
-                                            
-                for attachment in attachmentsObj:
-                    if len(attachment.keys()):
-                        base_folders = "folders"
-                        full_folder_path = base_folders + "/" + data["id"]
-                        full_filename_path = full_folder_path + "/" + data["id"] + "." + attachment["ext"]
-                        if not(os.path.exists(full_folder_path)):
-                            os.mkdir(full_folder_path) 
-
-                        if (os.path.exists(full_filename_path)):
-                            os.rename(full_filename_path, full_folder_path + "/" + data["name"] + "_" + str(datetime.today().timestamp()))
-
-                        with open(full_filename_path, 'wb') as theFile:
-                            theFile.write(base64.b64decode(attachment["base64"]))
-
-                        
-                        data["attachments"] = full_filename_path
-            
-
-            
-            return response
-        except Exception as e:
-
-            print(e)
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
-    
-    return jsonify(response), 500
-
-
-
-# Read operation
 @app.route('/api/catalogues/getCatalogues', methods=['POST'])
 def getCatalogues():
     print("START GET CATALOGUES")
     data = request.json
     
-    response = {}
-    
-    try:
-        response = {
-            "message": "DATA ACCESS",
-            "error": "",
-            "code": 200
-        }
+    return catalogues.getCatalogues(data, BASE_URL)
 
-        print(data)
-
-        query = ""
-        if "title" in data.keys():
-            if " " in data["title"]:
-                data["title"] = "(" + data["title"] + ")"
-            query += "title%3A" + data["title"].replace(" ","%20") + "%0A"
-            print("A")
-        else:
-            query += "*%3A*%0A"
-        
-        if "topics" in data.keys():
-            query += "topics%3A%22" + data["topics"] + "%22"
-        else:
-            query += "*%3A*"
-
-        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
-        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
-        print(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&sort=title_str%20asc&useParams=")
-
-        # solr.add([data])
-        responseRaw = requests.get(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&sort=title_str%20asc&useParams=", verify=False)
-        print(responseRaw)
-        # Decode the content from bytes to string and then parse as JSON
-        response_json = json.loads(responseRaw.content.decode('utf-8'))
-        responseRaw = response_json.get('response', {}).get('docs', [])
-        # Now you can access response_docs as a list containing the documents
-        # Do whatever you need to do with response_docs
-
-
-        
-        documents = []
-        if len(responseRaw) > 0:
-            for documentRaw in responseRaw:
-                document = { }
-
-                keysRaw = list(documentRaw.keys())
-                for keyRaw in keysRaw:
-
-                    if keyRaw in ["id", "_version_"]:
-                        document[keyRaw] = documentRaw[keyRaw]
-                    else:
-                        document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
-                
-                documents.append(document)
-        
-        response = {
-            "documents": documents
-        }
-    except Exception as e:
-        response = {
-            "message": "",
-            "error": str(e),
-            "code": 500
-        }
-    
-    return response
-
-@app.route('/api/catalogues/update', methods=['PUT'])
-def update_catalogue():
-    print("START USER UPDATE")
-    data = request.json
-
-    print(data)
-    
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-            response = {
-                "message": "DATA UPDATED",
-                "error": "",
-                "code": 200
-            }
-
-            # solr.add([data])
-
-            r = requests.post(BASE_URL + "/catalogues/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
-            print(f"Status Code: {r.status_code}, Response: {r.json()}")
-        except Exception as e:
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
-    
-    return jsonify(response), 500
-
-@app.route('/api/catalogues/delete', methods=['POST'])
-def deleteCatalogue():
-    print("START DELETE DOCUMENT")
-    data = request.json
-    
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-            response = {
-                "message": "DATA REMOVED",
-                "error": "",
-                "code": 200
-            }
-
-            payload = "<delete><query>id:\"" + data["id"]+ "\"</query></delete>"
-
-            # solr.add([data])
-            headers = {'Content-type': 'application/xml'}
-            responseRaw = requests.post(BASE_URL + "/catalogues/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", headers=headers, data=payload, verify=False)
-
-            print(responseRaw.content)
-            # Now you can access response_docs as a list containing the documents
-            # Do whatever you need to do with response_docs
-
-        except Exception as e:
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
-    
-    return response
-
+# Documents operation
 # Read operation
 @app.route('/api/documents/getDocuments', methods=['POST'])
 def getDocuments():
     print("START GET DOCUMENTS")
     data = request.json
     
-    response = {}
+    return documents.getDocuments(data)
+
+
+@app.route('/api/documents/add', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def create_document():
+    print("START DOCUMENT ADD")
+    data = request.json
     
-    try:
-        response = {
-            "message": "DATA ACCESS",
-            "error": "",
-            "code": 200
-        }
+    return jsonify(documents.create_document(data, BASE_URL)), 500
 
-        # solr.add([data])
-
-        query = "parentId%3A" + data["parentId"] + "%0A"
-        if "name" in data.keys():
-            if " " in data["name"]:
-                data["name"] = "(" + data["name"] + ")"
-            query += "name%3A(" + data["name"].replace(" ","%20") + ")"
-            print("A")
-        
-        if "topics" in data.keys():
-            query += "topics%3A(" + data["topics"] + ")"
-        
-
-        print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
-        
-
-        # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
-        
-        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
-        print(responseRaw)
-        # Decode the content from bytes to string and then parse as JSON
-        response_json = json.loads(responseRaw.content.decode('utf-8'))
-        responseRaw = response_json.get('response', {}).get('docs', [])
-        # Now you can access response_docs as a list containing the documents
-        # Do whatever you need to do with response_docs
-
-
-        
-        documents = []
-        if len(responseRaw) > 0:
-            for documentRaw in responseRaw:
-                document = { }
-
-                keysRaw = list(documentRaw.keys())
-                for keyRaw in keysRaw:
-
-                    if keyRaw in ["id", "_version_"]:
-                        document[keyRaw] = documentRaw[keyRaw]
-                    else:
-                        document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
-                
-                documents.append(document)
-        
-        response = {
-            "documents": documents
-        }
-    except Exception as e:
-        response = {
-            "message": "",
-            "error": str(e),
-            "code": 500
-        }
+@app.route('/api/documents/base64', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def upload_document():
+    print("START DOCUMENT ADD")
+    data = request.json
     
-    return response
+    return jsonify(documents.upload_document(data)), 500
 
 
 @app.route('/api/documents/delete', methods=['POST'])
@@ -710,53 +169,8 @@ def deleteDocument():
     print("START DELETE DOCUMENT")
     data = request.json
     
-    response = {}
-    if not data:
-        response = {
-            "message": "",
-            "error": 'No data provided',
-            "code": 400
-        }
-    else:
-        try:
-            response = {
-                "message": "DATA REMOVED",
-                "error": "",
-                "code": 200
-            }
-
-            payload = "<delete><query>id:\"" + data["id"]+ "\"</query></delete>"
-
-            # solr.add([data])
-            headers = {'Content-type': 'application/xml'}
-            responseRaw = requests.post(BASE_URL + "/documents/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", headers=headers, data=payload, verify=False)
-
-            print(responseRaw.content)
-            # Now you can access response_docs as a list containing the documents
-            # Do whatever you need to do with response_docs
-
-        except Exception as e:
-            response = {
-                "message": "",
-                "error": str(e),
-                "code": 500
-            }
     
-    return response
-
-
-def extract_text_from_pdf(pdf_path):
-    # Convert PDF to image
-    pages = convert_from_path(pdf_path,400)
-     
-    # Extract text from each page using Tesseract OCR
-    text_data = ''
-    for page in pages:
-        text = pytesseract.image_to_string(page)
-        text_data += text + '\n'
-     
-    # Return the text data
-    return text_data
+    return documents.deleteDocument(data, BASE_URL)
 
 
 # Read operation
@@ -765,64 +179,7 @@ def getDocumentsByDate():
     print("START GET DOCUMENTS BY DATE")
     data = request.json
     
-    response = {}
-    
-    try:
-        response = {
-            "message": "DATA ACCESS",
-            "error": "",
-            "code": 200
-        }
-
-        # solr.add([data])
-
-        
-        documents = []
-        for date in data["dates"]:
-            query = "parentId%3A" + data["parentId"] + "%0A"
-            query += "topics%3A(" + date + ")"
-        
-
-            print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
-            
-
-            # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
-            
-            responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
-            print(responseRaw)
-            # Decode the content from bytes to string and then parse as JSON
-            response_json = json.loads(responseRaw.content.decode('utf-8'))
-            responseRaw = response_json.get('response', {}).get('docs', [])
-            # Now you can access response_docs as a list containing the documents
-            # Do whatever you need to do with response_docs
-
-
-            
-            if len(responseRaw) > 0:
-                for documentRaw in responseRaw:
-                    document = { }
-
-                    keysRaw = list(documentRaw.keys())
-                    for keyRaw in keysRaw:
-
-                        if keyRaw in ["id", "_version_"]:
-                            document[keyRaw] = documentRaw[keyRaw]
-                        else:
-                            document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
-                    
-                    documents.append(document)
-        
-        response = {
-            "documents": documents
-        }
-    except Exception as e:
-        response = {
-            "message": "",
-            "error": str(e),
-            "code": 500
-        }
-    
-    return response
+    return documents.getDocumentsByFate(data, BASE_URL)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'), debug=True)    
