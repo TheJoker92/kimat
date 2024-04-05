@@ -77,7 +77,7 @@ export class DgtaOcrModalComponent {
 
 
       this.deliberazioneTemaplateJSON.data = this.getDayNumber(this.deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(this.deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(this.deliberazioneTemaplateJSON.annoStr)
-      this.deliberazioneTemaplateJSON.dataNoDash = this.deliberazioneTemaplateJSON.data.replaceAll("-","")
+      this.deliberazioneTemaplateJSON.dataNoDash = "a" + this.deliberazioneTemaplateJSON.data.replaceAll("-","")
       console.log(this.deliberazioneTemaplateJSON)
 
       if (this.document.topics!.length == 0) {
