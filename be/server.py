@@ -190,8 +190,8 @@ def getDocumentsByDate():
     return documents.getDocumentsByDate(data, BASE_URL)
 
 # Read operation
-@app.route('/api/documents/getDocumentsById', methods=['POST'])
-def getDocumentsByDate():
+@app.route('/api/documents/getDocumentById', methods=['POST'])
+def getDocumentsById():
     print("START GET DOCUMENTS BY DATE")
     data = request.json
     
