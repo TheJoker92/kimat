@@ -70,7 +70,7 @@ def create_user():
 
     print(data)
     
-    return jsonify(users.create_user(data, BASE_URL)), 500
+    return jsonify(users.create_user(data, BASE_URL)), 200
 
 # Read operation
 @app.route('/api/users/login', methods=['POST'])
@@ -94,7 +94,7 @@ def update_user():
     print("START UPDATE USER ")
     data = request.json
 
-    return jsonify(users.get_user(data, BASE_URL)), 500
+    return jsonify(users.get_user(data, BASE_URL)), 200
 
 
 # Delete operation
@@ -104,7 +104,7 @@ def delete_user(id):
         solr.delete(id=id)
         return jsonify({'success': 'User deleted successfully'})
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e)}), 200
 
 #CATALOGUES
 # Create operation
@@ -114,7 +114,7 @@ def create_catalogue():
     print("START ADD CATALOGUE")
     data = request.json    
     
-    return jsonify(catalogues.create_catalogue(data, BASE_URL)), 500
+    return jsonify(catalogues.create_catalogue(data, BASE_URL)), 200
 
 @app.route('/api/catalogues/delete', methods=['POST'])
 def deleteCatalogue():
@@ -128,7 +128,7 @@ def update_catalogue():
     print("START CATALOGUE UPDATE")
     data = request.json
     
-    return jsonify(catalogues.update_catalogue(data, BASE_URL)), 500
+    return jsonify(catalogues.update_catalogue(data, BASE_URL)), 200
 
 @app.route('/api/catalogues/getCatalogues', methods=['POST'])
 def getCatalogues():
@@ -161,7 +161,7 @@ def upload_document():
     print("START DOCUMENT ADD")
     data = request.json
     
-    return jsonify(documents.upload_document(data)), 500
+    return jsonify(documents.upload_document(data)), 200
 
 
 @app.route('/api/documents/delete', methods=['POST'])
