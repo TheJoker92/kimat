@@ -60,7 +60,7 @@ def get_ocr():
 
 @app.route("/<ext>/<id>")
 def resource_src(ext, id):
-    return resource_src(ext, id, basePathAsset)
+    return documents.resource_src(ext, id, basePathAsset)
 
 # Create operation
 @app.route('/api/users/create', methods=['POST'])
