@@ -263,7 +263,7 @@ def resource_src(ext, id, basePathAsset):
         }
     return result
 
-def deleteCatalogue(data, BASE_URL):
+def deleteDocument(data, BASE_URL):
     response = {}
     if not data:
         response = {
