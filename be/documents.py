@@ -99,7 +99,7 @@ def getDocuments(data, BASE_URL):
                 keysRaw = list(documentRaw.keys())
                 for keyRaw in keysRaw:
 
-                    if keyRaw in ["id", "_version_"]:
+                    if keyRaw in ["id", "_version_", "deliberationDate"]:
                         document[keyRaw] = documentRaw[keyRaw]
                     else:
                         document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
@@ -339,7 +339,7 @@ def getDocumentsByDate(data, BASE_URL):
                     keysRaw = list(documentRaw.keys())
                     for keyRaw in keysRaw:
 
-                        if keyRaw in ["id", "_version_"]:
+                        if keyRaw in ["id", "_version_", "deliberationDate"]:
                             document[keyRaw] = documentRaw[keyRaw]
                         else:
                             document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
