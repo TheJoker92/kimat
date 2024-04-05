@@ -195,7 +195,7 @@ def getDocumentsById():
     print("START GET DOCUMENTS BY DATE")
     data = request.json
     
-    return documents.getDocumentById(data["idDocument"], BASE_URL)
+    return documents.getDocumentById(data["id"], BASE_URL)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'), debug=True)    
