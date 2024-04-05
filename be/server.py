@@ -153,7 +153,7 @@ def create_document():
     print("START DOCUMENT ADD")
     data = request.json
     
-    return jsonify(documents.create_document(data, BASE_URL)), 500
+    return jsonify(documents.create_document(data, BASE_URL)), 200
 
 @app.route('/api/documents/base64', methods=['POST'])
 @cross_origin(supports_credentials=True)
