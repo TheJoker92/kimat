@@ -266,7 +266,7 @@ def resource_src(ext, id, basePathAsset):
         for path in os.listdir(tmp_folder_path):
             merger.append(tmp_folder_path + "/" + path)
             merger.write(file_path)
-            merger.close()
+        merger.close()
 
         data = {
             "id": id
