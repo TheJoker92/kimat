@@ -17,6 +17,9 @@ nltk.download('maxent_ne_chunker')
 nltk.download('words')
 nltk.download('universal_tagset')
 
+import re
+
+
 
 
 def create_document(data, BASE_URL):
@@ -265,7 +268,7 @@ def resource_src(ext, id, basePathAsset):
         merger = PyPDF2.PdfMerger()
         for path in os.listdir(tmp_folder_path):
             merger.append(tmp_folder_path + "/" + path)
-            merger.write(file_path)
+        merger.write(file_path)
         merger.close()
 
         data = {
@@ -510,3 +513,14 @@ def getDocumentById(idDocument, BASE_URL):
         response = None
     
     return response 
+
+
+
+def sort_alphanumeric_list(lst):
+    def extract_number(s):
+        # Regular expression to extract the final number from a string
+        match = re.search(r'\d+$', s)
+        return int(match.group()) if match else float('inf')
+
+    # Sort the list using a custom key function
+    return sorted(lst, key=extract_number)
