@@ -525,7 +525,7 @@ def sort_alphanumeric_list(lst):
         filename = lst[0][:last_dash_index]
 
     for num in range (1,len(lst)):
-        sortedList.append(filename + "-" + str(num))
+        sortedList.append(filename + "-" + str(num) + ".pdf")
 
     # Sort the list using a custom key function
     return sortedList
