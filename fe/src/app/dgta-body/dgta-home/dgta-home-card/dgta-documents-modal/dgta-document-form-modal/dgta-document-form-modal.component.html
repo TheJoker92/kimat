@@ -3,11 +3,12 @@
 </div>
 <div class="container">
     <div class=" column-center-spacebetween" [ngClass]="{'box-form': isSingle, 'box-form-multiple':isMultiple}">
-        <h3 class="row-center-center">INSERISCI DATI DOCUMENTO/I</h3>
-        <!-- <div class="row-center-center">
+        <h3 *ngIf="isSingle" class="row-center-center">INSERISCI DATI DOCUMENTO/I</h3>
+        <h3 *ngIf="isMultiple" class="row-center-center">CARICA DOCUMENTO/I</h3>
+        <div class="row-center-center">
             <button [ngClass]="{'activeTab': isSingle}" (click)="toggleIsSingle()">SINGOLO</button>
             <button [ngClass]="{'activeTab': isMultiple}" (click)="toggleIsMultiple()">MULTIPLO</button>
-        </div> -->
+        </div>
         <div *ngIf="isSingle" class="box-form column-center-center">
 
             <div class="mb10px">

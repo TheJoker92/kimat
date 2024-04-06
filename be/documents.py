@@ -238,7 +238,9 @@ def extract_text_from_pdf(pdf_path):
 
 def resource_src(ext, id, basePathAsset):
     file_path = basePathAsset + id + "/" + id + "." + ext
-
+    tmp_folder_path = basePathAsset + id + "/tmp"
+    
+    
     result = {}
     numOfPages = 0
     if (os.path.exists(file_path)):
@@ -258,6 +260,18 @@ def resource_src(ext, id, basePathAsset):
             "base64": prefix + encoded_string.decode('utf-8'),
             "numOfPages": numOfPages
         }
+
+    elif (os.path.exists(tmp_folder_path)):
+        merger = PyPDF2.PdfMerger()
+        for path in os.listdir(tmp_folder_path):
+            merger.append(path)
+            merger.write(file_path)
+            merger.close()
+
+        data = {
+            "id": id
+        }
+        getOcr(data, basePathAsset)
     else:
         result = {
             "error": True
@@ -369,11 +383,12 @@ def massiveUploadFromPapers(data, BASE_URL):
             attachmentsObj = json.loads(data["attachments"])
             base_folders = "folders"
             full_folder_path = base_folders + "/tmp/" + data["parentId"]
-                                
+
+            index = 0          
             for attachment in attachmentsObj:
                 if len(attachment.keys()):
                     
-                    full_filename_path = full_folder_path + "/" + data["parentId"] + "." + attachment["ext"]
+                    full_filename_path = full_folder_path + "/" + data["parentId"] + "/" + data["id"] + "_" + index + "_" + "." + attachment["ext"]
                     if not(os.path.exists(full_folder_path)):
                         os.mkdir(full_folder_path) 
 
