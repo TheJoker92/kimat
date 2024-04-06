@@ -264,7 +264,7 @@ def resource_src(ext, id, basePathAsset):
     elif (os.path.exists(tmp_folder_path)):
         merger = PyPDF2.PdfMerger()
         for path in os.listdir(tmp_folder_path):
-            merger.append(path)
+            merger.append(tmp_folder_path + "/" + path)
             merger.write(file_path)
             merger.close()
 
