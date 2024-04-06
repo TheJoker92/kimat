@@ -518,10 +518,14 @@ def getDocumentById(idDocument, BASE_URL):
 
 
 def sort_alphanumeric_list(lst):
-    def extract_number(s):
-        # Regular expression to extract the final number from a string
-        match = re.search(r'\d+$', s)
-        return int(match.group()) if match else float('inf')
+    sortedList = []
+
+    last_dash_index = lst[0].rfind('-')
+    if last_dash_index != -1:
+        filename = lst[0][:last_dash_index]
+
+    for num in range (1,len(lst)):
+        sortedList.append(filename + "-" + str(num))
 
     # Sort the list using a custom key function
-    return sorted(lst, key=extract_number)
+    return sortedList
