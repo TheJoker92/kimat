@@ -84,4 +84,8 @@ export class HttpService {
   getDocumentsbydate(payload: any) {
     return this.http.post(this.buildURL("documents/", this.data.document.getDocumentsByDate), payload, this.httpOptions)
   }
+
+  getDocumentById(payload: any) {
+    return this.http.post(this.buildURL("documents/", this.data.document.getDocumentsById), payload, this.httpOptions)
+  }
 }

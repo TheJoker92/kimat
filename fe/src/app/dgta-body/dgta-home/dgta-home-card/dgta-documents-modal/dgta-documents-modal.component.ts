@@ -439,4 +439,40 @@ export class DgtaDocumentsModalComponent {
     }
   }
 
+  getDocumentById(payload: any) {
+    this.http.getDocumentById(payload).subscribe({
+      next: (response: any) => {
+        this.loadingService.isLoading = false
+
+        // this.documents = []
+        for (let documentRaw of response.documents!) {
+          let document: any = {}
+          for (let keyDocument of Object.keys(documentRaw)) {
+            if (this.isParsable(documentRaw[keyDocument])) {
+              document[keyDocument] = JSON.parse(documentRaw[keyDocument])
+            } else {
+              document[keyDocument] = documentRaw[keyDocument]
+            }
+
+          }
+
+          if (this.documents.filter((presentedDocument: IDocument) => document.id == presentedDocument.id).length == 0) {
+            this.documents.push(document)
+          }
+
+          console.log("AAAA", this.documents)
+          this.documents = JSON.parse(JSON.stringify(this.documents))
+        }
+        // this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
+
+
+      },
+      error: (error: any) => {
+        console.error(error)
+        this.loadingService.isLoading = false
+
+      }
+    })
+  }
+
 }

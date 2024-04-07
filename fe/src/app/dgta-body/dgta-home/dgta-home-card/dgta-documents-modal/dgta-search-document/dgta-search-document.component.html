@@ -1,6 +1,24 @@
-<div class="row-center-center mt40px p10px">
+<div class="row-bottom-center mt40px p10px">
     <div class="search-container row-center-center mt10px bkg-white">
         <fa-icon class="p3px color-green" [icon]="faSearch"></fa-icon>
         <input type="text" name="" id="" (input)="onSearch($event)">
     </div>
+    <div *ngIf="!isEnabledScan" class="row-center-bottom cursor-pointer" (click)="startScan()">
+        <fa-icon class="p3px color-white font-size-15em" [icon]="faBarcode"></fa-icon>
+        <fa-icon class="p3px relative" [icon]="faSearch"></fa-icon>
+    </div>
+    <div *ngIf="isEnabledScan" class="row-center-bottom cursor-pointer" (click)="stopScan()">
+        <fa-icon class="p3px color-white font-size-15em" [icon]="faStop"></fa-icon>
+    </div>
+</div>
+
+<div *ngIf="isEnabledScan">
+    <zxing-scanner 
+    [formats]="allowedFormats"
+
+    (deviceChange)="onDeviceChange($event)"
+                        (scanSuccess)="onCodeResult($event)" (permissionResponse)="onHasPermission($event)"
+                        (camerasFound)="onCamerasFound($event)"
+                        (torchCompatible)="onTorchCompatible($event)">
+                    </zxing-scanner>
 </div>

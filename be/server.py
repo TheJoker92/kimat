@@ -173,6 +173,7 @@ def massiveUploadFromPapers():
 
 
 @app.route('/api/documents/delete', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def deleteDocument():
     print("START DELETE DOCUMENT")
     data = request.json
@@ -183,6 +184,7 @@ def deleteDocument():
 
 # Read operation
 @app.route('/api/documents/getDocumentsByDate', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def getDocumentsByDate():
     print("START GET DOCUMENTS BY DATE")
     data = request.json
@@ -191,6 +193,7 @@ def getDocumentsByDate():
 
 # Read operation
 @app.route('/api/documents/getDocumentById', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def getDocumentsById():
     print("START GET DOCUMENTS BY DATE")
     data = request.json

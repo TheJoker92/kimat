@@ -95,3 +95,9 @@ dgta-documents-modal {
 .overflow-auto {
     overflow: auto;
 }
+
+zxing-scanner  {
+    position: fixed;
+    left: 25%;
+    z-index: 2;
+}
