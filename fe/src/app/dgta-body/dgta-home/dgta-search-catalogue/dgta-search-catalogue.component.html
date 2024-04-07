@@ -10,7 +10,4 @@
 
 </div>
 
-<barcode-scanner-livestream
-      type="code_128"
-      (valueChanges)="onValueChanges($event)"
-></barcode-scanner-livestream>
+<zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>

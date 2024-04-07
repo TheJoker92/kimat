@@ -21,6 +21,7 @@
     "@fortawesome/angular-fontawesome": "^0.14.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@zxing/ngx-scanner": "^17.0.1",
     "jsbarcode": "^3.11.6",
     "jspdf": "^2.5.1",
     "ng2-pdf-viewer": "^10.0.0",

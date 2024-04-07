@@ -3,11 +3,12 @@ import { SessionService } from '../../../session.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSearch, faBarcode } from '@fortawesome/free-solid-svg-icons';
 import { BarcodeScannerLivestreamComponent, BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @Component({
   selector: 'dgta-search-catalogue',
   standalone: true,
-  imports: [FontAwesomeModule, BarcodeScannerLivestreamModule],
+  imports: [FontAwesomeModule, BarcodeScannerLivestreamModule, ZXingScannerModule],
   templateUrl: './dgta-search-catalogue.component.html',
   styleUrl: './dgta-search-catalogue.component.scss'
 })
@@ -19,6 +20,8 @@ export class DgtaSearchCatalogueComponent {
   barcodeScanner: BarcodeScannerLivestreamComponent = new BarcodeScannerLivestreamComponent();
 
   barcodeValue: any
+
+  isEnabledScan = false
 
 
   faSearch = faSearch
@@ -38,10 +41,10 @@ export class DgtaSearchCatalogueComponent {
     this.hideTopicsE.emit()
   }
 
-  onValueChanges(result: any) {
-    if (this.isGUID(result.codeResult.code)) {
+  onCodeResult(result: any) {
+    if (this.isGUID(result)) {
       this.sessionService.terms = {
-        "id": result.codeResult.code
+        "id": result
       }
 
       this.getCataloguesE.emit()
@@ -59,7 +62,9 @@ export class DgtaSearchCatalogueComponent {
     return GUIDRegex.test(str);
   }
 
+
   startScan() {
-    this.barcodeScanner.start()
+    this.isEnabledScan = true
   }
+  
 }
