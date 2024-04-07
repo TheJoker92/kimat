@@ -4,3 +4,8 @@
         <input type="text" name="" id="" (input)="onSearch($event)">
     </div>
 </div>
+
+<barcode-scanner-livestream
+      type="code_128"
+      (valueChanges)="onValueChanges($event)"
+></barcode-scanner-livestream>

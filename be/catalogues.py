@@ -44,11 +44,12 @@ def getCatalogues(data, BASE_URL):
         print(data)
 
         query = ""
+        if "id" in data.keys():
+            query += "id%3A" + data["id"] + "%0A"
         if "title" in data.keys():
             if " " in data["title"]:
                 data["title"] = "(" + data["title"] + ")"
             query += "title%3A" + data["title"].replace(" ","%20") + "%0A"
-            print("A")
         else:
             query += "*%3A*%0A"
         

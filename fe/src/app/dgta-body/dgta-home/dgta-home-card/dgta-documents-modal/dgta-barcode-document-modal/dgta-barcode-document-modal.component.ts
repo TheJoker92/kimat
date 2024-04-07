@@ -26,8 +26,8 @@ export class DgtaBarcodeDocumentModalComponent {
 
     mywindow.document.write('<html><head>');
     mywindow.document.write('</head><body>');
-    mywindow.document.write('<h2>Catalogo<h2>');
-    mywindow.document.write(document.getElementById(this.document.parentId!)!.innerHTML);
+    // mywindow.document.write('<h2>Catalogo<h2>');
+    // mywindow.document.write(document.getElementById(this.document.parentId!)!.innerHTML);
     mywindow.document.write('<h2>Documento<h2>');
     mywindow.document.write('idDocument ' + document.getElementById(this.document.id!)!.innerHTML + 'idDocument ');
     mywindow.document.write('</body></html>');
