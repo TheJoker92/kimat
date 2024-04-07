@@ -1,8 +1,13 @@
-<div class="row-center-center mt40px p10px">
+<div class="row-bottom-center mt40px p10px">
     <div class="search-container row-center-center mt10px bkg-white">
         <fa-icon class="p3px color-green" [icon]="faSearch"></fa-icon>
         <input type="text" name="" id="" (input)="onSearch($event)">
     </div>
+    <div class="row-center-bottom cursor-pointer" (click)="startScan()">
+        <fa-icon class="p3px color-white font-size-15em" [icon]="faBarcode"></fa-icon>
+        <fa-icon class="p3px relative" [icon]="faSearch"></fa-icon>
+    </div>
+
 </div>
 
 <barcode-scanner-livestream

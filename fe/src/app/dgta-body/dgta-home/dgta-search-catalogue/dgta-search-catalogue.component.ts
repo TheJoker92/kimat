@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { SessionService } from '../../../session.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faBarcode } from '@fortawesome/free-solid-svg-icons';
 import { BarcodeScannerLivestreamComponent, BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
 
 @Component({
@@ -22,6 +22,7 @@ export class DgtaSearchCatalogueComponent {
 
 
   faSearch = faSearch
+  faBarcode = faBarcode
 
   constructor(private sessionService: SessionService) {
 
@@ -45,6 +46,8 @@ export class DgtaSearchCatalogueComponent {
 
       this.getCataloguesE.emit()
       this.hideTopicsE.emit()
+
+      this.barcodeScanner.stop()
     } else {
       alert("Barcode non valido")
     }
@@ -54,5 +57,9 @@ export class DgtaSearchCatalogueComponent {
   isGUID(str: any) {
     const GUIDRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     return GUIDRegex.test(str);
+  }
+
+  startScan() {
+    this.barcodeScanner.start()
   }
 }
