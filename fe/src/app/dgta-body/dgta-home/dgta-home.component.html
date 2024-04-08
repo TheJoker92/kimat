@@ -11,7 +11,8 @@
     <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
                     [ngClass]="{'display-none':sessionService.isOpenDocumentsModal}" 
                     [catalogues]="catalogues"
-                    (getCataloguesByTopicE)="getCatalogues()"></dgta-topic-card>
+                    [numTopics]="numTopics"
+                    (getCataloguesByTopicE)="getCatalogues($event)"></dgta-topic-card>
     <div class="column-top-right">
         <dgta-home-card class="row-center h10vh" 
         [catalogues]="catalogues"

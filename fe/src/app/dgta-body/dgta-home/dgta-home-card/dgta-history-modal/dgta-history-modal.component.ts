@@ -3,6 +3,7 @@ import { ICatalogue } from '../../../../interfaces/ICatalogue';
 import { CommonModule } from '@angular/common';
 import { ILog } from '../../../../interfaces/ILog';
 import { DefaultDashPipe } from '../../../../default-dash.pipe';
+import { SessionService } from '../../../../session.service';
 
 @Component({
   selector: 'dgta-history-modal',
@@ -17,8 +18,10 @@ export class DgtaHistoryModalComponent {
 
   history: ILog[] = []
 
+  constructor(private session: SessionService) { }
+
   ngOnInit() {
-    this.history = this.catalogue.history!
+    this.history = this.catalogue.history!.filter((log: ILog) => this.session.user?.role == "admin" || log.user?.id == this.session.user?.id)
   }
 
   closeHistoryModal() {

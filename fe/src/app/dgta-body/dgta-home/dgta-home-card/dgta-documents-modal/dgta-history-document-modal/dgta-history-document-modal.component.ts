@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter } from "@angular/core"
 import { DefaultDashPipe } from "../../../../../default-dash.pipe"
 import { ILog } from "../../../../../interfaces/ILog"
 import { IDocument } from "../../../../../interfaces/IDocument"
+import { SessionService } from "../../../../../session.service"
 
 @Component({
   selector: 'dgta-history-document-modal',
@@ -17,8 +18,10 @@ export class DgtaHistoryDocumentModalComponent {
 
   history: ILog[] = []
 
+  constructor(private session: SessionService) { }
+
   ngOnInit() {
-    this.history = this.document.history!
+    this.history = this.document.history!.filter((log: ILog) => this.session.user?.role == "admin" || log.user?.id == this.session.user?.id)
     console.log("H", this.history)
   }
 

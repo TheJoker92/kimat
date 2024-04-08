@@ -31,6 +31,8 @@ export class DgtaHomeComponent {
 
   toggleTopicsLabel = "nascondi categorie"
 
+  numTopics: any = {}
+
   constructor(public sessionService: SessionService,
               private http: HttpService) {
     this.getCatalogues()
@@ -55,8 +57,7 @@ export class DgtaHomeComponent {
     this.isOpenCatalogueFormModal = false
   }
 
-  getCatalogues() {
-
+  getCatalogues(topic?: string) {
     this.http.getCatalogues(this.sessionService.terms).subscribe({
       next: (response: any) => {
 
@@ -75,6 +76,20 @@ export class DgtaHomeComponent {
           this.catalogues.push(catalogue)
         }
         
+        if (topic) {
+          console.log("GET CATALOGUE", topic)
+
+          let catalogues = this.catalogues.filter(catalogue => catalogue.topics?.includes(topic))
+          
+          this.numTopics[topic] = catalogues.length
+
+          this.numTopics = JSON.parse(JSON.stringify(this.numTopics))
+        } else {
+          this.numTopics["*"] = this.catalogues.length
+        }
+
+
+
 
         console.log(this.catalogues)
       },

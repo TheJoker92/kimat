@@ -66,24 +66,29 @@ export class DgtaHomeCardComponent {
   }
 
   deleteCatalogue(catalogue: ICatalogue) {
-    this.catalogue = {}
+    if (this.sessionService.user?.role == "admin") {
 
-    let payload = {
-      id: catalogue.id
-    }
-    this.http.deleteCatalogue(payload).subscribe({
-      next: (response: any) => {
-        if(response.code == 200) {
-          alert("L'operazione è riuscita")
-          window.location.reload()
-        } else {
-          alert("Qualcosa è andato storto")
-        }
-      },
-      error: (error: any) => {
-        console.error(error)
+      this.catalogue = {}
+  
+      let payload = {
+        id: catalogue.id
       }
-    })
+      this.http.deleteCatalogue(payload).subscribe({
+        next: (response: any) => {
+          if(response.code == 200) {
+            alert("L'operazione è riuscita")
+            window.location.reload()
+          } else {
+            alert("Qualcosa è andato storto")
+          }
+        },
+        error: (error: any) => {
+          console.error(error)
+        }
+      })
+    } else {
+      alert("Non sei autorizzato ad effettuare l'operazione")
+    }
     
   }
 

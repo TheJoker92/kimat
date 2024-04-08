@@ -337,24 +337,29 @@ export class DgtaDocumentsModalComponent {
   }
 
   deleteDocument(document: IDocument) {
-    this.document = {}
+    if (this.sessionService.user?.role == "admin") {
 
-    let payload = {
-      id: document.id
-    }
-    this.http.deleteDocuments(payload).subscribe({
-      next: (response: any) => {
-        if (response.code == 200) {
-          alert("L'operazione è riuscita")
-          this.getDocuments()
-        } else {
-          alert("Qualcosa è andato storto")
-        }
-      },
-      error: (error: any) => {
-        console.error(error)
+      this.document = {}
+  
+      let payload = {
+        id: document.id
       }
-    })
+      this.http.deleteDocuments(payload).subscribe({
+        next: (response: any) => {
+          if (response.code == 200) {
+            alert("L'operazione è riuscita")
+            this.getDocuments()
+          } else {
+            alert("Qualcosa è andato storto")
+          }
+        },
+        error: (error: any) => {
+          console.error(error)
+        }
+      })
+    } else {
+      alert("Non sei autorizzato ad effettuare l'operazione")
+    }
 
   }
 

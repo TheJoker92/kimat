@@ -12,11 +12,27 @@ import { SessionService } from '../../../session.service';
 })
 export class DgtaTopicCardComponent {
   @Input() catalogues: ICatalogue[] = []
+  @Input() numTopics:any = {}
+
   @Output() getCataloguesByTopicE = new EventEmitter()
 
   data: any = rawData
 
   topics: any[] = []
+
+  ngAfterViewInit() {
+    for (let topic of this.data.topics) {
+      this.getCataloguesByTopicE.emit(topic)
+    }
+
+    this.numTopics["*"] = 0
+
+    for (let key of Object.keys(this.numTopics)) {
+      this.numTopics["*"] += this.numTopics[key]
+    }
+
+    console.log(this.topics)
+  }
 
   classCard = ""
   constructor(private sessionService: SessionService) {
@@ -28,13 +44,17 @@ export class DgtaTopicCardComponent {
       })
     }
 
+
     this.topics.unshift({
       rawName: "*",
       name: "TUTTI",
       className: "card row-center-center color-tutti"
     })
+
     console.log(this.topics)
   }
+
+
 
   getDocumentByTopic(topic: any) {
     this.sessionService.terms["topics"] = topic.rawName
