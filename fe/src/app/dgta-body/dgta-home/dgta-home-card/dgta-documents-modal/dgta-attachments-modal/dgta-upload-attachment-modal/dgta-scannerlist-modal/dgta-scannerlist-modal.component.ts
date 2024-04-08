@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpService } from '../../../../../../../http.service';
 import { IDevice } from '../../../../../../../interfaces/IDevice';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dgta-scannerlist-modal',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dgta-scannerlist-modal.component.html',
   styleUrl: './dgta-scannerlist-modal.component.scss'
 })

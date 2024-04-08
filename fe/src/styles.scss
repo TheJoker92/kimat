@@ -21,7 +21,9 @@ body {
 }
 
 .bkg-login {
-    background-image: URL("assets/home-bkg.avif");
+    background-image: URL("assets/login-form.jpeg");
+    background-repeat: no-repeat;
+    background-size: 100vw  100vh;
 }
 
 * {

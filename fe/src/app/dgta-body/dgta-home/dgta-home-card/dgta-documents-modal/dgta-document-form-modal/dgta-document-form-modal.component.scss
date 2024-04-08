@@ -22,24 +22,25 @@
     align-items: center;
 }
 
-.box-form-multiple {
+.box-form-manual {
     background: white;
-    width: 30vw;
-    min-width: 475px;
-    height: 200px;
-    min-height: 200px;
     border-radius: 15px;
     color: black;
+    padding: 10px;
+}
+
+.box-form-multiple {
+    background: white;
+    border-radius: 15px;
+    color: black;
+    padding: 10px;
 }
 
 .box-form {
     background: white;
-    width: 30vw;
-    min-width: 475px;
-    height: 15vw;
-    min-height: 700px;
     border-radius: 15px;
     color: black;
+    padding: 10px;
 }
 
 .form-field-size {
@@ -55,4 +56,8 @@ fa-icon {
 .activeTab {
     background: rgb(10, 98, 10);
     color: white;
+}
+
+h3 {
+    color: black;
 }

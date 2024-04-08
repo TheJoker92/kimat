@@ -52,6 +52,7 @@ export class DgtaDocumentFormModalComponent {
   attachmentsPdf: IAttachment[] = []
   isSingle = false
   isMultiple = true
+  isManual = false
 
   multipleFiles: any[] = []
 
@@ -252,11 +253,19 @@ export class DgtaDocumentFormModalComponent {
   toggleIsSingle() {
     this.isSingle = true
     this.isMultiple = false
+    this.isManual = false
   }
 
   toggleIsMultiple() {
     this.isSingle = false
     this.isMultiple = true
+    this.isManual = false
+  }
+
+  toggleIsManual() {
+    this.isSingle = false
+    this.isMultiple = false
+    this.isManual = true
   }
 
   onUploadFiles(e: any) {
@@ -687,6 +696,14 @@ export class DgtaDocumentFormModalComponent {
     // Using string interpolation and padStart to pad with zero
     const paddedNum: string = num.toString().padStart(2, '0');
     return paddedNum;
+  }
+
+  openScanApp() {
+    this.http.openApp().subscribe({
+      next: (response) => {
+
+      }
+    })
   }
 
 }

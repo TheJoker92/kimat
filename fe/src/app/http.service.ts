@@ -86,6 +86,11 @@ export class HttpService {
   }
 
   getDocumentById(payload: any) {
-    return this.http.post(this.buildURL("documents/", this.data.document.getDocumentsById), payload, this.httpOptions)
+    return this.http.post(this.buildURL("documents/", this.data.document.getDocumentById), payload, this.httpOptions)
+  }
+
+  openApp() {
+    return this.http.post("http://127.0.0.1:7999/api/scanmax", {} ,this.httpOptions)
+
   }
 }

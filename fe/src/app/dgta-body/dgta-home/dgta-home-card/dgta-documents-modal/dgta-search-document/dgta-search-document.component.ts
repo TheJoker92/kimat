@@ -39,6 +39,10 @@ export class DgtaSearchDocumentComponent {
 
   }
 
+  // ngAfterViewInit() {
+  //   this.onCodeResult("fa0931b9-333a-498b-a6a4-c04add1b44e0")
+  // }
+
   onSearch(e: any) {
     this.sessionService.terms["name"] = "*" + e.target.value + "*"
 

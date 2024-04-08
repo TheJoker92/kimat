@@ -2,12 +2,14 @@
 
 </div>
 <div class="container">
-    <div class=" column-center-spacebetween" [ngClass]="{'box-form': isSingle, 'box-form-multiple':isMultiple}">
+    <div class=" column-center-spacebetween" [ngClass]="{'box-form': isSingle, 'box-form-multiple':isMultiple, 'box-form-manual':isManual}">
         <h3 *ngIf="isSingle" class="row-center-center">INSERISCI DATI DOCUMENTO/I</h3>
         <h3 *ngIf="isMultiple" class="row-center-center">CARICA DOCUMENTO/I</h3>
+        <h3 *ngIf="isManual" class="row-center-center">CARICA DOCUMENTO/I MANUALMENTE</h3>
         <div class="row-center-center">
             <button [ngClass]="{'activeTab': isSingle}" (click)="toggleIsSingle()">SINGOLO</button>
             <button [ngClass]="{'activeTab': isMultiple}" (click)="toggleIsMultiple()">MULTIPLO</button>
+            <button [ngClass]="{'activeTab': isManual}" (click)="toggleIsManual()">MANUALE</button>
         </div>
         <div *ngIf="isSingle" class="box-form column-center-center">
 
@@ -108,6 +110,24 @@
             <div class="row-center-center">
                 <button class="mt10px" (click)="cancel()">ANNULLA</button>
                 <button class="mt10px" (click)="addDocumentMultiple()">AGGIUNGI</button>
+            </div>
+        </div>
+
+        <div *ngIf="isManual" class="box-form-manual column-left-center p10px">
+            <h4>
+                1. Stampa barcode
+            </h4>
+            <h4>
+                2. Metti i barcode tra i documenti
+            </h4>
+            <h4>
+                3. Apri l'applicazione
+                <button (click)="openScanApp()">APRI</button>
+            </h4>
+
+            <div class="row-center-center">
+                <button class="mt10px" (click)="cancel()">ANNULLA</button>
+                <button class="mt10px" (click)="addDocument()">AGGIUNGI</button>
             </div>
         </div>
     </div>
