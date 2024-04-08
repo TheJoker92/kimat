@@ -1,5 +1,5 @@
-<div class="container row-center-space-between h-100vh">
-    <div class="front h100p column-center-top">
+<div class="container row-center-center h-100vh">
+    <!-- <div class="front h100p column-center-top">
         <div class="font-size-xl color-white p10px">Benvenuto in </div>
         <div class="font-size-xl color-white p10px">{{ dgta }}</div>
     </div>
@@ -21,5 +21,21 @@
         </div>
         <p class="recover-password">Recupera credenziali</p>
         <button class="mt10px" (click)="logIn()">ENTRA</button>
+    </div> -->
+<div class="back column-center-center h-100vh">
+    <h4>Benvenuto in dgt&#64;</h4>
+    <div class="row-center-center">
+        <fa-icon class="p3px font-size-xl" [icon]="faSignIn"></fa-icon>
+        Accedi
     </div>
+    <div class="column-top-left">
+        <label for="">email</label>
+        <input (input)="editEmail($event)" id="email" type="text">
+    </div>
+    <div class="column-top-left">
+        <label for="">password</label>
+        <input (input)="editPassword($event)" type="password">
+    </div>
+    <p class="recover-password">Recupera credenziali</p>
+    <button class="mt10px" (click)="logIn()">ENTRA</button>
 </div>
