@@ -66,7 +66,7 @@ export class DgtaHomeCardComponent {
   }
 
   deleteCatalogue(catalogue: ICatalogue) {
-    if (this.sessionService.user?.role == "admin") {
+    if (catalogue.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length == 0) {
 
       this.catalogue = {}
   

@@ -337,7 +337,7 @@ export class DgtaDocumentsModalComponent {
   }
 
   deleteDocument(document: IDocument) {
-    if (this.sessionService.user?.role == "admin") {
+    if (document.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length == 0) {
 
       this.document = {}
   
