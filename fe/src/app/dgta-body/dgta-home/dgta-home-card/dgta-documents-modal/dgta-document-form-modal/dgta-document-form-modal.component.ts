@@ -106,9 +106,11 @@ export class DgtaDocumentFormModalComponent {
   addDocument() {
     if (!this.name) {
       alert("Inserire il nome di un documento")
-    } else if (this.topics.length == 0) {
-      alert("Indicare un almeno un argomento")
-    } else if (this.owners.length == 0) {
+    } 
+    // else if (this.topics.length == 0) {
+    //   alert("Indicare almeno un argomento")
+    // } 
+    else if (this.owners.length == 0) {
       alert("Indicare almeno un proprietario")
     } else if (!this.place.palace || !this.place.floor || !this.place.room || !this.place.sector || !this.place.rack || !this.place.position) {
       alert("Compilare tutti i campi del collocamento")
