@@ -88,6 +88,19 @@ export class DgtaHomeComponent {
           this.numTopics["*"] = this.catalogues.length
         }
 
+        for (let topic of Object.keys(this.numTopics)) {
+          console.log("GET CATALOGUE", topic)
+
+          let catalogues = this.catalogues.filter(catalogue => catalogue.topics?.includes(topic))
+          
+          this.numTopics[topic] = catalogues.length
+
+          this.numTopics = JSON.parse(JSON.stringify(this.numTopics))
+        } 
+
+
+          this.numTopics["*"] = this.catalogues.length
+
 
 
 
