@@ -34,19 +34,19 @@ export class DgtaHomeComponent {
   numTopics: any = {}
 
   constructor(public sessionService: SessionService,
-              private http: HttpService) {
+    private http: HttpService) {
     this.getCatalogues()
   }
 
   isParsable(inputString: string): boolean {
     try {
-        // Try to parse the string into an object
-        JSON.parse(inputString);
-        return true; // If successful, return true
+      // Try to parse the string into an object
+      JSON.parse(inputString);
+      return true; // If successful, return true
     } catch (error) {
-        return false; // If parsing fails, return false
+      return false; // If parsing fails, return false
     }
-  
+
   }
 
   openModalCatalogueFormModal() {
@@ -62,12 +62,12 @@ export class DgtaHomeComponent {
       next: (response: any) => {
 
         this.catalogues = []
-        
+
         for (let document of response.documents!) {
           let catalogue: any = {}
           for (let keyDocument of Object.keys(document)) {
             if (this.isParsable(document[keyDocument])) {
-              catalogue[keyDocument] =  JSON.parse(document[keyDocument])
+              catalogue[keyDocument] = JSON.parse(document[keyDocument])
             } else {
               catalogue[keyDocument] = document[keyDocument]
             }
@@ -75,12 +75,12 @@ export class DgtaHomeComponent {
 
           this.catalogues.push(catalogue)
         }
-        
+
         if (topic) {
           console.log("GET CATALOGUE", topic)
 
           let catalogues = this.catalogues.filter(catalogue => catalogue.topics?.includes(topic))
-          
+
           this.numTopics[topic] = catalogues.length
 
           this.numTopics = JSON.parse(JSON.stringify(this.numTopics))
@@ -92,17 +92,13 @@ export class DgtaHomeComponent {
           console.log("GET CATALOGUE", topic)
 
           let catalogues = this.catalogues.filter(catalogue => catalogue.topics?.includes(topic))
-          
+
           this.numTopics[topic] = catalogues.length
 
           this.numTopics = JSON.parse(JSON.stringify(this.numTopics))
-        } 
+        }
 
-
-          this.numTopics["*"] = this.catalogues.length
-
-
-
+        this.numTopics["*"] = this.catalogues.length
 
         console.log(this.catalogues)
       },
@@ -113,7 +109,7 @@ export class DgtaHomeComponent {
   }
 
   toggleTopics() {
-    if(this.showTopics) {
+    if (this.showTopics) {
       this.showTopics = false
       this.toggleTopicsLabel = "mostra categorie"
     } else {
@@ -123,7 +119,7 @@ export class DgtaHomeComponent {
   }
 
   hideTopics() {
-    if(this.showTopics) {
+    if (this.showTopics) {
       this.showTopics = false
       this.toggleTopicsLabel = "mostra categorie"
     }

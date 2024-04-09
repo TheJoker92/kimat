@@ -18,7 +18,13 @@ export class DgtaTopicCardComponent {
 
   data: any = rawData
 
-  topics: any[] = []
+  @Input() topics: any[] = []
+
+  filteredTopics: any[] = []
+
+  ngOnChanges() {
+    if(this.topics && this.topics.length) this.filteredTopics = this.topics.filter(topic => this.numTopics[topic.rawName])
+  }
 
   ngAfterViewInit() {
     for (let topic of this.data.topics) {
@@ -27,9 +33,14 @@ export class DgtaTopicCardComponent {
 
     this.numTopics["*"] = 0
 
-    for (let key of Object.keys(this.numTopics)) {
-      this.numTopics["*"] += this.numTopics[key]
+    if (Object.keys(this.sessionService.terms.topics).length == 0) {
+      for (let key of Object.keys(this.numTopics)) {
+        this.numTopics["*"] += this.numTopics[key]
+      }
     }
+
+    this.filteredTopics = this.topics.filter(topic => this.numTopics[topic.rawName])
+
 
     console.log(this.topics)
   }

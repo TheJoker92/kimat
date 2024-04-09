@@ -1,4 +1,4 @@
-<div *ngFor="let topic of topics" class="row-center-space-between w50p container">
+<div *ngFor="let topic of filteredTopics" class="row-center-space-between w50p container">
     <div [class]="topic['className']" (click)="getDocumentByTopic(topic)">
         <div class="row-left-center w100p p10px text-container">
             {{ topic.name }} {{ numTopics[topic.rawName] }}
