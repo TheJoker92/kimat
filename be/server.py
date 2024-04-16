@@ -94,8 +94,8 @@ def resource_src(ext, id):
                     return jsonify({"error": "Expired token"}), 500
 
 
-        except:
-            return jsonify({"error": True}), 500
+        except Exception as e:
+            return jsonify({"error": True, "msg": e}), 500
         
     AUTHORIZED_TOKEN[data.email] = utils.random(10)
     return documents.resource_src(ext, id, basePathAsset)
