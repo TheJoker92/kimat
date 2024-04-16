@@ -81,12 +81,10 @@ def resource_src(ext, id):
         try:
             data = request.json
 
-            token = utils.randomword(6)
+            data["token"] = utils.randomword(6)
             print("SEND EMAIL")
-            print(LOGIN_SENDER)
-            print(PASSWORD_SENDER)
-            print(token)
-            emails.sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, token)
+            
+            emails.sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, data)
 
             startTime = time.time()
             while(AUTHORIZED_TOKEN[data["email"]] != data["token"]):
