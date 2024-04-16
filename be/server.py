@@ -23,16 +23,19 @@ PASSWORD_SENDER = ""
 with open('.env', 'r') as file:
     # Read all lines from the file and store them in a list
     lines = file.readlines()
-    flaskstaticFolderPath = lines[0]
-    basePathAsset = lines[1]
-    LOGIN_SENDER = lines[2]
-    PASSWORD_SENDER = lines[3]
+    flaskstaticFolderPath = lines[0].replace("\n","")
+    basePathAsset = lines[1].replace("\n","")
+    LOGIN_SENDER = lines[2].replace("\n","")
+    PASSWORD_SENDER = lines[3].replace("\n","")
 
 import users
 import catalogues
 import documents
 
 import emails
+import sys
+
+sys.path.append('/home')
 
 AUTHORIZED_TOKEN = {}
 
