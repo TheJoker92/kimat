@@ -99,7 +99,7 @@ def resource_src(ext, id):
         except Exception as e:
             return jsonify({"error": True, "msg": e}), 500
         
-    AUTHORIZED_TOKEN[data["email"]] = utils.random(10)
+    AUTHORIZED_TOKEN[data["email"]] = utils.randomword(10)
     return documents.resource_src(ext, id, basePathAsset)
 
 # Create operation
