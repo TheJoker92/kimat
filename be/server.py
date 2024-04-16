@@ -74,7 +74,7 @@ def get_ocr():
 
     return documents.getOcr(data, basePathAsset)
 
-@app.route("/<ext>/<id>")
+@app.route("/<ext>/<id>", methods=['POST', 'GET'])
 def resource_src(ext, id):
     global AUTHORIZED_TOKEN
     if ext == "pdf":

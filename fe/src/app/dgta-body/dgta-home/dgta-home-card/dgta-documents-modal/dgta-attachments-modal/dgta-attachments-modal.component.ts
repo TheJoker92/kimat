@@ -58,7 +58,14 @@ export class DgtaAttachmentsModalComponent {
 
   getPdf() {
     this.loadingService.isLoading = true
-    fetch(this.http.BASE_URL + "pdf/" + this.document.id!).then((result) => {
+    fetch(this.http.BASE_URL + "pdf/" + this.document.id!, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"email": this.sessionService.user?.email, "firstName": this.sessionService.user?.firstName})
+    }).then((result) => {
       return result.json()
     })
     .then((result) => {
