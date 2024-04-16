@@ -240,7 +240,7 @@ def getDocumentsById():
 @cross_origin(supports_credentials=True)
 def setAuthorizedToken():
     global AUTHORIZED_TOKEN
-    AUTHORIZED_TOKEN = utils.setAuthToken(AUTHORIZED_TOKEN, request.json())
+    AUTHORIZED_TOKEN = utils.setAuthToken(AUTHORIZED_TOKEN, request.json)
     
     return jsonify({200: "OK"}), 200
 

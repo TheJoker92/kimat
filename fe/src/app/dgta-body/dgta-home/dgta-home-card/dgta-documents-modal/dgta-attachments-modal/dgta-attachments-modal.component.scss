@@ -41,3 +41,19 @@
 #file-pdf {
     visibility: hidden;
 }
+
+.box-auth-container {
+    width: 100%;
+    color: black;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+}
+
+.box-auth {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+}
