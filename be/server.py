@@ -89,6 +89,7 @@ def resource_src(ext, id):
             startTime = time.time()
             while(AUTHORIZED_TOKEN[data["email"]] != data["token"]):
                 timer = time.time() - startTime
+                print(timer)
                 if timer > 60000:
                     AUTHORIZED_TOKEN[data["email"]] = utils.random(10)
                     return jsonify({"error": "Expired token"}), 500
