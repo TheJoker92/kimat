@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 import random, string
 
 
-def sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, data, token) :
+def sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, data) :
   # Create message container - the correct MIME type is multipart/alternative.
   msg = MIMEMultipart('alternative')
   msg['Subject'] = "Dgt@ - Richiesta accesso al file"
@@ -27,7 +27,7 @@ def sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, data, token) :
   </html>
   """
 
-  htmlString = htmlString.replace("{0}", data["firstName"]).replace("{1}", token)
+  htmlString = htmlString.replace("{0}", data["firstName"]).replace("{1}", data["token"])
 
   # Record the MIME types of both parts - text/plain and text/html.
 
@@ -52,13 +52,3 @@ def sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, data, token) :
 
 
     
-
-
-data = {
-   "firstName": "Alessandro",
-   "email": "demicco.alessandro92@gmail.com"
-}
-
-token = "AAABBB"
-
-sendTokenEmail("demicco.alessandro92@gmail.com", "mebb tqss yxhn cbfs", data, token)
