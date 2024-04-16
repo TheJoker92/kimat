@@ -88,7 +88,8 @@ def resource_src(ext, id):
 
             print(AUTHORIZED_TOKEN)
             startTime = time.time()
-            while(AUTHORIZED_TOKEN[data["email"].replace("@", "")] != data["token"]):
+            while(not(data["email"].replace("@", "") in AUTHORIZED_TOKEN.keys()) or 
+                  AUTHORIZED_TOKEN[data["email"].replace("@", "")] != data["token"]):
                 timer = time.time() - startTime
                 print(str(timer))
                 if timer > 60000:
