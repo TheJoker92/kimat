@@ -86,10 +86,11 @@ def resource_src(ext, id):
             
             emails.sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, data)
 
+            print(AUTHORIZED_TOKEN)
             startTime = time.time()
             while(AUTHORIZED_TOKEN[data["email"].replace("@", "")] != data["token"]):
                 timer = time.time() - startTime
-                print(timer)
+                print(str(timer))
                 if timer > 60000:
                     AUTHORIZED_TOKEN[data["email"].replace("@", "")] = utils.random(10)
                     return jsonify({"error": "Expired token"}), 500
