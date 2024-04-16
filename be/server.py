@@ -82,6 +82,7 @@ def resource_src(ext, id):
             data = request.json()
 
             token = utils.randomword(6)
+            print("SEND EMAIL")
             emails.sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, token)
 
             startTime = time.time()

@@ -47,6 +47,7 @@ export class DgtaAttachmentsModalComponent {
   }
               
   ngOnInit() {
+    this.getPdf()
 
     let history = this.document.history!
     if (history.length > 1) {
@@ -259,8 +260,6 @@ export class DgtaAttachmentsModalComponent {
     this.http.sendToken(data).subscribe({
       next: (response: any) => {
         this.isAuthenticated = true
-        this.getPdf()
-
       },
       error: (error: any) => {
         console.error(error)
