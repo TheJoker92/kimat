@@ -79,7 +79,7 @@ def resource_src(ext, id):
     global AUTHORIZED_TOKEN
     if ext == "pdf":
         try:
-            data = request.json()
+            data = request.json
 
             token = utils.randomword(6)
             print("SEND EMAIL")
