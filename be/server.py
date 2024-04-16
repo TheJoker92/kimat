@@ -91,8 +91,7 @@ def resource_src(ext, id):
             while(not(data["email"].replace("@", "") in AUTHORIZED_TOKEN.keys()) or 
                   AUTHORIZED_TOKEN[data["email"].replace("@", "")] != data["token"]):
                 timer = time.time() - startTime
-                print(str(timer))
-                if timer > 60000:
+                if timer > 600:
                     AUTHORIZED_TOKEN[data["email"].replace("@", "")] = utils.random(10)
                     return jsonify({"error": "Expired token"}), 500
 
@@ -100,7 +99,7 @@ def resource_src(ext, id):
         except Exception as e:
             return jsonify({"error": True, "msg": e}), 500
         
-    AUTHORIZED_TOKEN[data.email] = utils.random(10)
+    AUTHORIZED_TOKEN[data["email"]] = utils.random(10)
     return documents.resource_src(ext, id, basePathAsset)
 
 # Create operation
