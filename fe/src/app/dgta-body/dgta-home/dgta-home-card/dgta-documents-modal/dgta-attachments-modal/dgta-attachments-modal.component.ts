@@ -29,13 +29,17 @@ export class DgtaAttachmentsModalComponent {
   isOpenUploadAttachmentModal = false
   srcPdf = ""
 
+  token = ""
+
   numOfPages: string = ""
 
   lastView: ILog = {}
 
+  isAuthenticated = false
+
   constructor (private http: HttpService,
               private sessionService: SessionService,
-              private loadingService: LoadingService) {}
+              public loadingService: LoadingService) {}
 
   ngOnChanges() {
 
@@ -43,7 +47,6 @@ export class DgtaAttachmentsModalComponent {
   }
               
   ngOnInit() {
-    this.getPdf()
 
     let history = this.document.history!
     if (history.length > 1) {
@@ -61,6 +64,7 @@ export class DgtaAttachmentsModalComponent {
       
       if (result.error) {
         this.srcPdf = ""
+        alert("Il codice inserito è errato. Riprova.")
       } else {
         this.srcPdf = result.base64
 
@@ -240,5 +244,27 @@ export class DgtaAttachmentsModalComponent {
 
   closeOcrModal() {
     this.isOpenOcrModal = false
+  }
+
+  editToken(e: any) {
+    this.token = e.target.value
+  }
+
+  sendToken() {
+    let data = {
+      firstName: this.sessionService.user?.firstName,
+      email: this.sessionService.user?.email,
+      token: this.token
+    }
+    this.http.sendToken(data).subscribe({
+      next: (response: any) => {
+        this.isAuthenticated = true
+        this.getPdf()
+
+      },
+      error: (error: any) => {
+        console.error(error)
+      }
+    })
   }
 }

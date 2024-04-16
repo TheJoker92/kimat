@@ -10,19 +10,31 @@ import os
 import base64
 
 
+import utils
+
+import time
+
 flaskstaticFolderPath = ""
 basePathAsset = ""
+
+LOGIN_SENDER = ""
+PASSWORD_SENDER = ""
 
 with open('.env', 'r') as file:
     # Read all lines from the file and store them in a list
     lines = file.readlines()
     flaskstaticFolderPath = lines[0]
     basePathAsset = lines[1]
+    LOGIN_SENDER = lines[2]
+    PASSWORD_SENDER = lines[3]
 
 import users
 import catalogues
 import documents
 
+import emails
+
+AUTHORIZED_TOKEN = {}
 
 app = Flask(__name__, static_folder=flaskstaticFolderPath)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1000 * 1000
@@ -64,6 +76,26 @@ def get_ocr():
 
 @app.route("/<ext>/<id>")
 def resource_src(ext, id):
+    global AUTHORIZED_TOKEN
+    if ext == "pdf":
+        try:
+            data = request.json()
+
+            token = utils.randomword(6)
+            emails.sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, token)
+
+            startTime = time.time()
+            while(AUTHORIZED_TOKEN[data.email] != data.token):
+                timer = time.time() - startTime
+                if timer == 60:
+                    AUTHORIZED_TOKEN[data.email] = utils.random(10)
+                    return jsonify({"error": "Expired token"}), 500
+
+
+        except:
+            return jsonify({"error": True}), 500
+        
+    AUTHORIZED_TOKEN[data.email] = utils.random(10)
     return documents.resource_src(ext, id, basePathAsset)
 
 # Create operation
@@ -182,7 +214,6 @@ def deleteDocument():
     print("START DELETE DOCUMENT")
     data = request.json
     
-    
     return documents.deleteDocument(data, BASE_URL)
 
 
@@ -203,6 +234,15 @@ def getDocumentsById():
     data = request.json
     
     return jsonify(documents.getDocumentById(data["id"], BASE_URL)), 200
+
+# SECURITY
+@app.route('/api/security/setAuthorizedToken', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def setAuthorizedToken():
+    global AUTHORIZED_TOKEN
+    AUTHORIZED_TOKEN = utils.setAuthToken(AUTHORIZED_TOKEN, request.json())
+    
+    return jsonify({200: "OK"}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'), debug=True)    

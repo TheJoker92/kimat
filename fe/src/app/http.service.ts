@@ -93,4 +93,8 @@ export class HttpService {
     return this.http.post("http://127.0.0.1:7999/api/scanmax", {} ,this.httpOptions)
 
   }
+
+  sendToken(payload: any) {
+    return this.http.post(this.buildURL("security/", this.data.security.setAuthorizedToken), payload, this.httpOptions)
+  }
 }

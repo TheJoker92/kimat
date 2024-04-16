@@ -8,74 +8,83 @@
         <button class="mt10px" (click)="getOcr()">OCR</button>
                     
     </div>
-    <div *ngIf="!srcPdf" class="row-center-left">
-        Non è stato caricato nessun documento
-    </div>
-    <div *ngIf="srcPdf" class="row-center-left">
-        <div class="box-form column-center-left">
-            <h4 class="ml10px">{{ document.name }}</h4>
-            <div class="file-viewer-container">
-                <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false"
-                    style="width: 100vw; height: 100vh"></pdf-viewer>
-            </div>
+    <div *ngIf="!isAuthenticated && !loadingService.isLoading">
+        <div class="box-auth column-top-center">
+            <h4>Inserire token inviato via email</h4>
+            <input (input)="editToken($event)" type="text">
+            <button (click)="sendToken()">INVIA</button>
         </div>
-        <!-- <div class="column-left-left ml10px">
-            <h4>Informazioni generali</h4>
-            <div class="row-center-left">
-                Nome: {{ document.name }}
-            </div>
-            <div>
-                Numero di pagine: {{ numOfPages }}
-            </div>
-            <div class="row-center-left">
-                <div class="column-top-left">
-                    Posizione:
-                    <small>(fisica)</small>
+    </div>
+    <div *ngIf="isAuthenticated">
+        <div *ngIf="!srcPdf" class="row-center-left">
+            Non è stato caricato nessun documento
+        </div>
+        <div *ngIf="srcPdf" class="row-center-left">
+            <div class="box-form column-center-left">
+                <h4 class="ml10px">{{ document.name }}</h4>
+                <div class="file-viewer-container">
+                    <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false"
+                        style="width: 100vw; height: 100vh"></pdf-viewer>
                 </div>
-                    <div class="column-top-left mt10px mb10px">
-                        <div>
-                            edificio: {{ getPositionLabel('palace') }}
-                        </div>
-                        <div>
-                            piano: {{ getPositionLabel('floor')}}
-                        </div>
-                        <div>
-                            stanza: {{ getPositionLabel('room')}}
-                        </div>
-                        <div>
-                            scaffale: {{ getPositionLabel('rack') }}
-                        </div>
-                        <div>
-                            settore: {{ getPositionLabel('sector') }}
-                        </div>
-                        <div>
-                            posizione{{ getPositionLabel('position') }}
-                        </div>
-
+            </div>
+            <!-- <div class="column-left-left ml10px">
+                <h4>Informazioni generali</h4>
+                <div class="row-center-left">
+                    Nome: {{ document.name }}
+                </div>
+                <div>
+                    Numero di pagine: {{ numOfPages }}
+                </div>
+                <div class="row-center-left">
+                    <div class="column-top-left">
+                        Posizione:
+                        <small>(fisica)</small>
                     </div>
-            </div>
-            <div>
-                Data di creazione: {{ formatDate(document.history![0]!.date!) }}
-            </div>
-            <div class="row-center-left mt10px">
-                <div class="column-left-left">
-                    <strong>
-                        proprietario/i:
-                    </strong>
-                    <div *ngFor="let owner of document.owners">
-                        {{ owner.firstName }} {{ owner.lastName }}
+                        <div class="column-top-left mt10px mb10px">
+                            <div>
+                                edificio: {{ getPositionLabel('palace') }}
+                            </div>
+                            <div>
+                                piano: {{ getPositionLabel('floor')}}
+                            </div>
+                            <div>
+                                stanza: {{ getPositionLabel('room')}}
+                            </div>
+                            <div>
+                                scaffale: {{ getPositionLabel('rack') }}
+                            </div>
+                            <div>
+                                settore: {{ getPositionLabel('sector') }}
+                            </div>
+                            <div>
+                                posizione{{ getPositionLabel('position') }}
+                            </div>
+    
+                        </div>
+                </div>
+                <div>
+                    Data di creazione: {{ formatDate(document.history![0]!.date!) }}
+                </div>
+                <div class="row-center-left mt10px">
+                    <div class="column-left-left">
+                        <strong>
+                            proprietario/i:
+                        </strong>
+                        <div *ngFor="let owner of document.owners">
+                            {{ owner.firstName }} {{ owner.lastName }}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row-center-left">
-                <div class="column-left-left">
-                    <strong>ultima visualizzazione:</strong>
-                    <div>{{ getLastViewFullName() }}</div>
-                    <div>{{ getLastViewtDate() }}</div>
+                <div class="row-center-left">
+                    <div class="column-left-left">
+                        <strong>ultima visualizzazione:</strong>
+                        <div>{{ getLastViewFullName() }}</div>
+                        <div>{{ getLastViewtDate() }}</div>
+                    </div>
+                    
                 </div>
-                
-            </div>
-        </div> -->
+            </div> -->
+        </div>
     </div>
 <dgta-upload-attachment-modal *ngIf="isOpenUploadAttachmentModal"
     [document]="document"

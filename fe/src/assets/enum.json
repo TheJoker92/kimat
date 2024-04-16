@@ -22,6 +22,9 @@
             "base64": "base64",
             "getDocumentsByDate": "getDocumentsByDate",
             "getDocumentById": "getDocumentById"
+        },
+        "security": {
+            "setAuthorizedToken": "setAuthorizedToken"
         }
     },
     "error": {
