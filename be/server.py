@@ -86,7 +86,7 @@ def resource_src(ext, id):
             emails.sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, token)
 
             startTime = time.time()
-            while(AUTHORIZED_TOKEN[data.email] != data.token):
+            while(AUTHORIZED_TOKEN[data["email"]] != data["token"]):
                 timer = time.time() - startTime
                 if timer > 60000:
                     AUTHORIZED_TOKEN[data.email] = utils.random(10)
