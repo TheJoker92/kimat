@@ -21,6 +21,8 @@ export class DgtaAttachmentsModalComponent {
   @Input() document: IDocument = {}
   @Output() getDocumentsE = new EventEmitter()
   @Output() closeAttahcmentsModalE = new EventEmitter()
+
+  
   
   ocrText: string = ""
   isOpenOcrModal = false
@@ -56,10 +58,11 @@ export class DgtaAttachmentsModalComponent {
     }
   }
 
-  getPdf() {
-    this.loadingService.isLoading = true
+  getPdf(signal?: any) {
+    // this.loadingService.isLoading = true
     fetch(this.http.BASE_URL + "pdf/" + this.document.id!, {
       method: 'POST',
+      signal: signal,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -73,6 +76,7 @@ export class DgtaAttachmentsModalComponent {
       if (result.error) {
         this.srcPdf = ""
         alert("Il codice inserito è errato. Riprova.")
+        this.isAuthenticated = false
       } else {
         this.srcPdf = result.base64
 
@@ -80,6 +84,14 @@ export class DgtaAttachmentsModalComponent {
       }
       this.loadingService.isLoading = false
     })
+  }
+
+  newToken() {
+    let controller = new AbortController()
+    let signal = controller.signal
+    controller.abort(true)
+    this.loadingService.isLoading = false
+    this.getPdf(signal)
   }
 
   getDocumentsEmitter() {
@@ -259,6 +271,8 @@ export class DgtaAttachmentsModalComponent {
   }
 
   sendToken() {
+    this.loadingService.isLoading = true
+
     let data = {
       firstName: this.sessionService.user?.firstName,
       email: this.sessionService.user?.email,

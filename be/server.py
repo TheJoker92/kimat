@@ -38,6 +38,7 @@ import sys
 sys.path.append('/home')
 
 AUTHORIZED_TOKEN = {}
+SENDED_TOKEN = {}
 
 app = Flask(__name__, static_folder=flaskstaticFolderPath)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1000 * 1000
@@ -80,6 +81,7 @@ def get_ocr():
 @app.route("/<ext>/<id>", methods=['POST', 'GET'])
 def resource_src(ext, id):
     global AUTHORIZED_TOKEN
+    global SENDED_TOKEN
     global basePathAsset
     if ext == "pdf":
         try:
@@ -89,6 +91,8 @@ def resource_src(ext, id):
             print("SEND EMAIL")
             
             emails.sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, data)
+
+            SENDED_TOKEN[data["email"].replace("@", "")] = data["token"]
 
             print(AUTHORIZED_TOKEN)
             startTime = time.time()
@@ -248,9 +252,19 @@ def getDocumentsById():
 @cross_origin(supports_credentials=True)
 def setAuthorizedToken():
     global AUTHORIZED_TOKEN
-    AUTHORIZED_TOKEN = utils.setAuthToken(AUTHORIZED_TOKEN, request.json)
+    global SENDED_TOKEN
+
+    data = request.json
+
+
+    if SENDED_TOKEN[data["email"].replace("@", "")] == data["token"]:
+        AUTHORIZED_TOKEN = utils.setAuthToken(AUTHORIZED_TOKEN, data)
+        response = jsonify({200: "OK"}), 200
+
+    else:
+        response = jsonify({"error": True}), 200
     
-    return jsonify({200: "OK"}), 200
+    return response
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'), debug=True)    

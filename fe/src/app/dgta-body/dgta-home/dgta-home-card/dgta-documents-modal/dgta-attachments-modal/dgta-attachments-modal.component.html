@@ -12,7 +12,10 @@
         <div class="box-auth column-center-center">
             <h4>Inserire token inviato via email</h4>
             <input (input)="editToken($event)" type="text">
-            <button (click)="sendToken()" class="mt10px">INVIA</button>
+            <div>
+                <button (click)="newToken()" class="mt10px">NUOVO</button>
+                <button (click)="sendToken()" class="mt10px">INVIA</button>
+            </div>
         </div>
     </div>
     <div *ngIf="isAuthenticated">
