@@ -77,6 +77,7 @@ def get_ocr():
 @app.route("/<ext>/<id>", methods=['POST', 'GET'])
 def resource_src(ext, id):
     global AUTHORIZED_TOKEN
+    global basePathAsset
     if ext == "pdf":
         try:
             data = request.json

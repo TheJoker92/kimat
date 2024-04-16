@@ -246,6 +246,8 @@ def resource_src(ext, id, basePathAsset):
     
     result = {}
     numOfPages = 0
+    print("FILE PATH")
+    print(file_path)
     if (os.path.exists(file_path)):
         with open(file_path, "rb") as file:
             encoded_string = base64.b64encode(file.read())
