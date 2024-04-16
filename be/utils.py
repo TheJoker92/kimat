@@ -6,6 +6,6 @@ def randomword(length):
    return ''.join(random.choice(letters) for i in range(length))
 
 def setAuthToken(AUTHORIZED_TOKEN, data):
-    AUTHORIZED_TOKEN[data.email] = data.token
+    AUTHORIZED_TOKEN[data["email"]] = data["token"]
 
     return AUTHORIZED_TOKEN
