@@ -58,11 +58,10 @@ export class DgtaAttachmentsModalComponent {
     }
   }
 
-  getPdf(signal?: any) {
+  getPdf() {
     // this.loadingService.isLoading = true
     fetch(this.http.BASE_URL + "pdf/" + this.document.id!, {
       method: 'POST',
-      signal: signal,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -84,14 +83,18 @@ export class DgtaAttachmentsModalComponent {
       }
       this.loadingService.isLoading = false
     })
+    .catch(error => {
+      if (error.name === 'AbortError') {
+        console.log('Fetch aborted');
+      } else {
+        console.error('Fetch error:', error);
+      }
+    });
   }
 
   newToken() {
-    let controller = new AbortController()
-    let signal = controller.signal
-    controller.abort(true)
     this.loadingService.isLoading = false
-    this.getPdf(signal)
+    this.getPdf()
   }
 
   getDocumentsEmitter() {
@@ -138,22 +141,25 @@ export class DgtaAttachmentsModalComponent {
   }
 
   getOcr() {
-    let payload = {
-      id: this.document.id
-    }
+    if (this.isAuthenticated) {
 
-    this.loadingService.isLoading = true
-    this.http.getOcr(payload).subscribe({
-      next: (response: any) => {
-        this.loadingService.isLoading = false
-        this.ocrText = response.text
-        this.isOpenOcrModal = true
-      },
-      error: (error) => {
-        this.loadingService.isLoading = false
-        console.error(error)
+      let payload = {
+        id: this.document.id
       }
-    })
+  
+      this.loadingService.isLoading = true
+      this.http.getOcr(payload).subscribe({
+        next: (response: any) => {
+          this.loadingService.isLoading = false
+          this.ocrText = response.text
+          this.isOpenOcrModal = true
+        },
+        error: (error) => {
+          this.loadingService.isLoading = false
+          console.error(error)
+        }
+      })
+    }
   }
 
   uploadAttachmentDocument() {
@@ -280,7 +286,9 @@ export class DgtaAttachmentsModalComponent {
     }
     this.http.sendToken(data).subscribe({
       next: (response: any) => {
-        this.isAuthenticated = true
+        this.isAuthenticated = !response.error
+        this.loadingService.isLoading = false
+
       },
       error: (error: any) => {
         console.error(error)
