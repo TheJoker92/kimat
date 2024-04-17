@@ -31,6 +31,7 @@ with open('.env', 'r') as file:
 import users
 import catalogues
 import documents
+import metadata
 
 import emails
 import sys
@@ -265,6 +266,42 @@ def setAuthorizedToken():
         response = jsonify({"error": True}), 200
     
     return response
+
+# SECURITY
+@app.route('/api/metadata/getMetadata', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def getMetadata():
+    global AUTHORIZED_TOKEN
+    global SENDED_TOKEN
+
+    try:
+        data = request.json
+
+        data["token"] = utils.randomword(6)
+        print("SEND EMAIL")
+        
+        emails.sendTokenEmail(LOGIN_SENDER, PASSWORD_SENDER, data)
+
+        SENDED_TOKEN[data["email"].replace("@", "")] = data["token"]
+
+        print(AUTHORIZED_TOKEN)
+        startTime = time.time()
+        while(not(data["email"].replace("@", "") in AUTHORIZED_TOKEN.keys()) or 
+                AUTHORIZED_TOKEN[data["email"].replace("@", "")] != data["token"]):
+            timer = time.time() - startTime
+            if timer > 600:
+                AUTHORIZED_TOKEN[data["email"].replace("@", "")] = utils.randomword(10)
+                return jsonify({"error": "Expired token"}), 500
+
+    except Exception as e:
+        return jsonify({"error": True, "msg": e}), 500
+    
+    AUTHORIZED_TOKEN[data["email"].replace("@", "")] = utils.randomword(10)
+
+    return metadata.parseToXml(data.document)
+
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'), debug=True)    
