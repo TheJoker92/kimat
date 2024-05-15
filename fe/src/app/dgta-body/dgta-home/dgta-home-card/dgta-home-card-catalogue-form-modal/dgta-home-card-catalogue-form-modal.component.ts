@@ -161,7 +161,8 @@ export class DgtaHomeCardCatalogueFormModalComponent {
 
     this.http.getUser(payload).subscribe({
       next: (response: any) => {
-        this.allowedOwners = JSON.parse(JSON.stringify(response.users.filter((user: IUser) => user.id != this.sessionService.user!.id)))
+        this.allowedOwners = JSON.parse(JSON.stringify(response.users))
+        // this.allowedOwners = JSON.parse(JSON.stringify(response.users.filter((user: IUser) => user.id != this.sessionService.user!.id)))
         this.data.owners = JSON.parse(JSON.stringify(response.users))
         this.owners = response.users.filter((user: IUser) => user.id == this.sessionService.user!.id)
 
