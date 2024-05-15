@@ -2,3 +2,34 @@
     height: 100vh;
 }
 
+.select-category {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8.5px 7px;
+    gap: 10px;
+
+    width: 68px;
+    height: 32px;
+
+    background: #E69800;
+    border-radius: 8px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    border: none;
+    color: white;
+    font-size: medium;
+}
+
+.add-folder {
+    /* Vector */
+
+    color: #E69800;
+    opacity: 0.5;
+    font-size: xx-large;
+}

@@ -37,6 +37,11 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   faCheckSquare = faCheckSquare
   faTrash = faTrash
 
+  step = 1
+
+  showTopicSelection = false
+  showOwnerSelection = false
+
   constructor(public sessionService: SessionService,
     private http: HttpService,
     private loadingService: LoadingService) {
@@ -65,17 +70,36 @@ export class DgtaHomeCardCatalogueFormModalComponent {
 
     this.topic = this.allowedTopics[0]
   }
-  addTopic() {
-    if (this.topics.length < 4 && this.topic) {
-      this.topics.push(this.topic)
-      this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
-      this.topic = this.allowedTopics[0]
+  addTopic(topic: any) {
+    if (this.topics.length < 4) {
+      // this.topics.push(this.topic)
+      // this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
+      // this.topic = this.allowedTopics[0]
+      if(this.topics.includes(topic)) {
+        this.topics = this.topics.filter((addedTopic: any) => addedTopic != topic)
+      } else {
+        this.topics.push(topic)
+      }
     } else if (this.topics.length >= 4) {
       alert("Puoi aggiungere fino a quattro argomenti")
     } else if (!this.topic) {
       alert("Selezionare un argomento")
     }
   }
+
+  addOwner(owner: any) {
+    if (this.owners) {
+      // this.topics.push(this.topic)
+      // this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
+      // this.topic = this.allowedTopics[0]
+      if(this.owners.includes(owner)) {
+        this.owners = this.owners.filter((addedOwner: any) => addedOwner.id != owner.id)
+      } else {
+        this.owners.push(owner)
+      }
+    }
+  }
+
 
   addCatalogue() {
     if (this.title && (this.owners && this.owners.length > 0) && (this.topics && this.topics.length > 0) &&
@@ -150,28 +174,28 @@ export class DgtaHomeCardCatalogueFormModalComponent {
     this.closeCatalogueFormModalE.emit()
   }
 
-  addOwner() {
-    if(this.owner && this.owners.filter((owner: IUser) => owner.id == this.owner.id).length) {
-      this.owner = this.allowedOwners[0]
-    }
+  // addOwner() {
+  //   if(this.owner && this.owners.filter((owner: IUser) => owner.id == this.owner.id).length) {
+  //     this.owner = this.allowedOwners[0]
+  //   }
     
-    if (this.allowedOwners.length && this.owner.id) {
-      this.owners.push(this.owner)
+  //   if (this.allowedOwners.length && this.owner.id) {
+  //     this.owners.push(this.owner)
 
-      this.allowedOwners = this.data.owners
-      for (let owner of this.owners) {
+  //     this.allowedOwners = this.data.owners
+  //     for (let owner of this.owners) {
 
-        this.allowedOwners = this.allowedOwners.filter((rawOwner: IUser) => rawOwner.id != owner.id)
-      }
+  //       this.allowedOwners = this.allowedOwners.filter((rawOwner: IUser) => rawOwner.id != owner.id)
+  //     }
 
-      console.log("ADD ALLOW", this.allowedOwners)
-    } else if(!this.owner.id) {
+  //     console.log("ADD ALLOW", this.allowedOwners)
+  //   } else if(!this.owner.id) {
       
-    } else {
-      alert("Non ci sono utenti da aggiungere")
-    }
+  //   } else {
+  //     alert("Non ci sono utenti da aggiungere")
+  //   }
 
-  }
+  // }
 
   onSelectOwner(e: any) {
     this.owner = this.allowedOwners.find((owner: IUser) => owner.id == e.target.value)!
@@ -190,5 +214,73 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   editLocation(label: string, e: any) {
     this.place[label] = e.target.value
     console.log(this.place)
+  }
+
+  nextStep() {
+    this.step += 1
+  }
+
+  toggleShowTopicSelection() {
+
+    if (this.showTopicSelection) {
+      this.showTopicSelection = false
+    } else {
+      this.showTopicSelection = true
+
+    }
+  }
+
+  toggleShowOwnerSelection() {
+
+    if (this.showOwnerSelection) {
+      this.showOwnerSelection = false
+    } else {
+      this.showOwnerSelection = true
+
+    }
+  }
+
+  getLabelTopic() {
+    let label = ""
+    if (this.topics.length == 0) {
+      label = "Premere per selezionare gli argomenti"
+    } else if(this.topic.length == 1) {
+      label = "Hai selezionato " + this.topics.length + " argomento"
+    } else {
+      label = "Hai selezionato " + this.topics.length + " argomenti"
+    }
+
+    return label
+  }
+
+  getLabelOwner() {
+    let label = ""
+    if (this.owners.length == 0) {
+      label = "Premere per selezionare i proprietari"
+    } else if(this.owners.length == 1) {
+      label = "Hai selezionato " + this.owners.length + " proprietario"
+    } else {
+      label = "Hai selezionato " + this.owners.length + " proprietari"
+    }
+
+    return label
+  }
+
+  isAddedTopic(topic: any) {
+    let result
+
+    if (this.topics.filter((addedTopic: any) => addedTopic == topic).length) {
+      result = true
+    }
+    return result
+  }
+
+  isAddedOwner(owner: any) {
+    let result
+
+    if (this.owners.filter((addedOwner: any) => addedOwner.id == owner.id).length) {
+      result = true
+    }
+    return result
   }
 }

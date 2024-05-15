@@ -18,16 +18,18 @@ body {
     min-height: 100%;
     max-height: 100%;
     height: 100%;
+    background-color:#F3F2F8 !important;
+
 }
 
 .bkg-login {
-    background-image: URL("https://151.31.7.244:8000/assets/login-form.jpeg");
-    background-repeat: no-repeat;
+    background-color:#F3F2F8;
     background-size: 100vw  100vh;
 }
 
 * {
-    font-family:courier, courier new, serif;
+    font-family:  Calibri, sans-serif !important;
+    
 }
 
 dgta-login {
@@ -37,7 +39,7 @@ dgta-login {
 }
 
 .front {
-    background-image: URL("https://151.31.7.244:8000/assets/login-form.jpeg");
+    background-image: URL("https://192.168.1.239:8000/assets/login-form.jpeg");
 }
 
 button {
@@ -99,7 +101,64 @@ dgta-documents-modal {
 }
 
 zxing-scanner  {
-    position: fixed;
-    left: 25%;
+    display: flex !important;
+    position: absolute;
+    /* left: 25%; */
     z-index: 2;
+    display: flex;
+    height: 100vh;
+    top: 0;
+    width: 100vw
+}
+
+
+
+.checkbox-round {
+    width: 21px;
+    height: 21px;
+    background-color: white;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.checkbox-round:checked {
+    background:URL("https://192.168.1.239:8000/assets/checkbox.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+
+.selections {
+    overflow: auto;
+    height: 150px;
+    background: white;
+    border-radius: 8px;
+    position: relative;
+    /* bottom: 42%; */
+    margin-top: 6px;
+    width: 100%;
+}
+
+.selection-confirm {
+    height:30px !important;
+    padding-bottom:8px !important;
+    padding-top:8px !important;
+    
+}
+
+.select-container {
+    background-color: white;
+    border-radius: 8px;
+    height: 32px;
+    width: 100%;
+    border: solid grey 1px;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+
 }

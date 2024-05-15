@@ -1,12 +1,17 @@
-<dgta-search-catalogue  (getCataloguesE)="getCatalogues()"
-                        (hideTopicsE)="hideTopics()"></dgta-search-catalogue>
-<div class="w-100 h-100c container-scroll">
-    <div class="row-center-left mb10px">
-        <h2 class="ml10px color-white">RACCOLTE</h2> 
-        <div class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
-            <fa-icon class="cursor-pointer font-size-15em" [icon]="faFolderPlus"></fa-icon>
+
+<div class="h-100c container-scroll">
+    <div class="row-center-space-between mb10px">
+        <h2 class="ml10px">Raccolte</h2> 
+        <div class="row-center-space-between mr10px">
+            <button class="select-category mr10px" (click)="openModalCatalogueFormModal()">Aggiungi</button>
+            <!-- <button class="select-category">Seleziona</button>
+            <div class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
+                <fa-icon class="cursor-pointer font-size-15em add-folder" [icon]="faFolderPlus"></fa-icon>
+            </div> -->
         </div>
     </div>
+    <dgta-search-catalogue  (getCataloguesE)="getCatalogues()"
+                        (hideTopicsE)="hideTopics()"></dgta-search-catalogue>
     <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong>
     <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
                     [ngClass]="{'display-none':sessionService.isOpenDocumentsModal}" 

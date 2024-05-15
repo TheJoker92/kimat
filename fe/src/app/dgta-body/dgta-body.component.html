@@ -1,4 +1,4 @@
-<div class="row-center-center w-100 h-100" [ngClass]="{'bkg-login':!sessionService.user}">
+<div class="row-center-center h-100" [ngClass]="{'bkg-login':!sessionService.user}">
     <dgta-login *ngIf="!sessionService.user"></dgta-login>
     <dgta-home *ngIf="sessionService.user"></dgta-home>
 </div>

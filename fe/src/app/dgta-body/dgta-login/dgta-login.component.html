@@ -1,4 +1,4 @@
-<div class="container row-center-center h-100vh">
+<!-- <div class="container row-center-center h-100vh">
     <!-- <div class="front h100p column-center-top">
         <div class="font-size-xl color-white p10px">Benvenuto in </div>
         <div class="font-size-xl color-white p10px">{{ dgta }}</div>
@@ -22,7 +22,7 @@
         <p class="recover-password">Recupera credenziali</p>
         <button class="mt10px" (click)="logIn()">ENTRA</button>
     </div> -->
-<div class="back column-center-center h-100vh">
+<!-- <div class="back column-center-center h-100vh">
     <h4>Benvenuto in dgt&#64;</h4>
     <div class="row-center-center">
         <fa-icon class="p3px font-size-xl" [icon]="faSignIn"></fa-icon>
@@ -38,4 +38,35 @@
     </div>
     <p class="recover-password">Recupera credenziali</p>
     <button class="mt10px" (click)="logIn()">ENTRA</button>
+</div> --> 
+
+<div class="container column-center-space-between h-100p">
+    <div class="column-center-center">
+        <div class="label-access">
+            Accedi
+        </div>
+        <div class="column-top-left">
+            <input class="field" (input)="editEmail($event)" id="email" type="text" placeholder="email">
+            <input class="field" (input)="editPassword($event)" type="password" placeholder="password">
+            <div class="row-center-space-between w-100p pt-10px">
+                <div class="row-center-space-between w-40px">
+                    <input type="checkbox">
+                    <div class="black">
+                        Ricorda
+                    </div>
+                </div>
+                <strong class="black miss-password">
+                    Hai dimenticato la password?
+                </strong>
+            </div>
+            <button class="mt10px" (click)="logIn()">Accedi</button>
+    
+        </div>
+    </div>
+    <div class="black">
+        Non hai un account?
+        <strong class="black register">
+            Registrati
+        </strong>
+    </div>
 </div>

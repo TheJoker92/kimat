@@ -26,10 +26,6 @@
     color: rgb(250, 198, 28)
 }
 
-body {
-    background-image: linear-gradient(to right, black , rgb(27, 26, 26));
-    filter: brightness(1.2);    color: white;
-}
 
 .box-form {
     color: black;
@@ -38,4 +34,12 @@ body {
 .bkg-grey {
     background-image: linear-gradient(to right, rgb(113, 110, 110) , rgb(72, 61, 61));
     filter: brightness(1.2);    color: white;
+}
+
+.bkg-orange  {
+    background-color: #E69800;;
+}
+
+.opacity-05 {
+    opacity: 0.95;
 }

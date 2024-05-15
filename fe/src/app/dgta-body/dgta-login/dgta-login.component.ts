@@ -23,6 +23,8 @@ export class DgtaLoginComponent {
   email = ""
   password = ""
 
+  saveSession = false
+
   constructor(private http: HttpService, 
               private loadingService: LoadingService,
               private sessionService: SessionService) { }
@@ -57,7 +59,11 @@ export class DgtaLoginComponent {
             alert("La password inserita non è corretta.")
           } else {
             alert("Accesso effettuato correttamente")
-            this.sessionService.saveSession("user", response)
+
+            if (this.saveSession) {
+              this.sessionService.saveSession("user", response)
+            }
+            this.sessionService.user = response
             console.log(response)
 
             this.sessionService.pageNavigation.push(PageEnum.HOME)
@@ -70,6 +76,14 @@ export class DgtaLoginComponent {
           this.loadingService.isLoading = false
         }
       })
+    }
+  }
+
+  checkSaveUserCredential() {
+    if(this.saveSession) {
+      this.saveSession = false
+    } else {
+      this.saveSession = true
     }
   }
 }

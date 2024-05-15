@@ -62,11 +62,11 @@ app.url_map.converters['regex'] = RegexConverter
 def angular():
     return send_from_directory("browser", "index.html")
 
-@app.route("/assets/<regex('.*\.(js|css|avif|scss|jpeg|json)'):path>")
+@app.route("/assets/<regex('.*\.(js|css|avif|scss|jpeg|json|png)'):path>")
 def assets_src(path):
     return send_from_directory("browser/assets", path)
 
-@app.route("/<regex('.*\.(js|css|avif|scss|jpeg|json)'):path>")
+@app.route("/<regex('.*\.(js|css|avif|scss|jpeg|json|png)'):path>")
 def angular_src(path):
     return send_from_directory("browser", path)
 
@@ -267,5 +267,5 @@ def setAuthorizedToken():
     return response
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'), debug=True)    
+    app.run(host='0.0.0.0', port=8000, ssl_context=('cert.pem', 'key.pem'))    
     # app.run(host='0.0.0.0', port=8001)

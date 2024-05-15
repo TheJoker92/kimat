@@ -1,1 +1,4 @@
-Hello!
+#Ensure Solr is on by running
+
+cd solr-9.5.0/
+bash run-solr.sh

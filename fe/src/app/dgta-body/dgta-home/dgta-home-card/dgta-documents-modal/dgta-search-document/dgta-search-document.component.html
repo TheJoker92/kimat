@@ -7,8 +7,8 @@
         <fa-icon class="p3px color-white font-size-15em" [icon]="faBarcode"></fa-icon>
         <fa-icon class="p3px relative" [icon]="faSearch"></fa-icon>
     </div>
-    <div *ngIf="isEnabledScan" class="row-center-bottom cursor-pointer" (click)="stopScan()">
-        <fa-icon class="p3px color-white font-size-15em" [icon]="faStop"></fa-icon>
+    <div *ngIf="isEnabledScan" class="row-center-bottom cursor-pointer stop-scan" (click)="stopScan()">
+        <button>Chiudi</button>
     </div>
 </div>
 
