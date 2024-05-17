@@ -9,6 +9,9 @@ import { ICatalogue } from './interfaces/ICatalogue';
 })
 export class SessionService {
 
+  selectedCatalogues: any[] = []
+  activeSelect = false
+
   user: IUser | undefined
   documentSelected: IDocument | undefined
   pageNavigation: PageEnum[] = [PageEnum.LOGIN]

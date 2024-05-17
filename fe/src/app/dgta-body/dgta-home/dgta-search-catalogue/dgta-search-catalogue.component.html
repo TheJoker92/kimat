@@ -1,9 +1,9 @@
 <div class="row-bottom-center p10px">
     <div class="search-container row-center-center mt10px bkg-white">
-        <fa-icon class="p3px" [icon]="faSearch"></fa-icon>
+        <div class="p3px search-icon"></div>
         <input type="text" name="" id="" (input)="onSearch($event)">
         <div *ngIf="!isEnabledScan" class="row-center-bottom cursor-pointer" (click)="startScan()">
-            <fa-icon class="p3px font-size-15em" [icon]="faBarcode"></fa-icon>
+            <div class="p3px font-size-15em barcode-icon"></div>
             <!-- <fa-icon class="p3px relative" [icon]="faSearch"></fa-icon> -->
         </div>
     </div>

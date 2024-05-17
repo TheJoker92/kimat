@@ -25,13 +25,17 @@ export class DgtaHomeComponent {
 
   catalogues: ICatalogue[] = []
 
-  showTopics = true
+  showTopics = false
 
   term = ""
 
-  toggleTopicsLabel = "nascondi categorie"
+  toggleTopicsLabel = "mostra filtri"
 
   numTopics: any = {}
+
+  activeSelect = false
+
+  
 
   constructor(public sessionService: SessionService,
     private http: HttpService) {
@@ -111,18 +115,58 @@ export class DgtaHomeComponent {
   toggleTopics() {
     if (this.showTopics) {
       this.showTopics = false
-      this.toggleTopicsLabel = "mostra categorie"
+      this.toggleTopicsLabel = "mostra filtri"
     } else {
       this.showTopics = true
-      this.toggleTopicsLabel = "nascondi categorie"
+      this.toggleTopicsLabel = "nascondi filtri"
     }
   }
 
   hideTopics() {
     if (this.showTopics) {
       this.showTopics = false
-      this.toggleTopicsLabel = "mostra categorie"
+      this.toggleTopicsLabel = "mostra filtri"
     }
+  }
+
+  activeSelectMode() {
+    this.sessionService.activeSelect = true
+  }
+
+  deactiveSelectMode() {
+    this.sessionService.activeSelect = false
+  }
+
+  deleteMassive() {
+    for (let catalogue of this.sessionService.selectedCatalogues) {
+      this.deleteCatalogue(catalogue)
+    }
+  }
+
+  deleteCatalogue(catalogue: ICatalogue) {
+
+    if (catalogue.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length != 0) {
+  
+      let payload = {
+        id: catalogue.id
+      }
+      this.http.deleteCatalogue(payload).subscribe({
+        next: (response: any) => {
+          if(response.code == 200) {
+            alert("L'operazione è riuscita")
+            window.location.reload()
+          } else {
+            alert("Qualcosa è andato storto")
+          }
+        },
+        error: (error: any) => {
+          console.error(error)
+        }
+      })
+    } else {
+      alert("Non sei autorizzato ad effettuare l'operazione")
+    }
+    
   }
 }
 

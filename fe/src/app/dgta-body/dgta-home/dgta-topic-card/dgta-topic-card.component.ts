@@ -15,6 +15,7 @@ export class DgtaTopicCardComponent {
   @Input() numTopics:any = {}
 
   @Output() getCataloguesByTopicE = new EventEmitter()
+  @Output() closeFilterModalE = new EventEmitter()
 
   data: any = rawData
 
@@ -22,8 +23,18 @@ export class DgtaTopicCardComponent {
 
   filteredTopics: any[] = []
 
+  isFiltered = false
+
   ngOnChanges() {
     if(this.topics && this.topics.length) this.filteredTopics = this.topics.filter(topic => this.numTopics[topic.rawName])
+
+    // if (this.isFiltered) {
+    //   this.filteredTopics = [{
+    //     rawName: "*",
+    //     name: "TUTTI",
+    //     className: "card row-center-center color-tutti"
+    //   }]
+    // }
   }
 
   ngAfterViewInit() {
@@ -56,11 +67,11 @@ export class DgtaTopicCardComponent {
     }
 
 
-    this.topics.unshift({
-      rawName: "*",
-      name: "TUTTI",
-      className: "card row-center-center color-tutti"
-    })
+    // this.topics.unshift({
+    //   rawName: "*",
+    //   name: "TUTTI",
+    //   className: "card row-center-center color-tutti"
+    // })
 
     console.log(this.topics)
   }
@@ -68,7 +79,34 @@ export class DgtaTopicCardComponent {
 
 
   getDocumentByTopic(topic: any) {
-    this.sessionService.terms["topics"] = topic.rawName
+
+    if (this.isFiltered) {
+      this.sessionService.terms["topics"] = "*"
+
+      this.isFiltered = false
+    } else {
+      this.isFiltered = true
+
+      this.filteredTopics = this.topics.filter(topic => this.numTopics[topic.rawName])
+      this.sessionService.terms["topics"] = topic.rawName
+    }
+
+
+
     this.getCataloguesByTopicE.emit()
+
+  }
+
+  isAddedTopic(topic: any) {
+    let result
+
+    if (this.topics.filter((addedTopic: any) => addedTopic == topic).length) {
+      result = true
+    }
+    return !result
+  }
+
+  close() {
+    this.closeFilterModalE.emit()
   }
 }

@@ -60,7 +60,7 @@ export class DgtaDocumentsModalComponent {
 
   term = ""
 
-  toggleTopicsLabel = "nascondi categorie"
+  toggleTopicsLabel = "nascondi filtri"
 
   path: any
 
@@ -366,17 +366,17 @@ export class DgtaDocumentsModalComponent {
   toggleTopics() {
     if (this.showTopics) {
       this.showTopics = false
-      this.toggleTopicsLabel = "mostra categorie"
+      this.toggleTopicsLabel = "mostra filtri"
     } else {
       this.showTopics = true
-      this.toggleTopicsLabel = "nascondi categorie"
+      this.toggleTopicsLabel = "nascondi filtri"
     }
   }
 
   hideTopics() {
     if (this.showTopics) {
       this.showTopics = false
-      this.toggleTopicsLabel = "mostra categorie"
+      this.toggleTopicsLabel = "mostra filtri"
     }
   }
 

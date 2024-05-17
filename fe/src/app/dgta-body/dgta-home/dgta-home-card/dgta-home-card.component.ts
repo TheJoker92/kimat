@@ -44,6 +44,8 @@ export class DgtaHomeCardComponent {
   isOpenDocumentsModal = false
   isOpenInfoCatalogueModal = false
 
+  selectedCatalogue: any
+
   constructor(private http: HttpService,
               public sessionService: SessionService) { }
 
@@ -142,5 +144,23 @@ export class DgtaHomeCardComponent {
   closeCatalogueInfo() {
     this.catalogue = {}
     this.isOpenInfoCatalogueModal = false
+  }
+
+  selectCatalogue(catalogue: any) {
+    if (!this.sessionService.activeSelect) {
+      this.selectedCatalogue = catalogue
+    }
+  }
+
+  multipleSelectedCatalogue(catalogue: any) {
+    if (!this.sessionService.selectedCatalogues.includes(catalogue)) {
+      this.sessionService.selectedCatalogues.push(catalogue)
+    } else {
+      this.sessionService.selectedCatalogues = this.sessionService.selectedCatalogues.filter((selectedCatalogue: any) => catalogue.id != selectedCatalogue.id)
+    }
+  }
+
+  isMultipleSelectedCatalogue(catalogue: any) {
+
   }
 }

@@ -20,11 +20,11 @@
 // }
 
 
-.catalogue-container:hover {
-    background: #E69800;
-    cursor: pointer;
-    color: white
-}
+// .catalogue-container:hover {
+//     background: #E69800;
+//     cursor: pointer;
+//     color: white
+// }
 
 .dropdown {
     float: left;
@@ -70,4 +70,30 @@
   
   .dropdown:hover .dropdown-content {
     display: block;
+  }
+
+  .barcontainer {
+    height: 74px;
+    position: fixed;
+    top: calc(100% - 74px);
+  }
+
+  small {
+    color: #E69800;
+  }
+
+  .title-container {
+    height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .card-container {
+    margin: 20px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    overflow: auto;
+    height: 50vh;
+    width: 400px;
   }

@@ -169,7 +169,7 @@ def deleteCatalogue():
     print("START DELETE CATALOGUE")
     data = request.json
     
-    return catalogues.deleteCatalogue(data, BASE_URL)
+    return catalogues.delete_catalogue(data, BASE_URL)
 
 @app.route('/api/catalogues/update', methods=['PUT'])
 def update_catalogue():

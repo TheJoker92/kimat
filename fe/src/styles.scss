@@ -4,6 +4,7 @@
 @import "assets/style/margin.scss";
 @import "assets/style/padding.scss";
 @import "assets/style/dimension.scss";
+@import "assets/style/icons.scss";
 
 html {
     margin: 0px;
@@ -14,13 +15,15 @@ html {
 
 body {
     margin: 0px;
-    background-size: 100vw 100vh;
+    // background-size: 100vw 100vh;
     min-height: 100%;
     max-height: 100%;
     height: 100%;
     background-color:#F3F2F8 !important;
+    overflow-x: hidden;
 
 }
+
 
 .bkg-login {
     background-color:#F3F2F8;
@@ -39,7 +42,7 @@ dgta-login {
 }
 
 .front {
-    background-image: URL("https://192.168.1.239:8000/assets/login-form.jpeg");
+    background-image: URL("https://151.31.8.43:8000/assets/login-form.jpeg");
 }
 
 button {
@@ -101,6 +104,7 @@ dgta-documents-modal {
 }
 
 zxing-scanner  {
+    
     display: flex !important;
     position: absolute;
     /* left: 25%; */
@@ -126,7 +130,7 @@ zxing-scanner  {
 }
 
 .checkbox-round:checked {
-    background:URL("https://192.168.1.239:8000/assets/checkbox.png");
+    background:URL("https://151.31.8.43:8000/assets/checkbox.png");
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -162,4 +166,33 @@ zxing-scanner  {
     padding-left: 5px;
     width: 312px;
 
+}
+
+.container-steppoint {
+    fa-icon {
+      font-size: xx-small;
+      color: #D9D9D9;
+    }
+
+    .fa-icon-enabled {
+        color: #5D6A85;
+    }
+  }
+  
+  
+
+.behind {
+    visibility: collapse;
+}
+
+.lineseparator {
+    border: 0.5px solid #2D2D2D;
+    opacity: 10%;
+    width: calc(100% - 63px)
+}
+
+.header-table {
+    background-color: #236BFE10;
+    padding-right:5px;
+    padding-left:5px;
 }

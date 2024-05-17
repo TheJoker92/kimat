@@ -32,8 +32,9 @@
 }
 
 .bkg-grey {
-    background-image: linear-gradient(to right, rgb(113, 110, 110) , rgb(72, 61, 61));
-    filter: brightness(1.2);    color: white;
+    background: #F3F2F8 !important;
+    filter: brightness(1.2);   
+    color: black;
 }
 
 .bkg-orange  {
@@ -42,4 +43,13 @@
 
 .opacity-05 {
     opacity: 0.95;
+}
+
+.not-valid-field,
+.not-valid-field:focus {
+    border: solid 1px red !important;
+}
+
+.color-red {
+    color: red !important
 }

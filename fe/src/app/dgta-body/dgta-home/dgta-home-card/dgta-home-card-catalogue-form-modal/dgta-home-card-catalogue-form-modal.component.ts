@@ -6,7 +6,7 @@ import { HttpService } from '../../../../http.service';
 import { LoadingService } from '../../../../dgta-loading/loading.service';
 import { IUser } from '../../../../interfaces/IUser';
 import { SessionService } from '../../../../session.service';
-import { faCheckSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare, faTrash, faChevronLeft, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ActionLogEnum } from '../../../../interfaces/ILog';
 import { IPlace } from '../../../../interfaces/IPlace';
@@ -32,10 +32,23 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   allowedOwners: IUser[] = []
   owner: IUser = {}
 
+  isValidTitle = true
+  isValidTopic = true
+  isValidOwner = true
+
+  isValidPalace = true
+  isValidFloor = true
+  isValidSector = true
+  isValidRoom = true
+  isValidRack = true
+
+  isValidPosition = true
   place: IPlace | any = {}
 
   faCheckSquare = faCheckSquare
   faTrash = faTrash
+  faChevronLeft = faChevronLeft
+  faCircle = faCircle
 
   step = 1
 
@@ -46,7 +59,7 @@ export class DgtaHomeCardCatalogueFormModalComponent {
     private http: HttpService,
     private loadingService: LoadingService) {
     this.allowedTopics = this.data.topics
-    this.topic = this.allowedTopics[0]
+    // this.topic = this.allowedTopics[0]
     this.getUsers()
   }
 
@@ -102,8 +115,9 @@ export class DgtaHomeCardCatalogueFormModalComponent {
 
 
   addCatalogue() {
-    if (this.title && (this.owners && this.owners.length > 0) && (this.topics && this.topics.length > 0) &&
-      this.place.palace && this.place.floor && this.place.room && this.place.sector && this.place.rack && this.place.position) {
+    this.nextStep()
+
+    if (this.isValidPalace && this.isValidFloor &&this.isValidSector && this.isValidRack && this.isValidRoom && this.isValidPosition) {
 
       let payload: any = {
         title: this.title,
@@ -129,29 +143,22 @@ export class DgtaHomeCardCatalogueFormModalComponent {
           this.loadingService.isLoading = false
 
           if (response.code == 200) {
-            alert("Hai aggiunto un nuovo catalogo")
-            window.location.reload()
+            this.step = 3
+            // alert("Hai aggiunto un nuovo catalogo")
+            // window.location.reload()
           } else {
-            alert("Errore server. Contattare il supporto.")
+            this.step = 4
           }
         },
         error: (error) => {
           this.loadingService.isLoading = false
-          alert("L'operazione è fallita. Riprova.")
+          this.step = 4
           console.error(error)
         }
       })
-    } else if (!this.title) {
-      alert("Aggiungi un titolo")
-    } else if (!this.owners || this.owners.length == 0) {
-      alert("Indicare almeno un proprietario.")
-    } else if (!this.topics || this.topics.length == 0) {
-      alert("Indicare almeno un aromento.")
-    } else if (!this.place.palace || !this.place.floor || !this.place.room || !this.place.sector || !this.place.rack || !this.place.position) {
-      alert("Indicare il collocamento compilando tutti i campi associati.")
-    } else {
-      alert("Qualcosa è andato storto. Riprova.")
     }
+    
+    
   }
 
   getUsers() {
@@ -217,8 +224,75 @@ export class DgtaHomeCardCatalogueFormModalComponent {
     console.log(this.place)
   }
 
+
+  previousStep() {
+    if (this.step == 1) {
+      this.cancel()
+    } else {
+      this.step -= 1
+    }
+  }
+
   nextStep() {
-    this.step += 1
+    if (this.step == 1) {
+      if (this.title.length == 0) {
+        this.isValidTitle = false
+      } else {
+        this.isValidTitle = true
+      }
+  
+      if (this.owners.length == 0) {
+        this.isValidOwner = false
+      } else {
+        this.isValidOwner = true
+      }
+  
+      if (this.topics.length == 0) {
+        this.isValidTopic = false
+      } else {
+        this.isValidTopic = true
+      }
+  
+      if (this.isValidOwner && this.isValidTitle && this.isValidTopic) {
+        this.step += 1
+      } 
+    } else if (this.step == 2) {
+      if (this.place.palace) {
+        this.isValidPalace = true
+      } else {
+        this.isValidPalace = false
+      }
+  
+      if (this.place.floor) {
+        this.isValidFloor = true
+      } else {
+        this.isValidFloor = false
+      }
+  
+      if (this.place.room) {
+        this.isValidRoom = true
+      } else {
+        this.isValidRoom = false
+      }
+
+      if (this.place.sector) {
+        this.isValidSector = true
+      } else {
+        this.isValidSector = false
+      }
+
+      if (this.place.rack) {
+        this.isValidRack = true
+      } else {
+        this.isValidRack = false
+      }
+
+      if (this.place.position) {
+        this.isValidPosition = true
+      } else {
+        this.isValidPosition = false
+      }
+    }
   }
 
   toggleShowTopicSelection() {

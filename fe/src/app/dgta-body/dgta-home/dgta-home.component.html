@@ -1,22 +1,32 @@
 
 <div class="h-100c container-scroll">
-    <div class="row-center-space-between mb10px">
-        <h2 class="ml10px">Raccolte</h2> 
-        <div class="row-center-space-between mr10px">
-            <button class="select-category mr10px" (click)="openModalCatalogueFormModal()">Aggiungi</button>
-            <!-- <button class="select-category">Seleziona</button>
-            <div class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
-                <fa-icon class="cursor-pointer font-size-15em add-folder" [icon]="faFolderPlus"></fa-icon>
-            </div> -->
+    <div class="row-center-center">
+        <div class="row-center-space-between mb10px max-width410px w100p">
+            <h2 class="ml20px">Raccolte</h2> 
+            <div class="row-center-space-between mr10px">
+                <button *ngIf="!sessionService.activeSelect" class="add-category mr10px" (click)="openModalCatalogueFormModal()">Aggiungi</button>
+                <button *ngIf="!sessionService.activeSelect"class="select-category mr10px p10px" (click)="activeSelectMode()">Seleziona</button>
+                <button *ngIf="sessionService.activeSelect"class="select-category mr10px p10px" (click)="deactiveSelectMode()">Annulla</button>
+                <button *ngIf="sessionService.activeSelect"class="select-category mr10px p10px" (click)="deleteMassive()">Elimina {{ sessionService.selectedCatalogues.length }}</button>
+                <!-- <button class="select-category">Seleziona</button>
+                <div class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
+                    <fa-icon class="cursor-pointer font-size-15em add-folder" [icon]="faFolderPlus"></fa-icon>
+                </div> -->
+            </div>
         </div>
     </div>
     <dgta-search-catalogue  (getCataloguesE)="getCatalogues()"
                         (hideTopicsE)="hideTopics()"></dgta-search-catalogue>
-    <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong>
-    <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
-                    [ngClass]="{'display-none':sessionService.isOpenDocumentsModal}" 
+                        <div class="row-center-center">
+                            <div class="ml10px cursor-pointer row-center-right max-width410px w100p" (click)="toggleTopics()">Filtra 
+                                        <div class="filter-icon"></div>
+                                    </div>
+                        </div>
+    <dgta-topic-card class="row-center-space-between flex-wrap"
+                    [ngClass]="{'behind': !showTopics}" 
                     [catalogues]="catalogues"
                     [numTopics]="numTopics"
+                    (closeFilterModalE)="hideTopics()"
                     (getCataloguesByTopicE)="getCatalogues($event)"></dgta-topic-card>
     <div class="column-top-right">
         <dgta-home-card class="row-center h10vh" 

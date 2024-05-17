@@ -22,12 +22,15 @@
 }
 
 .box-form {
-    background: #F3F2F8;
-    width: 30vw;
-    min-width: 475px;
-    height: 15vw;
-    min-height: 500px;
-    border-radius: 15px;
+  background: #F3F2F8;
+  /* width: 30vw; */
+  /* min-width: 475px; */
+  height: 15vw;
+  min-height: 500px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-field-size,
@@ -44,7 +47,7 @@ select {
     border: 1px solid #7f868f;
     
 }
-input[type=text] {
+.input302px {
     width: 302px !important;
 }
 
@@ -148,3 +151,13 @@ button {
     margin: -5px -20px -5px -5px;
   }
 
+  .input-50p {
+    width: 138px !important;
+  }
+
+  .container-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; 
+  }

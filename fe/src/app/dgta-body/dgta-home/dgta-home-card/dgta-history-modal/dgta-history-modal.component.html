@@ -3,7 +3,72 @@
 </div>
 <div class="container">
     <div class="box-form column-center-spacebetween">
-        <h3 class="row-center-center ml10px">Storico di '{{ catalogue.title }}'</h3>
+        <div class="row-center-space-between w100p">
+            <div class="row-center-left cursor-pointer" (click)="closeHistoryModal()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Raccolte</small>
+            </div>
+            <div>
+                <h3 class="row-center-center">Storico</h3>
+            </div>
+            <div class="w-40px h10p">
+            </div>
+        </div>
+
+        <div class="row-center-space-between w100p mt40px">
+            <div class="row-center-center w100p cursor-pointer p10px" [ngClass]="{'selected': isSelectedInfo}" (click)="activeInfoTab()">
+                Info
+            </div>
+            <div class="row-center-center w100p cursor-pointer p10px" [ngClass]="{'selected': isSelectedLog}" (click)="activeLogTab()">
+                Log
+            </div>
+        </div>
+        <div *ngIf="isSelectedInfo" class="column-top-left w100p mt30px">
+            <div class="row-center-space-between w100p pt10px pb10px">
+                <div class="create-label">
+                    Creato da:
+                </div>
+                <div>
+                    {{ getUserFullName(history[0]) | defaultDash }}
+                </div>
+            </div>
+            <div class="row-center-space-between w100p pt10px pb10px">
+                <div class="create-label">
+                    Il:
+                </div>
+                <div>
+                    {{ formatDate(history[0].date!) | defaultDash}}
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isSelectedLog" class="column-top-left w100p mt30px">
+            <div class="row-center-space-between w100p pt10px pb10px header-table">
+                <div>Utente</div>
+                <div>Azione</div>
+                <div>Data</div>
+            </div>
+            <div *ngFor="let log of history" class="row-center-space-between w100p pt10px pb10px pr5px pl5px">
+                <div class="column-top-left">
+                    <div>
+                        {{ getUserFirstName(log) | defaultDash }}
+                    </div>
+                    <div>
+                        {{ getUserLastName(log) | defaultDash }}
+                    </div>
+                </div>
+                <div>
+                    {{ log.actionLog | defaultDash}}
+                </div>
+                <div class="column-top-left">
+                    <div>
+                        {{ formatDate(log.date!) | defaultDash}}
+                    </div>
+                    <div class="row-center-right w100p">
+                        {{ formatHour(log.date!) | defaultDash}}
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="h450px overflow-auto">
 
             <div *ngFor="let log of history" class="column-top-left mt10px ml10px w80p">
@@ -33,9 +98,6 @@
                 </h4>                
             </div> -->
             
-        </div>
-        <div class="row-center-center">
-            <button class="m10px" (click)="closeHistoryModal()">CHIUDI</button>
         </div>
     </div>
 </div>
