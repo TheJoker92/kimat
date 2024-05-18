@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as rawData from '../../../../../../assets/enum.json';
-import { faCheckSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare, faTrash, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { LoadingService } from '../../../../../dgta-loading/loading.service';
 import { HttpService } from '../../../../../http.service';
 import { ActionLogEnum } from '../../../../../interfaces/ILog';
@@ -8,18 +8,37 @@ import { IPlace } from '../../../../../interfaces/IPlace';
 import { IUser } from '../../../../../interfaces/IUser';
 import { SessionService } from '../../../../../session.service';
 import { ICatalogue } from '../../../../../interfaces/ICatalogue';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dgta-update-collocation-modal',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FontAwesomeModule],
   templateUrl: './dgta-update-collocation-modal.component.html',
   styleUrl: './dgta-update-collocation-modal.component.scss'
 })
 export class DgtaUpdateCollocationModalComponent {
   @Input() catalogue: ICatalogue = {}
   @Output() closeUpdateCollocationModalE = new EventEmitter()
+  @Output() closeAllE = new EventEmitter()
   
+  
+  isValidTitle = true
+  isValidTopic = true
+  isValidOwner = true
+
+  isValidPalace = true
+  isValidFloor = true
+  isValidSector = true
+  isValidRoom = true
+  isValidRack = true
+  isValidPosition = true
+
+
+  faChevronLeft = faChevronLeft
+
+  step = 1
 
   place: IPlace | any = {}
 
@@ -35,7 +54,42 @@ export class DgtaUpdateCollocationModalComponent {
   
 
   updateCatalogue() {
-    if (this.place.palace && this.place.floor && this.place.room && this.place.sector && this.place.rack && this.place.position) {
+    if (this.place.palace) {
+      this.isValidPalace = true
+    } else {
+      this.isValidPalace = false
+    }
+
+    if (this.place.floor) {
+      this.isValidFloor = true
+    } else {
+      this.isValidFloor = false
+    }
+
+    if (this.place.room) {
+      this.isValidRoom = true
+    } else {
+      this.isValidRoom = false
+    }
+
+    if (this.place.sector) {
+      this.isValidSector = true
+    } else {
+      this.isValidSector = false
+    }
+
+    if (this.place.rack) {
+      this.isValidRack = true
+    } else {
+      this.isValidRack = false
+    }
+
+    if (this.place.position) {
+      this.isValidPosition = true
+    } else {
+      this.isValidPosition = false
+    }
+    if (this.isValidPalace && this.isValidFloor &&this.isValidSector && this.isValidRack && this.isValidRoom && this.isValidPosition) {
 
       this.place["date"] = new Date().toISOString()
 
@@ -70,8 +124,9 @@ export class DgtaUpdateCollocationModalComponent {
           this.loadingService.isLoading = false
 
           if (response.code == 200) {
-            alert("Hai aggiornato il catalogo")
-            window.location.reload()
+            // alert("Hai aggiornato il catalogo")
+            // window.location.reload()
+            this.step = 2
           } else {
             alert("Errore server. Contattare il supporto.")
           }
@@ -83,7 +138,6 @@ export class DgtaUpdateCollocationModalComponent {
         }
       })
     } else if (!this.place.palace || !this.place.floor || !this.place.room || !this.place.sector || !this.place.rack || !this.place.position) {
-      alert("Indicare il collocamento compilando tutti i campi associati.")
     } else {
       alert("Qualcosa è andato storto. Riprova.")
     }
@@ -138,5 +192,13 @@ export class DgtaUpdateCollocationModalComponent {
         return false; // If parsing fails, return false
     }
   
+  }
+
+  previousStep() {
+    this.step -= 1
+  }
+
+  reload() {
+    window.location.reload()
   }
 }

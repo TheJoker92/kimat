@@ -1,79 +1,174 @@
 <div class="overlay">
 
 </div>
-<div class="container" [ngClass]="{'opacity': isOpenUpdateCollocationModal}">
-    <div class="box-form column-center-center p10px">
-        <div class="row-center-space-between">
-            <div class="column-top-left w300px">
-                <h3 class="ml10px">Luogo di {{ catalogue.title }}</h3>
-                <div class="column-top-left w300px">
-                    <h4>
-                        Corrente
-                    </h4>
-                    <div class="row-center-center w90p">
-                        <div class="w100p nowrap">
-                            {{ formatDate(currentPlace.date!) | defaultDash}}
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <div class="row-center-space-between w100p">
+            <div class="row-center-left cursor-pointer" (click)="close()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Raccolte</small>
+            </div>
+            <div>
+                <h3 class="row-center-center">Posizione</h3>
+            </div>
+            <div (click)="openUpdateCollocationModal()">
+                <button>Ricolloca</button>
+            </div>
+        </div>
+
+        <div class="row-center-space-between w100p mt40px">
+            <div class="row-center-center w100p cursor-pointer p10px" [ngClass]="{'selected': isSelectedCurrent}" (click)="activeCurrentTab()">
+                Corrente
+            </div>
+            <div class="row-center-center w100p cursor-pointer p10px" [ngClass]="{'selected': isSelectedHistory}" (click)="activeHistoryTab()">
+                Storico
+            </div>
+        </div>
+        <div *ngIf="isSelectedCurrent" class="column-center-center w100p mt30px">
+            <div *ngIf="!catalogue.placement || catalogue.placement.length == 0" class="row-center-center">Non è stata data nessuna collocazione</div>
+            <div *ngIf="catalogue.placement" class="column-center-center w100p">
+                <div  class="row-center-space-between w100p p10px header">
+                    {{ formatDate(catalogue.placement![catalogue.placement!.length -1].date!) | defaultDash}}
+                </div>
+                <div class="bkg-white w100p p10px bottom-radius-8px">
+                    <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                        <div class="label">
+                            Edificio
                         </div>
-                        <div class="column-top-left w300px">
-                            <div class="h20px row-center-center row-center-center">
-                                {{ currentPlace.palace | defaultDash }}
+                        <div>
+                            {{ catalogue.placement![catalogue.placement!.length -1].palace | defaultDash}}
+                        </div>
+                    </div>
+                    <div class="row-center-space-between w100p">
+                        <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                            <div class="label">
+                                Piano
                             </div>
-                            <div class="h20px row-center-center row-center-center">
-                                {{ currentPlace.floor | defaultDash}}
+                            <div>
+                                {{ catalogue.placement![catalogue.placement!.length -1].floor | defaultDash}}
                             </div>
-                            <div class="h20px row-center-center">
-                                {{ currentPlace.room | defaultDash}}
-                            </div>
-                            <div class="h20px row-center-center">
-                                {{ currentPlace.sector | defaultDash}}
-                            </div>
-                            <div class="h20px row-center-center">
-                                {{ currentPlace.rack | defaultDash}}
-                            </div>
-                            <div class="h20px row-center-center">
-                                {{ currentPlace.position | defaultDash}}
+    
+                        </div>
+                        <div  class="row-center-right w100p pt10px pb10px mb10px p10px">
+                            <div class="column-top-left">
+                                <div class="label">
+                                    Stanza
+                                </div>
+                                <div class="row-center-right w100p">
+                                    {{ catalogue.placement![catalogue.placement!.length -1].room | defaultDash}}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <h4 class="row-c">
-                    storico
-                </h4>
-                <div class="collocation-container w90p overflow-auto h128px">
-                    <div *ngFor="let place of catalogue.placement; index as i" class="row-center-center w90p">
-                        <div class="w100p nowrap">
-                            {{ formatDate(place.date!) | defaultDash}}
+                    <div class="row-center-space-between w100p">
+                        <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                            <div class="label">
+                                Settore
+                            </div>
+                            <div>
+                                {{ catalogue.placement![catalogue.placement!.length -1].sector | defaultDash}}
+                            </div>
+    
                         </div>
-                        <div class="ml10px column-top-left p10px w300px">
-                            <div class="h20px row-center-center row-center-center">
-                                {{ place.palace | defaultDash }}
+                        <div  class="row-center-right w100p pt10px pb10px mb10px p10px">
+                            <div class="column-top-leftt">
+                                <div class="label">
+                                    Scaffale
+                                </div>
+                                <div  class="row-center-right">
+                                    {{ catalogue.placement![catalogue.placement!.length -1].rack | defaultDash}}
+                                </div>
                             </div>
-                            <div class="h20px row-center-center row-center-center">
-                                {{ place.floor | defaultDash}}
+                        </div>
+                    </div>
+                    <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                        <div class="label">
+                            Posizione
+                        </div>
+                        <div>
+                            {{ catalogue.placement![catalogue.placement!.length -1].position | defaultDash}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div *ngIf="!isSelectedCurrent" class="column-center-center w100p mt30px">
+            <div *ngIf="!catalogue.placement || catalogue.placement.length == 1" class="row-center-center">Non ci sono precedenti ricollocazioni</div>
+            <div *ngIf="catalogue.placement" class="overflow w100p p10px h350px">
+                <div *ngFor="let placementLog of getPlacementLogs()" class="w100p">
+
+                    <div  class="row-center-space-between w100p p10px header">
+                        {{ formatDate(placementLog.date!) | defaultDash}}
+                    </div>
+                    <div class="bkg-white w100p p10px bottom-radius-8px">
+                        <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                            <div class="label">
+                                Edificio
                             </div>
-                            <div class="h20px row-center-center">
-                                {{ place.room | defaultDash}}
+                            <div>
+                                {{ placementLog.palace | defaultDash}}
                             </div>
-                            <div class="h20px row-center-center">
-                                {{ place.sector | defaultDash}}
+                        </div>
+                        <div class="row-center-space-between w100p">
+                            <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                                <div class="label">
+                                    Piano
+                                </div>
+                                <div>
+                                    {{ placementLog.floor | defaultDash}}
+                                </div>
+        
                             </div>
-                            <div class="h20px row-center-center">
-                                {{ place.rack | defaultDash}}
+                            <div  class="row-center-right w100p pt10px pb10px mb10px p10px">
+                                <div class="column-top-left">
+                                    <div class="label">
+                                        Stanza
+                                    </div>
+                                    <div class="row-center-right w100p">
+                                        {{ placementLog.room | defaultDash}}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="h20px row-center-center">
-                                {{ place.position | defaultDash}}
+                        </div>
+                        <div class="row-center-space-between w100p">
+                            <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                                <div class="label">
+                                    Settore
+                                </div>
+                                <div>
+                                    {{ placementLog.sector | defaultDash}}
+                                </div>
+        
+                            </div>
+                            <div  class="row-center-right w100p pt10px pb10px mb10px p10px">
+                                <div class="column-top-leftt">
+                                    <div class="label">
+                                        Scaffale
+                                    </div>
+                                    <div  class="row-center-right">
+                                        {{ placementLog.rack | defaultDash}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                            <div class="label">
+                                Posizione
+                            </div>
+                            <div>
+                                {{ placementLog.position | defaultDash}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="row-center-center mb10px">
-            <button class="mt10px" (click)="close()">CHIUDI</button>
-            <button class="mt10px" (click)="openUpdateCollocationModal()">RICOLLOCA</button>
-        </div>
     </div>
 </div>
 <dgta-update-collocation-modal *ngIf="isOpenUpdateCollocationModal" [catalogue]="catalogue"
-    (closeUpdateCollocationModalE)="closeUpdateCollocationModal()"></dgta-update-collocation-modal>
+    (closeUpdateCollocationModalE)="closeUpdateCollocationModal()"
+    (closeAllE)="closeAllModal()"></dgta-update-collocation-modal> 
