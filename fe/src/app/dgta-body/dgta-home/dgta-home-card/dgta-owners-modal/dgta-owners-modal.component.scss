@@ -3,12 +3,11 @@
     left:0%;
     top:0%;
     width: 100vw;
-    height: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
-    opacity: 40%;
+    background-color: #F3F2F8;
 }
 
 .container {
@@ -23,11 +22,16 @@
 }
 
 .box-form {
-    background: white;
-    width: 350px;
-    min-width: 275px;
-    min-height: 350px;
-    border-radius: 15px;
+  background: #F3F2F8;
+  /* width: 30vw; */
+  /* min-width: 475px; */
+  width: 340px;
+  height: 15vw;
+  min-height: 500px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-field-size {
