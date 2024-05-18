@@ -42,29 +42,31 @@
             </div>
         </div>
         <div *ngIf="isSelectedLog" class="column-top-left w100p mt30px">
-            <div class="row-center-space-between w100p pt10px pb10px header-table">
-                <div>Utente</div>
-                <div>Azione</div>
-                <div>Data</div>
+            <div class="row-center-space-between w100p header-table">
+                <div class=" pt10px pb10px">Utente</div>
+                <div class=" pt10px pb10px">Azione</div>
+                <div class=" pt10px pb10px">Data</div>
             </div>
-            <div *ngFor="let log of history" class="row-center-space-between w100p pt10px pb10px pr5px pl5px">
-                <div class="column-top-left">
-                    <div>
-                        {{ getUserFirstName(log) | defaultDash }}
+            <div *ngFor="let log of history; index as index" class="column-center-center w100p pb10px pr10px pl10px w350px">
+                <div class="w100p row-center-space-between" [ngClass]="{'bkg-white': index % 2 == 0}">
+                    <div class="column-top-left p5px">
+                        <div>
+                            {{ getUserFirstName(log) | defaultDash }}
+                        </div>
+                        <div>
+                            {{ getUserLastName(log) | defaultDash }}
+                        </div>
                     </div>
-                    <div>
-                        {{ getUserLastName(log) | defaultDash }}
+                    <div class="p5px">
+                        {{ log.actionLog | defaultDash}}
                     </div>
-                </div>
-                <div>
-                    {{ log.actionLog | defaultDash}}
-                </div>
-                <div class="column-top-left">
-                    <div>
-                        {{ formatDate(log.date!) | defaultDash}}
-                    </div>
-                    <div class="row-center-right w100p">
-                        {{ formatHour(log.date!) | defaultDash}}
+                    <div class="column-top-left p5px">
+                        <div>
+                            {{ formatDate(log.date!) | defaultDash}}
+                        </div>
+                        <div class="row-center-right w100p">
+                            {{ formatHour(log.date!) | defaultDash}}
+                        </div>
                     </div>
                 </div>
             </div>
