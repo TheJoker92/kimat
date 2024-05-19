@@ -68,7 +68,7 @@
         </div> -->
         <div *ngFor="let catalogue of catalogues" class="row-center-space-between w100p mt10px catalogue-container">
             <div class="column-center-center w100p">
-                <div class="row-center-space-between w100p cursor-pointer max-width410px" (click)="selectCatalogue(catalogue)">
+                <div class="row-center-space-between w100p cursor-pointer max-width410px" [ngClass]="{'selectedCatalogue': selectedCatalogue == catalogue}" (click)="selectCatalogue(catalogue)">
                     <div class="row-center-space-between">
                         <div class="row-center-left">
                             <div *ngIf="!sessionService.activeSelect" class="cursor-pointer font-size-3em folder-icon"></div>

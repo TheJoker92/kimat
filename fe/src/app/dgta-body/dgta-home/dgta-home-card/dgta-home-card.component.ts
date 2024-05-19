@@ -148,7 +148,11 @@ export class DgtaHomeCardComponent {
 
   selectCatalogue(catalogue: any) {
     if (!this.sessionService.activeSelect) {
-      this.selectedCatalogue = catalogue
+      if (this.selectedCatalogue != catalogue) {
+        this.selectedCatalogue = catalogue
+      } else {
+        this.selectedCatalogue = undefined
+      }
     }
   }
 
@@ -163,4 +167,6 @@ export class DgtaHomeCardComponent {
   isMultipleSelectedCatalogue(catalogue: any) {
 
   }
+
+  
 }
