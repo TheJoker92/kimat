@@ -20,12 +20,14 @@ import { SessionService } from '../../../../session.service';
 import { DgtaTopicCardComponent } from '../../dgta-topic-card/dgta-topic-card.component';
 import { DgtaSearchDocumentComponent } from './dgta-search-document/dgta-search-document.component';
 
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { DgtaHeaderComponent } from '../../../../dgta-header/dgta-header.component';
+import { DgtaFilterDocumentsComponent } from './dgta-filter-documents/dgta-filter-documents.component';
 
 @Component({
   selector: 'dgta-documents-modal',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, DgtaTopicCardComponent, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent, PdfViewerModule, DgtaAttachmentsModalComponent, DgtaSearchDocumentComponent],
+  imports: [CommonModule, FontAwesomeModule, DgtaFilterDocumentsComponent, DgtaHeaderComponent, DgtaTopicCardComponent, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent, PdfViewerModule, DgtaAttachmentsModalComponent, DgtaSearchDocumentComponent],
   templateUrl: './dgta-documents-modal.component.html',
   styleUrl: './dgta-documents-modal.component.scss'
 })
@@ -35,6 +37,7 @@ export class DgtaDocumentsModalComponent {
   @Output() closeDocumentsModalE = new EventEmitter()
 
   faSearch = faSearch
+  faChevronLeft = faChevronLeft
 
   document: IDocument = {}
 
@@ -56,7 +59,7 @@ export class DgtaDocumentsModalComponent {
 
   }
 
-  showTopics = true
+  showTopics = false
 
   term = ""
 
@@ -75,7 +78,7 @@ export class DgtaDocumentsModalComponent {
   endDate: any
 
   constructor(private http: HttpService,
-    private sessionService: SessionService,
+    public sessionService: SessionService,
     private loadingService: LoadingService,
     private elementRef: ElementRef,
     private cdRef: ChangeDetectorRef) {
@@ -477,6 +480,18 @@ export class DgtaDocumentsModalComponent {
 
       }
     })
+  }
+
+  activeSelectMode() {
+    this.sessionService.activeSelectDocument = true
+  }
+
+  deactiveSelectMode() {
+    this.sessionService.activeSelectDocument = false
+  }
+
+  deleteMassive() {
+    //TODO
   }
 
 }

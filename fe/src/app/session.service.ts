@@ -11,6 +11,7 @@ export class SessionService {
 
   selectedCatalogues: any[] = []
   activeSelect = false
+  activeSelectDocument = false
 
   user: IUser | undefined
   documentSelected: IDocument | undefined

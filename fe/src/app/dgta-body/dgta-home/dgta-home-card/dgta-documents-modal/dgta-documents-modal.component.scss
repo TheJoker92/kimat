@@ -1,43 +1,94 @@
-.container {
+.h-100c {
+    height: 100vh;
+}
+
+.overlay {
     position: fixed;
     left:0%;
     top:0%;
     width: 100vw;
-    height: 100%;
+    height: 100vh;
     display: flex;
-    background-image: linear-gradient(to right, black , rgb(27, 26, 26));
-    filter: brightness(1.2);    
-    color: white;
+    justify-content: center;
+    align-items: center;
+    background-color: #F3F2F8;
 }
 
-
-.box-form {
-    color: black;
-    background: white;
-    width: 100vw;
-    min-width: 275px;
-    height: 15vw;
-    min-height: 350px;
-    border-radius: 15px;
-}
-
-.form-field-size {
-    width: 15vw;
-    max-width: 200px;
-    min-width: 200px;
-}
-
-.stateValue:hover {
-    cursor: pointer;
-    color: rgb(12, 114, 12);
-}
-
-
-.document-container {
+.container {
+    position: fixed;
     width: 100%;
+    height: 100%;
+    top:0%;
+    left: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+.add-category {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8.5px 7px;
+    gap: 10px;
+
+    width: 68px;
+    height: 32px;
+
+    background: #E69800;
+    border-radius: 8px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    border: none;
+    color: white;
+    font-size: medium;
 }
 
-.document-container:hover {
-    background: rgb(2, 73, 2);
-    cursor: pointer;
+.add-folder {
+    /* Vector */
+
+    color: #E69800;
+    opacity: 0.5;
+    font-size: xx-large;
+}
+
+.select-category {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8.5px 7px;
+    gap: 10px;
+
+    width: 80px;
+    height: 32px;
+
+    background: #E69800;
+    border-radius: 8px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    border: none;
+    color: white;
+    font-size: medium;
+}
+
+
+.absolute-pos {
+    position: absolute;
+    top: 10%;
+}
+
+.bar-container {
+    width:93%;
+    max-width: 375px;
+    margin-bottom:10px;
 }

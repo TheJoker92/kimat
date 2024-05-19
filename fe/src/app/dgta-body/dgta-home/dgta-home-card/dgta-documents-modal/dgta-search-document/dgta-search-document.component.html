@@ -1,24 +1,19 @@
-<div class="row-bottom-center mt40px p10px">
+<div class="row-bottom-left p10px w100p">
     <div class="search-container row-center-center mt10px bkg-white">
-        <fa-icon class="p3px color-green" [icon]="faSearch"></fa-icon>
+        <div class="p3px search-icon"></div>
         <input type="text" name="" id="" (input)="onSearch($event)">
-    </div>
-    <div *ngIf="!isEnabledScan" class="row-center-bottom cursor-pointer" (click)="startScan()">
-        <fa-icon class="p3px color-white font-size-15em" [icon]="faBarcode"></fa-icon>
-        <fa-icon class="p3px relative" [icon]="faSearch"></fa-icon>
+        <div *ngIf="!isEnabledScan" class="row-center-bottom cursor-pointer" (click)="startScan()">
+            <div class="p3px font-size-15em barcode-icon"></div>
+        </div>
     </div>
     <div *ngIf="isEnabledScan" class="row-center-bottom cursor-pointer stop-scan" (click)="stopScan()">
-        <button>Chiudi</button>
+        <button class="stop-scan-btn">Chiudi</button>
     </div>
 </div>
 
 <div *ngIf="isEnabledScan">
-    <zxing-scanner 
-    [formats]="allowedFormats"
-
-    (deviceChange)="onDeviceChange($event)"
-                        (scanSuccess)="onCodeResult($event)" (permissionResponse)="onHasPermission($event)"
-                        (camerasFound)="onCamerasFound($event)"
-                        (torchCompatible)="onTorchCompatible($event)">
-                    </zxing-scanner>
+    <zxing-scanner [formats]="allowedFormats" (deviceChange)="onDeviceChange($event)"
+        (scanSuccess)="onCodeResult($event)" (permissionResponse)="onHasPermission($event)"
+        (camerasFound)="onCamerasFound($event)" (torchCompatible)="onTorchCompatible($event)">
+    </zxing-scanner>
 </div>
