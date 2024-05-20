@@ -1,6 +1,6 @@
 <div class="container">
     <div class="w100p max-width410px row-center-space-between">
-        <div class="row-center-left cursor-pointer" (click)="close()">
+        <div class="row-center-left cursor-pointer pl10px" (click)="close()">
             <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
             <small>documenti</small>
         </div>
@@ -14,12 +14,12 @@
         <div class="column-top-left">
             <div class="column-top-left mt20px p10px">
                 <label for="">Data inizio</label>
-                <input class="font-size-medium" type="date" name="" id="" (input)="setStartDate($event)"
+                <input class="font-size-medium p10px" type="date" name="" id="" (input)="setStartDate($event)"
                     [value]="startDate">
             </div>
             <div class="column-top-left mt20px p10px">
                 <label for="">Data fine</label>
-                <input class="font-size-medium" type="date" name="" id="" [min]="startDate"
+                <input class="font-size-medium p10px" type="date" name="" id="" [min]="startDate"
                     (input)="setEndDate($event)" [value]="endDate">
             </div>
             <!-- <div class="row-bottom-left p10px" (click)="getDocumentsbydate()">

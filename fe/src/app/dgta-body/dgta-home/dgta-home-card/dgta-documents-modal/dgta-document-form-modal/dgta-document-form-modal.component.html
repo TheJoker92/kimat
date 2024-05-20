@@ -1,9 +1,178 @@
 <div class="overlay">
 
 </div>
-<div class="container">
-    <div class=" column-center-spacebetween" [ngClass]="{'box-form': isSingle, 'box-form-multiple':isMultiple, 'box-form-manual':isManual}">
-        <h3 *ngIf="isSingle" class="row-center-center">INSERISCI DATI DOCUMENTO/I</h3>
+<div class="container column-center-center">
+    <div class="row-center-space-between w100p max-width410px">
+        <div class="column-top-left h100p">
+            <div class="row-center-left cursor-pointer" (click)="cancel()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Documenti</small>
+            </div>
+        </div>
+        <div class="column-center-center mb10px">
+            <h3 class="row-center-center">Nuovo documento</h3>
+            <small>{{ mode }}</small>
+        </div>
+        <div class="w-40px h10p">
+        </div>
+    </div>
+    <div *ngIf="!isSingle && !isMultiple && !isManual" class="column-center-center">
+        <div class="card-selection" (click)="toggleIsSingle()">
+            Singolo
+        </div>
+        <div class="card-selection" (click)="toggleIsMultiple()">
+            Multiplo
+        </div>
+        <div class="card-selection" (click)="toggleIsManual()">
+            Manuale
+        </div>
+    </div>
+    <div *ngIf="isSingle || isMultiple || isManual" class=" column-center-spacebetween" [ngClass]="{'box-form': isSingle, 'box-form-multiple':isMultiple, 'box-form-manual':isManual}">
+        <div class="box-form column-center-spacebetween">
+            <div class="box-form column-center-spacebetween ">
+                <div class="container-form">
+                    <div>
+    
+                        <div *ngIf="stepSingleAdd == 1" class="mb10px">
+                            <div class="column-top-left ">
+                                <label for="">Titolo</label>
+                                <input class="form-field-size input302px" [ngClass]="{'not-valid-field': !isValidName}"
+                                    (input)="editName($event)" type="text" [value]="name">
+                                <small *ngIf="!isValidName" class="color-red">Campo obbligatorio</small>
+                            </div>
+                        </div>
+                        <div *ngIf="stepSingleAdd == 1" class="mb10px">
+                            <label for="">Argomenti</label>
+                            <!-- <div *ngFor="let topic of topics" class="mb10px">
+                                <div>
+                                    <label class="mb5px">{{ topic }}</label>
+                                    <fa-icon class="p3px" [icon]="faTrash" (click)="deleteTopic(topic)"></fa-icon>
+                                </div>
+                            </div> -->
+                            <div class="column-start-space-between w-318px container-topic-selection">
+                                <div class="cursor-pointer select-container" [ngClass]="{'not-valid-field': !isValidTopic}"
+                                    (click)="toggleShowTopicSelection()">
+                                    {{ getLabelTopic() }}
+                                </div>
+                                <small *ngIf="!isValidTopic" class="color-red">Campo obbligatorio</small>
+                                <div *ngIf="showTopicSelection" class="column-start-space-between selections">
+                                    <div *ngFor="let topicOpt of allowedTopics" class="row-center-space-between">
+                                        <input type="checkbox" class="checkbox-round font-size-15em"
+                                            (click)="addTopic(topicOpt)" [checked]="isAddedTopic(topicOpt)" />
+                                        {{ topicOpt }}
+                                    </div>
+                                </div>
+                                <button *ngIf="showTopicSelection" class="selection-confirm"
+                                    (click)="toggleShowTopicSelection()">Conferma</button>
+                                <!-- <div>
+                                    <fa-icon class="p3px color-green-light" [icon]="faCheckSquare" (click)="addTopic()"></fa-icon>
+                                </div> -->
+    
+                            </div>
+                        </div>
+                        <div *ngIf="stepSingleAdd == 1" class="mb10px">
+                            <label for="">Proprietari</label>
+                            <!-- <div *ngFor="let topic of topics" class="mb10px">
+                                <div>
+                                    <label class="mb5px">{{ topic }}</label>
+                                    <fa-icon class="p3px" [icon]="faTrash" (click)="deleteTopic(topic)"></fa-icon>
+                                </div>
+                            </div> -->
+                            <div class="column-start-space-between w-318px container-topic-selection">
+                                <div class="cursor-pointer select-container" [ngClass]="{'not-valid-field': !isValidTopic}"
+                                    (click)="toggleShowOwnerSelection()">
+                                    {{ getLabelOwner() }}
+                                </div>
+                                <small *ngIf="!isValidOwner" class="color-red">Campo obbligatorio</small>
+                                <div *ngIf="showOwnerSelection" class="selections">
+                                    <div *ngFor="let allowedOwner of allowedOwners">
+                                        <input type="checkbox" class="checkbox-round font-size-15em"
+                                            (click)="addOwner(allowedOwner)" [checked]="isAddedOwner(allowedOwner)" />
+                                        {{ allowedOwner.firstName }} {{ allowedOwner.lastName }}
+                                    </div>
+                                </div>
+                                <button *ngIf="showOwnerSelection" class="selection-confirm"
+                                    (click)="toggleShowOwnerSelection()">Conferma</button>
+                                <!-- <div>
+                                    <fa-icon class="p3px color-green-light" [icon]="faCheckSquare" (click)="addTopic()"></fa-icon>
+                                </div> -->
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb10px w-318px">
+                        <div *ngIf="stepSingleAdd == 2" class="mb10px">
+                            <h4>Collocamento</h4>
+                            <div class="column-top-left w220px">
+                                <label for="">Edificio</label>
+                                <input class="form-field-size input302px" (input)="editLocation('palace',$event)"
+                                    [ngClass]="{'not-valid-field': !isValidPalace}" type="text">
+                                <small *ngIf="!isValidPalace" class="color-red">Campo obbligatorio</small>
+    
+                            </div>
+                            <div class="row-center-space-between mt10px">
+                                <div class="column-top-left w110px">
+                                    <label for="">Piano</label>
+                                    <input class="form-field-size input-50p" (input)="editLocation('floor', $event)"
+                                        [ngClass]="{'not-valid-field': !isValidFloor}" type="text">
+                                    <small *ngIf="!isValidFloor" class="color-red">Campo obbligatorio</small>
+    
+                                </div>
+                                <div class="column-top-left w110px">
+                                    <label for="">Stanza</label>
+                                    <input class="form-field-size input-50p" (input)="editLocation('room', $event)"
+                                        [ngClass]="{'not-valid-field': !isValidRoom}" type="text">
+                                    <small *ngIf="!isValidRoom" class="color-red">Campo obbligatorio</small>
+    
+                                </div>
+                            </div>
+                            <div class="row-center-space-between mt10px">
+                                <div class="column-top-left w110px">
+                                    <label for="">Settore</label>
+                                    <input class="form-field-size input-50p" (input)="editLocation('sector', $event)"
+                                        [ngClass]="{'not-valid-field': !isValidSector}" type="text">
+                                    <small *ngIf="!isValidSector" class="color-red">Campo obbligatorio</small>
+    
+                                </div>
+                                <div class="column-top-left w110px">
+                                    <label for="">Scaffale</label>
+                                    <input class="form-field-size input-50p" (input)="editLocation('rack', $event)"
+                                        [ngClass]="{'not-valid-field': !isValidRack}" type="text">
+                                    <small *ngIf="!isValidRack" class="color-red">Campo obbligatorio</small>
+    
+                                </div>
+                            </div>
+                            <div class="column-top-left w220px mt10px">
+                                <label for="">Posizione</label>
+                                <input class="form-field-size input302px" (input)="editLocation('position', $event)"
+                                    [ngClass]="{'not-valid-field': !isValidPosition}" type="text">
+                                <small *ngIf="!isValidPosition" class="color-red">Campo obbligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="stepSingleAdd == 3" class="column-center-center">
+                        <div class="success-logo">
+    
+                        </div>
+                        <h3>Catalogo aggiunto con successo</h3>
+                    </div>
+                    <div class="column-center-center">
+                        <div class="row-center-center container-steppoint">
+                            <fa-icon *ngIf="stepSingleAdd < 3" class="p3px" [ngClass]="{'fa-icon-enabled': stepSingleAdd==1}"
+                                [icon]="faCircle"></fa-icon>
+                            <fa-icon *ngIf="stepSingleAdd < 3" class="p3px" [ngClass]="{'fa-icon-enabled': stepSingleAdd==2}"
+                                [icon]="faCircle"></fa-icon>
+                        </div>
+                        <button *ngIf="stepSingleAdd == 1" class="mt10px mb10px" (click)="nextstepSingleAdd()">Avanti</button>
+                        <!-- <button class="mt10px" (click)="cancel()">ANNULLA</button> -->
+                        <!-- <button *ngIf="stepSingleAdd == 2" class="mt10px mb10px" (click)="addCatalogue()">Conferma</button> -->
+                    </div>
+                </div>
+                <button *ngIf="stepSingleAdd == 3" class="mt10px" (click)="cancel()">Torna alla home</button>
+            </div>
+        </div>
+        
+        <!-- <h3 *ngIf="isSingle" class="row-center-center">INSERISCI DATI DOCUMENTO/I</h3>
         <h3 *ngIf="isMultiple" class="row-center-center">CARICA DOCUMENTO/I</h3>
         <h3 *ngIf="isManual" class="row-center-center">CARICA DOCUMENTO/I MANUALMENTE</h3>
         <div class="row-center-center">
@@ -18,7 +187,7 @@
                     <label for=""><strong>Nome</strong></label>
                     <input class="form-field-size" (input)="editName($event)" type="text">
                 </div>
-            </div>
+            </div> -->
             <!-- <div class="mb10px">
                 <label for=""><strong>Argomento/i</strong></label>
                 <div *ngFor="let topic of topics" class="mb10px">
@@ -49,7 +218,7 @@
                     </div>
                 </div>
             </div> -->
-            <div class="mb10px">
+            <!-- <div class="mb10px">
                 <label class="mb5px"><strong>Proprietario/i</strong></label>
                 <div *ngFor="let owner of owners" class="mb10px">
                     <div class="row-center-space-between">
@@ -111,9 +280,9 @@
                 <button class="mt10px" (click)="cancel()">ANNULLA</button>
                 <button class="mt10px" (click)="addDocumentMultiple()">AGGIUNGI</button>
             </div>
-        </div>
+        </div> -->
 
-        <div *ngIf="isManual" class="box-form-manual column-left-center p10px">
+        <!-- <div *ngIf="isManual" class="box-form-manual column-left-center p10px">
             <h4>
                 1. Stampa barcode
             </h4>
@@ -129,6 +298,6 @@
                 <button class="mt10px" (click)="cancel()">ANNULLA</button>
                 <button class="mt10px" (click)="addDocument()">AGGIUNGI</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

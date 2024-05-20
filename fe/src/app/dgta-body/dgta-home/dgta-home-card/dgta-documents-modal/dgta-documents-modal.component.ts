@@ -39,6 +39,8 @@ export class DgtaDocumentsModalComponent {
   faSearch = faSearch
   faChevronLeft = faChevronLeft
 
+  selectedDocument: any
+
   document: IDocument = {}
 
   isOpenDocumentFormModal = false
@@ -388,18 +390,43 @@ export class DgtaDocumentsModalComponent {
     return documentListed.topics![0][elem]
   }
 
-  setStartDate(e: any) {
-    this.startDate = e.target.value
+  setStartDate(value: any) {
+    this.startDate = value
+
+    if (this.endDate && this.startDate) {
+      this.getDocumentsbydate()
+    } else {
+      this.getDocuments(this.term)
+    }
   }
 
-  setEndDate(e: any) {
-    this.endDate = e.target.value
+  setEndDate(value: any) {
+    this.endDate = value
+
+    if (this.endDate && this.startDate) {
+      this.getDocumentsbydate()
+    } else {
+      this.getDocuments(this.term)
+    }
   }
 
   formatDate(date: string) {
     //NO  DASH FOR SOLR SEARCH
     let dateArray = date.split("T")[0].split("-")
     return dateArray[2] + dateArray[1] + dateArray[0]
+  }
+
+  formatDateSlash(date: string) {
+    let formatDate
+
+    if(date) {
+      let dateArray = date.split("T")[0].split("-")
+      formatDate = dateArray[2] + "/" + dateArray[1]+ "/" + + dateArray[0]
+    } else {
+      formatDate = "*"
+    }
+
+    return formatDate
   }
 
   getDocumentsbydate() {
@@ -494,4 +521,16 @@ export class DgtaDocumentsModalComponent {
     //TODO
   }
 
+  clear() {
+    this.startDate = undefined
+    this.endDate = undefined
+  }
+
+  selectDocument(documentListed: any) {
+    if (this.selectedDocument == documentListed){
+      this.selectedDocument = undefined
+    } else {
+      this.selectedDocument = documentListed
+    }
+  }
 }

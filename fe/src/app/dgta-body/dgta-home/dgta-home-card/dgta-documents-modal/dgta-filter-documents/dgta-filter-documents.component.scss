@@ -69,8 +69,26 @@ h3 {
 }
 
 input {
-    width:350px;
+    width:330px;
     height: 40px;
     border-radius: 8px;
     border: none;
+    outline-width: 0;
+
+}
+
+input:focus {
+    border: none;
+    outline-width: 0;
+
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-image: URL("https://151.31.8.43:8000/assets/calendar-icon.png");
+    background-size: 100% 100%;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    cursor: pointer;
+
 }

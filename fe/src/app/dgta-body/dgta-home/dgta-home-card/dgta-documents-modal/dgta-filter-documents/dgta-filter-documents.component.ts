@@ -16,8 +16,12 @@ export class DgtaFilterDocumentsComponent {
 
   @Input() documents: any[] = []
 
-  @Output() getDocumentssByDateE = new EventEmitter()
+  @Output() getDocumentsByDateE = new EventEmitter()
   @Output() closeFilterModalE = new EventEmitter()
+
+  @Output() startDateE = new EventEmitter()
+  @Output() endDateE = new EventEmitter()
+  
 
   data: any = rawData
 
@@ -42,10 +46,12 @@ export class DgtaFilterDocumentsComponent {
 
   setStartDate(e: any) {
     this.startDate = e.target.value
+    this.startDateE.emit(this.startDate)
   }
 
   setEndDate(e: any) {
     this.endDate = e.target.value
+    this.endDateE.emit(this.endDate)
   }
 
   formatDate(date: string) {

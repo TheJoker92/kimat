@@ -5,7 +5,7 @@ import { IUser } from '../../../../../interfaces/IUser';
 import { HttpService } from '../../../../../http.service';
 import { SessionService } from '../../../../../session.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCheckSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare, faTrash, faChevronLeft, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
 
 import * as data from '../../../../../../assets/enum.json'
@@ -26,6 +26,12 @@ export class DgtaDocumentFormModalComponent {
 
   @Output() closeDocumentFormModalE = new EventEmitter()
   @Output() emitterGetDocumentsE = new EventEmitter()
+
+  faCircle = faCircle
+
+  mode = ""
+
+  stepSingleAdd = 1
 
   failedUploading: string[] = []
 
@@ -51,10 +57,25 @@ export class DgtaDocumentFormModalComponent {
   attachmentPdf: IAttachment = {}
   attachmentsPdf: IAttachment[] = []
   isSingle = false
-  isMultiple = true
+  isMultiple = false
   isManual = false
 
+  isValidName = true
+  isValidTopic = true
+  isValidOwner = true
+
+  isValidPalace = true
+  isValidFloor = true
+  isValidSector = true
+  isValidRoom = true
+  isValidRack = true
+
+  isValidPosition = true
+
   multipleFiles: any[] = []
+
+  showTopicSelection = false
+  showOwnerSelection = false
 
   constructor(private http: HttpService,
     private sessionService: SessionService,
@@ -64,16 +85,23 @@ export class DgtaDocumentFormModalComponent {
     this.getUsers()
   }
 
+  faChevronLeft = faChevronLeft
+
   onSelectTopic(e: any) {
     this.topic = e.target.value
   }
 
 
-  addTopic() {
-    if (this.topics.length < 4 && this.topic) {
-      this.topics.push(this.topic)
-      this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
-      this.topic = this.allowedTopics[0]
+  addTopic(topic: any) {
+    if (this.topics.length < 4) {
+      // this.topics.push(this.topic)
+      // this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
+      // this.topic = this.allowedTopics[0]
+      if(this.topics.includes(topic)) {
+        this.topics = this.topics.filter((addedTopic: any) => addedTopic != topic)
+      } else {
+        this.topics.push(topic)
+      }
     } else if (this.topics.length >= 4) {
       alert("Puoi aggiungere fino a quattro argomenti")
     } else if (!this.topic) {
@@ -199,27 +227,17 @@ export class DgtaDocumentFormModalComponent {
   }
 
 
-  addOwner() {
-    if (this.owner && this.owners.filter((owner: IUser) => owner.id == this.owner.id).length) {
-      this.owner = this.allowedOwners[0]
-    }
-
-    if (this.allowedOwners.length && this.owner.id) {
-      this.owners.push(this.owner)
-
-      this.allowedOwners = this.dataUser.owners
-      for (let owner of this.owners) {
-
-        this.allowedOwners = this.allowedOwners.filter((rawOwner: IUser) => rawOwner.id != owner.id)
+  addOwner(owner: any) {
+    if (this.owners) {
+      // this.topics.push(this.topic)
+      // this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
+      // this.topic = this.allowedTopics[0]
+      if(this.owners.includes(owner)) {
+        this.owners = this.owners.filter((addedOwner: any) => addedOwner.id != owner.id)
+      } else {
+        this.owners.push(owner)
       }
-
-      console.log("ADD ALLOW", this.allowedOwners)
-    } else if (!this.owner.id) {
-
-    } else {
-      alert("Non ci sono utenti da aggiungere")
     }
-
   }
 
   onSelectOwner(e: any) {
@@ -256,18 +274,24 @@ export class DgtaDocumentFormModalComponent {
     this.isSingle = true
     this.isMultiple = false
     this.isManual = false
+
+    this.mode = "singolo"
   }
 
   toggleIsMultiple() {
     this.isSingle = false
     this.isMultiple = true
     this.isManual = false
+
+    this.mode = "multiplo"
   }
 
   toggleIsManual() {
     this.isSingle = false
     this.isMultiple = false
     this.isManual = true
+
+    this.mode = "manuale"
   }
 
   onUploadFiles(e: any) {
@@ -283,11 +307,11 @@ export class DgtaDocumentFormModalComponent {
   }
 
   addDocumentMultiple() {
-    this.addDocumentMultipleFirstStep(0)
+    this.addDocumentMultipleFirststepSingleAdd(0)
 
   }
 
-  addDocumentMultipleFirstStep(index: number) {
+  addDocumentMultipleFirststepSingleAdd(index: number) {
     let file = this.multipleFiles[index]
     let parentId = this.catalogue.id
 
@@ -323,7 +347,7 @@ export class DgtaDocumentFormModalComponent {
       "deliberationDate": ""
     }
 
-    console.log("FIRST STEP", index, payload)
+    console.log("FIRST stepSingleAdd", index, payload)
 
     this.loadingService.isLoading = true
     this.http.addDocument(payload).subscribe({
@@ -367,10 +391,10 @@ export class DgtaDocumentFormModalComponent {
                 let documentF: IDocument = documents.find((documentFromList: IDocument) => documentFromList.name == file.name.replace(".pdf", ""))!
                 // console.log("AAA", documentF, documents, file.name.replace(".pdf", ""))
                 if (documentF) {
-                  this.addDocumentMultipleSecondStep(documentF, index)
+                  this.addDocumentMultipleSecondstepSingleAdd(documentF, index)
                 } else {
                   this.failedUploading.push(file.name)
-                  this.addDocumentMultipleFirstStep(index + 1)
+                  this.addDocumentMultipleFirststepSingleAdd(index + 1)
                 }
               }
             })
@@ -399,7 +423,7 @@ export class DgtaDocumentFormModalComponent {
   }
 
 
-  addDocumentMultipleSecondStep(document: IDocument, index: number) {
+  addDocumentMultipleSecondstepSingleAdd(document: IDocument, index: number) {
     let file = this.multipleFiles[index]
 
     const reader = new FileReader();
@@ -435,7 +459,7 @@ export class DgtaDocumentFormModalComponent {
         "deliberationDate": document.deliberationDate
       }
 
-      console.log("SECOND STEP", index, payload)
+      console.log("SECOND stepSingleAdd", index, payload)
 
       this.http.addDocument(payload).subscribe({
         next: (response: any) => {
@@ -463,7 +487,7 @@ export class DgtaDocumentFormModalComponent {
               "deliberationDate": document.deliberationDate
             }
 
-            console.log("UPLOAD PDF SECOND STEP", index, payload)
+            console.log("UPLOAD PDF SECOND stepSingleAdd", index, payload)
 
             this.loadingService.isLoading = true
 
@@ -590,7 +614,7 @@ export class DgtaDocumentFormModalComponent {
                 index += 1
                 this.loadingService.isLoading = false
                 if (index < this.multipleFiles.length) {
-                  this.addDocumentMultipleFirstStep(index)
+                  this.addDocumentMultipleFirststepSingleAdd(index)
                 } else {
                   alert("Hai aggiornato il catalogo")
 
@@ -706,6 +730,141 @@ export class DgtaDocumentFormModalComponent {
 
       }
     })
+  }
+
+
+  previousstepSingleAdd() {
+    if (this.stepSingleAdd == 1) {
+      this.cancel()
+    } else {
+      this.stepSingleAdd -= 1
+    }
+  }
+
+  nextstepSingleAdd() {
+    if (this.stepSingleAdd == 1) {
+      if (this.name.length == 0) {
+        this.isValidName = false
+      } else {
+        this.isValidName = true
+      }
+  
+      if (this.owners.length == 0) {
+        this.isValidOwner = false
+      } else {
+        this.isValidOwner = true
+      }
+  
+      if (this.topics.length == 0) {
+        this.isValidTopic = false
+      } else {
+        this.isValidTopic = true
+      }
+  
+      if (this.isValidOwner && this.isValidName && this.isValidTopic) {
+        this.stepSingleAdd += 1
+      } 
+    } else if (this.stepSingleAdd == 2) {
+      if (this.place.palace) {
+        this.isValidPalace = true
+      } else {
+        this.isValidPalace = false
+      }
+  
+      if (this.place.floor) {
+        this.isValidFloor = true
+      } else {
+        this.isValidFloor = false
+      }
+  
+      if (this.place.room) {
+        this.isValidRoom = true
+      } else {
+        this.isValidRoom = false
+      }
+
+      if (this.place.sector) {
+        this.isValidSector = true
+      } else {
+        this.isValidSector = false
+      }
+
+      if (this.place.rack) {
+        this.isValidRack = true
+      } else {
+        this.isValidRack = false
+      }
+
+      if (this.place.position) {
+        this.isValidPosition = true
+      } else {
+        this.isValidPosition = false
+      }
+    }
+  }
+
+  toggleShowTopicSelection() {
+
+    if (this.showTopicSelection) {
+      this.showTopicSelection = false
+    } else {
+      this.showTopicSelection = true
+
+    }
+  }
+
+  getLabelTopic() {
+    let label = ""
+    if (this.topics.length == 0) {
+      label = "Premere per selezionare gli argomenti"
+    } else if(this.topic.length == 1) {
+      label = "Hai selezionato " + this.topics.length + " argomento"
+    } else {
+      label = "Hai selezionato " + this.topics.length + " argomenti"
+    }
+
+    return label
+  }
+
+  isAddedTopic(topic: any) {
+    let result
+
+    if (this.topics.filter((addedTopic: any) => addedTopic == topic).length) {
+      result = true
+    }
+    return result
+  }
+
+  isAddedOwner(owner: any) {
+    let result
+
+    if (this.owners.filter((addedOwner: any) => addedOwner.id == owner.id).length) {
+      result = true
+    }
+    return result
+  }
+
+  toggleShowOwnerSelection() {
+
+    if (this.showOwnerSelection) {
+      this.showOwnerSelection = false
+    } else {
+      this.showOwnerSelection = true
+
+    }
+  }
+
+  getLabelOwner() {
+    let label = ""
+    if (this.owners.length == 0) {
+      label = "Premere per selezionare i proprietari"
+    } else if(this.owners.length == 1) {
+      label = "Hai selezionato " + this.owners.length + " proprietario"
+    } else {
+      label = "Hai selezionato " + this.owners.length + " proprietari"
+    }
+
+    return label
   }
 
 }

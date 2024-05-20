@@ -33,90 +33,103 @@
             <dgta-search-document (getDocumentsE)="getDocuments($event)"
             (hideTopicsE)="hideTopics()"
             (getDocumentByIdE)="getDocumentById($event)"></dgta-search-document>
-            <dgta-filter-documents 
-                class="row-center-left flex-wrap"
-                [ngClass]="{'behind': !showTopics}" 
-                [documents]="documents"
-                (closeFilterModalE)="hideTopics()"
-                (getDocumentssByDateE)="getDocumentsbydate()"></dgta-filter-documents>
-            <div class="row-center-center w100p">
+            <div class="row-center-space-between">
+                
+                <dgta-filter-documents 
+                    class="row-center-left flex-wrap"
+                    [ngClass]="{'behind': !showTopics}" 
+                    [documents]="documents"
+                    (closeFilterModalE)="hideTopics()"
+                    (startDateE)="setStartDate($event)"
+                    (endDateE)="setEndDate($event)"
+                    (getDocumentssByDateE)="getDocumentsbydate()"></dgta-filter-documents>
+            </div>
+            <div *ngIf="startDate || endDate" class="row-center-space-between w100p max-width410px">
+                <div  class="w-40px h10p"></div>
+                <div>
+                    <div class="w170px">
+                        {{formatDateSlash(startDate)}} - {{ formatDateSlash(endDate) }}
+                    </div>
+                    <button class="clear" (click)="clear()">
+                        Pulisci
+                    </button>
+                </div>
                 <div class="ml10px cursor-pointer row-center-right max-width410px w100p" (click)="toggleTopics()">Filtra 
                             <div class="filter-icon"></div>
                 </div>
             </div>
-            <div class="row-center-left mb10px">
-                <h2 class="ml10px color-white">DOCUMENTI</h2>
-                <div class="row-left-left p10px" (click)="openModalDocumentFormModal()">
-                    <fa-icon class="cursor-pointer font-size-15em" [icon]="faFolderPlus"></fa-icon>
+            <div *ngIf="!(startDate || endDate)"  class="row-center-center w100p">
+                <div class="ml10px cursor-pointer row-center-right max-width410px w100p" (click)="toggleTopics()">Filtra 
+                            <div class="filter-icon"></div>
                 </div>
             </div>
             <!-- <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong> -->
             <!-- <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
             (getCataloguesByTopicE)="getDocuments()"></dgta-topic-card> -->
-            <!-- <div *ngFor="let documentListed of documents" class="column-top-right">
-                <div class="column-top-left w100p">
-                    <div class="row-center-space-between  w100p">
-                        <div class="row-center-space-between document-container p10px">
-                            <div class="row-center-left">
-                                <fa-icon class="cursor-pointer color-yellow-folder font-size-3em"
-                                    [icon]="faFolder"></fa-icon>
-                                <div class="column-left-left ml5px w200px">
-                                    <strong class="">{{ documentListed.name }}</strong>
-                                   
+            <div class="rows-container column-center-center">
+
+                <div *ngFor="let documentListed of documents" class="column-top-right">
+                    <div class="column-top-left w100p max-width410px">
+                        <div class="row-center-space-between w100p" (click)="selectDocument(documentListed)">
+                            <div class="row-center-space-between document-container">
+                                <div class="row-center-left">
+                                    <div class="cursor-pointer color-yellow-folder font-size-3em document-icon"></div>
+                                    <div class="column-left-left ml5px w200px">
+                                        <div class="">{{ documentListed.name }}</div>
+                                    </div>
                                 </div>
-                                
-                            </div>
-                            <div class="row-center-center w10p">
-                                <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash"
-                                    (click)="deleteDocument(documentListed)"></fa-icon>
+                                <!-- <div class="row-center-center w10p">
+                                    <fa-icon class="cursor-pointer font-size-25em" [icon]="faTrash"
+                                        (click)="deleteDocument(documentListed)"></fa-icon>
+                                </div> -->
                             </div>
                         </div>
-                    </div>
-                    <div class="p10px row-center-center w100p bkg-grey">
-                        <div class="row-left-space-around w100p">
-                            <div class="row-center-center w10p">
-                                <div class="column-center-center">
-                                    <fa-icon class="cursor-pointer font-size-20em" [icon]="faFileLines"
-                                        (click)="openAttachmentsModal(documentListed)"></fa-icon>
-                                    <small>documenti</small>
+                        <div *ngIf="selectedDocument == documentListed" class="p10px row-center-center w100p bkg-grey absolute-pos">
+                            <div class="row-left-space-around w100p">
+                                <div class="row-center-center w10p">
+                                    <div class="column-center-center">
+                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faFileLines"
+                                            (click)="openAttachmentsModal(documentListed)"></fa-icon>
+                                        <small>documenti</small>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row-center-center w10p">
-                                <div class="column-center-center">
-                                    <fa-icon class="cursor-pointer font-size-20em" [icon]="faBarcode"
-                                        (click)="openViewBarcodeModal(documentListed)"></fa-icon>
-                                    <small>barcode</small>
+                                <div class="row-center-center w10p">
+                                    <div class="column-center-center">
+                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faBarcode"
+                                            (click)="openViewBarcodeModal(documentListed)"></fa-icon>
+                                        <small>barcode</small>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row-center-center w10p">
-                                <div class="column-center-center">
-                                    <fa-icon class="cursor-pointer font-size-20em" [icon]="faClockRotateLeft"
-                                        (click)="openHistoryModal(documentListed)"></fa-icon>
-                                    <small>storico</small>
+                                <div class="row-center-center w10p">
+                                    <div class="column-center-center">
+                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faClockRotateLeft"
+                                            (click)="openHistoryModal(documentListed)"></fa-icon>
+                                        <small>storico</small>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row-center-center w10p">
-                                <div class="column-center-center">
-                                    <fa-icon class="cursor-pointer font-size-20em" [icon]="faMapMarker"
-                                        (click)="openCollocationModal(documentListed)"></fa-icon>
-                                    <small>posizione</small>
+                                <div class="row-center-center w10p">
+                                    <div class="column-center-center">
+                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faMapMarker"
+                                            (click)="openCollocationModal(documentListed)"></fa-icon>
+                                        <small>posizione</small>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row-center-center w10p">
-                                <div class="column-center-center">
-                                    <fa-icon class="cursor-pointer font-size-20em" [icon]="faUsers"
-                                        (click)="openOwnersModal(catalogue)"></fa-icon>
-                                    <small>utenti</small>
+                                <div class="row-center-center w10p">
+                                    <div class="column-center-center">
+                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faUsers"
+                                            (click)="openOwnersModal(catalogue)"></fa-icon>
+                                        <small>utenti</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+    
+    
                     </div>
-
-
+    
+    
                 </div>
-
-
-            </div> -->
+            </div>
         </div>
 
         <dgta-owners-document-modal *ngIf="isOpenOwnersModal" [document]="document"
