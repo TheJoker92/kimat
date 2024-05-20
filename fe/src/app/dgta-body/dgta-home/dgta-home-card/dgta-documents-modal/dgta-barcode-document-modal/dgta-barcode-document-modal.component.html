@@ -3,19 +3,22 @@
 </div>
 <div class="container">
     <div class="box-form column-center-spacebetween">
-        <h3 class="row-center-center">{{ document.name }}</h3>
-        <div class="box-form column-center-center">
-            <!-- <strong>
-                Barcode catalogo
-            </strong>
-            <ngx-barcode6 [bc-format]="'CODE128'" [id]="document.parentId!" [bc-value]="document.parentId!" [bc-display-value]="true"></ngx-barcode6> -->
-            <strong>
-                Barcode documento
-            </strong>
+        <div class="row-center-space-between w100p">
+            <div class="row-center-left cursor-pointer" (click)="cancel()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Documenti</small>
+            </div>
+            <div>
+                <h3 class="row-center-center">Barcode</h3>
+            </div>
+            <div class="w-40px h10p">
+            </div>
+        </div>
+        <div class="box-form column-center-spacebetween">
             <ngx-barcode6 [bc-format]="'CODE128'" [id]="document.id!" [bc-value]="document.id!" [bc-display-value]="true"></ngx-barcode6>
             <div class="row-center-center">
-                <button class="mt10px" (click)="cancel()">ANNULLA</button>
-                <button class="mt10px" (click)="print()">STAMPA</button>
+                <!-- <button class="mt10px" (click)="cancel()">ANNULLA</button> -->
+                <button class="mt10px" (click)="print()">Stampa</button>
             </div>
         </div>
     </div>

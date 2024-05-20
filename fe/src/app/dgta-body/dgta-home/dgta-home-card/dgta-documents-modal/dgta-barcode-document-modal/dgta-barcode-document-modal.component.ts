@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { IDocument } from '../../../../../interfaces/IDocument';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'dgta-barcode-document-modal',
   standalone: true,
-  imports: [NgxBarcode6Module],
+  imports: [NgxBarcode6Module, FontAwesomeModule],
   templateUrl: './dgta-barcode-document-modal.component.html',
   styleUrl: './dgta-barcode-document-modal.component.scss'
 })
@@ -13,6 +15,10 @@ export class DgtaBarcodeDocumentModalComponent {
   @Input() document: IDocument = {}
   @Output() closeBarcodeViewModalE = new EventEmitter()
 
+
+  faChevronLeft = faChevronLeft
+
+  
   constructor() { }
 
   cancel() {

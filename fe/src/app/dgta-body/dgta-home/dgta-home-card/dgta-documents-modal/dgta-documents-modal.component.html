@@ -22,7 +22,7 @@
                     <button *ngIf="sessionService.activeSelectDocument" class="select-category mr10px p10px"
                         (click)="deactiveSelectMode()">Annulla</button>
                     <button *ngIf="sessionService.activeSelectDocument" class="select-category p10px"
-                        (click)="deleteMassive()">Elimina {{ sessionService.selectedCatalogues.length }}</button>
+                        (click)="deleteMassive()">Elimina {{ sessionService.selectedDocuments.length }}</button>
                     <!-- <button class="select-category">Seleziona</button>
                     <div class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
                         <fa-icon class="cursor-pointer font-size-15em add-folder" [icon]="faFolderPlus"></fa-icon>
@@ -72,7 +72,9 @@
                         <div class="row-center-space-between w100p cursor-pointer" (click)="selectDocument(documentListed)">
                             <div class="column-left-space-between document-container">
                                 <div class="row-center-left">
-                                    <div class="cursor-pointer color-yellow-folder font-size-3em document-icon"></div>
+                                <input *ngIf="sessionService.activeSelectDocument" type="checkbox" class="checkbox-round font-size-15em" (click)="multipleSelectedDocument(documentListed)" [checked]="isMultipleSelectedDocument(documentListed)" />
+                            
+                                    <div *ngIf="!sessionService.activeSelectDocument" class="cursor-pointer color-yellow-folder font-size-3em document-icon"></div>
                                     <div class="column-left-left ml5px mb10px w200px">
                                         <div class="">{{ documentListed.name }}</div>
                                     </div>
@@ -88,40 +90,40 @@
                                 </div> -->
                             </div>
                         </div>
-                        <div *ngIf="selectedDocument == documentListed" class="p10px row-center-center w100p bkg-grey absolute-pos-baricon">
-                            <div class="row-left-space-around w100p">
+                        <div *ngIf="selectedDocument == documentListed" class="row-center-center w100p absolute-pos-baricon">
+                            <div class="row-left-space-around w100p baricon">
                                 <div class="row-center-center w10p">
                                     <div class="column-center-center">
-                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faFileLines"
-                                            (click)="openAttachmentsModal(documentListed)"></fa-icon>
+                                        <div class="cursor-pointer font-size-20em eye-baricon"
+                                            (click)="openAttachmentsModal(documentListed)"></div>
                                         <small>documenti</small>
                                     </div>
                                 </div>
                                 <div class="row-center-center w10p">
                                     <div class="column-center-center">
-                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faBarcode"
-                                            (click)="openViewBarcodeModal(documentListed)"></fa-icon>
+                                        <div class="cursor-pointer font-size-20em barcode-baricon"
+                                            (click)="openViewBarcodeModal(documentListed)"></div>
                                         <small>barcode</small>
                                     </div>
                                 </div>
                                 <div class="row-center-center w10p">
                                     <div class="column-center-center">
-                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faClockRotateLeft"
-                                            (click)="openHistoryModal(documentListed)"></fa-icon>
+                                        <div class="cursor-pointer font-size-20em history-baricon"
+                                            (click)="openHistoryModal(documentListed)"></div>
                                         <small>storico</small>
                                     </div>
                                 </div>
                                 <div class="row-center-center w10p">
                                     <div class="column-center-center">
-                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faMapMarker"
-                                            (click)="openCollocationModal(documentListed)"></fa-icon>
+                                        <div class="cursor-pointer font-size-20em location-baricon"
+                                            (click)="openCollocationModal(documentListed)"></div>
                                         <small>posizione</small>
                                     </div>
                                 </div>
                                 <div class="row-center-center w10p">
                                     <div class="column-center-center">
-                                        <fa-icon class="cursor-pointer font-size-20em" [icon]="faUsers"
-                                            (click)="openOwnersModal(catalogue)"></fa-icon>
+                                        <div class="cursor-pointer font-size-20em users-baricon"
+                                            (click)="openOwnersModal(catalogue)"></div>
                                         <small>utenti</small>
                                     </div>
                                 </div>

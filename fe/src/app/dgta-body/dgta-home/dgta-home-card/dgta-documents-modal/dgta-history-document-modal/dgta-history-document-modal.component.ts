@@ -4,11 +4,13 @@ import { DefaultDashPipe } from "../../../../../default-dash.pipe"
 import { ILog } from "../../../../../interfaces/ILog"
 import { IDocument } from "../../../../../interfaces/IDocument"
 import { SessionService } from "../../../../../session.service"
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome"
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'dgta-history-document-modal',
   standalone: true,
-  imports: [CommonModule, DefaultDashPipe],
+  imports: [CommonModule, DefaultDashPipe, FontAwesomeModule],
   templateUrl: './dgta-history-document-modal.component.html',
   styleUrl: './dgta-history-document-modal.component.scss'
 })
@@ -16,7 +18,12 @@ export class DgtaHistoryDocumentModalComponent {
   @Input() document: IDocument = {}
   @Output() closeHistoryModalE = new EventEmitter()
 
+  faChevronLeft = faChevronLeft
+
   history: ILog[] = []
+
+  isSelectedInfo = true
+  isSelectedLog = false
 
   constructor(private session: SessionService) { }
 
@@ -33,13 +40,35 @@ export class DgtaHistoryDocumentModalComponent {
     this.closeHistoryModalE.emit()
   }  
 
-  getUserFullName(log: ILog) {
-    console.log(log.user)
-    return log.user?.firstName + " " + log.user?.lastName
-  }
-
   formatDate (date: string) {
     let dateArray = date.split("T")[0].split("-")
     return dateArray[2] + "-" + dateArray[1]+ "-" + dateArray[0]
+  }
+
+  getUserFullName(log: ILog) {
+    return log.user?.firstName + " " + log.user?.lastName
+  }
+
+  getUserFirstName(log: ILog) {
+    return log.user?.firstName
+  }
+
+  getUserLastName(log: ILog) {
+    return log.user?.lastName
+  }
+
+  formatHour(hour: string) {
+    let hourArray = hour.split("T")[1].split(":")
+    return hourArray[0] + ":" + hourArray[1]
+  }
+
+  activeLogTab() {
+    this.isSelectedLog = true
+    this.isSelectedInfo = false
+  }
+
+  activeInfoTab() {
+    this.isSelectedLog = false
+    this.isSelectedInfo = true
   }
 }

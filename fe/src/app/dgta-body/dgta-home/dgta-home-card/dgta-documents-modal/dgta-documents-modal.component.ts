@@ -38,6 +38,7 @@ export class DgtaDocumentsModalComponent {
 
   faSearch = faSearch
   faChevronLeft = faChevronLeft
+  
 
   selectedDocument: any
 
@@ -153,8 +154,6 @@ export class DgtaDocumentsModalComponent {
           }
 
           this.documents.push(document)
-
-          console.log("AAAA", this.documents)
           this.documents = JSON.parse(JSON.stringify(this.documents))
 
         }
@@ -342,7 +341,7 @@ export class DgtaDocumentsModalComponent {
   }
 
   deleteDocument(document: IDocument) {
-    if (document.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length == 0) {
+    if (document.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length != 0) {
 
       this.document = {}
   
@@ -352,8 +351,11 @@ export class DgtaDocumentsModalComponent {
       this.http.deleteDocuments(payload).subscribe({
         next: (response: any) => {
           if (response.code == 200) {
-            alert("L'operazione è riuscita")
-            this.getDocuments()
+            // alert("L'operazione è riuscita")
+            this.sessionService.selectedDocuments = this.sessionService.selectedDocuments.filter((documentSelected: any) => documentSelected.id != document.id)
+            setTimeout(() => {
+              this.getDocuments()
+            },1000)
           } else {
             alert("Qualcosa è andato storto")
           }
@@ -517,10 +519,6 @@ export class DgtaDocumentsModalComponent {
     this.sessionService.activeSelectDocument = false
   }
 
-  deleteMassive() {
-    //TODO
-  }
-
   clear() {
     this.startDate = undefined
     this.endDate = undefined
@@ -535,4 +533,20 @@ export class DgtaDocumentsModalComponent {
       this.selectedDocument = documentListed
     }
   }
+
+  multipleSelectedDocument(document: any) {
+    if (!this.sessionService.selectedDocuments.includes(document)) {
+      this.sessionService.selectedDocuments.push(document)
+    } else {
+      this.sessionService.selectedDocuments = this.sessionService.selectedDocuments.filter((selectedDocument: any) => document.id != selectedDocument.id)
+    }
+  }
+
+  deleteMassive() {
+    for (let document of this.sessionService.selectedDocuments) {
+      this.deleteDocument(document)
+    }
+  }
+
+  isMultipleSelectedDocument(document: any) {}
 }

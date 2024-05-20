@@ -128,6 +128,7 @@ export class DgtaDocumentFormModalComponent {
   }
 
   cancel() {
+    this.emitterGetDocumentsE.emit()
     this.closeDocumentFormModalE.emit()
   }
 
@@ -181,10 +182,10 @@ export class DgtaDocumentFormModalComponent {
           this.loadingService.isLoading = false
 
           if (response.code == 200) {
-            alert("Hai aggiornato il catalogo")
+            this.stepSingleAdd = 3
 
             this.emitterGetDocumentsE.emit()
-            this.closeDocumentFormModalE.emit()
+            // this.closeDocumentFormModalE.emit()
           } else {
             alert("Errore server. Contattare il supporto.")
           }

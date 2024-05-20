@@ -1,8 +1,8 @@
 <div class="overlay">
 
 </div>
-<div class="container column-center-center">
-    <div class="row-center-space-between w100p max-width410px">
+<div class="container column-center-center" [ngClass]="{'column-center-center': stepSingleAdd < 3, 'column-center-spacebetween': stepSingleAdd == 3}">
+    <div *ngIf="stepSingleAdd < 3" class="row-center-space-between w100p max-width410px">
         <div class="column-top-left h100p">
             <div class="row-center-left cursor-pointer" (click)="cancel()">
                 <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
@@ -30,7 +30,13 @@
     <div *ngIf="isSingle || isMultiple || isManual" class=" column-center-spacebetween" [ngClass]="{'box-form': isSingle, 'box-form-multiple':isMultiple, 'box-form-manual':isManual}">
         <div class="box-form column-center-spacebetween">
             <div class="box-form column-center-spacebetween ">
-                <div class="container-form">
+                <div *ngIf="stepSingleAdd == 3" class="column-center-center">
+                    <div class="success-logo">
+
+                    </div>
+                    <h3>Documento aggiunto con successo</h3>
+                </div>
+                <div *ngIf="stepSingleAdd < 3" class="container-form">
                     <div>
     
                         <div *ngIf="stepSingleAdd == 1" class="mb10px">
@@ -100,8 +106,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb10px w-318px">
-                        <div *ngIf="stepSingleAdd == 2" class="mb10px">
+                    <div *ngIf="stepSingleAdd == 2" class="mb10px w-318px">
+                        <div class="mb10px">
                             <h4>Collocamento</h4>
                             <div class="column-top-left w220px">
                                 <label for="">Edificio</label>
@@ -150,12 +156,7 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="stepSingleAdd == 3" class="column-center-center">
-                        <div class="success-logo">
-    
-                        </div>
-                        <h3>Catalogo aggiunto con successo</h3>
-                    </div>
+                    
                     <div class="column-center-center">
                         <div class="row-center-center container-steppoint">
                             <fa-icon *ngIf="stepSingleAdd < 3" class="p3px" [ngClass]="{'fa-icon-enabled': stepSingleAdd==1}"
