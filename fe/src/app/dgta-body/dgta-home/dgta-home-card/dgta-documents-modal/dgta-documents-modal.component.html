@@ -6,7 +6,9 @@
         
 
         <div class="w-100 h-100c container-scroll absolute-pos column-top-center">
-
+            <div>
+                <h2>{{ catalogue.title }}</h2>
+            </div>
             <div class="row-center-space-between bar-container">
                 <div class="row-center-left cursor-pointer" (click)="close()">
                     <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
@@ -27,9 +29,6 @@
                     </div> -->
                 </div>
             </div>
-            <div>
-                <strong>{{ catalogue.title }}</strong>
-            </div>
             <dgta-search-document (getDocumentsE)="getDocuments($event)"
             (hideTopicsE)="hideTopics()"
             (getDocumentByIdE)="getDocumentById($event)"></dgta-search-document>
@@ -46,8 +45,8 @@
             </div>
             <div *ngIf="startDate || endDate" class="row-center-space-between w100p max-width410px">
                 <div  class="w-40px h10p"></div>
-                <div>
-                    <div class="w170px">
+                <div class="filter-container">
+                    <div class="w186px">
                         {{formatDateSlash(startDate)}} - {{ formatDateSlash(endDate) }}
                     </div>
                     <button class="clear" (click)="clear()">
@@ -59,23 +58,28 @@
                 </div>
             </div>
             <div *ngIf="!(startDate || endDate)"  class="row-center-center w100p">
-                <div class="ml10px cursor-pointer row-center-right max-width410px w100p" (click)="toggleTopics()">Filtra 
+                <div class="ml10px cursor-pointer row-center-right max-width380px w100p" (click)="toggleTopics()">Filtra 
                             <div class="filter-icon"></div>
                 </div>
             </div>
             <!-- <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong> -->
             <!-- <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
             (getCataloguesByTopicE)="getDocuments()"></dgta-topic-card> -->
-            <div class="rows-container column-center-center">
+            <div class="rows-container column-top-center">
 
                 <div *ngFor="let documentListed of documents" class="column-top-right">
                     <div class="column-top-left w100p max-width410px">
-                        <div class="row-center-space-between w100p" (click)="selectDocument(documentListed)">
-                            <div class="row-center-space-between document-container">
+                        <div class="row-center-space-between w100p cursor-pointer" (click)="selectDocument(documentListed)">
+                            <div class="column-left-space-between document-container">
                                 <div class="row-center-left">
                                     <div class="cursor-pointer color-yellow-folder font-size-3em document-icon"></div>
-                                    <div class="column-left-left ml5px w200px">
+                                    <div class="column-left-left ml5px mb10px w200px">
                                         <div class="">{{ documentListed.name }}</div>
+                                    </div>
+                                </div>
+                                <div class="row-center-right width320px">
+                                    <div class="lineseparator w100p">
+                    
                                     </div>
                                 </div>
                                 <!-- <div class="row-center-center w10p">
@@ -84,7 +88,7 @@
                                 </div> -->
                             </div>
                         </div>
-                        <div *ngIf="selectedDocument == documentListed" class="p10px row-center-center w100p bkg-grey absolute-pos">
+                        <div *ngIf="selectedDocument == documentListed" class="p10px row-center-center w100p bkg-grey absolute-pos-baricon">
                             <div class="row-left-space-around w100p">
                                 <div class="row-center-center w10p">
                                     <div class="column-center-center">

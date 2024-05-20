@@ -524,6 +524,8 @@ export class DgtaDocumentsModalComponent {
   clear() {
     this.startDate = undefined
     this.endDate = undefined
+
+    this.getDocuments()
   }
 
   selectDocument(documentListed: any) {

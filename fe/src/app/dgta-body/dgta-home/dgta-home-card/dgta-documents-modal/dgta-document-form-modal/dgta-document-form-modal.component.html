@@ -164,8 +164,7 @@
                                 [icon]="faCircle"></fa-icon>
                         </div>
                         <button *ngIf="stepSingleAdd == 1" class="mt10px mb10px" (click)="nextstepSingleAdd()">Avanti</button>
-                        <!-- <button class="mt10px" (click)="cancel()">ANNULLA</button> -->
-                        <!-- <button *ngIf="stepSingleAdd == 2" class="mt10px mb10px" (click)="addCatalogue()">Conferma</button> -->
+                        <button *ngIf="stepSingleAdd == 2" class="mt10px mb10px" (click)="addDocument()">Conferma</button>
                     </div>
                 </div>
                 <button *ngIf="stepSingleAdd == 3" class="mt10px" (click)="cancel()">Torna alla home</button>
