@@ -65,7 +65,7 @@
             <!-- <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong> -->
             <!-- <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
             (getCataloguesByTopicE)="getDocuments()"></dgta-topic-card> -->
-            <div class="rows-container column-top-center">
+            <div class="rows-container column-top-center overflow-x-hidden">
 
                 <div *ngFor="let documentListed of documents" class="column-top-right">
                     <div class="column-top-left w100p max-width410px">
@@ -79,7 +79,7 @@
                                         <div class="">{{ documentListed.name }}</div>
                                     </div>
                                 </div>
-                                <div class="row-center-right width320px">
+                                <div class="row-center-right width310px">
                                     <div class="lineseparator w100p">
                     
                                     </div>
