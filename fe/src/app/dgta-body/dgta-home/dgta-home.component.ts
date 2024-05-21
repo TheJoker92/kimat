@@ -135,6 +135,7 @@ export class DgtaHomeComponent {
 
   deactiveSelectMode() {
     this.sessionService.activeSelect = false
+    this.sessionService.selectedCatalogues = []
   }
 
   deleteMassive() {

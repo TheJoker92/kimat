@@ -517,6 +517,7 @@ export class DgtaDocumentsModalComponent {
 
   deactiveSelectMode() {
     this.sessionService.activeSelectDocument = false
+    this.sessionService.selectedDocuments = []
   }
 
   clear() {
