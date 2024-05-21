@@ -28,7 +28,7 @@
         </div>
     </div>
     <div *ngIf="isSingle || isMultiple || isManual" class=" column-center-spacebetween" [ngClass]="{'box-form': isSingle, 'box-form-multiple':isMultiple, 'box-form-manual':isManual}">
-        <div class="box-form column-center-spacebetween">
+        <div *ngIf="isSingle" class="box-form column-center-spacebetween">
             <div class="box-form column-center-spacebetween ">
                 <div *ngIf="stepSingleAdd == 3" class="column-center-center">
                     <div class="success-logo">
@@ -171,6 +171,48 @@
                 <button *ngIf="stepSingleAdd == 3" class="mt10px" (click)="cancel()">Torna alla home</button>
             </div>
         </div>
+        <div *ngIf="isMultiple" class="column-center-center w100p">
+            <div class="row-center-left w100p">
+                <strong>Carica documenti</strong>
+            </div>
+            <div class="card-add-file column-center-center mt10px">
+                <input (input)="onUploadFiles($event)" type="file" name="" id="file-pdf" multiple accept=".pdf">
+                <div class="add-file-icon cursor-pointer" (click)="loadFile('pdf')"></div>
+                <div class="column-center-center">
+                    <div>
+                        Scegli file 
+                    </div>
+                    <small class="light-grey">File supportato: PDF</small>
+                </div>
+                
+            </div>
+            <div class="column-top-left w100p mt20px">
+                <div class="row-center-left">
+                    <strong>File da caricare</strong> 
+                    <div>
+                        ({{ multipleFiles.length }})
+                    </div>
+                </div>
+                <div class="overflow-file">
+
+                    <div *ngFor="let file of multipleFiles" class="row-center-left file-card">
+                        <div class="row-center-space-between w100p">
+                            <div class="row-center-left">
+                                <div class="pdf-file-icon">
+            
+                                </div>
+                                <div>
+                                    {{ getReducedLabelName(file.name) }}
+                                </div>
+                            </div>
+                            <div class="file-trash-icon cursor-pointer" (click)=delete(file)>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- <h3 *ngIf="isSingle" class="row-center-center">INSERISCI DATI DOCUMENTO/I</h3>
         <h3 *ngIf="isMultiple" class="row-center-center">CARICA DOCUMENTO/I</h3>
@@ -300,4 +342,7 @@
             </div>
         </div> -->
     </div>
+
+    <button class="mt10px" (click)="addDocumentMultiple()">Aggiungi</button>
+
 </div>

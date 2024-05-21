@@ -868,4 +868,19 @@ export class DgtaDocumentFormModalComponent {
     return label
   }
 
+  getReducedLabelName(label: string) {
+    let result = label
+
+    if (result.length > 20) {
+      result = label.replace(".pdf","").substring(0,20) + "..."
+    }
+    
+
+    return result
+  }
+
+  delete(file: any) {
+    this.multipleFiles = this.multipleFiles.filter((toBeUploadedFile) => toBeUploadedFile != file)
+  }
+
 }
