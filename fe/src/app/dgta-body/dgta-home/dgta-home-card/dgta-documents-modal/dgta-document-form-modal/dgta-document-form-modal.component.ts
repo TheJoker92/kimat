@@ -12,6 +12,8 @@ import * as data from '../../../../../../assets/enum.json'
 import { ActionLogEnum, ILog } from '../../../../../interfaces/ILog';
 import { IAttachment, IDocument, IDocumentState } from '../../../../../interfaces/IDocument';
 import { LoadingService } from '../../../../../dgta-loading/loading.service';
+import { map } from 'rxjs';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'dgta-document-form-modal',
@@ -32,6 +34,7 @@ export class DgtaDocumentFormModalComponent {
   mode = ""
 
   stepSingleAdd = 1
+  stepMultipleAdd = 1
 
   failedUploading: string[] = []
 
@@ -51,6 +54,8 @@ export class DgtaDocumentFormModalComponent {
   owners: IUser[] = []
   allowedOwners: IUser[] = []
   owner: IUser = {}
+
+  startUpload = false
 
   dataUser: any = {}
 
@@ -97,7 +102,7 @@ export class DgtaDocumentFormModalComponent {
       // this.topics.push(this.topic)
       // this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
       // this.topic = this.allowedTopics[0]
-      if(this.topics.includes(topic)) {
+      if (this.topics.includes(topic)) {
         this.topics = this.topics.filter((addedTopic: any) => addedTopic != topic)
       } else {
         this.topics.push(topic)
@@ -135,7 +140,7 @@ export class DgtaDocumentFormModalComponent {
   addDocument() {
     if (!this.name) {
       alert("Inserire il nome di un documento")
-    } 
+    }
     // else if (this.topics.length == 0) {
     //   alert("Indicare almeno un argomento")
     // } 
@@ -233,7 +238,7 @@ export class DgtaDocumentFormModalComponent {
       // this.topics.push(this.topic)
       // this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
       // this.topic = this.allowedTopics[0]
-      if(this.owners.includes(owner)) {
+      if (this.owners.includes(owner)) {
         this.owners = this.owners.filter((addedOwner: any) => addedOwner.id != owner.id)
       } else {
         this.owners.push(owner)
@@ -299,6 +304,8 @@ export class DgtaDocumentFormModalComponent {
     for (let file of e.target.files) {
       if (file && file.type == "application/pdf") {
 
+        file.progressUpload = 0
+
         this.multipleFiles.push(file)
 
       } else if (file.type != "application/pdf") {
@@ -308,6 +315,7 @@ export class DgtaDocumentFormModalComponent {
   }
 
   addDocumentMultiple() {
+    this.startUpload = true
     this.addDocumentMultipleFirststepSingleAdd(0)
 
   }
@@ -493,14 +501,40 @@ export class DgtaDocumentFormModalComponent {
             this.loadingService.isLoading = true
 
             setTimeout(() => {
-              this.http.uploadFile(payload).subscribe({
-                next: (response: any) => {
-                  if (response.code == 200) {
-                    this.getOcr(document, index)
+              this.http.uploadFileWithPercent(payload).subscribe((event: any) => {
+                switch (event.type) {
+                  case HttpEventType.UploadProgress:
+                    let file = this.multipleFiles[index]
+                    file.progressUpload = Math.round(100 * (event.loaded / (event.total ?? 1)));
 
+                    console.log(this.multipleFiles)
+                    return 101
+                  case HttpEventType.Response: {
+
+                    if (this.multipleFiles.length == index + 1) {
+                      this.stepMultipleAdd = 2
+                      this.startUpload = false
+                      this.multipleFiles = []
+                    }
+                    return 100;
                   }
+                  default:
+                    return 0;
                 }
               })
+
+
+              //   .subscribe({
+              //     next: (response: any) => {
+              //       if (response.code == 200) {
+              //         this.getOcr(document, index)
+
+              //       }
+
+              //       this.multipleFiles[index].progress
+              //       this.multipleFiles = JSON.parse(JSON.stringify(this.multipleFiles))
+              //     }
+              //   })
             }, 5000)
 
 
@@ -546,44 +580,44 @@ export class DgtaDocumentFormModalComponent {
         let rawDate = ocrTextNormalized.split("L\u2019")[1].split("NELLA")[0]
 
 
-      if(!rawDate || !rawDate.includes("ANNO")) {
-        rawDate = ocrTextNormalized.split("LANNO")[1]
-      }
+        if (!rawDate || !rawDate.includes("ANNO")) {
+          rawDate = ocrTextNormalized.split("LANNO")[1]
+        }
 
-      if(!rawDate || !rawDate.includes("ANNO")) {
-        rawDate = ocrTextNormalized.split("L’")[1]
-      }
+        if (!rawDate || !rawDate.includes("ANNO")) {
+          rawDate = ocrTextNormalized.split("L’")[1]
+        }
 
-      if(!rawDate || !rawDate.includes("ANNO")) {
-        rawDate = ocrText.split("L\u2019")[1].toUpperCase().replace(/\s/g, "").trim()
-      }
-      
-      rawDate = rawDate.split("NELLA")[0]
+        if (!rawDate || !rawDate.includes("ANNO")) {
+          rawDate = ocrText.split("L\u2019")[1].toUpperCase().replace(/\s/g, "").trim()
+        }
 
-      if (!rawDate.includes("ANNO")) {
-        rawDate = ocrTextNormalized.split("L'")[1].split("NELLA")[0]
-      }
+        rawDate = rawDate.split("NELLA")[0]
+
+        if (!rawDate.includes("ANNO")) {
+          rawDate = ocrTextNormalized.split("L'")[1].split("NELLA")[0]
+        }
 
         if (!rawDate.includes("ANNO")) {
           rawDate = ocrTextNormalized.split("L'")[1].split("NELLA")[0]
         }
         deliberazioneTemaplateJSON.annoStr = rawDate.split("ANNO")[1].split(",")[0]
         deliberazioneTemaplateJSON.giornoStr = rawDate.split("ADDI")[1].split("DEL")[0]
-        deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0].replace(".",":").replace(",",":")
-        
+        deliberazioneTemaplateJSON.meseStr = rawDate.split("DELMESEDI")[1].split("ALLEORE")[0].replace(".", ":").replace(",", ":")
+
         if (!deliberazioneTemaplateJSON.meseStr) {
           deliberazioneTemaplateJSON.meseStr = rawDate.split("MESEDI")[1]
         }
 
         deliberazioneTemaplateJSON.meseStr = deliberazioneTemaplateJSON.meseStr.split("ALLEORE")[0].replace(".", ":").replace(",", ":")
 
-        
-        deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0].replace(".",":").replace(",",":")
+
+        deliberazioneTemaplateJSON.oreStr = rawDate.split("ALLEORE")[1].split("NELLA")[0].replace(".", ":").replace(",", ":")
 
 
 
         deliberazioneTemaplateJSON.data = this.getDayNumber(deliberazioneTemaplateJSON.giornoStr) + "-" + this.getMonthNumber(deliberazioneTemaplateJSON.meseStr) + "-" + this.getYearNumber(deliberazioneTemaplateJSON.annoStr)
-        deliberazioneTemaplateJSON.dataNoDash = "a" + deliberazioneTemaplateJSON.data.replaceAll("-","")
+        deliberazioneTemaplateJSON.dataNoDash = "a" + deliberazioneTemaplateJSON.data.replaceAll("-", "")
         let payload: any = {
           "parentId": document.parentId,
           "id": document.id,
@@ -606,8 +640,8 @@ export class DgtaDocumentFormModalComponent {
           next: (response: any) => {
 
             if (response.code == 200) {
-              
-              
+
+
 
               this.loadingService.isLoading = true
 
@@ -749,35 +783,35 @@ export class DgtaDocumentFormModalComponent {
       } else {
         this.isValidName = true
       }
-  
+
       if (this.owners.length == 0) {
         this.isValidOwner = false
       } else {
         this.isValidOwner = true
       }
-  
+
       if (this.topics.length == 0) {
         this.isValidTopic = false
       } else {
         this.isValidTopic = true
       }
-  
+
       if (this.isValidOwner && this.isValidName && this.isValidTopic) {
         this.stepSingleAdd += 1
-      } 
+      }
     } else if (this.stepSingleAdd == 2) {
       if (this.place.palace) {
         this.isValidPalace = true
       } else {
         this.isValidPalace = false
       }
-  
+
       if (this.place.floor) {
         this.isValidFloor = true
       } else {
         this.isValidFloor = false
       }
-  
+
       if (this.place.room) {
         this.isValidRoom = true
       } else {
@@ -818,7 +852,7 @@ export class DgtaDocumentFormModalComponent {
     let label = ""
     if (this.topics.length == 0) {
       label = "Premere per selezionare gli argomenti"
-    } else if(this.topic.length == 1) {
+    } else if (this.topic.length == 1) {
       label = "Hai selezionato " + this.topics.length + " argomento"
     } else {
       label = "Hai selezionato " + this.topics.length + " argomenti"
@@ -859,7 +893,7 @@ export class DgtaDocumentFormModalComponent {
     let label = ""
     if (this.owners.length == 0) {
       label = "Premere per selezionare i proprietari"
-    } else if(this.owners.length == 1) {
+    } else if (this.owners.length == 1) {
       label = "Hai selezionato " + this.owners.length + " proprietario"
     } else {
       label = "Hai selezionato " + this.owners.length + " proprietari"
@@ -872,9 +906,9 @@ export class DgtaDocumentFormModalComponent {
     let result = label
 
     if (result.length > 20) {
-      result = label.replace(".pdf","").substring(0,20) + "..."
+      result = label.replace(".pdf", "").substring(0, 20) + "..."
     }
-    
+
 
     return result
   }
@@ -883,4 +917,7 @@ export class DgtaDocumentFormModalComponent {
     this.multipleFiles = this.multipleFiles.filter((toBeUploadedFile) => toBeUploadedFile != file)
   }
 
+  previousStep() {
+    this.stepMultipleAdd = 1
+  }
 }

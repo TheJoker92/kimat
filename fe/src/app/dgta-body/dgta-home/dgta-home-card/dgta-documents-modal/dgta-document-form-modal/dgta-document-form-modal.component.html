@@ -172,10 +172,16 @@
             </div>
         </div>
         <div *ngIf="isMultiple" class="column-center-center w100p">
-            <div class="row-center-left w100p">
+            <div *ngIf="stepMultipleAdd == 2" class="column-center-center">
+                <div class="success-logo">
+
+                </div>
+                <h3>Documenti aggiunti con successo</h3>
+            </div>
+            <div *ngIf="stepMultipleAdd == 1" class="row-center-left w100p">
                 <strong>Carica documenti</strong>
             </div>
-            <div class="card-add-file column-center-center mt10px">
+            <div *ngIf="stepMultipleAdd == 1" class="card-add-file column-center-center mt10px">
                 <input (input)="onUploadFiles($event)" type="file" name="" id="file-pdf" multiple accept=".pdf">
                 <div class="add-file-icon cursor-pointer" (click)="loadFile('pdf')"></div>
                 <div class="column-center-center">
@@ -188,31 +194,88 @@
             </div>
             <div class="column-top-left w100p mt20px">
                 <div class="row-center-left">
-                    <strong>File da caricare</strong> 
-                    <div>
+                    <strong  *ngIf="!startUpload && stepMultipleAdd == 1">File da caricare</strong> 
+                    <strong  *ngIf="startUpload">File in caricamento</strong> 
+                    <div  *ngIf="startUpload">
                         ({{ multipleFiles.length }})
                     </div>
                 </div>
                 <div class="overflow-file">
 
                     <div *ngFor="let file of multipleFiles" class="row-center-left file-card">
-                        <div class="row-center-space-between w100p">
-                            <div class="row-center-left">
-                                <div class="pdf-file-icon">
-            
+                        <div class="column-top-left w100p">
+                            <div class="row-center-space-between w100p">
+                                <div class="row-center-left">
+                                    <div class="pdf-file-icon">
+                
+                                    </div>
+                                    <div>
+                                        {{ getReducedLabelName(file.name) }}
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ getReducedLabelName(file.name) }}
+                                <div *ngIf="!startUpload" class="file-trash-icon cursor-pointer" (click)=delete(file)>
+        
                                 </div>
                             </div>
-                            <div class="file-trash-icon cursor-pointer" (click)=delete(file)>
-    
+                            <div *ngIf="startUpload && file.progressUpload < 100" class="row-center-center w100p">
+                                <progress [value]="file.progressUpload" max="100"></progress>
+                            </div>
+                            <div *ngIf="!startUpload || !file.progressUpload " class="row-center-left w220px p10px">
+                                <small>In attesa</small>
+                            </div>
+                            <div *ngIf="startUpload && file.progressUpload == 100" class="row-center-left w220px p10px">
+                                <small>Completato</small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div *ngIf="isManual" class="box-form column-center-spacebetween">
+            <div class="row-center-left">
+                <div class="column-left-center box-form-manual">
+                    <div class="column-center-center">
+                        <div class="row-center-center number-bullet-point">
+                            1
+                        </div>
+                        <div class="vertical-line">
+        
+                        </div>
+                        <div class="row-center-center number-bullet-point">
+                            2
+                        </div>
+                        <div class="vertical-line">
+        
+                        </div>
+                        <div class="row-center-center number-bullet-point">
+                            3
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="column-left-center">
+                    <div class="column-center-spacebetween h138px">
+                        <div class="row-center-center">
+                            Stampa barcode
+                        </div>
+                        <div class="vertical-noline">
+                            
+                        </div>
+                        <div class="row-center-left ">
+                            Inserisci il barcode tra i documenti
+                        </div>
+                        <div class="vertical-noline">
+                            
+                        </div>
+                        <div class="row-center-left">
+                            Premere il pulsante "Apri"
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+        
         
         <!-- <h3 *ngIf="isSingle" class="row-center-center">INSERISCI DATI DOCUMENTO/I</h3>
         <h3 *ngIf="isMultiple" class="row-center-center">CARICA DOCUMENTO/I</h3>
@@ -343,6 +406,9 @@
         </div> -->
     </div>
 
-    <button class="mt10px" (click)="addDocumentMultiple()">Aggiungi</button>
+    <button *ngIf="!startUpload && stepMultipleAdd == 1 && isMultiple" class="mt10px" (click)="addDocumentMultiple()">Aggiungi</button>
+    <button *ngIf="startUpload && stepMultipleAdd == 1 && isMultiple" class="mt10px opacity-80 no-pointer">Attendere</button>
+    <button *ngIf="!startUpload && stepMultipleAdd == 2 && isMultiple" class="mt10px opacity-80 no-pointer" (click)="previousStep()">Carica altri file</button>
+    <button *ngIf="isManual" class="mt10px" (click)="openScanApp()">Apri</button>
 
 </div>

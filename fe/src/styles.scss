@@ -209,3 +209,41 @@ dgta-search-document {
 .overflow-x-hidden {
     overflow-x: hidden;
 }
+
+
+progress {
+    width: 322px;
+    padding: 10px;
+}
+
+progress::-webkit-progress-value,
+progress::-moz-progress-bar {
+    background: #E69800;
+  }
+
+  .opacity-80 {
+    opacity: 80%;
+  }
+
+.no-pointer {
+    cursor: auto;
+}
+
+.number-bullet-point {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background: #E69800;
+    color: white;
+}
+
+.vertical-line {
+    border-left: 1px solid grey;
+    height:30px;
+    width:1px;
+}
+
+.vertical-noline {
+    height:30px;
+    width:1px;
+}

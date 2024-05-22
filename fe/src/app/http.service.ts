@@ -72,6 +72,15 @@ export class HttpService {
     return this.http.post(this.buildURL("documents/", this.data.document.base64), payload, this.httpOptions)
   }
 
+  uploadFileWithPercent(payload: any) {
+    return this.http.post(this.buildURL("documents/", this.data.document.base64), payload, {
+      reportProgress: true,
+      observe: 'events',
+      headers: this.httpOptions["headers"]
+    })
+  }
+
+
   deleteDocuments(payload: any) {
     return this.http.post(this.buildURL("documents/", this.data.document.delete), payload, this.httpOptions)
   }
