@@ -41,15 +41,15 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="isSelectedLog" class="column-top-left w100p mt30px">
-            <div class="row-center-space-between w100p header-table">
-                <div class=" pt10px pb10px">Utente</div>
-                <div class=" pt10px pb10px">Azione</div>
-                <div class=" pt10px pb10px">Data</div>
-            </div>
+        <div *ngIf="isSelectedLog" class="row-center-space-between w100p header-table mt30px">
+            <div class=" pt10px pb10px">Utente</div>
+            <div class=" pt10px pb10px">Azione</div>
+            <div class=" pt10px pb10px">Data</div>
+        </div>
+        <div *ngIf="isSelectedLog" class="column-top-left w100p overflow-auto custom-padding">
             <div *ngFor="let log of history; index as index" class="column-center-center w100p pb10px pr10px pl10px w350px">
                 <div class="w100p row-center-space-between" [ngClass]="{'bkg-white': index % 2 == 0}">
-                    <div class="column-top-left p5px">
+                    <div class="column-top-left">
                         <div>
                             {{ getUserFirstName(log) | defaultDash }}
                         </div>
@@ -60,7 +60,7 @@
                     <div class="p5px">
                         {{ log.actionLog | defaultDash}}
                     </div>
-                    <div class="column-top-left p5px">
+                    <div class="column-top-left">
                         <div>
                             {{ formatDate(log.date!) | defaultDash}}
                         </div>
@@ -71,23 +71,7 @@
                 </div>
             </div>
         </div>
-        <div class="h450px overflow-auto">
-
-            <div *ngFor="let log of history" class="column-top-left mt10px ml10px w80p">
-                <div class="row-center-space-between">
-                    <strong>{{ log.actionLog | defaultDash}}</strong>
-                </div>
-                <div class="row-center-space-between">
-                    <div>
-                        {{ getUserFullName(log) | defaultDash }}
-                    </div>
-                </div>
-                <div class="row-center-space-between">
-                    {{ formatDate(log.date!) | defaultDash}}
-                </div>
-            </div>
-        </div>
-        <div class="box-form column-center-center">
+        <div *ngIf="isSelectedInfo" class="box-form column-center-center">
             <!-- <div class="row-center-space-between mb10px w80p">
                 <h4>
                     azione
