@@ -3,38 +3,81 @@
 </div>
 <div class="container">
     <div class="box-form column-center-spacebetween">
-        <h3 class="row-center-center">INSERISCI DATI COLLOCAMENTO</h3>
-        <div class="box-form column-center-center">
-            <div class="mb10px">
-                <div class="column-top-left w220px">
-                    <label for=""><strong>Edificio</strong></label>
-                    <input class="form-field-size" (input)="editLocation('palace',$event)" type="text">
+        <div class="row-center-space-between w-318px">
+            <div class="row-center-left" (click)="cancel()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Indietro</small>
+            </div>
+            <h3 class="row-center-center">Ricolloca</h3>
+            <div class="w-40px h10p">
+            </div>
+
+        </div>
+        <div class="box-form column-center-spacebetween ">
+            <div class="container-form">
+                <div *ngIf="step == 1" class="mb10px w-318px">
+                    <div class="mb10px">
+                        <h4>Collocamento</h4>
+                        <div class="column-top-left w220px">
+                            <label for="">Edificio</label>
+                            <input class="form-field-size input302px" (input)="editLocation('palace',$event)"
+                                [ngClass]="{'not-valid-field': !isValidPalace}" type="text">
+                            <small *ngIf="!isValidPalace" class="color-red">Campo obbligatorio</small>
+
+                        </div>
+                        <div class="row-center-space-between mt10px">
+                            <div class="column-top-left w110px">
+                                <label for="">Piano</label>
+                                <input class="form-field-size input-50p" (input)="editLocation('floor', $event)"
+                                    [ngClass]="{'not-valid-field': !isValidFloor}" type="text">
+                                <small *ngIf="!isValidFloor" class="color-red">Campo obbligatorio</small>
+
+                            </div>
+                            <div class="column-top-left w110px">
+                                <label for="">Stanza</label>
+                                <input class="form-field-size input-50p" (input)="editLocation('room', $event)"
+                                    [ngClass]="{'not-valid-field': !isValidRoom}" type="text">
+                                <small *ngIf="!isValidRoom" class="color-red">Campo obbligatorio</small>
+
+                            </div>
+                        </div>
+                        <div class="row-center-space-between mt10px">
+                            <div class="column-top-left w110px">
+                                <label for="">Settore</label>
+                                <input class="form-field-size input-50p" (input)="editLocation('sector', $event)"
+                                    [ngClass]="{'not-valid-field': !isValidSector}" type="text">
+                                <small *ngIf="!isValidSector" class="color-red">Campo obbligatorio</small>
+
+                            </div>
+                            <div class="column-top-left w110px">
+                                <label for="">Scaffale</label>
+                                <input class="form-field-size input-50p" (input)="editLocation('rack', $event)"
+                                    [ngClass]="{'not-valid-field': !isValidRack}" type="text">
+                                <small *ngIf="!isValidRack" class="color-red">Campo obbligatorio</small>
+
+                            </div>
+                        </div>
+                        <div class="column-top-left w220px mt10px">
+                            <label for="">Posizione</label>
+                            <input class="form-field-size input302px" (input)="editLocation('position', $event)"
+                                [ngClass]="{'not-valid-field': !isValidPosition}" type="text">
+                            <small *ngIf="!isValidPosition" class="color-red">Campo obbligatorio</small>
+
+                        </div>
+                    </div>
+
                 </div>
-                <div class="column-top-left w220px">
-                    <label for=""><strong>Piano</strong></label>
-                    <input class="form-field-size" (input)="editLocation('floor', $event)" type="text">
+                <div *ngIf="step == 2" class="column-center-center">
+                    <div class="success-logo">
+
+                    </div>
+                    <h3>Catalogo ricollocato con successo</h3>
                 </div>
-                <div class="column-top-left w220px">
-                    <label for=""><strong>Stanza</strong></label>
-                    <input class="form-field-size" (input)="editLocation('room', $event)" type="text">
-                </div>
-                <div class="column-top-left w220px">
-                    <label for=""><strong>Settore</strong></label>
-                    <input class="form-field-size" (input)="editLocation('sector', $event)" type="text">
-                </div>
-                <div class="column-top-left w220px">
-                    <label for=""><strong>Scaffale</strong></label>
-                    <input class="form-field-size" (input)="editLocation('rack', $event)" type="text">
-                </div>
-                <div class="column-top-left w220px">
-                    <label for=""><strong>Posizione</strong></label>
-                    <input class="form-field-size" (input)="editLocation('position', $event)" type="text">
+                <div class="column-center-center">
+                    <button *ngIf="step == 1" class="mt10px mb10px" (click)="updateDocument()">Conferma</button>
                 </div>
             </div>
-            <div class="row-center-center">
-                <button class="mt10px" (click)="cancel()">ANNULLA</button>
-                <button class="mt10px" (click)="updateDocument()">CONFERMA</button>
-            </div>
+            <button *ngIf="step == 2" class="mt10px" (click)="reload()">Torna alla home</button>
         </div>
     </div>
 </div>

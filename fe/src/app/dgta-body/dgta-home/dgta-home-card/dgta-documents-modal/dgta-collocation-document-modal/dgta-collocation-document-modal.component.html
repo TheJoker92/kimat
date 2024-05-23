@@ -1,6 +1,174 @@
 <div class="overlay">
 
 </div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <div class="column-center-center w100p">     
+            <div class="row-center-space-between w100p">
+                <div class="row-center-left cursor-pointer" (click)="close()">
+                    <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                    <small>Documenti</small>
+                </div>
+                <div>
+                    <h3 class="row-center-center">Posizione</h3>
+                </div>
+                <div (click)="openUpdateCollocationModal()">
+                    <button>Ricolloca</button>
+                </div>
+            </div>
+            <div class="row-center-space-between w100p mt40px">
+                <div class="row-center-center w100p cursor-pointer p10px" [ngClass]="{'selected': isSelectedCurrent}" (click)="activeCurrentTab()">
+                    Corrente
+                </div>
+                <div class="row-center-center w100p cursor-pointer p10px" [ngClass]="{'selected': isSelectedHistory}" (click)="activeHistoryTab()">
+                    Storico
+                </div>
+            </div>
+            <div *ngIf="isSelectedCurrent" class="column-center-center w100p mt30px">
+                <div *ngIf="!document.placement || document.placement.length == 0" class="row-center-center">Non è stata data nessuna collocazione</div>
+                <div *ngIf="document.placement && document.placement.length > 0" class="column-center-center w100p">
+                    <div  class="row-center-space-between w100p p10px header">
+                        {{ formatDate(document.placement![document.placement!.length -1].date!) | defaultDash}}
+                    </div>
+                    <div class="bkg-white w100p p10px bottom-radius-8px">
+                        <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                            <div class="label">
+                                Edificio
+                            </div>
+                            <div>
+                                {{ document.placement![document.placement!.length -1].palace | defaultDash}}
+                            </div>
+                        </div>
+                        <div class="row-center-space-between w100p">
+                            <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                                <div class="label">
+                                    Piano
+                                </div>
+                                <div>
+                                    {{ document.placement![document.placement!.length -1].floor | defaultDash}}
+                                </div>
+        
+                            </div>
+                            <div  class="row-center-right w100p pt10px pb10px mb10px p10px">
+                                <div class="column-top-left">
+                                    <div class="label">
+                                        Stanza
+                                    </div>
+                                    <div class="row-center-right w100p">
+                                        {{ document.placement![document.placement!.length -1].room | defaultDash}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-center-space-between w100p">
+                            <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                                <div class="label">
+                                    Settore
+                                </div>
+                                <div>
+                                    {{ document.placement![document.placement!.length -1].sector | defaultDash}}
+                                </div>
+        
+                            </div>
+                            <div  class="row-center-right w100p pt10px pb10px mb10px p10px">
+                                <div class="column-top-leftt">
+                                    <div class="label">
+                                        Scaffale
+                                    </div>
+                                    <div  class="row-center-right">
+                                        {{ document.placement![document.placement!.length -1].rack | defaultDash}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                            <div class="label">
+                                Posizione
+                            </div>
+                            <div>
+                                {{ document.placement![document.placement!.length -1].position | defaultDash}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div *ngIf="!isSelectedCurrent" class="column-center-center w100p mt30px">
+                <div *ngIf="!document.placement || document.placement.length == 1" class="row-center-center">Non ci sono precedenti ricollocazioni</div>
+                <div *ngIf="document.placement" class="overflow w100p p10px h350px">
+                    <div *ngFor="let placementLog of getPlacementLogs()" class="w100p">
+    
+                        <div  class="row-center-space-between w100p p10px header">
+                            {{ formatDate(placementLog.date!) | defaultDash}}
+                        </div>
+                        <div class="bkg-white w100p p10px bottom-radius-8px">
+                            <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                                <div class="label">
+                                    Edificio
+                                </div>
+                                <div>
+                                    {{ placementLog.palace | defaultDash}}
+                                </div>
+                            </div>
+                            <div class="row-center-space-between w100p">
+                                <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                                    <div class="label">
+                                        Piano
+                                    </div>
+                                    <div>
+                                        {{ placementLog.floor | defaultDash}}
+                                    </div>
+            
+                                </div>
+                                <div  class="row-center-right w100p pt10px pb10px mb10px p10px">
+                                    <div class="column-top-left">
+                                        <div class="label">
+                                            Stanza
+                                        </div>
+                                        <div class="row-center-right w100p">
+                                            {{ placementLog.room | defaultDash}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-center-space-between w100p">
+                                <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                                    <div class="label">
+                                        Settore
+                                    </div>
+                                    <div>
+                                        {{ placementLog.sector | defaultDash}}
+                                    </div>
+            
+                                </div>
+                                <div  class="row-center-right w100p pt10px pb10px mb10px p10px">
+                                    <div class="column-top-leftt">
+                                        <div class="label">
+                                            Scaffale
+                                        </div>
+                                        <div  class="row-center-right">
+                                            {{ placementLog.rack | defaultDash}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
+                                <div class="label">
+                                    Posizione
+                                </div>
+                                <div>
+                                    {{ placementLog.position | defaultDash}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+
 <div class="container" [ngClass]="{'opacity': isOpenUpdateCollocationModal}">
     <div class="box-form column-center-center p10px">
         <h3 class="ml10px">{{ document.name }}</h3>
@@ -76,7 +244,7 @@
             <button class="mt10px" (click)="openUpdateCollocationModal()">RICOLLOCA</button>
         </div>
     </div>
-</div>
+</div> -->
 
 <dgta-collocation-update-document *ngIf="isOpenUpdateCollocationModal"
     [document]="document"

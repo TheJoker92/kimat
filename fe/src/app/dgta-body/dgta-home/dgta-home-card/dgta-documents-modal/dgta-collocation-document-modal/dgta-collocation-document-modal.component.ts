@@ -5,11 +5,13 @@ import { IDocument } from '../../../../../interfaces/IDocument';
 import { DefaultDashPipe } from '../../../../../default-dash.pipe';
 import { DgtaCollocationUpdateDocumentComponent } from './dgta-collocation-update-document/dgta-collocation-update-document.component';
 
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'dgta-collocation-document-modal',
   standalone: true,
-  imports: [CommonModule, DefaultDashPipe, DgtaCollocationUpdateDocumentComponent],
+  imports: [CommonModule, DefaultDashPipe, DgtaCollocationUpdateDocumentComponent, FontAwesomeModule],
   templateUrl: './dgta-collocation-document-modal.component.html',
   styleUrl: './dgta-collocation-document-modal.component.scss'
 })
@@ -19,7 +21,12 @@ export class DgtaCollocationDocumentModalComponent {
   @Output() closeCollocationModalE = new EventEmitter()
   @Output() getDocumentsE = new EventEmitter()
 
+  faChevronLeft = faChevronLeft
+
   isOpenUpdateCollocationModal = false
+
+  isSelectedCurrent = true
+  isSelectedHistory = false
 
   places: IPlace[] = []
 
@@ -63,6 +70,22 @@ export class DgtaCollocationDocumentModalComponent {
 
   getDocumentsEmitter() {
     this.getDocumentsE.emit()
-    this.close(true)
+    // this.close(true)
+  }
+
+  activeCurrentTab() {
+    this.isSelectedCurrent = true
+    this.isSelectedHistory = false
+  }
+
+  activeHistoryTab() {
+    this.isSelectedHistory = true
+    this.isSelectedCurrent = false
+  }
+
+  getPlacementLogs() {
+    return this.document.placement!.filter((placementLog: any) => placementLog != this.document.placement![this.document.placement!.length -1])
   }
 }
+
+

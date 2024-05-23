@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as rawData from '../../../../../../assets/enum.json';
-import { faCheckSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IDocument } from '../../../../../../interfaces/IDocument';
 import { CommonModule } from '@angular/common';
 import { DefaultDashPipe } from '../../../../../../default-dash.pipe';
@@ -11,11 +10,14 @@ import { ActionLogEnum } from '../../../../../../interfaces/ILog';
 import { IPlace } from '../../../../../../interfaces/IPlace';
 import { SessionService } from '../../../../../../session.service';
 import { DgtaUpdateCollocationModalComponent } from '../../../dgta-collocation-modal/dgta-update-collocation-modal/dgta-update-collocation-modal.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'dgta-collocation-update-document',
   standalone: true,
-  imports: [CommonModule, DefaultDashPipe, DgtaUpdateCollocationModalComponent],
+  imports: [CommonModule, DefaultDashPipe, DgtaUpdateCollocationModalComponent, FontAwesomeModule],
   templateUrl: './dgta-collocation-update-document.component.html',
   styleUrl: './dgta-collocation-update-document.component.scss'
 })
@@ -24,11 +26,21 @@ export class DgtaCollocationUpdateDocumentComponent {
   @Output() closeUpdateCollocationModalE = new EventEmitter()
   @Output() getDocumentsE = new EventEmitter()
 
+  isValidPalace = true
+  isValidFloor = true
+  isValidSector = true
+  isValidRoom = true
+  isValidRack = true
+  isValidPosition = true
+
+
+  faChevronLeft = faChevronLeft
+
   place: IPlace | any = {}
 
-  faCheckSquare = faCheckSquare
-  faTrash = faTrash
 
+  step = 1
+  
   constructor(public sessionService: SessionService,
     private http: HttpService,
     private loadingService: LoadingService) {
@@ -38,7 +50,42 @@ export class DgtaCollocationUpdateDocumentComponent {
   
 
   updateDocument() {
-    if (this.place.palace && this.place.floor && this.place.room && this.place.sector && this.place.rack && this.place.position) {
+    if (this.place.palace) {
+      this.isValidPalace = true
+    } else {
+      this.isValidPalace = false
+    }
+
+    if (this.place.floor) {
+      this.isValidFloor = true
+    } else {
+      this.isValidFloor = false
+    }
+
+    if (this.place.room) {
+      this.isValidRoom = true
+    } else {
+      this.isValidRoom = false
+    }
+
+    if (this.place.sector) {
+      this.isValidSector = true
+    } else {
+      this.isValidSector = false
+    }
+
+    if (this.place.rack) {
+      this.isValidRack = true
+    } else {
+      this.isValidRack = false
+    }
+
+    if (this.place.position) {
+      this.isValidPosition = true
+    } else {
+      this.isValidPosition = false
+    }
+    if (this.isValidPalace && this.isValidFloor &&this.isValidSector && this.isValidRack && this.isValidRoom && this.isValidPosition) {
       this.place["date"] = new Date().toISOString()
 
       this.place = JSON.parse(JSON.stringify(this.place))
@@ -78,10 +125,10 @@ export class DgtaCollocationUpdateDocumentComponent {
           this.loadingService.isLoading = false
 
           if (response.code == 200) {
-            alert("Hai aggiornato il catalogo")
-            this.loadingService.isLoading = false
+            // alert("Hai aggiornato il catalogo")
             this.getDocumentsE.emit()
-            this.closeUpdateCollocationModalE.emit()
+            // this.closeUpdateCollocationModalE.emit()
+            this.step = 2
           } else {
             alert("Errore server. Contattare il supporto.")
           }
@@ -118,5 +165,13 @@ export class DgtaCollocationUpdateDocumentComponent {
         return false; // If parsing fails, return false
     }
   
+  }
+
+  previousStep() {
+    this.step -= 1
+  }
+
+  reload() {
+    window.location.reload()
   }
 }
