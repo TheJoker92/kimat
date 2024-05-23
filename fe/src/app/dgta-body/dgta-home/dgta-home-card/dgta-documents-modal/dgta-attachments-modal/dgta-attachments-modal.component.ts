@@ -8,11 +8,13 @@ import { LoadingService } from '../../../../../dgta-loading/loading.service';
 import { SessionService } from '../../../../../session.service';
 import { DgtaUploadAttachmentModalComponent } from './dgta-upload-attachment-modal/dgta-upload-attachment-modal.component';
 import { DgtaOcrModalComponent } from './dgta-ocr-modal/dgta-ocr-modal.component';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'dgta-attachments-modal',
   standalone: true,
-  imports: [CommonModule, PdfViewerModule, DgtaUploadAttachmentModalComponent, DgtaOcrModalComponent],
+  imports: [CommonModule, PdfViewerModule, DgtaUploadAttachmentModalComponent, DgtaOcrModalComponent, FontAwesomeModule],
   templateUrl: './dgta-attachments-modal.component.html',
   styleUrl: './dgta-attachments-modal.component.scss'
 })
@@ -22,7 +24,7 @@ export class DgtaAttachmentsModalComponent {
   @Output() getDocumentsE = new EventEmitter()
   @Output() closeAttahcmentsModalE = new EventEmitter()
 
-  
+  faChevronLeft = faChevronLeft
   
   ocrText: string = ""
   isOpenOcrModal = false

@@ -2,19 +2,36 @@
 
 </div>
 <div class="container column-top-left">
-    <div class="row-bottom-center ml10px">
-        <button class="mt10px" (click)="close()">CHIUDI</button>
+    <div class="row-bottom-center ml10px w370px">
+        <!-- <button class="mt10px" (click)="close()">CHIUDI</button>
         <button class="nowrap" (click)="openUpdateAttachmentModal()">CARICA FILE</button>
-        <button class="mt10px" (click)="getOcr()">OCR</button>
+        <button class="mt10px" (click)="getOcr()">OCR</button> -->
+        <div *ngIf="isAuthenticated" class="row-center-space-between w100p">
+            <div class="row-center-left cursor-pointer" (click)="close()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Indietro</small>
+            </div>
+            <div>
+                <h3 class="row-center-center">{{ document.name }}</h3>
+            </div>
+            <div  (click)="getOcr()">
+                <button >OCR</button>
+            </div>
+        </div>
+        <div *ngIf="!isAuthenticated" class="column-center-center w100p">
+            <h3>Token</h3>
+            <small>Inserisci il codice token che hai ricevuto per email</small>
+        </div>
                     
     </div>
     <div *ngIf="!isAuthenticated && !loadingService.isLoading" class="box-auth-container">
-        <div class="box-auth column-center-center">
-            <h4>Inserire token inviato via email</h4>
-            <input (input)="editToken($event)" type="text">
+        <div class="box-auth column-center-spacebetween">
+            <div class="row-center-center w100p">
+                <input class="field" (input)="editToken($event)" placeholder="Token" type="text">
+            </div>
             <div>
-                <button (click)="newToken()" class="mt10px">NUOVO</button>
-                <button (click)="sendToken()" class="mt10px">INVIA</button>
+                Non hai ricevuto il token? <strong (click)="newToken()" class="mt10px cursor-pointer">Richiedine uno nuovo</strong>
+                <button (click)="sendToken()" class="mt10px">Conferma</button>
             </div>
         </div>
     </div>
