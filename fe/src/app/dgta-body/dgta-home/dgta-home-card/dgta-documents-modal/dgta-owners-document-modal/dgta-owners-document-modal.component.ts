@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ICatalogue } from '../../../../../interfaces/ICatalogue';
 import { IUser } from '../../../../../interfaces/IUser';
 import { IDocument } from '../../../../../interfaces/IDocument';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'dgta-owners-document-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FontAwesomeModule],
   templateUrl: './dgta-owners-document-modal.component.html',
   styleUrl: './dgta-owners-document-modal.component.scss'
 })
@@ -17,6 +19,9 @@ export class DgtaOwnersDocumentModalComponent {
   @Output() closeOwnersModalE = new EventEmitter()
 
   owners: IUser[] = []
+
+  faChevronLeft = faChevronLeft
+
 
   constructor() { }
 

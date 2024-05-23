@@ -3,17 +3,32 @@
 </div>
 <div class="container">
     <div class="box-form column-center-spacebetween">
-        <h3 class="row-center-center">Proprietario/i di '{{ document.name }}'</h3>
-        <div class="box-form column-center-center">
-            <div *ngFor="let owner of owners" class="row-center-space-between mb10px w80p">
-                <div>
-                    {{ owner.firstName }} {{ owner.lastName }} 
-                </div>
-                <a [href] = "getStringSendEmail(owner.email!)">contatta</a>
+        <div class="row-center-space-between w100p">
+            <div class="row-center-left cursor-pointer" (click)="cancel()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Documenti</small>
             </div>
-
-            <div class="row-center-center">
-                <button class="mt10px" (click)="cancel()">CHIUDI</button>
+            <div>
+                <h3 class="row-center-center">Utenti</h3>
+            </div>
+            <div class="w-40px h10p">
+            </div>
+        </div>
+        <div class="row-center-left w100p">
+            <strong>Proprietari</strong>
+        </div>
+        <div class="column-center-center w100p mt30px">
+            <div *ngIf="!document.owners" class="row-center-center">Non ci sono proprietari</div>
+            <div *ngIf="document.owners" class="overflow w100p p10px h350px">
+                <div *ngFor="let owner of owners" class="row-center-space-between mb10px w80p">
+                    <div>
+                        {{ owner.firstName }} {{ owner.lastName }}
+                    </div>
+                    <div class="row-center-center">
+                        <!-- <div class="call-baricon mr10px cursor-pointer"></div> -->
+                        <a class="email-baricon cursor-pointer" [href]="getStringSendEmail(owner.email!)"></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
