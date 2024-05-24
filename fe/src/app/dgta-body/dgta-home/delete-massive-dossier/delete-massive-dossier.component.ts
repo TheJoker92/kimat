@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'dgta-delete-massive-catalogue',
+  selector: 'dgta-delete-massive-dossier',
   standalone: true,
   imports: [],
-  templateUrl: './delete-massive-catalogue.component.html',
-  styleUrl: './delete-massive-catalogue.component.scss'
+  templateUrl: './delete-massive-dossier.component.html',
+  styleUrl: './delete-massive-dossier.component.scss'
 })
-export class DeleteMassiveCatalogueComponent {
+export class DeleteMassiveDossierComponent {
 
   @Output() confirmE = new EventEmitter()
   @Output() closeE = new EventEmitter()

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ICatalogue } from '../../../../../interfaces/ICatalogue';
 import { IUser } from '../../../../../interfaces/IUser';
 import { IDocument } from '../../../../../interfaces/IDocument';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';

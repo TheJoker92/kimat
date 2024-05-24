@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DgtaInfoCatalogueModalComponent } from './dgta-info-catalogue-modal.component';
+import { DgtaInfoDossierModalComponent } from './dgta-info-dossier-modal.component';
 
-describe('DgtaInfoCatalogueModalComponent', () => {
-  let component: DgtaInfoCatalogueModalComponent;
-  let fixture: ComponentFixture<DgtaInfoCatalogueModalComponent>;
+describe('DgtaInfoDossierModalComponent', () => {
+  let component: DgtaInfoDossierModalComponent;
+  let fixture: ComponentFixture<DgtaInfoDossierModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DgtaInfoCatalogueModalComponent]
+      imports: [DgtaInfoDossierModalComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DgtaInfoCatalogueModalComponent);
+    fixture = TestBed.createComponent(DgtaInfoDossierModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

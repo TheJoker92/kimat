@@ -25,10 +25,10 @@
             </div>
         </div>
         <div *ngIf="isSelectedCurrent" class="column-center-center w100p mt30px">
-            <div *ngIf="!catalogue.placement || catalogue.placement.length == 0" class="row-center-center">Non è stata data nessuna collocazione</div>
-            <div *ngIf="catalogue.placement" class="column-center-center w100p">
+            <div *ngIf="!dossier.placement || dossier.placement.length == 0" class="row-center-center">Non è stata data nessuna collocazione</div>
+            <div *ngIf="dossier.placement" class="column-center-center w100p">
                 <div  class="row-center-space-between w100p p10px header">
-                    {{ formatDate(catalogue.placement![catalogue.placement!.length -1].date!) | defaultDash}}
+                    {{ formatDate(dossier.placement![dossier.placement!.length -1].date!) | defaultDash}}
                 </div>
                 <div class="bkg-white w100p p10px bottom-radius-8px">
                     <div  class="column-top-left w100p pt10px pb10px mb10px p10px">
@@ -36,7 +36,7 @@
                             Edificio
                         </div>
                         <div>
-                            {{ catalogue.placement![catalogue.placement!.length -1].palace | defaultDash}}
+                            {{ dossier.placement![dossier.placement!.length -1].palace | defaultDash}}
                         </div>
                     </div>
                     <div class="row-center-space-between w100p">
@@ -45,7 +45,7 @@
                                 Piano
                             </div>
                             <div>
-                                {{ catalogue.placement![catalogue.placement!.length -1].floor | defaultDash}}
+                                {{ dossier.placement![dossier.placement!.length -1].floor | defaultDash}}
                             </div>
     
                         </div>
@@ -55,7 +55,7 @@
                                     Stanza
                                 </div>
                                 <div class="row-center-right w100p">
-                                    {{ catalogue.placement![catalogue.placement!.length -1].room | defaultDash}}
+                                    {{ dossier.placement![dossier.placement!.length -1].room | defaultDash}}
                                 </div>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                 Settore
                             </div>
                             <div>
-                                {{ catalogue.placement![catalogue.placement!.length -1].sector | defaultDash}}
+                                {{ dossier.placement![dossier.placement!.length -1].sector | defaultDash}}
                             </div>
     
                         </div>
@@ -76,7 +76,7 @@
                                     Scaffale
                                 </div>
                                 <div  class="row-center-right">
-                                    {{ catalogue.placement![catalogue.placement!.length -1].rack | defaultDash}}
+                                    {{ dossier.placement![dossier.placement!.length -1].rack | defaultDash}}
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                             Posizione
                         </div>
                         <div>
-                            {{ catalogue.placement![catalogue.placement!.length -1].position | defaultDash}}
+                            {{ dossier.placement![dossier.placement!.length -1].position | defaultDash}}
                         </div>
                     </div>
                 </div>
@@ -94,8 +94,8 @@
             
         </div>
         <div *ngIf="!isSelectedCurrent" class="column-center-center w100p mt30px">
-            <div *ngIf="!catalogue.placement || catalogue.placement.length == 1" class="row-center-center">Non ci sono precedenti ricollocazioni</div>
-            <div *ngIf="catalogue.placement" class="overflow w100p p10px h350px">
+            <div *ngIf="!dossier.placement || dossier.placement.length == 1" class="row-center-center">Non ci sono precedenti ricollocazioni</div>
+            <div *ngIf="dossier.placement" class="overflow w100p p10px h350px">
                 <div *ngFor="let placementLog of getPlacementLogs()" class="w100p">
 
                     <div  class="row-center-space-between w100p p10px header">
@@ -166,6 +166,6 @@
         </div>
     </div>
 </div>
-<dgta-update-collocation-modal *ngIf="isOpenUpdateCollocationModal" [catalogue]="catalogue"
+<dgta-update-collocation-modal *ngIf="isOpenUpdateCollocationModal" [dossier]="dossier"
     (closeUpdateCollocationModalE)="closeUpdateCollocationModal()"
     (closeAllE)="closeAllModal()"></dgta-update-collocation-modal> 

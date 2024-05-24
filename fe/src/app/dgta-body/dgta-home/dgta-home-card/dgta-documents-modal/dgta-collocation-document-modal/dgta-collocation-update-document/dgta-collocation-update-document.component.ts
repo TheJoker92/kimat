@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { DefaultDashPipe } from '../../../../../../default-dash.pipe';
 import { LoadingService } from '../../../../../../dgta-loading/loading.service';
 import { HttpService } from '../../../../../../http.service';
-import { ICatalogue } from '../../../../../../interfaces/ICatalogue';
+import { IDossier } from '../../../../../../interfaces/IDossier';
 import { ActionLogEnum } from '../../../../../../interfaces/ILog';
 import { IPlace } from '../../../../../../interfaces/IPlace';
 import { SessionService } from '../../../../../../session.service';

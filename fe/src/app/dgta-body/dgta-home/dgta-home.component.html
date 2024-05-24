@@ -4,19 +4,19 @@
         <div class="row-center-space-between mb10px max-width410px w100p">
             <h2 class="ml20px">Raccolte</h2> 
             <div class="row-center-space-between mr10px">
-                <button *ngIf="!sessionService.activeSelect" class="add-category mr10px" (click)="openModalCatalogueFormModal()">Aggiungi</button>
+                <button *ngIf="!sessionService.activeSelect" class="add-category mr10px" (click)="openModalDossierFormModal()">Aggiungi</button>
                 <button *ngIf="!sessionService.activeSelect"class="select-category mr10px p10px" (click)="activeSelectMode()">Seleziona</button>
                 <button *ngIf="sessionService.activeSelect"class="select-category mr10px p10px" (click)="deactiveSelectMode()">Annulla</button>
-                <button *ngIf="sessionService.activeSelect"class="select-category mr10px p10px" (click)="openDeleteMassiveModal()">Elimina {{ sessionService.selectedCatalogues.length }}</button>
+                <button *ngIf="sessionService.activeSelect"class="select-category mr10px p10px" (click)="openDeleteMassiveModal()">Elimina {{ sessionService.selectedDossiers.length }}</button>
                 <!-- <button class="select-category">Seleziona</button>
-                <div class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
+                <div class="row-left-left p10px" (click)="openModalDossierFormModal()">
                     <fa-icon class="cursor-pointer font-size-15em add-folder" [icon]="faFolderPlus"></fa-icon>
                 </div> -->
             </div>
         </div>
     </div>
-    <dgta-search-catalogue  (getCataloguesE)="getCatalogues()"
-                        (hideTopicsE)="hideTopics()"></dgta-search-catalogue>
+    <dgta-search-dossier  (getDossiersE)="getDossiers()"
+                        (hideTopicsE)="hideTopics()"></dgta-search-dossier>
                         <div class="row-center-center">
                             <div class="ml10px cursor-pointer row-center-right max-width410px w100p" (click)="toggleTopics()">Filtra 
                                         <div class="filter-icon"></div>
@@ -24,22 +24,22 @@
                         </div>
     <dgta-topic-card class="row-center-space-between flex-wrap"
                     [ngClass]="{'behind': !showTopics}" 
-                    [catalogues]="catalogues"
+                    [dossiers]="dossiers"
                     [numTopics]="numTopics"
                     (closeFilterModalE)="hideTopics()"
-                    (getCataloguesByTopicE)="getCatalogues($event)"></dgta-topic-card>
+                    (getDossiersByTopicE)="getDossiers($event)"></dgta-topic-card>
     <div class="column-top-right">
         <dgta-home-card class="row-center h10vh" 
-        [catalogues]="catalogues"
+        [dossiers]="dossiers"
         ></dgta-home-card>   
     </div>
 </div>
 
-<dgta-home-card-catalogue-form-modal *ngIf="isOpenCatalogueFormModal"
-    (closeCatalogueFormModalE)="closeCatalogueFormModal()"
-    (getCataloguesE)="getCatalogues()"></dgta-home-card-catalogue-form-modal>
+<dgta-home-card-dossier-form-modal *ngIf="isOpenDossierFormModal"
+    (closeDossierFormModalE)="closeDossierFormModal()"
+    (getDossiersE)="getDossiers()"></dgta-home-card-dossier-form-modal>
 
-    <dgta-delete-massive-catalogue
+    <dgta-delete-massive-dossier
     *ngIf="isOpenDeleteMassive"
     (confirmE)="deleteMassive()"
-    (closeE)="closeDeleteMassiveModal()"></dgta-delete-massive-catalogue>
+    (closeE)="closeDeleteMassiveModal()"></dgta-delete-massive-dossier>

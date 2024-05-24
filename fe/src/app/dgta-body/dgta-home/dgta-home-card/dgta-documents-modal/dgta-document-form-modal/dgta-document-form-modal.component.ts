@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ICatalogue } from '../../../../../interfaces/ICatalogue';
+import { IDossier } from '../../../../../interfaces/IDossier';
 import { IPlace } from '../../../../../interfaces/IPlace';
 import { IUser } from '../../../../../interfaces/IUser';
 import { HttpService } from '../../../../../http.service';
@@ -23,7 +23,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
   styleUrl: './dgta-document-form-modal.component.scss'
 })
 export class DgtaDocumentFormModalComponent {
-  @Input() catalogue: ICatalogue = {}
+  @Input() dossier: IDossier = {}
   @Input() documents: IDocument[] = []
 
   @Output() closeDocumentFormModalE = new EventEmitter()
@@ -150,7 +150,7 @@ export class DgtaDocumentFormModalComponent {
       alert("Compilare tutti i campi del collocamento")
     } else {
 
-      let parentId = this.catalogue.id
+      let parentId = this.dossier.id
 
       let history: ILog = {
         id: "0",
@@ -322,7 +322,7 @@ export class DgtaDocumentFormModalComponent {
 
   addDocumentMultipleFirststepSingleAdd(index: number) {
     let file = this.multipleFiles[index]
-    let parentId = this.catalogue.id
+    let parentId = this.dossier.id
 
     let history: ILog = {
       id: "0",
@@ -369,7 +369,7 @@ export class DgtaDocumentFormModalComponent {
           // this.emitterGetDocuments.emit()
 
           let payload = {
-            parentId: this.catalogue.id,
+            parentId: this.dossier.id,
             name: file.name.replace(".pdf", "")
           }
 
@@ -444,7 +444,7 @@ export class DgtaDocumentFormModalComponent {
         ext: "pdf",
       }
 
-      let parentId = this.catalogue.id
+      let parentId = this.dossier.id
 
       let history: ILog = {
         id: document.history!.length.toString(),
@@ -480,7 +480,7 @@ export class DgtaDocumentFormModalComponent {
               base64: e.target.result.replace("data:application/pdf;base64,", "")
             }
 
-            let parentId = this.catalogue.id
+            let parentId = this.dossier.id
 
             let payload: any = {
               "parentId": parentId,

@@ -1,7 +1,7 @@
 import requests # type: ignore
 import json
 
-def create_catalogue(data, BASE_URL):    
+def create_dossier(data, BASE_URL):    
     response = {}
     if not data:
         response = {
@@ -19,7 +19,7 @@ def create_catalogue(data, BASE_URL):
 
             # solr.add([data])
 
-            r = requests.post(BASE_URL + "/catalogues/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+            r = requests.post(BASE_URL + "/dossiers/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
             print(data)
             return response
         except Exception as e:
@@ -31,7 +31,7 @@ def create_catalogue(data, BASE_URL):
     
     return response
 
-def getCatalogues(data, BASE_URL):
+def getDossiers(data, BASE_URL):
     response = {}
     
     try:
@@ -58,12 +58,12 @@ def getCatalogues(data, BASE_URL):
         else:
             query += "*%3A*"
 
-        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
-        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
-        print(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&sort=title_str%20asc&useParams=")
+        # https://127.0.0.1:8984/solr/dossiers/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
+        # https://127.0.0.1:8984/solr/dossiers/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
+        print(BASE_URL + "/dossiers/select?indent=true&q.op=AND&q=" + query + "&sort=title_str%20asc&useParams=")
 
         # solr.add([data])
-        responseRaw = requests.get(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&sort=title_str%20asc&useParams=", verify=False)
+        responseRaw = requests.get(BASE_URL + "/dossiers/select?indent=true&q.op=AND&q=" + query + "&sort=title_str%20asc&useParams=", verify=False)
         print(responseRaw)
         # Decode the content from bytes to string and then parse as JSON
         response_json = json.loads(responseRaw.content.decode('utf-8'))
@@ -101,7 +101,7 @@ def getCatalogues(data, BASE_URL):
     return response
 
 
-def delete_catalogue(data, BASE_URL):
+def delete_dossier(data, BASE_URL):
     response = {}
     if not data:
         response = {
@@ -121,7 +121,7 @@ def delete_catalogue(data, BASE_URL):
 
             # solr.add([data])
             headers = {'Content-type': 'application/xml'}
-            responseRaw = requests.post(BASE_URL + "/catalogues/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", headers=headers, data=payload, verify=False)
+            responseRaw = requests.post(BASE_URL + "/dossiers/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", headers=headers, data=payload, verify=False)
 
             print(responseRaw.content)
             # Now you can access response_docs as a list containing the documents
@@ -136,7 +136,7 @@ def delete_catalogue(data, BASE_URL):
     
     return response
 
-def update_catalogue(data, BASE_URL):
+def update_dossier(data, BASE_URL):
     print(data)
     
     response = {}
@@ -156,7 +156,7 @@ def update_catalogue(data, BASE_URL):
 
             # solr.add([data])
 
-            r = requests.post(BASE_URL + "/catalogues/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+            r = requests.post(BASE_URL + "/dossiers/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
             print(f"Status Code: {r.status_code}, Response: {r.json()}")
         except Exception as e:
             response = {

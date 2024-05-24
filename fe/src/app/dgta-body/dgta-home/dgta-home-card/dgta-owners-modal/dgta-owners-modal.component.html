@@ -18,8 +18,8 @@
             <strong>Proprietari</strong>
         </div>
         <div class="column-center-center w100p mt30px">
-            <div *ngIf="!catalogue.owners" class="row-center-center">Non ci sono proprietari</div>
-            <div *ngIf="catalogue.owners" class="overflow w100p p10px h350px">
+            <div *ngIf="!dossier.owners" class="row-center-center">Non ci sono proprietari</div>
+            <div *ngIf="dossier.owners" class="overflow w100p p10px h350px">
                 <div *ngFor="let owner of owners" class="row-center-space-between mb10px w80p">
                     <div>
                         {{ owner.firstName }} {{ owner.lastName }}

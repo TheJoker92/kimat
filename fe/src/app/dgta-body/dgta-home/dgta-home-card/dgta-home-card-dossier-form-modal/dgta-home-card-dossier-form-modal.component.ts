@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import * as rawData from '../../../../../assets/enum.json';
 import { CommonModule } from '@angular/common';
-import { ICatalogue } from '../../../../interfaces/ICatalogue';
+import { IDossier } from '../../../../interfaces/IDossier';
 import { HttpService } from '../../../../http.service';
 import { LoadingService } from '../../../../dgta-loading/loading.service';
 import { IUser } from '../../../../interfaces/IUser';
@@ -12,17 +12,17 @@ import { ActionLogEnum } from '../../../../interfaces/ILog';
 import { IPlace } from '../../../../interfaces/IPlace';
 
 @Component({
-  selector: 'dgta-home-card-catalogue-form-modal',
+  selector: 'dgta-home-card-dossier-form-modal',
   standalone: true,
   imports: [CommonModule, FontAwesomeModule],
   providers: [HttpService],
-  templateUrl: './dgta-home-card-catalogue-form-modal.component.html',
-  styleUrl: './dgta-home-card-catalogue-form-modal.component.scss'
+  templateUrl: './dgta-home-card-dossier-form-modal.component.html',
+  styleUrl: './dgta-home-card-dossier-form-modal.component.scss'
 })
 
-export class DgtaHomeCardCatalogueFormModalComponent {
-  @Output() closeCatalogueFormModalE = new EventEmitter()
-  @Output() getCataloguesE = new EventEmitter()
+export class DgtaHomeCardDossierFormModalComponent {
+  @Output() closeDossierFormModalE = new EventEmitter()
+  @Output() getDossiersE = new EventEmitter()
 
   title: string = ""
   data: any = rawData
@@ -116,7 +116,7 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   }
 
 
-  addCatalogue() {
+  addDossier() {
     this.nextStep()
 
     if (this.isValidPalace && this.isValidFloor &&this.isValidSector && this.isValidRack && this.isValidRoom && this.isValidPosition) {
@@ -140,14 +140,14 @@ export class DgtaHomeCardCatalogueFormModalComponent {
       console.log(payload)
 
       this.loadingService.isLoading = true
-      this.http.addCatalogue(payload).subscribe({
+      this.http.addDossier(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
 
           if (response.code == 200) {
             this.step = 3
             setTimeout(() => {
-              this.getCataloguesE.emit()
+              this.getDossiersE.emit()
             },1000)
             // alert("Hai aggiunto un nuovo catalogo")
             // window.location.reload()
@@ -184,7 +184,7 @@ export class DgtaHomeCardCatalogueFormModalComponent {
   }
 
   cancel() {
-    this.closeCatalogueFormModalE.emit()
+    this.closeDossierFormModalE.emit()
   }
 
   // addOwner() {

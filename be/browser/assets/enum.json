@@ -9,9 +9,9 @@
             "login": "login",
             "getUser": "getUser"
         },
-        "catalogue": {
+        "dossier": {
             "add": "add",
-            "getCatalogues": "getCatalogues",
+            "getDossiers": "getDossiers",
             "delete": "delete"
         },
         "document": {

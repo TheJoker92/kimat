@@ -29,7 +29,7 @@ with open('.env', 'r') as file:
     PASSWORD_SENDER = lines[3].replace("\n","")
 
 import users
-import catalogues
+import dossiers
 import documents
 import metadata
 
@@ -157,34 +157,34 @@ def delete_user(id):
 
 #CATALOGUES
 # Create operation
-@app.route('/api/catalogues/add', methods=['POST'])
+@app.route('/api/dossiers/add', methods=['POST'])
 @cross_origin(supports_credentials=True)
-def create_catalogue():
+def create_dossier():
     print("START ADD CATALOGUE")
     data = request.json    
     
-    return jsonify(catalogues.create_catalogue(data, BASE_URL)), 200
+    return jsonify(dossiers.create_dossier(data, BASE_URL)), 200
 
-@app.route('/api/catalogues/delete', methods=['POST'])
-def deleteCatalogue():
+@app.route('/api/dossiers/delete', methods=['POST'])
+def deleteDossier():
     print("START DELETE CATALOGUE")
     data = request.json
     
-    return catalogues.delete_catalogue(data, BASE_URL)
+    return dossiers.delete_dossier(data, BASE_URL)
 
-@app.route('/api/catalogues/update', methods=['PUT'])
-def update_catalogue():
+@app.route('/api/dossiers/update', methods=['PUT'])
+def update_dossier():
     print("START CATALOGUE UPDATE")
     data = request.json
     
-    return jsonify(catalogues.update_catalogue(data, BASE_URL)), 200
+    return jsonify(dossiers.update_dossier(data, BASE_URL)), 200
 
-@app.route('/api/catalogues/getCatalogues', methods=['POST'])
-def getCatalogues():
+@app.route('/api/dossiers/getDossiers', methods=['POST'])
+def getDossiers():
     print("START GET CATALOGUES")
     data = request.json
     
-    return catalogues.getCatalogues(data, BASE_URL)
+    return dossiers.getDossiers(data, BASE_URL)
 
 # Documents operation
 # Read operation

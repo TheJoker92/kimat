@@ -6,7 +6,7 @@
 
         <div class="w-100 h-100c container-scroll absolute-pos column-top-center">
             <div>
-                <h2>{{ catalogue.title }}</h2>
+                <h2>{{ dossier.title }}</h2>
             </div>
             <div class="row-center-space-between bar-container">
                 <div class="row-center-left cursor-pointer" (click)="close()">
@@ -23,7 +23,7 @@
                     <button *ngIf="sessionService.activeSelectDocument" class="select-category p10px"
                         (click)="openDeleteMassiveModal()">Elimina {{ sessionService.selectedDocuments.length }}</button>
                     <!-- <button class="select-category">Seleziona</button>
-                    <div class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
+                    <div class="row-left-left p10px" (click)="openModalDossierFormModal()">
                         <fa-icon class="cursor-pointer font-size-15em add-folder" [icon]="faFolderPlus"></fa-icon>
                     </div> -->
                 </div>
@@ -63,7 +63,7 @@
             </div>
             <!-- <strong class="ml10px cursor-pointer" (click)="toggleTopics()">{{ toggleTopicsLabel }}</strong> -->
             <!-- <dgta-topic-card *ngIf="showTopics" class="row-center-space-between flex-wrap"
-            (getCataloguesByTopicE)="getDocuments()"></dgta-topic-card> -->
+            (getDossiersByTopicE)="getDocuments()"></dgta-topic-card> -->
             <div class="rows-container column-top-center overflow-x-hidden">
 
                 <div *ngFor="let documentListed of documents" class="column-top-right">
@@ -122,7 +122,7 @@
                                 <div class="row-center-center w10p">
                                     <div class="column-center-center">
                                         <div class="cursor-pointer font-size-20em users-baricon"
-                                            (click)="openOwnersModal(catalogue)"></div>
+                                            (click)="openOwnersModal(dossier)"></div>
                                         <small>utenti</small>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@
             (closeAttahcmentsModalE)="closeAttachmentsModal(document)"
             (getDocumentsE)="getDocuments()"></dgta-attachments-modal>
 
-        <dgta-document-form-modal *ngIf="isOpenDocumentFormModal" [catalogue]="catalogue"
+        <dgta-document-form-modal *ngIf="isOpenDocumentFormModal" [dossier]="dossier"
             (emitterGetDocumentsE)="getDocuments()"
             (closeDocumentFormModalE)="closeModalDocuemntFormModal()"></dgta-document-form-modal>
         

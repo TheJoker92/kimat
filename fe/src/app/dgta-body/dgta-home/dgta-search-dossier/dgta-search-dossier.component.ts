@@ -8,14 +8,14 @@ import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'dgta-search-catalogue',
+  selector: 'dgta-search-dossier',
   standalone: true,
   imports: [CommonModule, FontAwesomeModule, BarcodeScannerLivestreamModule, ZXingScannerModule],
-  templateUrl: './dgta-search-catalogue.component.html',
-  styleUrl: './dgta-search-catalogue.component.scss'
+  templateUrl: './dgta-search-dossier.component.html',
+  styleUrl: './dgta-search-dossier.component.scss'
 })
-export class DgtaSearchCatalogueComponent {
-  @Output() getCataloguesE = new EventEmitter()
+export class DgtaSearchDossierComponent {
+  @Output() getDossiersE = new EventEmitter()
   @Output() hideTopicsE = new EventEmitter()
 
   torchEnabled = false;
@@ -49,7 +49,7 @@ export class DgtaSearchCatalogueComponent {
     }
 
 
-    this.getCataloguesE.emit()
+    this.getDossiersE.emit()
     this.hideTopicsE.emit()
   }
 
@@ -59,7 +59,7 @@ export class DgtaSearchCatalogueComponent {
         "id": result
       }
 
-      this.getCataloguesE.emit()
+      this.getDossiersE.emit()
       this.hideTopicsE.emit()
 
     } else {

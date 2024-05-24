@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IPlace } from '../../../../interfaces/IPlace';
 import { CommonModule } from '@angular/common';
-import { ICatalogue } from '../../../../interfaces/ICatalogue';
+import { IDossier } from '../../../../interfaces/IDossier';
 import { DefaultDashPipe } from '../../../../default-dash.pipe';
 import { DgtaUpdateCollocationModalComponent } from './dgta-update-collocation-modal/dgta-update-collocation-modal.component';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   styleUrl: './dgta-collocation-modal.component.scss'
 })
 export class DgtaCollocationModalComponent {
-  @Input() catalogue: ICatalogue = {}
+  @Input() dossier: IDossier = {}
   @Output() closeCollocationModalE = new EventEmitter()
 
   faChevronLeft = faChevronLeft
@@ -33,10 +33,10 @@ export class DgtaCollocationModalComponent {
   }
 
   ngOnInit() {
-    this.catalogue.placement![0]["date"] = this.catalogue.history![0].date!
-    console.log(this.catalogue.placement)
+    this.dossier.placement![0]["date"] = this.dossier.history![0].date!
+    console.log(this.dossier.placement)
 
-    this.currentPlace = this.catalogue.placement![this.catalogue.placement!.length -1]
+    this.currentPlace = this.dossier.placement![this.dossier.placement!.length -1]
   }
 
   close() {
@@ -67,7 +67,7 @@ export class DgtaCollocationModalComponent {
   }
 
   getPlacementLogs() {
-    return this.catalogue.placement!.filter((placementLog: any) => placementLog != this.catalogue.placement![this.catalogue.placement!.length -1])
+    return this.dossier.placement!.filter((placementLog: any) => placementLog != this.dossier.placement![this.dossier.placement!.length -1])
   }
 
   closeAllModal() {

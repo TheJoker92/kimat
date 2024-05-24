@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { IUser } from './interfaces/IUser';
 import { IDocument } from './interfaces/IDocument';
 import { IPageNavigation, PageEnum } from './interfaces/IPageNavigation';
-import { ICatalogue } from './interfaces/ICatalogue';
+import { IDossier } from './interfaces/IDossier';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
 
-  selectedCatalogues: any[] = []
+  selectedDossiers: any[] = []
   activeSelect = false
 
   selectedDocuments: any[] = []
@@ -21,7 +21,7 @@ export class SessionService {
 
   terms: any = {}
 
-  catalogue: ICatalogue = {}
+  dossier: IDossier = {}
   isOpenOwnersModal: boolean = false
   isOpenCollocationModal: boolean = false
   isOpenHistoryModal: boolean = false

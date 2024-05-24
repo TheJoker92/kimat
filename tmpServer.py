@@ -330,9 +330,9 @@ def delete_user(id):
 
 
 # Create operation
-@app.route('/api/catalogues/add', methods=['POST'])
+@app.route('/api/dossiers/add', methods=['POST'])
 @cross_origin(supports_credentials=True)
-def create_catalogue():
+def create_dossier():
     print("START CATALOGUE ADD")
     data = request.json
 
@@ -355,7 +355,7 @@ def create_catalogue():
 
             # solr.add([data])
 
-            r = requests.post(BASE_URL + "/catalogues/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+            r = requests.post(BASE_URL + "/dossiers/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
             print(data)
             return response
         except Exception as e:
@@ -470,8 +470,8 @@ def upload_document():
 
 
 # Read operation
-@app.route('/api/catalogues/getCatalogues', methods=['POST'])
-def getCatalogues():
+@app.route('/api/dossiers/getDossiers', methods=['POST'])
+def getDossiers():
     print("START GET CATALOGUES")
     data = request.json
     
@@ -500,12 +500,12 @@ def getCatalogues():
         else:
             query += "*%3A*"
 
-        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
-        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
-        print(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&sort=id+asc&useParams=")
+        # https://127.0.0.1:8984/solr/dossiers/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
+        # https://127.0.0.1:8984/solr/dossiers/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
+        print(BASE_URL + "/dossiers/select?indent=true&q.op=AND&q=" + query + "&sort=id+asc&useParams=")
 
         # solr.add([data])
-        responseRaw = requests.get(BASE_URL + "/catalogues/select?indent=true&q.op=AND&q=" + query + "&useParams=", verify=False)
+        responseRaw = requests.get(BASE_URL + "/dossiers/select?indent=true&q.op=AND&q=" + query + "&useParams=", verify=False)
         print(responseRaw)
         # Decode the content from bytes to string and then parse as JSON
         response_json = json.loads(responseRaw.content.decode('utf-8'))
@@ -542,8 +542,8 @@ def getCatalogues():
     
     return response
 
-@app.route('/api/catalogues/update', methods=['PUT'])
-def update_catalogue():
+@app.route('/api/dossiers/update', methods=['PUT'])
+def update_dossier():
     print("START USER UPDATE")
     data = request.json
 
@@ -566,7 +566,7 @@ def update_catalogue():
 
             # solr.add([data])
 
-            r = requests.post(BASE_URL + "/catalogues/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+            r = requests.post(BASE_URL + "/dossiers/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
             print(f"Status Code: {r.status_code}, Response: {r.json()}")
         except Exception as e:
             response = {
@@ -577,8 +577,8 @@ def update_catalogue():
     
     return jsonify(response), 500
 
-@app.route('/api/catalogues/delete', methods=['POST'])
-def deleteCatalogue():
+@app.route('/api/dossiers/delete', methods=['POST'])
+def deleteDossier():
     print("START DELETE DOCUMENT")
     data = request.json
     
@@ -601,7 +601,7 @@ def deleteCatalogue():
 
             # solr.add([data])
             headers = {'Content-type': 'application/xml'}
-            responseRaw = requests.post(BASE_URL + "/catalogues/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", headers=headers, data=payload, verify=False)
+            responseRaw = requests.post(BASE_URL + "/dossiers/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", headers=headers, data=payload, verify=False)
 
             print(responseRaw.content)
             # Now you can access response_docs as a list containing the documents
@@ -645,8 +645,8 @@ def getDocuments():
         print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&useParams=")
         
 
-        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
-        # https://127.0.0.1:8984/solr/catalogues/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
+        # https://127.0.0.1:8984/solr/dossiers/select?indent=true&q.op=AND&q=title%3A*di%20*%0A*%3A*&useParams=
+        # https://127.0.0.1:8984/solr/dossiers/select?indent=true&q.op=AND&q=title%3A%22*%22di*%22%0A*%3A*&useParams=
         
         responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=id+asc&useParams=", verify=False)
         print(responseRaw)

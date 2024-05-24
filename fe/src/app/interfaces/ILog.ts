@@ -12,7 +12,7 @@ export enum ActionLogEnum {
     RESOURCE_ACCESS = "resource access",
     LOGIN = "login",
     CREATION_CATALOGUE = "crea catalogo",
-    UPDATE_CATALOGUE = "aggiorna catalogue",
+    UPDATE_CATALOGUE = "aggiorna dossier",
     CREATION_DOCUMENT = "crea documento",
     UPDATE_DOCUMENT = "aggiornato documento",
     UPDATE_DOCUMENT_STATE = "aggiornato stato documento",

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { ICatalogue } from '../../../../interfaces/ICatalogue';
+import { IDossier } from '../../../../interfaces/IDossier';
 import { faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DgtaDocumentFormModalComponent } from './dgta-document-form-modal/dgta-document-form-modal.component';
@@ -34,7 +34,7 @@ import { DgtaDeleteMassiveDocumentComponent } from './dgta-delete-massive-docume
 })
 export class DgtaDocumentsModalComponent {
 
-  @Input() catalogue: ICatalogue = {}
+  @Input() dossier: IDossier = {}
   @Output() closeDocumentsModalE = new EventEmitter()
 
   faSearch = faSearch
@@ -128,7 +128,7 @@ export class DgtaDocumentsModalComponent {
 
   getDocuments(term?: string, dates?: any) {
     let payload: any = {
-      parentId: this.catalogue.id
+      parentId: this.dossier.id
     }
 
     if (term) {
@@ -163,7 +163,7 @@ export class DgtaDocumentsModalComponent {
         if (term) {
 
           let payload: any = {
-            parentId: this.catalogue.id
+            parentId: this.dossier.id
           }
 
           delete payload["name"]
@@ -457,7 +457,7 @@ export class DgtaDocumentsModalComponent {
       }
 
       let payload = {
-        "parentId": this.catalogue.id,
+        "parentId": this.dossier.id,
         "dates": dates
       }
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ICatalogue } from '../../../../interfaces/ICatalogue';
+import { IDossier } from '../../../../interfaces/IDossier';
 import { CommonModule } from '@angular/common';
 import { ILog } from '../../../../interfaces/ILog';
 import { DefaultDashPipe } from '../../../../default-dash.pipe';
@@ -15,7 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   styleUrl: './dgta-history-modal.component.scss'
 })
 export class DgtaHistoryModalComponent {
-  @Input() catalogue: ICatalogue = {}
+  @Input() dossier: IDossier = {}
   @Output() closeHistoryModalE = new EventEmitter()
 
   faChevronLeft = faChevronLeft
@@ -28,7 +28,7 @@ export class DgtaHistoryModalComponent {
   constructor(private session: SessionService) { }
 
   ngOnInit() {
-    this.history = this.catalogue.history!.filter((log: ILog) => this.session.user?.role == "admin" || log.user?.id == this.session.user?.id)
+    this.history = this.dossier.history!.filter((log: ILog) => this.session.user?.role == "admin" || log.user?.id == this.session.user?.id)
   }
 
   closeHistoryModal() {

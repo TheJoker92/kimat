@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ICatalogue } from '../../../interfaces/ICatalogue';
+import { IDossier } from '../../../interfaces/IDossier';
 import * as rawData from '../../../../assets/enum.json';
 import { SessionService } from '../../../session.service';
 @Component({
@@ -11,10 +11,10 @@ import { SessionService } from '../../../session.service';
   styleUrl: './dgta-topic-card.component.scss'
 })
 export class DgtaTopicCardComponent {
-  @Input() catalogues: ICatalogue[] = []
+  @Input() dossiers: IDossier[] = []
   @Input() numTopics:any = {}
 
-  @Output() getCataloguesByTopicE = new EventEmitter()
+  @Output() getDossiersByTopicE = new EventEmitter()
   @Output() closeFilterModalE = new EventEmitter()
 
   data: any = rawData
@@ -39,7 +39,7 @@ export class DgtaTopicCardComponent {
 
   ngAfterViewInit() {
     for (let topic of this.data.topics) {
-      this.getCataloguesByTopicE.emit(topic)
+      this.getDossiersByTopicE.emit(topic)
     }
 
     this.numTopics["*"] = 0
@@ -93,7 +93,7 @@ export class DgtaTopicCardComponent {
 
 
 
-    this.getCataloguesByTopicE.emit()
+    this.getDossiersByTopicE.emit()
 
   }
 

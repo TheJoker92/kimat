@@ -2,29 +2,29 @@ import { Component } from '@angular/core';
 import { DgtaHomeCardComponent } from './dgta-home-card/dgta-home-card.component';
 import { SessionService } from '../../session.service';
 import { HttpService } from '../../http.service';
-import { ICatalogue } from '../../interfaces/ICatalogue';
+import { IDossier } from '../../interfaces/IDossier';
 import { CommonModule } from '@angular/common';
-import { DgtaHomeCardCatalogueFormModalComponent } from './dgta-home-card/dgta-home-card-catalogue-form-modal/dgta-home-card-catalogue-form-modal.component';
+import { DgtaHomeCardDossierFormModalComponent } from './dgta-home-card/dgta-home-card-dossier-form-modal/dgta-home-card-dossier-form-modal.component';
 import { faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { DgtaSearchCatalogueComponent } from './dgta-search-catalogue/dgta-search-catalogue.component';
 import { Subscription } from 'rxjs';
 import { DgtaTopicCardComponent } from './dgta-topic-card/dgta-topic-card.component';
-import { DeleteMassiveCatalogueComponent } from './delete-massive-catalogue/delete-massive-catalogue.component';
+import { DeleteMassiveDossierComponent } from './delete-massive-dossier/delete-massive-dossier.component';
+import { DgtaSearchDossierComponent } from './dgta-search-dossier/dgta-search-dossier.component';
 
 @Component({
   selector: 'dgta-home',
   standalone: true,
-  imports: [DgtaHomeCardComponent, CommonModule, DgtaTopicCardComponent, DgtaHomeCardCatalogueFormModalComponent, FontAwesomeModule, DgtaSearchCatalogueComponent, DeleteMassiveCatalogueComponent],
+  imports: [DgtaHomeCardComponent, CommonModule, DgtaTopicCardComponent, DgtaHomeCardDossierFormModalComponent, FontAwesomeModule, DgtaSearchDossierComponent, DeleteMassiveDossierComponent],
   templateUrl: './dgta-home.component.html',
   styleUrl: './dgta-home.component.scss'
 })
 export class DgtaHomeComponent {
-  isOpenCatalogueFormModal = false
+  isOpenDossierFormModal = false
 
   faFolderPlus = faFolderPlus
 
-  catalogues: ICatalogue[] = []
+  dossiers: IDossier[] = []
 
   showTopics = false
 
@@ -41,7 +41,7 @@ export class DgtaHomeComponent {
 
   constructor(public sessionService: SessionService,
     private http: HttpService) {
-    this.getCatalogues()
+    this.getDossiers()
   }
 
   isParsable(inputString: string): boolean {
@@ -55,60 +55,60 @@ export class DgtaHomeComponent {
 
   }
 
-  openModalCatalogueFormModal() {
-    this.isOpenCatalogueFormModal = true
+  openModalDossierFormModal() {
+    this.isOpenDossierFormModal = true
   }
 
-  closeCatalogueFormModal() {
-    this.isOpenCatalogueFormModal = false
+  closeDossierFormModal() {
+    this.isOpenDossierFormModal = false
   }
 
-  getCatalogues(topic?: string) {
+  getDossiers(topic?: string) {
     this.deactiveSelectMode()
     
-    this.http.getCatalogues(this.sessionService.terms).subscribe({
+    this.http.getDossiers(this.sessionService.terms).subscribe({
       next: (response: any) => {
 
-        this.catalogues = []
+        this.dossiers = []
 
         for (let document of response.documents!) {
-          let catalogue: any = {}
+          let dossier: any = {}
           for (let keyDocument of Object.keys(document)) {
             if (this.isParsable(document[keyDocument])) {
-              catalogue[keyDocument] = JSON.parse(document[keyDocument])
+              dossier[keyDocument] = JSON.parse(document[keyDocument])
             } else {
-              catalogue[keyDocument] = document[keyDocument]
+              dossier[keyDocument] = document[keyDocument]
             }
           }
 
-          this.catalogues.push(catalogue)
+          this.dossiers.push(dossier)
         }
 
         if (topic) {
           console.log("GET CATALOGUE", topic)
 
-          let catalogues = this.catalogues.filter(catalogue => catalogue.topics?.includes(topic))
+          let dossiers = this.dossiers.filter(dossier => dossier.topics?.includes(topic))
 
-          this.numTopics[topic] = catalogues.length
+          this.numTopics[topic] = dossiers.length
 
           this.numTopics = JSON.parse(JSON.stringify(this.numTopics))
         } else {
-          this.numTopics["*"] = this.catalogues.length
+          this.numTopics["*"] = this.dossiers.length
         }
 
         for (let topic of Object.keys(this.numTopics)) {
           console.log("GET CATALOGUE", topic)
 
-          let catalogues = this.catalogues.filter(catalogue => catalogue.topics?.includes(topic))
+          let dossiers = this.dossiers.filter(dossier => dossier.topics?.includes(topic))
 
-          this.numTopics[topic] = catalogues.length
+          this.numTopics[topic] = dossiers.length
 
           this.numTopics = JSON.parse(JSON.stringify(this.numTopics))
         }
 
-        this.numTopics["*"] = this.catalogues.length
+        this.numTopics["*"] = this.dossiers.length
 
-        console.log(this.catalogues)
+        console.log(this.dossiers)
       },
       error: (error) => {
         console.error(error)
@@ -139,13 +139,13 @@ export class DgtaHomeComponent {
 
   deactiveSelectMode() {
     this.sessionService.activeSelect = false
-    this.sessionService.selectedCatalogues = []
+    this.sessionService.selectedDossiers = []
   }
 
   deleteMassive() {
     this.isOpenDeleteMassive = false
-    for (let catalogue of this.sessionService.selectedCatalogues) {
-      this.deleteCatalogue(catalogue)
+    for (let dossier of this.sessionService.selectedDossiers) {
+      this.deleteDossier(dossier)
     }
   }
 
@@ -157,20 +157,20 @@ export class DgtaHomeComponent {
     this.isOpenDeleteMassive = false
   }
 
-  deleteCatalogue(catalogue: ICatalogue) {
+  deleteDossier(dossier: IDossier) {
 
-    if (catalogue.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length != 0) {
+    if (dossier.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length != 0) {
   
       let payload = {
-        id: catalogue.id
+        id: dossier.id
       }
-      this.http.deleteCatalogue(payload).subscribe({
+      this.http.deleteDossier(payload).subscribe({
         next: (response: any) => {
           if(response.code == 200) {
             // alert("L'operazione è riuscita")
-            this.sessionService.selectedCatalogues = this.sessionService.selectedCatalogues.filter((selectedCatalogue: any) => selectedCatalogue.id != catalogue.id)
+            this.sessionService.selectedDossiers = this.sessionService.selectedDossiers.filter((selectedDossier: any) => selectedDossier.id != dossier.id)
             
-            if (this.sessionService.selectedCatalogues.length == 0) {
+            if (this.sessionService.selectedDossiers.length == 0) {
               window.location.reload()
             }
           } else {

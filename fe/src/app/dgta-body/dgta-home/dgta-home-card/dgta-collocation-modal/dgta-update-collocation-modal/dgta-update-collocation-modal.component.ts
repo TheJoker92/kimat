@@ -7,7 +7,7 @@ import { ActionLogEnum } from '../../../../../interfaces/ILog';
 import { IPlace } from '../../../../../interfaces/IPlace';
 import { IUser } from '../../../../../interfaces/IUser';
 import { SessionService } from '../../../../../session.service';
-import { ICatalogue } from '../../../../../interfaces/ICatalogue';
+import { IDossier } from '../../../../../interfaces/IDossier';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 
@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './dgta-update-collocation-modal.component.scss'
 })
 export class DgtaUpdateCollocationModalComponent {
-  @Input() catalogue: ICatalogue = {}
+  @Input() dossier: IDossier = {}
   @Output() closeUpdateCollocationModalE = new EventEmitter()
   @Output() closeAllE = new EventEmitter()
   
@@ -48,12 +48,12 @@ export class DgtaUpdateCollocationModalComponent {
   constructor(public sessionService: SessionService,
     private http: HttpService,
     private loadingService: LoadingService) {
-    this.pullCatalogue()
+    this.pullDossier()
   }
 
   
 
-  updateCatalogue() {
+  updateDossier() {
     if (this.place.palace) {
       this.isValidPalace = true
     } else {
@@ -93,33 +93,33 @@ export class DgtaUpdateCollocationModalComponent {
 
       this.place["date"] = new Date().toISOString()
 
-      let placement = this.catalogue.placement!
+      let placement = this.dossier.placement!
       placement.push(this.place)
       placement = JSON.parse(JSON.stringify(placement))
 
-      let history = this.catalogue.history!
+      let history = this.dossier.history!
       history.push({
-        id: this.catalogue.history!.length.toString(),
+        id: this.dossier.history!.length.toString(),
         date: new Date().toISOString(),
         user: this.sessionService.user,
-        resourceId: this.catalogue.id,
+        resourceId: this.dossier.id,
         actionLog: ActionLogEnum.UPDATE_CATALOGUE
       })
 
       history = JSON.parse(JSON.stringify(history))
 
       let payload: any = {
-        id: this.catalogue.id,
-        title: this.catalogue.title,
-        topics: JSON.stringify(this.catalogue.topics),
+        id: this.dossier.id,
+        title: this.dossier.title,
+        topics: JSON.stringify(this.dossier.topics),
         documents: JSON.stringify([]),
-        owners: JSON.stringify(this.catalogue.owners),
+        owners: JSON.stringify(this.dossier.owners),
         history: JSON.stringify(history),
         placement: JSON.stringify(placement),
       }
 
       this.loadingService.isLoading = true
-      this.http.addCatalogue(payload).subscribe({
+      this.http.addDossier(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
 
@@ -153,24 +153,24 @@ export class DgtaUpdateCollocationModalComponent {
     console.log(this.place)
   }
 
-  pullCatalogue() {
+  pullDossier() {
     this.loadingService.isLoading = true
 
-    this.http.getCatalogues(this.sessionService.terms).subscribe({
+    this.http.getDossiers(this.sessionService.terms).subscribe({
       next: (response: any) => {
-        let catalogueArray = response.documents!.filter((catalogue: ICatalogue) => catalogue.id == this.catalogue.id)
+        let dossierArray = response.documents!.filter((dossier: IDossier) => dossier.id == this.dossier.id)
         
-        for (let document of catalogueArray) {
-          let catalogue: any = {}
+        for (let document of dossierArray) {
+          let dossier: any = {}
           for (let keyDocument of Object.keys(document)) {
             if (this.isParsable(document[keyDocument])) {
-              catalogue[keyDocument] =  JSON.parse(document[keyDocument])
+              dossier[keyDocument] =  JSON.parse(document[keyDocument])
             } else {
-              catalogue[keyDocument] = document[keyDocument]
+              dossier[keyDocument] = document[keyDocument]
             }
           }
 
-          this.catalogue = catalogue
+          this.dossier = dossier
 
         }
 

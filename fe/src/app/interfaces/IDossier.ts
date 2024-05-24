@@ -3,7 +3,7 @@ import { ILog } from "./ILog"
 import { IPlace } from "./IPlace"
 import { IUser } from "./IUser"
 
-export interface ICatalogue {
+export interface IDossier {
     id?: string 
     title?: string
     topics?: string[]

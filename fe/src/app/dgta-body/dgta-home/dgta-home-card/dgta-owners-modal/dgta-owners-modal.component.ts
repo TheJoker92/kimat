@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ICatalogue } from '../../../../interfaces/ICatalogue';
+import { IDossier } from '../../../../interfaces/IDossier';
 import { IUser } from '../../../../interfaces/IUser';
 import { CommonModule } from '@angular/common';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   styleUrl: './dgta-owners-modal.component.scss'
 })
 export class DgtaOwnersModalComponent {
-  @Input() catalogue: ICatalogue = {}
+  @Input() dossier: IDossier = {}
   @Output() closeOwnersModalE = new EventEmitter()
 
 
@@ -23,7 +23,7 @@ export class DgtaOwnersModalComponent {
   constructor() { }
 
   ngOnInit() {
-    this.owners = this.catalogue.owners!
+    this.owners = this.dossier.owners!
   }
 
   cancel() {
