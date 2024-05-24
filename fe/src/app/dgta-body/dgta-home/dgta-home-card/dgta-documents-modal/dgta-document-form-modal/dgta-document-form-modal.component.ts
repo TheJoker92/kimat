@@ -508,6 +508,12 @@ export class DgtaDocumentFormModalComponent {
                     file.progressUpload = Math.round(100 * (event.loaded / (event.total ?? 1)));
 
                     console.log(this.multipleFiles)
+                    
+                    this.loadingService.isLoading = false
+                    if (index < this.multipleFiles.length) {
+                      this.addDocumentMultipleFirststepSingleAdd(index + 1)
+                    } 
+
                     return 101
                   case HttpEventType.Response: {
 

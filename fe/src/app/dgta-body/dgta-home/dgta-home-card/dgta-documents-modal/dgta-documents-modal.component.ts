@@ -23,11 +23,12 @@ import { DgtaSearchDocumentComponent } from './dgta-search-document/dgta-search-
 import { faSearch, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { DgtaHeaderComponent } from '../../../../dgta-header/dgta-header.component';
 import { DgtaFilterDocumentsComponent } from './dgta-filter-documents/dgta-filter-documents.component';
+import { DgtaDeleteMassiveDocumentComponent } from './dgta-delete-massive-document/dgta-delete-massive-document.component';
 
 @Component({
   selector: 'dgta-documents-modal',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, DgtaFilterDocumentsComponent, DgtaHeaderComponent, DgtaTopicCardComponent, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent, PdfViewerModule, DgtaAttachmentsModalComponent, DgtaSearchDocumentComponent],
+  imports: [CommonModule, FontAwesomeModule, DgtaFilterDocumentsComponent, DgtaHeaderComponent, DgtaDeleteMassiveDocumentComponent, DgtaTopicCardComponent, DgtaBarcodeDocumentModalComponent, DgtaDocumentFormModalComponent, DgtaOwnersDocumentModalComponent, DgtaCollocationDocumentModalComponent, DgtaHistoryDocumentModalComponent, DgtaStateDocumentModalComponent, PdfViewerModule, DgtaAttachmentsModalComponent, DgtaSearchDocumentComponent],
   templateUrl: './dgta-documents-modal.component.html',
   styleUrl: './dgta-documents-modal.component.scss'
 })
@@ -79,6 +80,8 @@ export class DgtaDocumentsModalComponent {
 
   startDate: any
   endDate: any
+
+  isOpenDeleteMassive = false
 
   constructor(private http: HttpService,
     public sessionService: SessionService,
@@ -212,6 +215,14 @@ export class DgtaDocumentsModalComponent {
 
       }
     })
+  }
+
+  openDeleteMassiveModal() {
+    this.isOpenDeleteMassive = true
+  }
+
+  closeDeleteMassiveModal() {
+    this.isOpenDeleteMassive = false
   }
 
   isParsable(inputString: string): boolean {
@@ -353,9 +364,13 @@ export class DgtaDocumentsModalComponent {
           if (response.code == 200) {
             // alert("L'operazione è riuscita")
             this.sessionService.selectedDocuments = this.sessionService.selectedDocuments.filter((documentSelected: any) => documentSelected.id != document.id)
-            setTimeout(() => {
-              this.getDocuments()
-            },1000)
+            
+            if (this.sessionService.selectedDocuments.length == 0) {
+              this.deactiveSelectMode()
+              setTimeout(() => {
+                this.getDocuments()
+              },1000)
+            }
           } else {
             alert("Qualcosa è andato storto")
           }
@@ -544,6 +559,7 @@ export class DgtaDocumentsModalComponent {
   }
 
   deleteMassive() {
+    this.isOpenDeleteMassive = false
     for (let document of this.sessionService.selectedDocuments) {
       this.deleteDocument(document)
     }

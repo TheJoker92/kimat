@@ -22,7 +22,7 @@
                     <button *ngIf="sessionService.activeSelectDocument" class="select-category mr10px p10px"
                         (click)="deactiveSelectMode()">Annulla</button>
                     <button *ngIf="sessionService.activeSelectDocument" class="select-category p10px"
-                        (click)="deleteMassive()">Elimina {{ sessionService.selectedDocuments.length }}</button>
+                        (click)="openDeleteMassiveModal()">Elimina {{ sessionService.selectedDocuments.length }}</button>
                     <!-- <button class="select-category">Seleziona</button>
                     <div class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
                         <fa-icon class="cursor-pointer font-size-15em add-folder" [icon]="faFolderPlus"></fa-icon>
@@ -160,3 +160,7 @@
         <dgta-document-form-modal *ngIf="isOpenDocumentFormModal" [catalogue]="catalogue"
             (emitterGetDocumentsE)="getDocuments()"
             (closeDocumentFormModalE)="closeModalDocuemntFormModal()"></dgta-document-form-modal>
+        
+            <dgta-delete-massive-document *ngIf="isOpenDeleteMassive"
+            (confirmE)="deleteMassive()"
+            (closeE)="closeDeleteMassiveModal()"></dgta-delete-massive-document>

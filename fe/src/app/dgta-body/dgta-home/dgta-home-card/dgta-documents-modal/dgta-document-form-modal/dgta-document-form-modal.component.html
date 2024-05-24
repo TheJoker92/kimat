@@ -1,7 +1,7 @@
 <div class="overlay">
 
 </div>
-<div class="container column-center-center" [ngClass]="{'column-center-center': stepSingleAdd < 3, 'column-center-spacebetween': stepSingleAdd == 3}">
+<div class="container column-center-center" [ngClass]="{'column-center-center': stepSingleAdd < 3, 'column-center-spacebetween': stepSingleAdd == 3, 'h800px': isMultiple}">
     <div *ngIf="stepSingleAdd < 3" class="row-center-space-between w100p max-width410px">
         <div class="column-top-left h100p">
             <div class="row-center-left cursor-pointer" (click)="cancel()">
@@ -200,7 +200,7 @@
                         ({{ multipleFiles.length }})
                     </div>
                 </div>
-                <div class="overflow-file">
+                <div class="overflow-file h210px">
 
                     <div *ngFor="let file of multipleFiles" class="row-center-left file-card">
                         <div class="column-top-left w100p">
@@ -406,9 +406,9 @@
         </div> -->
     </div>
 
-    <button *ngIf="!startUpload && stepMultipleAdd == 1 && isMultiple" class="mt10px" (click)="addDocumentMultiple()">Aggiungi</button>
-    <button *ngIf="startUpload && stepMultipleAdd == 1 && isMultiple" class="mt10px opacity-80 no-pointer">Attendere</button>
-    <button *ngIf="!startUpload && stepMultipleAdd == 2 && isMultiple" class="mt10px opacity-80 no-pointer" (click)="previousStep()">Carica altri file</button>
+    <button *ngIf="!startUpload && stepMultipleAdd == 1 && isMultiple" class="mt10px relative-add-document cursor-pointer" (click)="addDocumentMultiple()">Aggiungi</button>
+    <button *ngIf="startUpload && stepMultipleAdd == 1 && isMultiple" class="mt10px opacity-80 no-pointer relative-add-document">Attendere</button>
+    <button *ngIf="!startUpload && stepMultipleAdd == 2 && isMultiple" class="mt10px opacity-80 no-pointer relative-add-document cursor-pointer" (click)="previousStep()">Carica altri file</button>
     <button *ngIf="isManual" class="mt10px" (click)="openScanApp()">Apri</button>
 
 </div>

@@ -1,0 +1,90 @@
+.overlay {
+    position: fixed;
+    z-index:300;
+    left:0%;
+    top:0%;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    opacity: 30%;
+}
+
+.box-container {
+    position: fixed;
+    z-index:301;
+    top:0%;
+    left:0%;
+    height: 100%;
+    width:100%;
+}
+
+.container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    width: 90%;
+    max-width:410px;
+    margin-left:10px;
+}
+
+.confirm {
+    /* Button */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 22px 20px;
+
+    width: 100px;
+    max-width: 100px !important;
+    height: 32px;
+
+    color:white;
+
+    background: #E69800;
+    border-radius: 8px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+    border: none;
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.cancel {
+    /* Button */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 22px 20px;
+
+    max-width: 100px !important;
+    height: 32px;
+
+    color:white;
+
+    background: #1E242D;
+    border-radius: 8px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+    border: none;
+    font-size: 16px;
+
+    cursor: pointer;
+
+    margin-right: 10px;
+}

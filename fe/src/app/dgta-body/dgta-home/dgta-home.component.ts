@@ -64,6 +64,8 @@ export class DgtaHomeComponent {
   }
 
   getCatalogues(topic?: string) {
+    this.deactiveSelectMode()
+    
     this.http.getCatalogues(this.sessionService.terms).subscribe({
       next: (response: any) => {
 

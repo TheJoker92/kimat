@@ -35,6 +35,7 @@
 }
 
 .box-form-manual {
+    height:390px;
     background: #F3F2F8;
     border-radius: 15px;
     color: black;
@@ -280,4 +281,9 @@ button {
 .overflow-file {
   overflow: auto;
   height: 235px;
+}
+
+.relative-add-document {
+  position: relative;
+  bottom: calc(100% - 750px);
 }
