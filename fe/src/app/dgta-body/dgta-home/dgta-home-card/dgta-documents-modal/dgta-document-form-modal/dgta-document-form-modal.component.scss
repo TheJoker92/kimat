@@ -27,7 +27,7 @@
   /* min-width: 475px; */
   width: 340px;
   height: 15vw;
-  min-height: 500px;
+  min-height: 420px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@
 }
 
 .box-form-manual {
-    height:390px;
+    // height:390px;
     background: #F3F2F8;
     border-radius: 15px;
     color: black;
@@ -280,10 +280,10 @@ button {
 
 .overflow-file {
   overflow: auto;
-  height: 235px;
+  height: 145px;
 }
 
 .relative-add-document {
   position: relative;
-  bottom: calc(100% - 750px);
+  bottom: 70px;
 }
