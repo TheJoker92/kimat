@@ -100,17 +100,19 @@
 }
 
 .document-container {
-    width: 300px;
+    width: 82%;
+    max-width: 420px;
 }
 
 .rows-container {
-    margin: 10px;
+    margin: 20px;
     padding: 10px;
     background: white;
     border-radius: 8px;
     overflow: auto;
     height: 40vh;
-    width: 325px;
+    width: 82%;
+    max-width: 420px;
     border-radius: 8px;
 }
 
@@ -132,3 +134,7 @@
     background-color: white;
     max-width: 410px;
 }
+
+.selectedDocument {
+    background-color: #f9f9f9;
+  }
