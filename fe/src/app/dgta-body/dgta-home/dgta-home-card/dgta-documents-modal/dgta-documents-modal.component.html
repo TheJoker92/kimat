@@ -73,7 +73,7 @@
                                 <div class="row-center-left">
                                 <input *ngIf="sessionService.activeSelectDocument" type="checkbox" class="checkbox-round font-size-15em" (click)="multipleSelectedDocument(documentListed)" [checked]="isMultipleSelectedDocument(documentListed)" />
                             
-                                    <div *ngIf="!sessionService.activeSelectDocument" class="cursor-pointer color-yellow-folder font-size-3em document-icon"></div>
+                                    <div *ngIf="!sessionService.activeSelectDocument" class="cursor-pointer color-yellow-folder font-size-3em pdf-file-icon"></div>
                                     <div class="column-left-left ml5px mb10px w200px">
                                         <div class="">{{ documentListed.name }}</div>
                                     </div>

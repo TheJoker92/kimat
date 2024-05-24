@@ -198,7 +198,8 @@ zxing-scanner  {
 }
 
 .overflow {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 dgta-search-document {

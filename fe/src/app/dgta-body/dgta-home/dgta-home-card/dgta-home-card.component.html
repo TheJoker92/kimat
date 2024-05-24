@@ -71,7 +71,7 @@
                 <div class="row-center-space-between w100p cursor-pointer max-width410px" [ngClass]="{'selectedDossier': selectedDossier == dossier}" (click)="selectDossier(dossier)">
                     <div class="row-center-space-between">
                         <div class="row-center-left">
-                            <div *ngIf="!sessionService.activeSelect" class="cursor-pointer font-size-3em folder-icon"></div>
+                            <div *ngIf="!sessionService.activeSelect" class="cursor-pointer font-size-3em document-icon"></div>
                             <input *ngIf="sessionService.activeSelect" type="checkbox" class="checkbox-round font-size-15em" (click)="multipleSelectedDossier(dossier)" [checked]="isMultipleSelectedDossier(dossier)" />
                             <div class="column-left-left ml5px w200px title-container">
                                 {{ dossier.title }}
