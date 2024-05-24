@@ -22,6 +22,8 @@ import { IPlace } from '../../../../interfaces/IPlace';
 
 export class DgtaHomeCardCatalogueFormModalComponent {
   @Output() closeCatalogueFormModalE = new EventEmitter()
+  @Output() getCataloguesE = new EventEmitter()
+
   title: string = ""
   data: any = rawData
   allowedTopics: string[] = []
@@ -144,6 +146,9 @@ export class DgtaHomeCardCatalogueFormModalComponent {
 
           if (response.code == 200) {
             this.step = 3
+            setTimeout(() => {
+              this.getCataloguesE.emit()
+            },1000)
             // alert("Hai aggiunto un nuovo catalogo")
             // window.location.reload()
           } else {

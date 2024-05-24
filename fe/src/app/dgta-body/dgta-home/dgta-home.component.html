@@ -7,7 +7,7 @@
                 <button *ngIf="!sessionService.activeSelect" class="add-category mr10px" (click)="openModalCatalogueFormModal()">Aggiungi</button>
                 <button *ngIf="!sessionService.activeSelect"class="select-category mr10px p10px" (click)="activeSelectMode()">Seleziona</button>
                 <button *ngIf="sessionService.activeSelect"class="select-category mr10px p10px" (click)="deactiveSelectMode()">Annulla</button>
-                <button *ngIf="sessionService.activeSelect"class="select-category mr10px p10px" (click)="deleteMassive()">Elimina {{ sessionService.selectedCatalogues.length }}</button>
+                <button *ngIf="sessionService.activeSelect"class="select-category mr10px p10px" (click)="openDeleteMassiveModal()">Elimina {{ sessionService.selectedCatalogues.length }}</button>
                 <!-- <button class="select-category">Seleziona</button>
                 <div class="row-left-left p10px" (click)="openModalCatalogueFormModal()">
                     <fa-icon class="cursor-pointer font-size-15em add-folder" [icon]="faFolderPlus"></fa-icon>
@@ -36,4 +36,10 @@
 </div>
 
 <dgta-home-card-catalogue-form-modal *ngIf="isOpenCatalogueFormModal"
-    (closeCatalogueFormModalE)="closeCatalogueFormModal()"></dgta-home-card-catalogue-form-modal>
+    (closeCatalogueFormModalE)="closeCatalogueFormModal()"
+    (getCataloguesE)="getCatalogues()"></dgta-home-card-catalogue-form-modal>
+
+    <dgta-delete-massive-catalogue
+    *ngIf="isOpenDeleteMassive"
+    (confirmE)="deleteMassive()"
+    (closeE)="closeDeleteMassiveModal()"></dgta-delete-massive-catalogue>

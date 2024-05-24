@@ -10,11 +10,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DgtaSearchCatalogueComponent } from './dgta-search-catalogue/dgta-search-catalogue.component';
 import { Subscription } from 'rxjs';
 import { DgtaTopicCardComponent } from './dgta-topic-card/dgta-topic-card.component';
+import { DeleteMassiveCatalogueComponent } from './delete-massive-catalogue/delete-massive-catalogue.component';
 
 @Component({
   selector: 'dgta-home',
   standalone: true,
-  imports: [DgtaHomeCardComponent, CommonModule, DgtaTopicCardComponent, DgtaHomeCardCatalogueFormModalComponent, FontAwesomeModule, DgtaSearchCatalogueComponent],
+  imports: [DgtaHomeCardComponent, CommonModule, DgtaTopicCardComponent, DgtaHomeCardCatalogueFormModalComponent, FontAwesomeModule, DgtaSearchCatalogueComponent, DeleteMassiveCatalogueComponent],
   templateUrl: './dgta-home.component.html',
   styleUrl: './dgta-home.component.scss'
 })
@@ -35,6 +36,7 @@ export class DgtaHomeComponent {
 
   activeSelect = false
 
+  isOpenDeleteMassive = false
   
 
   constructor(public sessionService: SessionService,
@@ -139,9 +141,18 @@ export class DgtaHomeComponent {
   }
 
   deleteMassive() {
+    this.isOpenDeleteMassive = false
     for (let catalogue of this.sessionService.selectedCatalogues) {
       this.deleteCatalogue(catalogue)
     }
+  }
+
+  openDeleteMassiveModal() {
+    this.isOpenDeleteMassive = true
+  }
+
+  closeDeleteMassiveModal() {
+    this.isOpenDeleteMassive = false
   }
 
   deleteCatalogue(catalogue: ICatalogue) {
@@ -154,8 +165,12 @@ export class DgtaHomeComponent {
       this.http.deleteCatalogue(payload).subscribe({
         next: (response: any) => {
           if(response.code == 200) {
-            alert("L'operazione è riuscita")
-            window.location.reload()
+            // alert("L'operazione è riuscita")
+            this.sessionService.selectedCatalogues = this.sessionService.selectedCatalogues.filter((selectedCatalogue: any) => selectedCatalogue.id != catalogue.id)
+            
+            if (this.sessionService.selectedCatalogues.length == 0) {
+              window.location.reload()
+            }
           } else {
             alert("Qualcosa è andato storto")
           }
