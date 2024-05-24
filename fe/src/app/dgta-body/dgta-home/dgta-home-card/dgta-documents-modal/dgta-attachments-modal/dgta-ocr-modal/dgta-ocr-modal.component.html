@@ -2,28 +2,60 @@
 
 </div>
 <div class="container">
-    <div class="box-form column-center-spacebetween">
-        <div>
-            <div class="box-form column-center-center">
-                <h3 class="row-center-center">DATI ESTRATTI</h3>
-                <div class="row-center-left">
-                    <label>Tipo documento:</label> {{ deliberazioneTemaplateJSON.documentType }}
+    <div class="box-form column-center-top">
+        <div class="row-center-space-between w100p">
+            <div class="row-center-left cursor-pointer" (click)="close()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Indietro</small>
+            </div>
+            <div>
+                <h3 class="row-center-center">Dati estratti</h3>
+            </div>
+            <div class="w-40px h10p">
+            </div>
+        </div>
+
+        <div class="column-top-left w100p mt30px">
+            <div class="column-top-left w100p pt10px pb10px">
+                <div class="create-label">
+                    Tipo documento:
                 </div>
-                <div class="row-center-left">
-                    <label for="">Deliberazione N.</label> {{deliberazioneTemaplateJSON.numero }}
-                </div>
-                <div class="row-center-left">
-                    <label>Oggetto: </label> {{deliberazioneTemaplateJSON.oggetto }}
-                </div>
-                <div class="row-center-left">
-                    <label>Data: </label> {{deliberazioneTemaplateJSON.data }}
-                </div>
-                <div class="row-center-left">
-                    <label>Ora: </label> {{deliberazioneTemaplateJSON.oreStr }}
+                <div>
+                    {{ deliberazioneTemaplateJSON.documentType }}
                 </div>
             </div>
-            <div class="row-center-center">
-                <button class="mt10px" (click)="close()">CHIUDI</button>
+            <div class="column-top-left w100p pt10px pb10px">
+                <div class="create-label">
+                    Deliberazione N.:
+                </div>
+                <div>
+                    {{deliberazioneTemaplateJSON.numero }}
+                </div>
+            </div>
+            <div class="column-top-left w100p pt10px pb10px">
+                <div class="create-label">
+                    Oggetto:
+                </div>
+                <div>
+                    {{deliberazioneTemaplateJSON.oggetto }}
+                </div>
+            </div>
+            <div class="column-top-left w100p pt10px pb10px">
+                <div class="create-label">
+                    Data:
+                </div>
+                <div>
+                    {{deliberazioneTemaplateJSON.data }}
+                </div>
+            </div>
+            <div class="column-top-left w100p pt10px pb10px">
+                <div class="create-label">
+                    Ora:
+                </div>
+                <div>
+                    {{deliberazioneTemaplateJSON.oreStr }}
+                </div>
             </div>
         </div>
     </div>
+</div>

@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HttpService } from '../../../../../../http.service';
 import { IDocument } from '../../../../../../interfaces/IDocument';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'dgta-ocr-modal',
   standalone: true,
-  imports: [],
+  imports: [FontAwesomeModule],
   templateUrl: './dgta-ocr-modal.component.html',
   styleUrl: './dgta-ocr-modal.component.scss'
 })
@@ -13,6 +15,8 @@ export class DgtaOcrModalComponent {
   @Input() document: IDocument = {}
   @Input() ocrText: string = ""
   @Output() closeOcrModalE = new EventEmitter()
+
+  faChevronLeft = faChevronLeft
 
   deliberazioneTemaplateJSON: any = {}
 

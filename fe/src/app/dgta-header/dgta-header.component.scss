@@ -6,3 +6,8 @@
 .exit:hover {
     color: rgb(44, 44, 165);
 }
+
+.fixed {
+        z-index: 10000;
+        position: fixed;
+}

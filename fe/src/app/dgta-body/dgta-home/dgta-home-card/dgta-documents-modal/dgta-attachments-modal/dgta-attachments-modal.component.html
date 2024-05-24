@@ -1,8 +1,8 @@
-<div class="overlay">
+<div class="overlay" [ngClass]="{'row-center-center': !isAuthenticated, 'row-top-center': isAuthenticated}">
 
 </div>
-<div class="container column-top-left">
-    <div class="row-bottom-center ml10px w370px">
+<div class="container" [ngClass]="{'column-center-center': !isAuthenticated, 'column-top-center': isAuthenticated}">
+    <div class="row-bottom-center ml10px mr10px w370px">
         <!-- <button class="mt10px" (click)="close()">CHIUDI</button>
         <button class="nowrap" (click)="openUpdateAttachmentModal()">CARICA FILE</button>
         <button class="mt10px" (click)="getOcr()">OCR</button> -->
@@ -12,10 +12,10 @@
                 <small>Indietro</small>
             </div>
             <div>
-                <h3 class="row-center-center">{{ document.name }}</h3>
+                <h3 class="row-center-center">Documento digitale</h3>
             </div>
             <div  (click)="getOcr()">
-                <button >OCR</button>
+                <button class="button-ocr">Estrai dati</button>
             </div>
         </div>
         <div *ngIf="!isAuthenticated" class="column-center-center w100p">
@@ -31,7 +31,7 @@
             </div>
             <div>
                 Non hai ricevuto il token? <strong (click)="newToken()" class="mt10px cursor-pointer">Richiedine uno nuovo</strong>
-                <button (click)="sendToken()" class="mt10px">Conferma</button>
+                <button (click)="sendToken()" class="mt10px button-confirm">Conferma</button>
             </div>
         </div>
     </div>
@@ -41,7 +41,19 @@
         </div>
         <div *ngIf="srcPdf" class="row-center-left">
             <div class="box-form column-center-left">
-                <h4 class="ml10px">{{ document.name }}</h4>
+                <div *ngIf="isAuthenticated" class="row-center-space-between w100p maxw360px">
+                    <div class="row-center-left cursor-pointer" (click)="close()">
+                        <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                        <small>Indietro</small>
+                    </div>
+                    <div>
+                        <h3 class="row-center-center">Documento digitale</h3>
+                    </div>
+                    <div  (click)="getOcr()">
+                        <button class="button-ocr">Estrai dati</button>
+                    </div>
+                </div>
+                <!-- <h4 class="ml10px">{{ document.name }}</h4> -->
                 <div class="file-viewer-container">
                     <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false"
                         style="width: 100vw; height: 100vh"></pdf-viewer>

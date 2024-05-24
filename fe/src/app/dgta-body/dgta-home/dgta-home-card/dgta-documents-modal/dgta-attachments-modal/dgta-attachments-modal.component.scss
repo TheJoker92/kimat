@@ -51,9 +51,6 @@
     top:0%;
     width: 100vw;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: #F3F2F8;
 }
 
@@ -63,9 +60,6 @@
     height: 100%;
     top:0%;
     left: 0%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .box-form {
@@ -128,7 +122,33 @@ select {
 }
 
 
-button {
+.button-ocr {
+    /* Button */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-right: 10px;
+    width: 100% !important;
+    height: 32px;
+
+    color:white;
+
+    background: #E69800;
+    border-radius: 8px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+    border: none;
+    font-size: 16px;
+}
+
+.button-confirm {
     /* Button */
 
     /* Auto layout */
