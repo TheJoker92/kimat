@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faInfoCircle, faTrash, faFileLines, faBarcode, faClockRotateLeft, faUsers, faFolderClosed, faFolderOpen, faMapMarker } from '@fortawesome/free-solid-svg-icons';
-import { DgtaHomeCardDossierFormModalComponent } from './dgta-home-card-dossier-form-modal/dgta-home-card-dossier-form-modal.component';
 import { CommonModule } from '@angular/common';
 import { DgtaBarcodeModalComponent } from './dgta-barcode-modal/dgta-barcode-modal.component';
 import { HttpService } from '../../../http.service';
@@ -11,21 +10,22 @@ import { DgtaHistoryModalComponent } from './dgta-history-modal/dgta-history-mod
 import { DgtaDocumentsModalComponent } from './dgta-documents-modal/dgta-documents-modal.component';
 import { DgtaTopicCardComponent } from '../dgta-topic-card/dgta-topic-card.component';
 import { SessionService } from '../../../session.service';
-import { IDossier } from '../../../interfaces/IDossier';
+import { ICatalogue } from '../../../interfaces/ICatalogue';
+import { DgtaCatalogueFormModalComponent } from '../../dgta-catalogue-list/dgta-catalogue-form-modal/dgta-catalogue-form-modal.component';
 
 @Component({
   selector: 'dgta-home-card',
   standalone: true,
-  imports: [FontAwesomeModule, DgtaHomeCardDossierFormModalComponent, CommonModule, DgtaTopicCardComponent, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent, DgtaDocumentsModalComponent],
+  imports: [FontAwesomeModule, DgtaCatalogueFormModalComponent, CommonModule, DgtaTopicCardComponent, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent, DgtaDocumentsModalComponent],
   templateUrl: './dgta-home-card.component.html',
   styleUrl: './dgta-home-card.component.scss'
 })
 export class DgtaHomeCardComponent {
 
   @Input() isAdd = false
-  @Input() dossiers: IDossier[] = []
+  @Input() catalogues: ICatalogue[] = []
 
-  dossier: IDossier = {}
+  catalogue: ICatalogue = {}
 
   faFolder = faFolderClosed
   faUsers = faUsers
@@ -42,9 +42,9 @@ export class DgtaHomeCardComponent {
   isOpenCollocationModal = false
   isOpenHistoryModal = false
   isOpenDocumentsModal = false
-  isOpenInfoDossierModal = false
+  isOpenInfoCatalogueModal = false
 
-  selectedDossier: any
+  selectedCatalogue: any
 
   constructor(private http: HttpService,
               public sessionService: SessionService) { }
@@ -57,25 +57,25 @@ export class DgtaHomeCardComponent {
   //   this.faFolder = faFolderClosed
   // }
 
-  openViewBarcodeModal(dossier: IDossier) {
-    this.dossier = dossier
+  openViewBarcodeModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
     this.isOpenViewBarcodeModal = true
   }
 
   closeViewBarcodeModal() {
-    this.dossier = {}
+    this.catalogue = {}
     this.isOpenViewBarcodeModal = false
   }
 
-  deleteDossier(dossier: IDossier) {
-    if (dossier.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length == 0) {
+  deleteCatalogue(catalogue: ICatalogue) {
+    if (catalogue.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length == 0) {
 
-      this.dossier = {}
+      this.catalogue = {}
   
       let payload = {
-        id: dossier.id
+        id: catalogue.id
       }
-      this.http.deleteDossier(payload).subscribe({
+      this.http.deleteCatalogue(payload).subscribe({
         next: (response: any) => {
           if(response.code == 200) {
             alert("L'operazione è riuscita")
@@ -94,77 +94,77 @@ export class DgtaHomeCardComponent {
     
   }
 
-  openOwnersModal(dossier: IDossier) {
-    this.dossier = dossier
+  openOwnersModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
     this.isOpenOwnersModal = true
   }
 
   closeOwnersModal() {
-    this.dossier = {}
+    this.catalogue = {}
     this.isOpenOwnersModal = false
   }
 
-  openCollocationModal(dossier: IDossier) {
-    this.dossier = dossier
+  openCollocationModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
     this.isOpenCollocationModal = true
   }
 
   closeCollocationModal() {
-    this.dossier = {}
+    this.catalogue = {}
     this.isOpenCollocationModal = false
   }
 
-  openHistoryModal(dossier: IDossier) {
-    this.dossier = dossier
+  openHistoryModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
     this.isOpenHistoryModal = true
   }
 
   closeHistoryModal() {
-    this.dossier = {}
+    this.catalogue = {}
     this.isOpenHistoryModal = false
   }
 
-  openDocumentsModal(dossier: IDossier) {
-    this.dossier = dossier
+  openDocumentsModal(catalogue: ICatalogue) {
+    this.catalogue = catalogue
     this.isOpenDocumentsModal = true
     this.sessionService.isOpenDocumentsModal = true
   }
 
   closeDocumentsModal() {
-    this.dossier = {}
+    this.catalogue = {}
     this.isOpenDocumentsModal = false
     this.sessionService.isOpenDocumentsModal = false
   }
 
-  openDossierInfo(dossier: IDossier) {
-    this.dossier = dossier
-    this.isOpenInfoDossierModal = true
+  openCatalogueInfo(catalogue: ICatalogue) {
+    this.catalogue = catalogue
+    this.isOpenInfoCatalogueModal = true
   }
 
-  closeDossierInfo() {
-    this.dossier = {}
-    this.isOpenInfoDossierModal = false
+  closeCatalogueInfo() {
+    this.catalogue = {}
+    this.isOpenInfoCatalogueModal = false
   }
 
-  selectDossier(dossier: any) {
+  selectCatalogue(catalogue: any) {
     if (!this.sessionService.activeSelect) {
-      if (this.selectedDossier != dossier) {
-        this.selectedDossier = dossier
+      if (this.selectedCatalogue != catalogue) {
+        this.selectedCatalogue = catalogue
       } else {
-        this.selectedDossier = undefined
+        this.selectedCatalogue = undefined
       }
     }
   }
 
-  multipleSelectedDossier(dossier: any) {
-    if (!this.sessionService.selectedDossiers.includes(dossier)) {
-      this.sessionService.selectedDossiers.push(dossier)
+  multipleSelectedCatalogue(catalogue: any) {
+    if (!this.sessionService.selectedCatalogues.includes(catalogue)) {
+      this.sessionService.selectedCatalogues.push(catalogue)
     } else {
-      this.sessionService.selectedDossiers = this.sessionService.selectedDossiers.filter((selectedDossier: any) => dossier.id != selectedDossier.id)
+      this.sessionService.selectedCatalogues = this.sessionService.selectedCatalogues.filter((selectedCatalogue: any) => catalogue.id != selectedCatalogue.id)
     }
   }
 
-  isMultipleSelectedDossier(dossier: any) {
+  isMultipleSelectedCatalogue(catalogue: any) {
 
   }
 

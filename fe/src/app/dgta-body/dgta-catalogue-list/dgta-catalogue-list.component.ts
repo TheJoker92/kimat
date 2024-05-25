@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 // import { DgtaOwnersModalComponent } from './dgta-owners-modal/dgta-owners-modal.component';
 // import { DgtaCollocationModalComponent } from './dgta-collocation-modal/dgta-collocation-modal.component';
 // import { DgtaHistoryModalComponent } from './dgta-history-modal/dgta-history-modal.component';
-// import { DgtaDocumentsModalComponent } from './dgta-documents-modal/dgta-documents-modal.component';
+// import { DgtaDossiersModalComponent } from './dgta-dossiers-modal/dgta-dossiers-modal.component';
 // import { DgtaTopicCardComponent } from '../dgta-topic-card/dgta-topic-card.component';
 import { HttpService } from '../../http.service';
 import { ICatalogue } from '../../interfaces/ICatalogue';
@@ -41,7 +41,7 @@ export class DgtaCatalogueListComponent {
   isOpenOwnersModal = false
   isOpenCollocationModal = false
   isOpenHistoryModal = false
-  isOpenDocumentsModal = false
+  isOpenDossiersModal = false
   isOpenInfoCatalogueModal = false
 
   selectedCatalogue: any
@@ -131,16 +131,16 @@ export class DgtaCatalogueListComponent {
     this.isOpenHistoryModal = false
   }
 
-  openDocumentsModal(catalogue: ICatalogue) {
+  openDossiersModal(catalogue: ICatalogue) {
     this.catalogue = catalogue
-    this.isOpenDocumentsModal = true
-    this.sessionService.isOpenDocumentsModal = true
+    this.isOpenDossiersModal = true
+    this.sessionService.isOpenDossiersModal = true
   }
 
-  closeDocumentsModal() {
+  closeDossiersModal() {
     this.catalogue = {}
-    this.isOpenDocumentsModal = false
-    this.sessionService.isOpenDocumentsModal = false
+    this.isOpenDossiersModal = false
+    this.sessionService.isOpenDossiersModal = false
   }
 
   openCatalogueInfo(catalogue: ICatalogue) {

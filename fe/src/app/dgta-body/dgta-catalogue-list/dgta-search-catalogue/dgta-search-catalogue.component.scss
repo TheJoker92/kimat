@@ -1,0 +1,63 @@
+input {
+    border: none;
+    width: 100%;
+    height: Fill (52px)px;
+    padding: 12px;
+    gap: 7px;
+    background: white;
+
+}
+
+input:focus {
+    border: none;
+    outline: none;
+}
+
+.search-container {
+    width: 90%;
+    max-width: 410px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: medium;
+    border-radius: 10px;
+    background: white;
+
+
+}
+
+.relative {
+    position: relative;
+    left: -30%;
+    color: red
+}
+
+
+
+
+.stop-scan {
+    display: flex;
+    position: absolute;
+    top: calc(100% - 62px);
+    color: white;
+    background: #E69800;
+    z-index: 10;
+    border-radius: 8px;
+
+}
+
+.stop-scan-btn {
+    background: #E69800;
+    color: white;
+    z-index: 10;
+    padding: 8px;
+    border: none;
+    width: 100vw;
+    font-size: large;
+    height: 62px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

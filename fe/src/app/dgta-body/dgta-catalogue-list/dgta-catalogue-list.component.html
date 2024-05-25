@@ -1,6 +1,6 @@
 <div class="row-center-center">
 
-    <div class="card-container w25p max-width410 pxcolumn-center-center min-w300px" [ngClass]="{'display-none':isOpenDocumentsModal}">
+    <div class="card-container w25p max-width410 pxcolumn-center-center min-w300px" [ngClass]="{'display-none':isOpenDossiersModal}">
         <!-- <div class="ml10px row-center-space-between p10px w100p">
             <div class="h20px w10p">
                 <h4 class="w100px">
@@ -21,7 +21,7 @@
             <div class="h20px w10p">
                 <h4>
                     <div class="column-center-center">
-                        documenti
+                        dossieri
                         <small class="opacity-0">(fisico)</small>
                     </div>
                 </h4>
@@ -71,7 +71,7 @@
                 <div class="row-center-space-between w100p cursor-pointer max-width410px" [ngClass]="{'selectedCatalogue': selectedCatalogue == catalogue}" (click)="selectCatalogue(catalogue)">
                     <div class="row-center-space-between">
                         <div class="row-center-left">
-                            <div *ngIf="!sessionService.activeSelect" class="cursor-pointer font-size-3em document-icon"></div>
+                            <div *ngIf="!sessionService.activeSelect" class="cursor-pointer font-size-3em dossier-icon"></div>
                             <input *ngIf="sessionService.activeSelect" type="checkbox" class="checkbox-round font-size-15em" (click)="multipleSelectedCatalogue(catalogue)" [checked]="isMultipleSelectedCatalogue(catalogue)" />
                             <div class="column-left-left ml5px w200px title-container">
                                 {{ catalogue.title }}
@@ -99,8 +99,8 @@
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <div class="cursor-pointer font-size-20em file-icon"
-                                    (click)="openDocumentsModal(catalogue)"></div>
-                                <small>documenti</small>
+                                    (click)="openDossiersModal(catalogue)"></div>
+                                <small>dossieri</small>
                             </div>
                         </div>
                         <div class="row-center-center w10p">
@@ -153,6 +153,6 @@
     <dgta-history-modal *ngIf="isOpenHistoryModal" [catalogue]="catalogue"
         (closeHistoryModalE)="closeHistoryModal()"></dgta-history-modal>
     
-    <dgta-documents-modal *ngIf="isOpenDocumentsModal" [catalogue]="catalogue"
-        (closeDocumentsModalE)="closeDocumentsModal()"></dgta-documents-modal>
+    <dgta-dossiers-modal *ngIf="isOpenDossiersModal" [catalogue]="catalogue"
+        (closeDossiersModalE)="closeDossiersModal()"></dgta-dossiers-modal>
 </div>

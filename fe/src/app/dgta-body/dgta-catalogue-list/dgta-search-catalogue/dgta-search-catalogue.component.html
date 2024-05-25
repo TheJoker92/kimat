@@ -1,0 +1,25 @@
+<div class="row-bottom-center p10px">
+    <div class="search-container row-center-center mt10px bkg-white">
+        <div class="p3px search-icon"></div>
+        <input type="text" name="" id="" (input)="onSearch($event)">
+        <div *ngIf="!isEnabledScan" class="row-center-bottom cursor-pointer" (click)="startScan()">
+            <div class="p3px font-size-15em barcode-icon"></div>
+            <!-- <fa-icon class="p3px relative" [icon]="faSearch"></fa-icon> -->
+        </div>
+    </div>
+    <div *ngIf="isEnabledScan" class="row-center-bottom cursor-pointer stop-scan" (click)="stopScan()">
+        <button class="stop-scan-btn">Chiudi</button>
+    </div>
+
+</div>
+
+<div *ngIf="isEnabledScan">
+    <zxing-scanner 
+    [formats]="allowedFormats"
+
+    (deviceChange)="onDeviceChange($event)"
+                        (scanSuccess)="onCodeResult($event)" (permissionResponse)="onHasPermission($event)"
+                        (camerasFound)="onCamerasFound($event)"
+                        (torchCompatible)="onTorchCompatible($event)">
+                    </zxing-scanner>
+</div>

@@ -1,0 +1,187 @@
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: small;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    justify-content: start;
+    color: white
+}
+
+.container {
+    position: absolute;
+    z-index: 10;
+    background: #F3F2F8;
+    height: 100vh;
+    width: 100vw;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-tutti {
+    background-image: linear-gradient(to right, rgb(221, 55, 55) , rgb(232, 100, 22));
+    filter: brightness(1.2);
+}
+
+.color-storia {
+    background-image: linear-gradient(to right, rgb(128, 0, 0), rgb(153, 51, 51));
+    box-shadow: 0 2px 4px rgba(128, 0, 0, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-scienze-naturali {
+    background-image: linear-gradient(to right, rgb(0, 51, 0), rgb(51, 102, 51));
+    box-shadow: 0 2px 4px rgba(0, 51, 0, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-scienze-fisiche {
+    background-image: linear-gradient(to right, rgb(0, 0, 51), rgb(51, 51, 102));
+    box-shadow: 0 2px 4px rgba(0, 0, 51, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-matematica {
+    background-image: linear-gradient(to right, rgb(102, 0, 102), rgb(153, 51, 153));
+    box-shadow: 0 2px 4px rgba(102, 0, 102, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-tecnologia {
+    background-image: linear-gradient(to right, rgb(0, 51, 102), rgb(51, 102, 153));
+    box-shadow: 0 2px 4px rgba(0, 51, 102, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-medicina-e-salute {
+    background-image: linear-gradient(to right, rgb(51, 0, 51), rgb(102, 51, 102));
+    box-shadow: 0 2px 4px rgba(51, 0, 51, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-psicologia {
+    background-image: linear-gradient(to right, rgb(51, 51, 0), rgb(102, 102, 51));
+    box-shadow: 0 2px 4px rgba(51, 51, 0, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-filosofia {
+    background-image: linear-gradient(to right, rgb(102, 51, 0), rgb(153, 102, 51));
+    box-shadow: 0 2px 4px rgba(102, 51, 0, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-letteratura {
+    background-image: linear-gradient(to right, rgb(51, 0, 0), rgb(102, 51, 51));
+    box-shadow: 0 2px 4px rgba(51, 0, 0, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-arte-e-design {
+    background-image: linear-gradient(to right, rgb(0, 51, 51), rgb(51, 102, 102));
+    box-shadow: 0 2px 4px rgba(0, 51, 51, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-economia {
+    background-image: linear-gradient(to right, rgb(51, 0, 102), rgb(102, 51, 153));
+    box-shadow: 0 2px 4px rgba(51, 0, 102, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-politica-e-relazioni-internazionali {
+    background-image: linear-gradient(to right, rgb(0, 51, 102), rgb(51, 102, 153));
+    box-shadow: 0 2px 4px rgba(0, 51, 102, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-ambiente-e-sostenibilità {
+    background-image: linear-gradient(to right, rgb(51, 0, 51), rgb(102, 51, 102));
+    box-shadow: 0 2px 4px rgba(51, 0, 51, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-educazione {
+    background-image: linear-gradient(to right, rgb(51, 51, 0), rgb(102, 102, 51));
+    box-shadow: 0 2px 4px rgba(51, 51, 0, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-religione-e-spiritualità {
+    background-image: linear-gradient(to right, rgb(102, 51, 102), rgb(153, 102, 153));
+    box-shadow: 0 2px 4px rgba(102, 51, 102, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-viaggi-e-avventura {
+    background-image: linear-gradient(to right, rgb(51, 102, 102), rgb(102, 153, 153));
+    box-shadow: 0 2px 4px rgba(51, 102, 102, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-cucina-e-alimentazione {
+    background-image: linear-gradient(to right, rgb(102, 102, 51), rgb(153, 153, 102));
+    box-shadow: 0 2px 4px rgba(102, 102, 51, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-musica-e-spettacolo {
+    background-image: linear-gradient(to right, rgb(102, 51, 51), rgb(153, 102, 102));
+    box-shadow: 0 2px 4px rgba(102, 51, 51, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-sport-e-fitness {
+    background-image: linear-gradient(to right, rgb(51, 102, 51), rgb(102, 153, 102));
+    box-shadow: 0 2px 4px rgba(51, 102, 51, 0.5);
+    filter: brightness(1.2);
+}
+
+.color-manuale-di-istruzioni-e-guide-pratiche {
+    background-image: linear-gradient(to right, rgb(51, 51, 102), rgb(102, 102, 153));
+    box-shadow: 0 2px 4px rgba(51, 51, 102, 0.5);
+    filter: brightness(1.2);
+}
+
+
+.text-container {
+    // color: white;
+    font-size: large;
+}
+
+h3 {
+    display: flex;
+    justify-content: left;
+    width: 343px;
+}
+
+button {
+    /* Button */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 22px 20px;
+
+    width: 350px !important;
+    height: 62px;
+
+    color:white;
+
+    background: #E69800;
+    border-radius: 8px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+    border: none;
+    font-size: 16px;
+}
