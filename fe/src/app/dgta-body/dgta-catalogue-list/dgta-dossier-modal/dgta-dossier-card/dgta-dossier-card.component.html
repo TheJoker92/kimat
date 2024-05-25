@@ -1,7 +1,7 @@
 <div class="row-center-center">
 
     <div class="card-container w25p max-width410 pxcolumn-center-center min-w300px"
-        [ngClass]="{'display-none':isOpenDossierModal}">
+        [ngClass]="{'display-none':isOpenDocumentsModal}">
         <!-- <div class="ml10px row-center-space-between p10px w100p">
             <div class="h20px w10p">
                 <h4 class="w100px">
@@ -67,24 +67,24 @@
                 </h4>
             </div>
         </div> -->
-        <div *ngFor="let catalogue of catalogues" class="row-center-space-between w100p mt10px catalogue-container">
+        <div *ngFor="let dossier of dossiers" class="row-center-space-between w100p mt10px dossier-container">
             <div class="column-center-center w100p">
                 <div class="row-center-space-between w100p cursor-pointer max-width410px"
-                    [ngClass]="{'selectedCatalogue': selectedCatalogue == catalogue}"
-                    (click)="selectCatalogue(catalogue)">
+                    [ngClass]="{'selectedDossier': selectedDossier == dossier}"
+                    (click)="selectDossier(dossier)">
                     <div class="row-center-space-between">
                         <div class="row-center-left">
-                            <div *ngIf="!sessionService.activeSelect" class="cursor-pointer font-size-3em folder-icon">
+                            <div *ngIf="!sessionService.activeSelect" class="cursor-pointer font-size-3em document-icon">
                             </div>
                             <input *ngIf="sessionService.activeSelect" type="checkbox"
-                                class="checkbox-round font-size-15em" (click)="multipleSelectedCatalogue(catalogue)"
-                                [checked]="isMultipleSelectedCatalogue(catalogue)" />
+                                class="checkbox-round font-size-15em" (click)="multipleSelectedDossier(dossier)"
+                                [checked]="isMultipleSelectedDossier(dossier)" />
                             <div class="column-left-left ml5px w200px title-container">
-                                {{ catalogue.title }}
+                                {{ dossier.title }}
                             </div>
                             <!-- <div class="row-center-left w10p">
                                 <div class="column-left-left">
-                                    <div *ngFor="let topic of catalogue.topics">
+                                    <div *ngFor="let topic of dossier.topics">
                                         {{ topic }}
                                     </div>
                                 </div>
@@ -100,41 +100,41 @@
 
                     </div>
                 </div>
-                <div *ngIf="selectedCatalogue == catalogue"
+                <div *ngIf="selectedDossier == dossier"
                     class="row-center-center w100p bkg-grey barcontainer max-width410px">
                     <div class="row-left-space-around w100p">
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <div class="cursor-pointer font-size-20em file-icon"
-                                    (click)="openDossierModal(catalogue)"></div>
+                                    (click)="openDocumentsModal(dossier)"></div>
                                 <small>dossier</small>
                             </div>
                         </div>
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <fa-icon class="cursor-pointer font-size-20em barcode-baricon"
-                                    (click)="openViewBarcodeModal(catalogue)"></fa-icon>
+                                    (click)="openViewBarcodeModal(dossier)"></fa-icon>
                                 <small>barcode</small>
                             </div>
                         </div>
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <div class="cursor-pointer font-size-20em history-baricon"
-                                    (click)="openHistoryModal(catalogue)"></div>
+                                    (click)="openHistoryModal(dossier)"></div>
                                 <small>storico</small>
                             </div>
                         </div>
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <div class="cursor-pointer font-size-20em location-baricon"
-                                    (click)="openCollocationModal(catalogue)"></div>
+                                    (click)="openCollocationModal(dossier)"></div>
                                 <small>posizione</small>
                             </div>
                         </div>
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
                                 <fa-icon class="cursor-pointer font-size-20em users-baricon"
-                                    (click)="openOwnersModal(catalogue)"></fa-icon>
+                                    (click)="openOwnersModal(dossier)"></fa-icon>
                                 <small>utenti</small>
                             </div>
                         </div>
@@ -143,25 +143,25 @@
 
             </div>
         </div>
-        <div *ngIf="catalogues.length == 0" class="row-center-center mt10px">
+        <div *ngIf="dossiers.length == 0" class="row-center-center mt10px">
             Nessun risultato
         </div>
     </div>
 
-    <dgta-barcode-catalogue-modal *ngIf="isOpenViewBarcodeModal" [catalogue]="catalogue"
-        (closeBarcodeViewModalE)="closeViewBarcodeModal()"></dgta-barcode-catalogue-modal>
+    <dgta-barcode-modal *ngIf="isOpenViewBarcodeModal" [dossier]="dossier"
+        (closeBarcodeViewModalE)="closeViewBarcodeModal()"></dgta-barcode-modal>
 
-    <dgta-history-catalogue-modal *ngIf="isOpenHistoryModal" [catalogue]="catalogue"
-        (closeHistoryModalE)="closeHistoryModal()"></dgta-history-catalogue-modal>
+    <dgta-history-modal *ngIf="isOpenHistoryModal" [dossier]="dossier"
+        (closeHistoryModalE)="closeHistoryModal()"></dgta-history-modal>
 
-    <dgta-collocation-catalogue-modal *ngIf="isOpenCollocationModal" [catalogue]="catalogue"
-        (closeCollocationModalE)="closeCollocationModal()"></dgta-collocation-catalogue-modal>
+    <dgta-collocation-modal *ngIf="isOpenCollocationModal" [dossier]="dossier"
+        (closeCollocationModalE)="closeCollocationModal()"></dgta-collocation-modal>
 
-    <dgta-owners-catalogue-modal *ngIf="isOpenOwnersModal" [catalogue]="catalogue"
-        (closeOwnersModalE)="closeOwnersModal()"></dgta-owners-catalogue-modal>
+    <dgta-owners-modal *ngIf="isOpenOwnersModal" [dossier]="dossier"
+        (closeOwnersModalE)="closeOwnersModal()"></dgta-owners-modal>
     
     
     
-    <dgta-dossier-modal *ngIf="isOpenDossierModal" [catalogue]="catalogue"
-        (closeModalE)="closeDossierModal()"></dgta-dossier-modal>
+    <!-- <dgta-dossiers-dossier-modal *ngIf="isOpenDocumentsModal" [dossier]="dossier"
+        (closeDocumentsModalE)="closeDocumentsModal()"></dgta-dossiers-dossier-modal> -->
 </div>

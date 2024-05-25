@@ -81,6 +81,7 @@ select {
 }
 
 
+
 button {
     /* Button */
 
@@ -105,6 +106,13 @@ button {
     flex-grow: 0;
     border: none;
     font-size: 16px;
+}
+
+
+.abs {
+  position: absolute;
+  top: calc(100% - 82px);
+  width: 310px !important;
 }
 
 
@@ -158,6 +166,6 @@ button {
   .container-form {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    // justify-content: space-between;
     height: 100%; 
   }

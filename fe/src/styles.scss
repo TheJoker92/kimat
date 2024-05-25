@@ -61,7 +61,7 @@ button {
     cursor: pointer;
 }
 
-dgta-home-card-dossier-form-modal fa-icon {
+dgta-home-card-catalogue-form-modal fa-icon {
     cursor: pointer;
 }
 
@@ -169,6 +169,9 @@ zxing-scanner  {
 }
 
 .container-steppoint {
+
+    position: absolute;
+    top: calc(100% - 90px);
     fa-icon {
       font-size: xx-small;
       color: #D9D9D9;
@@ -248,3 +251,9 @@ progress::-moz-progress-bar {
     height:30px;
     width:1px;
 }
+
+.barcontainer {
+    height: 74px !important;
+    position: absolute !important;
+    top: calc(100% - 74px) !important;
+  }

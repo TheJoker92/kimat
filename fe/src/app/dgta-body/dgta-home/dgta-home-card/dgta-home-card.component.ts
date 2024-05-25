@@ -16,11 +16,12 @@ import { DgtaBarcodeCatalogueModalComponent } from '../../dgta-catalogue-list/dg
 import { DgtaHistoryCatalogueModalComponent } from '../../dgta-catalogue-list/dgta-history-catalogue-modal/dgta-history-catalogue-modal.component';
 import { DgtaCollocationCatalogueModalComponent } from '../../dgta-catalogue-list/dgta-collocation-catalogue-modal/dgta-collocation-catalogue-modal.component';
 import { DgtaOwnersCatalogueModalComponent } from '../../dgta-catalogue-list/dgta-owners-catalogue-modal/dgta-owners-catalogue-modal.component';
+import { DgtaDossierModalComponent } from '../../dgta-catalogue-list/dgta-dossier-modal/dgta-dossier-modal.component';
 
 @Component({
   selector: 'dgta-home-card',
   standalone: true,
-  imports: [FontAwesomeModule, DgtaCatalogueFormModalComponent, DgtaBarcodeCatalogueModalComponent, DgtaHistoryCatalogueModalComponent, DgtaOwnersCatalogueModalComponent, DgtaCollocationCatalogueModalComponent, CommonModule, DgtaTopicCardComponent, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent, DgtaDocumentsModalComponent],
+  imports: [FontAwesomeModule, DgtaDossierModalComponent, DgtaCatalogueFormModalComponent, DgtaBarcodeCatalogueModalComponent, DgtaHistoryCatalogueModalComponent, DgtaOwnersCatalogueModalComponent, DgtaCollocationCatalogueModalComponent, CommonModule, DgtaTopicCardComponent, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent, DgtaDocumentsModalComponent],
   templateUrl: './dgta-home-card.component.html',
   styleUrl: './dgta-home-card.component.scss'
 })
@@ -45,7 +46,7 @@ export class DgtaHomeCardComponent {
   isOpenOwnersModal = false
   isOpenCollocationModal = false
   isOpenHistoryModal = false
-  isOpenDocumentsModal = false
+  isOpenDossierModal = false
   isOpenInfoCatalogueModal = false
 
   selectedCatalogue: any
@@ -128,15 +129,14 @@ export class DgtaHomeCardComponent {
     this.isOpenHistoryModal = false
   }
 
-  openDocumentsModal(catalogue: ICatalogue) {
+  openDossierModal(catalogue: ICatalogue) {
     this.catalogue = catalogue
-    this.isOpenDocumentsModal = true
-    this.sessionService.isOpenDocumentsModal = true
+    this.isOpenDossierModal = true
   }
 
-  closeDocumentsModal() {
+  closeDossierModal() {
     this.catalogue = {}
-    this.isOpenDocumentsModal = false
+    this.isOpenDossierModal = false
     this.sessionService.isOpenDocumentsModal = false
   }
 
