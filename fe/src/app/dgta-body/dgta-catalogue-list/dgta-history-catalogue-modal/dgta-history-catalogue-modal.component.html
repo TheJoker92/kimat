@@ -1,1 +1,105 @@
-<p>dgta-history-catalogue-modal works!</p>
+<div class="overlay">
+
+</div>
+<div class="container">
+    <div class="box-form column-center-spacebetween">
+        <div class="row-center-space-between w100p">
+            <div class="row-center-left cursor-pointer" (click)="closeHistoryModal()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Catalogo</small>
+            </div>
+            <div>
+                <h3 class="row-center-center">Storico</h3>
+            </div>
+            <div class="w-40px h10p">
+            </div>
+        </div>
+
+        <div class="row-center-space-between w100p mt40px">
+            <div class="row-center-center w100p cursor-pointer p10px" [ngClass]="{'selected': isSelectedInfo}" (click)="activeInfoTab()">
+                Info
+            </div>
+            <div class="row-center-center w100p cursor-pointer p10px" [ngClass]="{'selected': isSelectedLog}" (click)="activeLogTab()">
+                Log
+            </div>
+        </div>
+        <div *ngIf="isSelectedInfo" class="column-top-left w100p mt30px">
+            <div class="row-center-space-between w100p pt10px pb10px">
+                <div class="create-label">
+                    Creato da:
+                </div>
+                <div>
+                    {{ getUserFullName(history[0]) | defaultDash }}
+                </div>
+            </div>
+            <div class="row-center-space-between w100p pt10px pb10px">
+                <div class="create-label">
+                    Il:
+                </div>
+                <div>
+                    {{ formatDate(history[0].date!) | defaultDash}}
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isSelectedLog" class="column-top-left w100p mt30px">
+            <div class="row-center-space-between w100p header-table">
+                <div class=" pt10px pb10px">Utente</div>
+                <div class=" pt10px pb10px">Azione</div>
+                <div class=" pt10px pb10px">Data</div>
+            </div>
+            <div *ngFor="let log of history; index as index" class="column-center-center w100p pb10px pr10px w350px">
+                <div class="w100p row-center-space-between" [ngClass]="{'bkg-white': index % 2 == 0}">
+                    <div class="column-top-left p5px">
+                        <div>
+                            {{ getUserFirstName(log) | defaultDash }}
+                        </div>
+                        <div>
+                            {{ getUserLastName(log) | defaultDash }}
+                        </div>
+                    </div>
+                    <div class="p5px">
+                        {{ log.actionLog | defaultDash}}
+                    </div>
+                    <div class="column-top-left p5px">
+                        <div>
+                            {{ formatDate(log.date!) | defaultDash}}
+                        </div>
+                        <div class="row-center-right w100p">
+                            {{ formatHour(log.date!) | defaultDash}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="h450px overflow-auto">
+
+            <div *ngFor="let log of history" class="column-top-left mt10px ml10px w80p">
+                <div class="row-center-space-between">
+                    <strong>{{ log.actionLog | defaultDash}}</strong>
+                </div>
+                <div class="row-center-space-between">
+                    <div>
+                        {{ getUserFullName(log) | defaultDash }}
+                    </div>
+                </div>
+                <div class="row-center-space-between">
+                    {{ formatDate(log.date!) | defaultDash}}
+                </div>
+            </div>
+        </div>
+        <div class="box-form column-center-center">
+            <!-- <div class="row-center-space-between mb10px w80p">
+                <h4>
+                    azione
+                </h4>
+                <h4>
+                    nome
+                </h4>
+                <h4>
+                    data
+                </h4>                
+            </div> -->
+            
+        </div>
+    </div>
+</div>

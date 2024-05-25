@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faInfoCircle, faTrash, faFileLines, faBarcode, faClockRotateLeft, faUsers, faFolderClosed, faFolderOpen, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
-// import { DgtaBarcodeModalComponent } from './dgta-barcode-modal/dgta-barcode-modal.component';
 // import { DgtaOwnersModalComponent } from './dgta-owners-modal/dgta-owners-modal.component';
 // import { DgtaCollocationModalComponent } from './dgta-collocation-modal/dgta-collocation-modal.component';
 // import { DgtaHistoryModalComponent } from './dgta-history-modal/dgta-history-modal.component';
@@ -12,11 +11,12 @@ import { HttpService } from '../../http.service';
 import { ICatalogue } from '../../interfaces/ICatalogue';
 import { SessionService } from '../../session.service';
 import { DgtaCatalogueFormModalComponent } from './dgta-catalogue-form-modal/dgta-catalogue-form-modal.component';
+import { DgtaBarcodeCatalogueModalComponent } from './dgta-barcode-catalogue-modal/dgta-barcode-catalogue-modal.component';
 
 @Component({
   selector: 'dgta-catalogue-list',
   standalone: true,
-  imports: [DgtaCatalogueFormModalComponent],
+  imports: [DgtaCatalogueFormModalComponent, DgtaBarcodeCatalogueModalComponent],
   templateUrl: './dgta-catalogue-list.component.html',
   styleUrl: './dgta-catalogue-list.component.scss'
 })

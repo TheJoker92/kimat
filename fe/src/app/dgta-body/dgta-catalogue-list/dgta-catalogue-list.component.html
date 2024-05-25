@@ -141,8 +141,8 @@
         </div>
     </div>
     
-    <dgta-barcode-modal *ngIf="isOpenViewBarcodeModal" [catalogue]="catalogue"
-        (closeBarcodeViewModalE)="closeViewBarcodeModal()"></dgta-barcode-modal>
+    <dgta-barcode-catalogue-modal *ngIf="isOpenViewBarcodeModal" [catalogue]="catalogue"
+        (closeBarcodeViewModalE)="closeViewBarcodeModal()"></dgta-barcode-catalogue-modal>
     
     <dgta-owners-modal *ngIf="isOpenOwnersModal" [catalogue]="catalogue"
         (closeOwnersModalE)="closeOwnersModal()"></dgta-owners-modal>

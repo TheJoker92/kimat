@@ -12,11 +12,15 @@ import { DgtaTopicCardComponent } from '../dgta-topic-card/dgta-topic-card.compo
 import { SessionService } from '../../../session.service';
 import { ICatalogue } from '../../../interfaces/ICatalogue';
 import { DgtaCatalogueFormModalComponent } from '../../dgta-catalogue-list/dgta-catalogue-form-modal/dgta-catalogue-form-modal.component';
+import { DgtaBarcodeCatalogueModalComponent } from '../../dgta-catalogue-list/dgta-barcode-catalogue-modal/dgta-barcode-catalogue-modal.component';
+import { DgtaHistoryCatalogueModalComponent } from '../../dgta-catalogue-list/dgta-history-catalogue-modal/dgta-history-catalogue-modal.component';
+import { DgtaCollocationCatalogueModalComponent } from '../../dgta-catalogue-list/dgta-collocation-catalogue-modal/dgta-collocation-catalogue-modal.component';
+import { DgtaOwnersCatalogueModalComponent } from '../../dgta-catalogue-list/dgta-owners-catalogue-modal/dgta-owners-catalogue-modal.component';
 
 @Component({
   selector: 'dgta-home-card',
   standalone: true,
-  imports: [FontAwesomeModule, DgtaCatalogueFormModalComponent, CommonModule, DgtaTopicCardComponent, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent, DgtaDocumentsModalComponent],
+  imports: [FontAwesomeModule, DgtaCatalogueFormModalComponent, DgtaBarcodeCatalogueModalComponent, DgtaHistoryCatalogueModalComponent, DgtaOwnersCatalogueModalComponent, DgtaCollocationCatalogueModalComponent, CommonModule, DgtaTopicCardComponent, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent, DgtaDocumentsModalComponent],
   templateUrl: './dgta-home-card.component.html',
   styleUrl: './dgta-home-card.component.scss'
 })
