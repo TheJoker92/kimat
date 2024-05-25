@@ -29,6 +29,7 @@ with open('.env', 'r') as file:
     PASSWORD_SENDER = lines[3].replace("\n","")
 
 import users
+import catalogues
 import dossiers
 import documents
 import metadata
@@ -155,7 +156,9 @@ def delete_user(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 200
 
-#CATALOGUES
+
+
+#DOSSIERS
 # Create operation
 @app.route('/api/dossiers/add', methods=['POST'])
 @cross_origin(supports_credentials=True)
@@ -185,6 +188,37 @@ def getDossiers():
     data = request.json
     
     return dossiers.getDossiers(data, BASE_URL)
+
+#CATALOGUE
+# Create operation
+@app.route('/api/catalogues/add', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def create_catalogue():
+    print("START ADD CATALOGUE")
+    data = request.json    
+    
+    return jsonify(catalogues.create_catalogue(data, BASE_URL)), 200
+
+@app.route('/api/catalogues/delete', methods=['POST'])
+def deleteCatalogue():
+    print("START DELETE CATALOGUE")
+    data = request.json
+    
+    return catalogues.delete_catalogue(data, BASE_URL)
+
+@app.route('/api/catalogues/update', methods=['PUT'])
+def update_catalogue():
+    print("START CATALOGUE UPDATE")
+    data = request.json
+    
+    return jsonify(catalogues.update_catalogue(data, BASE_URL)), 200
+
+@app.route('/api/catalogues/getCatalogues', methods=['POST'])
+def getCatalogues():
+    print("START GET CATALOGUES")
+    data = request.json
+    
+    return catalogues.getCatalogues(data, BASE_URL)
 
 # Documents operation
 # Read operation

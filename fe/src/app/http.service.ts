@@ -43,7 +43,7 @@ export class HttpService {
   }
 
   /**
-   * CATALOGUES
+   * DOSSIERS
    */
   getDossiers(payload: any) {
     return this.http.post(this.buildURL("dossiers/", this.data.dossier.getDossiers), payload)
@@ -57,6 +57,23 @@ export class HttpService {
     return this.http.post(this.buildURL("dossiers/", this.data.dossier.delete), payload, this.httpOptions)
   }
 
+
+  /**
+   * CATALOGUES
+   */
+  getCatalogues(payload: any) {
+    return this.http.post(this.buildURL("catalogues/", this.data.catalogue.getCatalogues), payload)
+  }
+  
+  addCatalogue(payload: any) {
+    return this.http.post(this.buildURL("catalogues/", this.data.catalogue.add), payload, this.httpOptions)
+  }
+
+  deleteCatalogue(payload: any) {
+    return this.http.post(this.buildURL("catalogues/", this.data.catalogue.delete), payload, this.httpOptions)
+  }
+
+  
   /**
    * DOCUMENTS
    */

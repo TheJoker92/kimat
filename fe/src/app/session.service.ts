@@ -9,6 +9,9 @@ import { IDossier } from './interfaces/IDossier';
 })
 export class SessionService {
 
+  selectedCatalogues: any[] = []
+  activeSelectCatalogue= false
+
   selectedDossiers: any[] = []
   activeSelect = false
 

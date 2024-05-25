@@ -7,7 +7,13 @@
     "endpoints": {
         "user": {
             "login": "login",
-            "getUser": "getUser"
+            "getUser": "getUser",
+            "create": "create"
+        },
+        "catalogue": {
+            "add": "add",
+            "getCatalogues": "getCatalogues",
+            "delete": "delete"
         },
         "dossier": {
             "add": "add",
