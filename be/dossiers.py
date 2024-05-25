@@ -44,6 +44,7 @@ def getDossiers(data, BASE_URL):
         print(data)
 
         query = ""
+        query += "parentId%3A" + data["parentId"] + "%0A"
         if "id" in data.keys():
             query += "id%3A" + data["id"] + "%0A"
         if "title" in data.keys():

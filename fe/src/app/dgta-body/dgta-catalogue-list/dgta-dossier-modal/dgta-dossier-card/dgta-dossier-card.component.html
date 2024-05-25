@@ -107,7 +107,7 @@
                             <div class="column-center-center">
                                 <div class="cursor-pointer font-size-20em file-icon"
                                     (click)="openDocumentsModal(dossier)"></div>
-                                <small>dossier</small>
+                                <small>documenti</small>
                             </div>
                         </div>
                         <div class="row-center-center w10p">
@@ -162,6 +162,8 @@
     
     
     
-    <!-- <dgta-dossiers-dossier-modal *ngIf="isOpenDocumentsModal" [dossier]="dossier"
-        (closeDocumentsModalE)="closeDocumentsModal()"></dgta-dossiers-dossier-modal> -->
+    
+<dgta-documents-modal *ngIf="isOpenDocumentsModal"
+[dossier]="dossier"
+(closeDocumentsModalE)="closeDocumentsModal()"></dgta-documents-modal>
 </div>

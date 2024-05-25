@@ -161,3 +161,8 @@ button {
     justify-content: space-between;
     height: 100%; 
   }
+
+  .absolute-pos {
+    position: absolute;
+    top: calc(100% - 80px);
+}

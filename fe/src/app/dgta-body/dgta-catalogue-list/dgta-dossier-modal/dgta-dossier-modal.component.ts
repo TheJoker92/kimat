@@ -16,11 +16,12 @@ import { ICatalogue } from '../../../interfaces/ICatalogue';
 import { DgtaDossierCardComponent } from './dgta-dossier-card/dgta-dossier-card.component';
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { DgtaDocumentsModalComponent } from '../../dgta-home/dgta-home-card/dgta-documents-modal/dgta-documents-modal.component';
 
 @Component({
   selector: 'dgta-dossier-modal',
   standalone: true,
-  imports: [DgtaHomeCardComponent, CommonModule, DgtaDossierCardComponent, DgtaTopicCardComponent, DgtaHomeCardDossierFormModalComponent, FontAwesomeModule, DgtaSearchDossierComponent, DeleteMassiveDossierComponent],
+  imports: [DgtaHomeCardComponent, CommonModule, DgtaDocumentsModalComponent, DgtaDossierCardComponent, DgtaTopicCardComponent, DgtaHomeCardDossierFormModalComponent, FontAwesomeModule, DgtaSearchDossierComponent, DeleteMassiveDossierComponent],
   templateUrl: './dgta-dossier-modal.component.html',
   styleUrl: './dgta-dossier-modal.component.scss'
 })
@@ -30,6 +31,8 @@ export class DgtaDossierModalComponent {
   @Output() closeModalE = new EventEmitter()
 
   isOpenDossierFormModal = false
+
+  isOpenDocumentsModal = false
 
   faFolderPlus = faFolderPlus
 
@@ -52,6 +55,9 @@ export class DgtaDossierModalComponent {
 
   constructor(public sessionService: SessionService,
     private http: HttpService) {
+  }
+
+  ngOnInit() {
     this.getDossiers()
   }
 
@@ -80,6 +86,8 @@ export class DgtaDossierModalComponent {
 
   getDossiers(topic?: string) {
     this.deactiveSelectMode()
+
+    this.sessionService.terms["parentId"] = this.catalogue.id
     
     this.http.getDossiers(this.sessionService.terms).subscribe({
       next: (response: any) => {

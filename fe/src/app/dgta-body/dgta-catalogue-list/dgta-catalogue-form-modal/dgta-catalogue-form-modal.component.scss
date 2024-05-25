@@ -56,6 +56,10 @@ select {
     color: black
 }
 
+.w110px {
+  width: 110px !important;
+}
+
 
 /* Placeholder */
 ::placeholder {
@@ -109,63 +113,37 @@ button {
 }
 
 
-.abs {
+.select-category {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8.5px 7px;
+  gap: 10px;
+
+  width: 80px;
+  height: 32px;
+
+  background: #E69800;
+  border-radius: 8px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  border: none;
+  color: white;
+  font-size: medium;
+}
+
+.absolute-pos {
   position: absolute;
-  top: calc(100% - 82px);
+  top: calc(100% - 80px);
   width: 310px !important;
 }
 
+.input-50p {
+  width: 90px !important;
 
-.custom-select {
-    position: relative;
-    display: inline-block;
-    width: 200px;
-    height: 40px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  
-  /* Style for the select options */
-  .custom-select select {
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  
-  /* Style for the select arrow */
-  .custom-select .arrow {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    pointer-events: none;
-  }
-  
-
-  .bloc {
-    display: inline-block;
-    vertical-align: top;
-    overflow: hidden;
-    border: solid grey 1px;
-  }
-  
-  .bloc select {
-    padding: 10px;
-    margin: -5px -20px -5px -5px;
-  }
-
-  .input-50p {
-    width: 138px !important;
-  }
-
-  .container-form {
-    display: flex;
-    flex-direction: column;
-    // justify-content: space-between;
-    height: 100%; 
-  }
+}

@@ -10,12 +10,13 @@ import { DgtaTopicCardComponent } from '../../../dgta-home/dgta-topic-card/dgta-
 import { HttpService } from '../../../../http.service';
 import { IDossier } from '../../../../interfaces/IDossier';
 import { SessionService } from '../../../../session.service';
+import { DgtaDocumentsModalComponent } from '../../../dgta-home/dgta-home-card/dgta-documents-modal/dgta-documents-modal.component';
 
 
 @Component({
   selector: 'dgta-dossier-card',
   standalone: true,
-  imports: [FontAwesomeModule, DgtaHistoryModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, CommonModule, DgtaTopicCardComponent, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent],
+  imports: [FontAwesomeModule, DgtaDocumentsModalComponent, DgtaHistoryModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, CommonModule, DgtaTopicCardComponent, DgtaBarcodeModalComponent, DgtaOwnersModalComponent, DgtaCollocationModalComponent, DgtaHistoryModalComponent],
   templateUrl: './dgta-dossier-card.component.html',
   styleUrl: './dgta-dossier-card.component.scss'
 })

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as rawData from '../../../../../assets/enum.json';
 import { CommonModule } from '@angular/common';
 import { IDossier } from '../../../../interfaces/IDossier';
@@ -21,6 +21,7 @@ import { IPlace } from '../../../../interfaces/IPlace';
 })
 
 export class DgtaHomeCardDossierFormModalComponent {
+  @Input() catalogue: any
   @Output() closeDossierFormModalE = new EventEmitter()
   @Output() getDossiersE = new EventEmitter()
 
@@ -122,6 +123,7 @@ export class DgtaHomeCardDossierFormModalComponent {
     if (this.isValidPalace && this.isValidFloor &&this.isValidSector && this.isValidRack && this.isValidRoom && this.isValidPosition) {
 
       let payload: any = {
+        parentId: this.catalogue.id,
         title: this.title,
         topics: JSON.stringify(this.topics),
         documents: JSON.stringify([]),

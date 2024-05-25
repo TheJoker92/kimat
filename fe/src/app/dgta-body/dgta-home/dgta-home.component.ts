@@ -173,7 +173,9 @@ export class DgtaHomeComponent {
             this.sessionService.selectedCatalogues = this.sessionService.selectedCatalogues.filter((selectedCatalogue: any) => selectedCatalogue.id != catalogue.id)
             
             if (this.sessionService.selectedCatalogues.length == 0) {
-              window.location.reload()
+              setTimeout(() => {
+                window.location.reload()
+              },1000)
             }
           } else {
             alert("Qualcosa è andato storto")

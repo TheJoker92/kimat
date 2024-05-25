@@ -52,6 +52,7 @@
     </div>
     
     <dgta-home-card-dossier-form-modal *ngIf="isOpenDossierFormModal"
+        [catalogue]="catalogue"
         (closeDossierFormModalE)="closeDossierFormModal()"
         (getDossiersE)="getDossiers()"></dgta-home-card-dossier-form-modal>
     

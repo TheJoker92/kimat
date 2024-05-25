@@ -68,3 +68,10 @@ button {
     border: none;
     font-size: 16px;
 }
+
+.absolute-pos {
+    height: 74px;
+    position: fixed;
+    top: calc(100% - 74px);
+    left:0%;
+}

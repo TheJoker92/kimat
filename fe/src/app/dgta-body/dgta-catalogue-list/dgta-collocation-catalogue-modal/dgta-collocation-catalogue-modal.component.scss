@@ -83,3 +83,8 @@ button {
     color: white;
     font-size: medium;
 }
+
+.absolute-pos {
+    position: absolute;
+    top: calc(100% - 80px);
+}
