@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faInfoCircle, faTrash, faFileLines, faBarcode, faClockRotateLeft, faUsers, faFolderClosed, faFolderOpen, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
@@ -23,6 +23,7 @@ import { DgtaDocumentsModalComponent } from '../../../dgta-home/dgta-home-card/d
 export class DgtaDossierCardComponent {
   @Input() isAdd = false
   @Input() dossiers: IDossier[] = []
+  @Output() goToDocumentsE = new EventEmitter<any>()
 
   dossier: IDossier = {}
 
@@ -125,12 +126,12 @@ export class DgtaDossierCardComponent {
 
   openDocumentsModal(dossier: IDossier) {
     this.dossier = dossier
-    this.isOpenDocumentsModal = true
+    // this.isOpenDocumentsModal = true 
+    this.goToDocumentsE.emit(dossier)
     this.sessionService.isOpenDocumentsModal = true
   }
 
   closeDocumentsModal() {
-    this.dossier = {}
     this.isOpenDocumentsModal = false
     this.sessionService.isOpenDocumentsModal = false
   }

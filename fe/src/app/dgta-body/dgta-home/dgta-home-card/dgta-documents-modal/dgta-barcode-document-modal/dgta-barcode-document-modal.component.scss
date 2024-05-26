@@ -70,8 +70,6 @@ button {
 }
 
 .absolute-pos {
-    height: 74px;
-    position: fixed;
-    top: calc(100% - 74px);
-    left:0%;
+    position: absolute;
+    top: calc(100% - 80px);
 }

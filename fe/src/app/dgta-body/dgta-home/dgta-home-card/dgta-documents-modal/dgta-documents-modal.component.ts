@@ -543,10 +543,12 @@ export class DgtaDocumentsModalComponent {
   }
 
   selectDocument(documentListed: any) {
-    if (this.selectedDocument == documentListed){
-      this.selectedDocument = undefined
-    } else {
-      this.selectedDocument = documentListed
+    if (!this.sessionService.activeSelectDocument) {
+      if (this.selectedDocument == documentListed){
+        this.selectedDocument = undefined
+      } else {
+        this.selectedDocument = documentListed
+      }
     }
   }
 

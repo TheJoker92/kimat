@@ -191,9 +191,11 @@ ngx-barcode6 svg {
     width: 27%;
 }
 
-dgta-home-card {
+dgta-home-card,
+dgta-dossier-card {
     width: 100vw;
 }
+
 
 .w50p {
     width: 50%;
@@ -221,11 +223,12 @@ ngx-barcode6 svg {
     height: 400px;
 }
 
-dgta-home .container-scroll{
+dgta-home .container-scroll,
+dgta-dossier-modal .container-scroll,
+dgta-documents-modal .container-scroll {
     overflow: auto;
     // height: 81vh;
 }
-
 .w30p {
     width: 30%;
 }

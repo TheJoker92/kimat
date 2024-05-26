@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { DgtaHomeCardComponent } from './dgta-home-card/dgta-home-card.component';
 import { SessionService } from '../../session.service';
 import { HttpService } from '../../http.service';
@@ -22,6 +22,9 @@ import { DgtaTopicCardCatalogueComponent } from '../dgta-catalogue-list/dgta-top
   styleUrl: './dgta-home.component.scss'
 })
 export class DgtaHomeComponent {
+
+  @Output() goToDossierE = new EventEmitter<any>()
+
   isOpenCatalogueFormModal = false
 
   faFolderPlus = faFolderPlus
@@ -189,6 +192,10 @@ export class DgtaHomeComponent {
       alert("Non sei autorizzato ad effettuare l'operazione")
     }
     
+  }
+
+  goToDossier(catalogue: any) {
+    this.goToDossierE.emit(catalogue)
   }
 }
 

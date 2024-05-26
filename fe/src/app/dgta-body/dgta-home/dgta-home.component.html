@@ -28,7 +28,7 @@
         [catalogues]="catalogues" [numTopics]="numTopics" (closeFilterModalE)="hideTopics()"
         (getCataloguesByTopicE)="getCatalogues($event)"></dgta-topic-card-catalogue>
     <div class="column-top-right">
-        <dgta-home-card class="row-center h10vh" [catalogues]="catalogues"></dgta-home-card>
+        <dgta-home-card class="row-center h10vh" [catalogues]="catalogues" (goToDossierE)="goToDossier($event)"></dgta-home-card>
     </div>
 </div>
 

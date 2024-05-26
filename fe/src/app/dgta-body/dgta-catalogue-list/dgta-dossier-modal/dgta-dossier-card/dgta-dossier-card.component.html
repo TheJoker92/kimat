@@ -1,72 +1,7 @@
 <div class="row-center-center">
 
     <div class="card-container w25p max-width410 pxcolumn-center-center min-w300px"
-        [ngClass]="{'display-none':isOpenDocumentsModal}">
-        <!-- <div class="ml10px row-center-space-between p10px w100p">
-            <div class="h20px w10p">
-                <h4 class="w100px">
-                    <div class="column-left-center">
-                        nome
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-left-center">
-                        argomento/i
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        documenti
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        barcode
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        cronologia
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        collocamento
-                        <small>(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        proprietario/i
-                    </div>
-                    <small class="opacity-0">(fisico)</small>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                    </div>
-                    <small class="opacity-0">(fisico)</small>
-                </h4>
-            </div>
-        </div> -->
+        >
         <div *ngFor="let dossier of dossiers" class="row-center-space-between w100p mt10px dossier-container">
             <div class="column-center-center w100p">
                 <div class="row-center-space-between w100p cursor-pointer max-width410px"
@@ -74,7 +9,7 @@
                     (click)="selectDossier(dossier)">
                     <div class="row-center-space-between">
                         <div class="row-center-left">
-                            <div *ngIf="!sessionService.activeSelect" class="cursor-pointer font-size-3em document-icon">
+                            <div *ngIf="!sessionService.activeSelect" class="cursor-pointer font-size-3em file-icon">
                             </div>
                             <input *ngIf="sessionService.activeSelect" type="checkbox"
                                 class="checkbox-round font-size-15em" (click)="multipleSelectedDossier(dossier)"
@@ -105,7 +40,7 @@
                     <div class="row-left-space-around w100p">
                         <div class="row-center-center w10p">
                             <div class="column-center-center">
-                                <div class="cursor-pointer font-size-20em file-icon"
+                                <div class="cursor-pointer font-size-20em pdf-file-icon"
                                     (click)="openDocumentsModal(dossier)"></div>
                                 <small>documenti</small>
                             </div>
@@ -159,11 +94,4 @@
 
     <dgta-owners-modal *ngIf="isOpenOwnersModal" [dossier]="dossier"
         (closeOwnersModalE)="closeOwnersModal()"></dgta-owners-modal>
-    
-    
-    
-    
-<dgta-documents-modal *ngIf="isOpenDocumentsModal"
-[dossier]="dossier"
-(closeDocumentsModalE)="closeDocumentsModal()"></dgta-documents-modal>
 </div>

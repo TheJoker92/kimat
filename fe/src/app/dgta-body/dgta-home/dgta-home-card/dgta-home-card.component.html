@@ -2,71 +2,6 @@
 
     <div class="card-container w25p max-width410 pxcolumn-center-center min-w300px"
         [ngClass]="{'display-none':isOpenDossierModal}">
-        <!-- <div class="ml10px row-center-space-between p10px w100p">
-            <div class="h20px w10p">
-                <h4 class="w100px">
-                    <div class="column-left-center">
-                        nome
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-left-center">
-                        argomento/i
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        documenti
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        barcode
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        cronologia
-                        <small class="opacity-0">(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        collocamento
-                        <small>(fisico)</small>
-                    </div>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                        proprietario/i
-                    </div>
-                    <small class="opacity-0">(fisico)</small>
-                </h4>
-            </div>
-            <div class="h20px w10p">
-                <h4>
-                    <div class="column-center-center">
-                    </div>
-                    <small class="opacity-0">(fisico)</small>
-                </h4>
-            </div>
-        </div> -->
         <div *ngFor="let catalogue of catalogues" class="row-center-space-between w100p mt10px catalogue-container">
             <div class="column-center-center w100p">
                 <div class="row-center-space-between w100p cursor-pointer max-width410px"
@@ -159,9 +94,4 @@
 
     <dgta-owners-catalogue-modal *ngIf="isOpenOwnersModal" [catalogue]="catalogue"
         (closeOwnersModalE)="closeOwnersModal()"></dgta-owners-catalogue-modal>
-    
-    
-    
-    <dgta-dossier-modal *ngIf="isOpenDossierModal" [catalogue]="selectedCatalogue"
-        (closeModalE)="closeDossierModal()"></dgta-dossier-modal>
 </div>

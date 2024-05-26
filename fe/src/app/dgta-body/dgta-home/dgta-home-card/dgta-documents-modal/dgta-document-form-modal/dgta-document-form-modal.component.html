@@ -164,11 +164,11 @@
                             <fa-icon *ngIf="stepSingleAdd < 3" class="p3px" [ngClass]="{'fa-icon-enabled': stepSingleAdd==2}"
                                 [icon]="faCircle"></fa-icon>
                         </div>
-                        <button *ngIf="stepSingleAdd == 1" class="mt10px mb10px" (click)="nextstepSingleAdd()">Avanti</button>
-                        <button *ngIf="stepSingleAdd == 2" class="mt10px mb10px" (click)="addDocument()">Conferma</button>
+                        <button *ngIf="stepSingleAdd == 1" class="mt10px mb10px absolute-pos" (click)="nextstepSingleAdd()">Avanti</button>
+                        <button *ngIf="stepSingleAdd == 2" class="mt10px mb10px absolute-pos" (click)="addDocument()">Conferma</button>
                     </div>
                 </div>
-                <button *ngIf="stepSingleAdd == 3" class="mt10px" (click)="cancel()">Torna alla home</button>
+                <button *ngIf="stepSingleAdd == 3" class="mt10px absolute-pos" (click)="cancel()">Torna alla home</button>
             </div>
         </div>
         <div *ngIf="isMultiple" class="column-center-center w100p">

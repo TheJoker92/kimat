@@ -29,6 +29,7 @@ export class DgtaDossierModalComponent {
 
   @Input() catalogue: any
   @Output() closeModalE = new EventEmitter()
+  @Output() goToDocumentsE = new EventEmitter<any>()
 
   isOpenDossierFormModal = false
 
@@ -59,6 +60,10 @@ export class DgtaDossierModalComponent {
 
   ngOnInit() {
     this.getDossiers()
+  }
+
+  goToDocuments(dossier: any) {
+    this.goToDocumentsE.emit(dossier)
   }
 
   isParsable(inputString: string): boolean {

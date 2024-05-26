@@ -287,3 +287,8 @@ button {
   position: relative;
   bottom: 70px;
 }
+
+.absolute-pos {
+  position: absolute;
+  top: calc(100% - 80px);
+}

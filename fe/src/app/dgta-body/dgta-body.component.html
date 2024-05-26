@@ -1,6 +1,14 @@
 <div class="row-center-center h-100" [ngClass]="{'bkg-login':!sessionService.user}">
     <dgta-login *ngIf="!sessionService.user"></dgta-login>
-    <dgta-home *ngIf="sessionService.user"></dgta-home>
+    <dgta-home *ngIf="sessionService.user && isOpenCatalogue" (goToDossierE)="fromCatalogeToDossier($event)"></dgta-home>
+    <dgta-dossier-modal *ngIf="sessionService.user && isOpenDossier" [catalogue]="selectedCatalogue"
+        (closeModalE)="fromDossierToCatalogue()"
+        (goToDocumentsE)="fromDossierToDocument($event)"></dgta-dossier-modal>
+
+    <dgta-documents-modal *ngIf="sessionService.user && isOpenDocuments" [dossier]="selectedDossier"
+        (closeDocumentsModalE)="fromDocumenToDossier()"
+        (goToDocumentsE)="fromDossierToDocument($event)"></dgta-documents-modal>
+    
 </div>
 
 <dgta-loading *ngIf="loadingService.isLoading"></dgta-loading>

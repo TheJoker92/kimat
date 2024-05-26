@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faInfoCircle, faTrash, faFileLines, faBarcode, faClockRotateLeft, faUsers, faFolderClosed, faFolderOpen, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
@@ -29,6 +29,8 @@ export class DgtaHomeCardComponent {
 
   @Input() isAdd = false
   @Input() catalogues: ICatalogue[] = []
+
+  @Output() goToDossierE = new EventEmitter<any>()
 
   catalogue: ICatalogue = {}
 
@@ -131,7 +133,7 @@ export class DgtaHomeCardComponent {
 
   openDossierModal(catalogue: ICatalogue) {
     this.catalogue = catalogue
-    this.isOpenDossierModal = true
+    this.goToDossierE.emit(catalogue)
   }
 
   closeDossierModal() {
