@@ -41,18 +41,6 @@
         </div>
         <div *ngIf="srcPdf" class="row-center-left">
             <div class="box-form column-center-left">
-                <div *ngIf="isAuthenticated" class="row-center-space-between w100p maxw360px">
-                    <div class="row-center-left cursor-pointer" (click)="close()">
-                        <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
-                        <small>Indietro</small>
-                    </div>
-                    <div>
-                        <h3 class="row-center-center">Documento digitale</h3>
-                    </div>
-                    <div  (click)="getOcr()">
-                        <button class="button-ocr">Estrai dati</button>
-                    </div>
-                </div>
                 <!-- <h4 class="ml10px">{{ document.name }}</h4> -->
                 <div class="file-viewer-container">
                     <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false"
