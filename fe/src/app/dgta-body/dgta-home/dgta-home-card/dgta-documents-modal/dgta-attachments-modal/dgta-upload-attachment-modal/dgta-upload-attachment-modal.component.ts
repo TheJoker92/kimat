@@ -8,20 +8,29 @@ import { SessionService } from '../../../../../../session.service';
 import { CommonModule } from '@angular/common';
 import { DgtaCameraAcquireModalComponent } from './dgta-camera-acquire-modal/dgta-camera-acquire-modal.component';
 import { DgtaScannerlistModalComponent } from './dgta-scannerlist-modal/dgta-scannerlist-modal.component';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'dgta-upload-attachment-modal',
   standalone: true,
-  imports: [CommonModule, DgtaCameraAcquireModalComponent, DgtaScannerlistModalComponent],
+  imports: [CommonModule, FontAwesomeModule, DgtaCameraAcquireModalComponent, DgtaScannerlistModalComponent],
   templateUrl: './dgta-upload-attachment-modal.component.html',
   styleUrl: './dgta-upload-attachment-modal.component.scss'
 })
 export class DgtaUploadAttachmentModalComponent {
   @Input() document: IDocument = {}
-  @Output() closeUpdateCollocationModalE = new EventEmitter()
+  @Input() attachmentPdf: any = {}
+  @Output() closeUploadAttachmentModalE = new EventEmitter()
   @Output() attachmentPdfE = new EventEmitter<IAttachment>()
 
-  attachmentPdf: IAttachment = {}
+  faChevronLeft = faChevronLeft
+
+  @Input() startUpload = false
+  @Input() step = 1
+
+  multipleFiles = []
+
 
   place: IPlace | any = {}
 
@@ -34,8 +43,12 @@ export class DgtaUploadAttachmentModalComponent {
 
     }
 
+  ngOnChanges() {
+    console.log(this.attachmentPdf.progressUpload)
+  }
+
   cancel() {
-    this.closeUpdateCollocationModalE.emit()
+    this.closeUploadAttachmentModalE.emit()
   }
 
   loadFile(ext: string) {
@@ -100,5 +113,22 @@ export class DgtaUploadAttachmentModalComponent {
       },
 
     }
+  }
+
+  delete() {
+    this.attachmentPdf = {}
+  }
+
+  
+
+  getReducedLabelName(label: string) {
+    let result = label
+
+    if (result.length > 20) {
+      result = label.replace(".pdf", "").substring(0, 20) + "..."
+    }
+
+
+    return result
   }
 }

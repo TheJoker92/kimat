@@ -14,8 +14,11 @@
             <div>
                 <h3 class="row-center-center">Documento digitale</h3>
             </div>
-            <div  (click)="getOcr()">
+            <div *ngIf="srcPdf"  (click)="getOcr()">
                 <button class="button-ocr">Estrai dati</button>
+            </div>
+            <div *ngIf="!srcPdf"  (click)="openUploadAttachmentModal()">
+                <button class="button-ocr">Upload</button>
             </div>
         </div>
         <div *ngIf="!isAuthenticated" class="column-center-center w100p">
@@ -41,74 +44,19 @@
         </div>
         <div *ngIf="srcPdf" class="row-center-left">
             <div class="box-form column-center-left">
-                <!-- <h4 class="ml10px">{{ document.name }}</h4> -->
                 <div class="file-viewer-container">
                     <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false"
                         style="width: 100vw; height: 100vh"></pdf-viewer>
                 </div>
             </div>
-            <!-- <div class="column-left-left ml10px">
-                <h4>Informazioni generali</h4>
-                <div class="row-center-left">
-                    Nome: {{ document.name }}
-                </div>
-                <div>
-                    Numero di pagine: {{ numOfPages }}
-                </div>
-                <div class="row-center-left">
-                    <div class="column-top-left">
-                        Posizione:
-                        <small>(fisica)</small>
-                    </div>
-                        <div class="column-top-left mt10px mb10px">
-                            <div>
-                                edificio: {{ getPositionLabel('palace') }}
-                            </div>
-                            <div>
-                                piano: {{ getPositionLabel('floor')}}
-                            </div>
-                            <div>
-                                stanza: {{ getPositionLabel('room')}}
-                            </div>
-                            <div>
-                                scaffale: {{ getPositionLabel('rack') }}
-                            </div>
-                            <div>
-                                settore: {{ getPositionLabel('sector') }}
-                            </div>
-                            <div>
-                                posizione{{ getPositionLabel('position') }}
-                            </div>
-    
-                        </div>
-                </div>
-                <div>
-                    Data di creazione: {{ formatDate(document.history![0]!.date!) }}
-                </div>
-                <div class="row-center-left mt10px">
-                    <div class="column-left-left">
-                        <strong>
-                            proprietario/i:
-                        </strong>
-                        <div *ngFor="let owner of document.owners">
-                            {{ owner.firstName }} {{ owner.lastName }}
-                        </div>
-                    </div>
-                </div>
-                <div class="row-center-left">
-                    <div class="column-left-left">
-                        <strong>ultima visualizzazione:</strong>
-                        <div>{{ getLastViewFullName() }}</div>
-                        <div>{{ getLastViewtDate() }}</div>
-                    </div>
-                    
-                </div>
-            </div> -->
         </div>
     </div>
 <dgta-upload-attachment-modal *ngIf="isOpenUploadAttachmentModal"
     [document]="document"
-    (closeUpdateCollocationModalE)="closeUploadAttachmentModal()"
+    [attachmentPdf]="attachmentPdf"
+    [step]="step"
+    [startUpload]="startUpload"
+    (closeUploadAttachmentModalE)="closeUploadAttachmentModal()"
     (attachmentPdfE)="attachmentPdfEmitter($event)"
 ></dgta-upload-attachment-modal>
 

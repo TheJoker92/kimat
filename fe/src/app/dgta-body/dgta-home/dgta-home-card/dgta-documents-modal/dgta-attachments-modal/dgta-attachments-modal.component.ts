@@ -10,6 +10,7 @@ import { DgtaUploadAttachmentModalComponent } from './dgta-upload-attachment-mod
 import { DgtaOcrModalComponent } from './dgta-ocr-modal/dgta-ocr-modal.component';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'dgta-attachments-modal',
@@ -22,13 +23,18 @@ export class DgtaAttachmentsModalComponent {
 
   @Input() document: IDocument = {}
   @Output() getDocumentsE = new EventEmitter()
-  @Output() closeAttahcmentsModalE = new EventEmitter()
+  @Output() closeAttahcmentsModalE = new EventEmitter<any>()
+
+  file: any
 
   faChevronLeft = faChevronLeft
   
+  step = 1
+  startUpload = false 
+
   ocrText: string = ""
   isOpenOcrModal = false
-  attachmentPdf: IAttachment = {}
+  attachmentPdf: any = {}
 
   isOpenUploadAttachmentModal = false
   srcPdf = ""
@@ -68,7 +74,7 @@ export class DgtaAttachmentsModalComponent {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"email": this.sessionService.user?.email, "firstName": this.sessionService.user?.firstName})
+      body: JSON.stringify({"email": this.sessionService.user?.email, "firstName": this.sessionService.user?.firstName, "isAuth": this.isAuthenticated})
     }).then((result) => {
       return result.json()
     })
@@ -76,8 +82,8 @@ export class DgtaAttachmentsModalComponent {
       
       if (result.error) {
         this.srcPdf = ""
-        alert("Il codice inserito è errato. Riprova.")
-        this.isAuthenticated = false
+        // alert("Il codice inserito è errato. Riprova.")
+        // this.isAuthenticated = false
       } else {
         this.srcPdf = result.base64
 
@@ -105,6 +111,7 @@ export class DgtaAttachmentsModalComponent {
 
   closeUploadAttachmentModal() {
     this.isOpenUploadAttachmentModal = false
+    this.closeAttahcmentsModalE.emit()
   }
 
   openUploadAttachmentModal() {
@@ -182,6 +189,28 @@ export class DgtaAttachmentsModalComponent {
       console.log(payload)
 
       this.loadingService.isLoading = true
+
+      this.http.uploadFileWithPercent(payload).subscribe((event: any) => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            this.attachmentPdf.progressUpload = Math.round(100 * (event.loaded / (event.total ?? 1)));
+
+            this.attachmentPdf = JSON.parse(JSON.stringify(this.attachmentPdf))
+            
+            this.loadingService.isLoading = false
+
+            this.startUpload = true
+
+            return 101
+          case HttpEventType.Response: {
+            this.startUpload = false
+            this.step = 2
+            return 100;
+          }
+          default:
+            return 0;
+        }
+      })
       this.http.uploadFile(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
@@ -257,6 +286,10 @@ export class DgtaAttachmentsModalComponent {
     this.attachmentPdf = attachmentPdf
 
     this.uploadAttachmentDocument()
+  }
+
+  uploadAttachment() {
+    
   }
 
   getPositionLabel(label: string) {

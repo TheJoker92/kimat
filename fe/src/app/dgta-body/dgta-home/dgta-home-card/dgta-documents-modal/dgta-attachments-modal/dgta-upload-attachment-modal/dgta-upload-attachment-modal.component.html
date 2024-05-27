@@ -3,31 +3,86 @@
 </div>
 <div class="container">
     <div class="box-form column-center-spacebetween">
-        <div>
-            <div class="box-form column-center-center">
-                <h3 class="row-center-center">CARICA FILE LOCALE</h3>
-                <button class="nowrap" (click)="loadFile('pdf')">CARICA FILE</button>
-                <input id="file-pdf" type="file" class="form-field-size" (input)="onUploadFile($event)" accept=".pdf">
-                <p>oppure</p>
-                <h3 class="row-center-center">CARICA FILE DA DISPOSITIVO</h3>
-                <div class="box-form column-center-center">
-                    <div *ngIf="attachmentPdf.base64">
-                        caricato
-                    </div>
-                    <!-- <button class="nowrap" (click)="openCameraAcquireModal()">ACQUISISCI DA CAMERA</button> -->
-                    <button class="nowrap" (click)="openScannerListModal()">ACQUISISCI</button>
-                </div>
+        <div class="row-center-space-between w-318px">
+            <div class="row-center-left" (click)="cancel()">
+                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                <small>Indietro</small>
+            </div>
+            <h3 class="row-center-center">Upload file</h3>
+            <div class="w-40px h10p">
+            </div>
 
+        </div>
+        <div class="box-form column-center-spacebetween ">
+            <div class="container-form">
+                <div *ngIf="step == 1" class="mb10px mt20px w-318px">
+                    <div *ngIf="step == 1" class="row-center-left w100p">
+                        <strong>Carica documenti</strong>
+                    </div>
+                    <div *ngIf="step == 1" class="card-add-file column-center-center mt10px">
+                        <input (input)="onUploadFile($event)" type="file" name="" id="file-pdf" multiple accept=".pdf">
+                        <div class="add-file-icon cursor-pointer" (click)="loadFile('pdf')"></div>
+                        <div class="column-center-center">
+                            <div>
+                                Scegli file
+                            </div>
+                            <small class="light-grey">File supportato: PDF</small>
+                        </div>
+
+                    </div>
+                    <div class="column-top-left w100p mt20px">
+                        <div class="row-center-left">
+                            <strong *ngIf="!startUpload && step == 1">File da caricare</strong>
+                            <strong *ngIf="startUpload">File in caricamento</strong>
+                            <div *ngIf="startUpload">
+                                ({{ multipleFiles.length }})
+                            </div>
+                        </div>
+                        <div *ngIf="attachmentPdf.name" class="overflow-file container-file w100p h180px">
+
+                            <div class="column-top-left w100p">
+                                <div class="row-center-space-between w100p">
+                                    <div class="row-center-left">
+                                        <div *ngIf="attachmentPdf.name" class="pdf-file-icon">
+
+                                        </div>
+                                        <div>
+                                            {{ getReducedLabelName(attachmentPdf.name) }}
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!startUpload" class="file-trash-icon cursor-pointer"
+                                        (click)=delete()>
+
+                                    </div>
+                                </div>
+                                <div *ngIf="startUpload && attachmentPdf.progressUpload < 100"
+                                    class="row-center-center w100p progress-container    padding: 10px;
+                                    width: 90%;">
+                                    <progress [value]="attachmentPdf.progressUpload" max="100"></progress>
+                                </div>
+                                <div *ngIf="!startUpload || !attachmentPdf.progressUpload "
+                                    class="row-center-left w220px p10px">
+                                    <small>In attesa</small>
+                                </div>
+                                <div *ngIf="startUpload && attachmentPdf.progressUpload == 100"
+                                    class="row-center-left w220px p10px">
+                                    <small>Completato</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="step == 2" class="column-center-center mt10px mb10px">
+                    <div class="success-logo">
+
+                    </div>
+                    <h3>File salvato correttamente</h3>
+                </div>
+                <div class="column-center-center">
+                    <button *ngIf="step == 1" class="mt10px mb10px absolute-pos"
+                        (click)="updateDocument()">Conferma</button>
+                </div>
             </div>
-            <div class="row-center-center">
-                <button class="mt10px" (click)="cancel()">ANNULLA</button>
-                <button class="mt10px" (click)="updateDocument()">CONFERMA</button>
-            </div>
+            <button *ngIf="step == 2" class="mt10px absolute-pos" (click)="cancel()">Torna alla home</button>
         </div>
     </div>
-
-    <dgta-camera-acquire-modal *ngIf="isOpenCameraAcquireModal" (closeCameraAcquireModalE)="closeCameraAcquireModal()"
-        (uploadAttachmentE)="uploadFromCamera($event)"></dgta-camera-acquire-modal>
-
-    <dgta-scannerlist-modal *ngIf="isOpenScannerListModal"
-                            (closeScannerListModalE)="closeScannerListModal()"></dgta-scannerlist-modal>

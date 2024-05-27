@@ -264,14 +264,14 @@ export class DgtaDocumentsModalComponent {
       "deliberationDate": this.document.deliberationDate
     }
 
-    this.loadingService.isLoading = true
+    // this.loadingService.isLoading = true
     this.http.addDocument(payload).subscribe({
       next: (response: any) => {
         this.loadingService.isLoading = false
 
         if (response.code == 200) {
-          alert("Accesso inserito in registro")
           this.loadingService.isLoading = false
+          alert("Accesso inserito in registro")
           this.getDocuments()
           this.isOpenAttachmentModal = true
         } else {
@@ -286,7 +286,7 @@ export class DgtaDocumentsModalComponent {
     })
   }
 
-  closeAttachmentsModal(document: IDocument) {
+  closeAttachmentsModal() {
     this.document = {}
     this.isOpenAttachmentModal = false
   }

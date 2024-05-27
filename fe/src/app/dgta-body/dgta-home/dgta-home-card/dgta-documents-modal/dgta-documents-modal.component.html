@@ -152,7 +152,7 @@
         <dgta-state-document-modal *ngIf="isOpenStateModal" [document]="document"
             (closeStateModalE)="closeStateModal(document)" (getDocumentsE)="getDocuments()"></dgta-state-document-modal>
         <dgta-attachments-modal *ngIf="isOpenAttachmentModal" [document]="document"
-            (closeAttahcmentsModalE)="closeAttachmentsModal(document)"
+            (closeAttahcmentsModalE)="closeAttachmentsModal()"
             (getDocumentsE)="getDocuments()"></dgta-attachments-modal>
 
         <dgta-document-form-modal *ngIf="isOpenDocumentFormModal" [dossier]="dossier"
