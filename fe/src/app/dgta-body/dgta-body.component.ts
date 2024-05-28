@@ -8,11 +8,12 @@ import { DgtaHomeComponent } from './dgta-home/dgta-home.component';
 import { ICatalogue } from '../interfaces/ICatalogue';
 import { DgtaDossierModalComponent } from './dgta-catalogue-list/dgta-dossier-modal/dgta-dossier-modal.component';
 import { DgtaDocumentsModalComponent } from './dgta-home/dgta-home-card/dgta-documents-modal/dgta-documents-modal.component';
+import { DgtaRegisterComponent } from './dgta-register/dgta-register.component';
 
 @Component({
   selector: 'dgta-body',
   standalone: true,
-  imports: [CommonModule, DgtaDocumentsModalComponent, DgtaLoginComponent, DgtaLoadingComponent, DgtaHomeComponent, DgtaDossierModalComponent],
+  imports: [CommonModule, DgtaDocumentsModalComponent, DgtaRegisterComponent, DgtaLoginComponent, DgtaLoadingComponent, DgtaHomeComponent, DgtaDossierModalComponent],
   providers: [LoadingService, SessionService],
   templateUrl: './dgta-body.component.html',
   styleUrl: './dgta-body.component.scss'
@@ -22,6 +23,10 @@ export class DgtaBodyComponent {
               public sessionService: SessionService) {
 
   }
+
+  isLoginMode = true
+  isRegistrationMode = false
+  isRecoverPassword = false
 
   isOpenCatalogue = true
   isOpenDossier = false
@@ -66,4 +71,16 @@ export class DgtaBodyComponent {
     this.isOpenDocuments = true
   }
 
+  
+  goToRegistration() {
+    this.isLoginMode = false
+    this.isRegistrationMode = true
+    this.isRecoverPassword = false
+  }
+
+  goToLogIn() {
+    this.isLoginMode = true
+    this.isRegistrationMode = false
+    this.isRecoverPassword = false
+  }
 }

@@ -35,7 +35,8 @@ body {
     
 }
 
-dgta-login {
+dgta-login,
+dgta-register {
     height: 70vh;
     display: flex;
     align-items: center;
@@ -256,4 +257,9 @@ progress::-moz-progress-bar {
     height: 74px !important;
     position: absolute !important;
     top: calc(100% - 74px) !important;
+  }
+
+
+  .white-spacenowrap {
+    white-space: nowrap;
   }

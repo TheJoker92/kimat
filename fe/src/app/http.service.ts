@@ -38,6 +38,10 @@ export class HttpService {
     return this.http.post(this.buildURL("users/", this.data.user.login), payload, this.httpOptions)
   }
 
+  register(payload: any) {
+    return this.http.post(this.buildURL("users/", this.data.user.create), payload, this.httpOptions)
+  }
+
   getUser(payload: any) {
     return this.http.post(this.buildURL("users/", this.data.user.getUser), payload, this.httpOptions)
   }
@@ -123,4 +127,6 @@ export class HttpService {
   sendToken(payload: any) {
     return this.http.post(this.buildURL("security/", this.data.security.setAuthorizedToken), payload, this.httpOptions)
   }
+
+  
 }

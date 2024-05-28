@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSignIn } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../http.service';
@@ -16,6 +16,8 @@ import { PageEnum } from '../../interfaces/IPageNavigation';
   styleUrl: './dgta-login.component.scss'
 })
 export class DgtaLoginComponent {
+  @Output() goToRegistrationE = new EventEmitter()
+  
   faSignIn = faSignIn
 
   dgta = "dgt@"
@@ -85,5 +87,9 @@ export class DgtaLoginComponent {
     } else {
       this.saveSession = true
     }
+  }
+
+  goToRegistration() {
+    this.goToRegistrationE.emit()
   }
 }
