@@ -3,18 +3,19 @@
 </div>
 <div class="container">
     <div class="h-100c container-scroll">
-        <div class="row-center-space-between">
-            <div class="row-center-left" (click)="closeModal()">
-                <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
-                <small class="cursor-pointer">Cataloghi</small>
-            </div>            <div class="w-40px h10p">
-            </div>
-
+        <div class="w100p row-center-center">
+            <h2 class="row-center-center">Dossier</h2>
         </div>
-        
         <div class="row-center-center">
             <div class="row-center-space-between mb10px max-width410px w100p">
-                <h2 class="row-center-center">Dossier</h2>
+                <div class="row-center-space-between">
+                    <div class="row-center-left" (click)="closeModal()">
+                        <fa-icon class="p3px" [icon]="faChevronLeft"></fa-icon>
+                        <small class="cursor-pointer">Cataloghi</small>
+                    </div>            <div class="w-40px h10p">
+                    </div>
+        
+                </div>
 
                 <div class="row-center-space-between mr10px">
                     <button *ngIf="!sessionService.activeSelect" class="add-category mr10px" (click)="openModalDossierFormModal()">Aggiungi</button>
