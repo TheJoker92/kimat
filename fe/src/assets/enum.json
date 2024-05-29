@@ -9,7 +9,8 @@
             "login": "login",
             "getUser": "getUser",
             "create": "create",
-            "recoverPass": "recoverPass"
+            "recoverPass": "recoverPass",
+            "updateUserPass": "updateUserPass"
         },
         "catalogue": {
             "add": "add",

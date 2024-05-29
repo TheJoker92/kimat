@@ -77,6 +77,43 @@ export class DgtaRecoverPasswordComponent {
         }
       })
     }
+
+  }
+  
+  updatePassword() {
+    if(!this.password || !this.confirmPassword)  {
+      alert("Compilare tutti i campi")
+    } else if(this.password != this.confirmPassword) {
+      alert("Le password non coincidono")
+    } else {
+      this.loadingService.isLoading = true
+
+      if (!this.email) {
+        alert("Compilare tutti i campi")
+      } else if (!this.email.includes("@") || !this.email.includes(".")) {
+        alert("Inserire un indirizzo email valido.")
+      } else {
+  
+        let payload = {
+          "email": this.email,
+          "password": this.password
+        }
+  
+        this.loadingService.isLoading = true
+        this.http.updateUser(payload).subscribe({
+          next: (response: any) => {
+            this.step = 4
+            this.loadingService.isLoading = false
+  
+          },
+          error: (error) => {
+            console.error(error)
+            this.loadingService.isLoading = false
+            alert("Cambio password fallito. Contattare l'assistenza.")
+          }
+        })
+      }
+    }
   }
 
   confirmToken() {
@@ -93,7 +130,13 @@ export class DgtaRecoverPasswordComponent {
       this.loadingService.isLoading = true
       this.http.sendTokenRecoverPass(payload).subscribe({
         next: (response: any) => {
-          this.step = 3
+          if (response.error) {
+            alert("Token errato")
+          } else {
+            this.step = 3
+          }
+
+          this.loadingService.isLoading = false
         },
         error: (error) => {
           console.error(error)

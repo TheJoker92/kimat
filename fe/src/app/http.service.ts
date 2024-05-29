@@ -50,6 +50,10 @@ export class HttpService {
     return this.http.post(this.buildURL("users/", this.data.user.recoverPass), payload, this.httpOptions)
   }
 
+  updateUser(payload: any) {
+    return this.http.post(this.buildURL("users/", this.data.user.updateUserPass), payload, this.httpOptions)
+  }
+
   /**
    * DOSSIERS
    */

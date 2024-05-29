@@ -195,13 +195,20 @@ def get_user():
 
 
 # Update operation
-@app.route('/api/users/update', methods=['PUT'])
+@app.route('/api/users/update', methods=['POST'])
 def update_user():
     print("START UPDATE USER ")
     data = request.json
 
-    return jsonify(users.get_user(data, BASE_URL)), 200
+    return jsonify(users.update_user(data, BASE_URL)), 200
 
+
+@app.route('/api/users/updateUserPass', methods=['POST'])
+def update_user_pass():
+    print("START UPDATE USER ")
+    data = request.json
+
+    return jsonify(users.updateUserPass(data, BASE_URL)), 200
 
 # Delete operation
 @app.route('/users/delete/<id>', methods=['DELETE'])
