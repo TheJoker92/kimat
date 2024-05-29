@@ -1,6 +1,9 @@
 <div class="row-center-center h-100" [ngClass]="{'bkg-login':!sessionService.user}">
-    <dgta-login *ngIf="!sessionService.user && isLoginMode" (goToRegistrationE)="goToRegistration()"></dgta-login>
+    <dgta-login *ngIf="!sessionService.user && isLoginMode" 
+    (goToRegistrationE)="goToRegistration()"
+    (recoverPasswordE)="goToRecoverPassword()"></dgta-login>
     <dgta-register *ngIf="!sessionService.user && isRegistrationMode" (goToLoginE)="goToLogIn()"></dgta-register>
+    <dgta-recover-password *ngIf="!sessionService.user && isRecoverPassword" (goToLoginE)="goToLogIn()"></dgta-recover-password>
     <dgta-home *ngIf="sessionService.user && isOpenCatalogue" (goToDossierE)="fromCatalogeToDossier($event)"></dgta-home>
     <dgta-dossier-modal *ngIf="sessionService.user && isOpenDossier" [catalogue]="selectedCatalogue"
         (closeModalE)="fromDossierToCatalogue()"

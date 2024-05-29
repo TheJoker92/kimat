@@ -17,7 +17,8 @@ import { PageEnum } from '../../interfaces/IPageNavigation';
 })
 export class DgtaLoginComponent {
   @Output() goToRegistrationE = new EventEmitter()
-  
+  @Output() recoverPasswordE = new EventEmitter()
+
   faSignIn = faSignIn
 
   dgta = "dgt@"
@@ -91,5 +92,9 @@ export class DgtaLoginComponent {
 
   goToRegistration() {
     this.goToRegistrationE.emit()
+  }
+
+  recoverPasswordEmitter() {
+    this.recoverPasswordE.emit()
   }
 }

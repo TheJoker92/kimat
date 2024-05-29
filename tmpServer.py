@@ -544,7 +544,7 @@ def getDossiers():
 
 @app.route('/api/dossiers/update', methods=['PUT'])
 def update_dossier():
-    print("START USER UPDATE")
+    print("START DOSSIER UPDATE")
     data = request.json
 
     print(data)

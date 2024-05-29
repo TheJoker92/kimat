@@ -8,7 +8,8 @@
         "user": {
             "login": "login",
             "getUser": "getUser",
-            "create": "create"
+            "create": "create",
+            "recoverPass": "recoverPass"
         },
         "catalogue": {
             "add": "add",
@@ -30,7 +31,8 @@
             "getDocumentById": "getDocumentById"
         },
         "security": {
-            "setAuthorizedToken": "setAuthorizedToken"
+            "setAuthorizedToken": "setAuthorizedToken",
+            "recoverPassSetToken": "recoverPassSetToken"
         }
     },
     "error": {

@@ -177,3 +177,59 @@ def update_user(data, BASE_URL):
             }
     
     return response
+
+
+def recoverPass():
+    esponse = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+            response = {
+                "message": "DATA ACCESS",
+                "error": "",
+                "code": 200
+            }
+
+            query = "email%3A%22" + data["email"] + "%22"
+            responseRaw = requests.get(BASE_URL + "/users/select?indent=true&q.op=AND&q=" + query + "%20asc&useParams=", verify=False)
+
+            # Decode the content from bytes to string and then parse as JSON
+            response_json = json.loads(responseRaw.content.decode('utf-8'))
+            usersRaw = response_json.get('response', {}).get('docs', [])
+
+            users = []
+
+            if len(usersRaw) > 0:
+                for userRaw in usersRaw:
+                    print(userRaw)
+                    user = { }
+
+                    keysRaw = list(userRaw.keys())
+                    for keyRaw in keysRaw:
+
+                        if keyRaw in ["id", "_version_"]:
+                            user[keyRaw] = userRaw[keyRaw]
+                        else:
+                            user[keyRaw] = userRaw[keyRaw][0]
+                    
+                    users.append(user)
+        
+            response = {
+                "users": users
+            }
+            # Now you can access response_docs as a list containing the documents
+            # Do whatever you need to do with response_docs
+
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+    
+    return response

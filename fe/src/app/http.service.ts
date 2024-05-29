@@ -46,6 +46,10 @@ export class HttpService {
     return this.http.post(this.buildURL("users/", this.data.user.getUser), payload, this.httpOptions)
   }
 
+  recoverPass(payload: any) {
+    return this.http.post(this.buildURL("users/", this.data.user.recoverPass), payload, this.httpOptions)
+  }
+
   /**
    * DOSSIERS
    */
@@ -128,5 +132,8 @@ export class HttpService {
     return this.http.post(this.buildURL("security/", this.data.security.setAuthorizedToken), payload, this.httpOptions)
   }
 
+  sendTokenRecoverPass(payload: any) {
+    return this.http.post(this.buildURL("security/", this.data.security.recoverPassSetToken), payload, this.httpOptions)
+  }
   
 }

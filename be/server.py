@@ -42,6 +42,10 @@ sys.path.append('/home')
 AUTHORIZED_TOKEN = {}
 SENDED_TOKEN = {}
 
+
+AUTHORIZED_TOKEN_RECOVER_PASS = {}
+SENDED_TOKEN_RECOVER_PASS = {}
+
 app = Flask(__name__, static_folder=flaskstaticFolderPath)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1000 * 1000
 cors = CORS(app, origins = ["*"])
@@ -121,6 +125,58 @@ def create_user():
     print(data)
     
     return jsonify(users.create_user(data, BASE_URL)), 200
+
+@app.route("/api/users/recoverPass", methods=['POST', 'GET'])
+def recoverPass():
+    global AUTHORIZED_TOKEN_RECOVER_PASS
+    global SENDED_TOKEN_RECOVER_PASS
+    global basePathAsset
+
+    try:
+        data = request.json
+
+        data["token"] = utils.randomword(6)
+        print("SEND EMAIL")
+        
+        emails.sendTokenEmailChangePsw(LOGIN_SENDER, PASSWORD_SENDER, data)
+
+        SENDED_TOKEN_RECOVER_PASS[data["email"].replace("@", "")] = data["token"]
+
+        print(AUTHORIZED_TOKEN_RECOVER_PASS)
+        startTime = time.time()
+        # while(not(data["email"].replace("@", "") in AUTHORIZED_TOKEN_RECOVER_PASS.keys()) or 
+        #         AUTHORIZED_TOKEN_RECOVER_PASS[data["email"].replace("@", "")] != data["token"]):
+        #     timer = time.time() - startTime
+        #     if timer > 600:
+        #         AUTHORIZED_TOKEN_RECOVER_PASS[data["email"].replace("@", "")] = utils.randomword(10)
+        #         return jsonify({"error": "Expired token"}), 500
+
+
+    except Exception as e:
+        return jsonify({"error": True, "msg": e}), 500
+    
+    # AUTHORIZED_TOKEN_RECOVER_PASS[data["email"].replace("@", "")] = utils.randomword(10)
+    return {"statusCode": 200}
+
+@app.route('/api/security/recoverPassSetToken', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def recoverPassSetToken():
+    global AUTHORIZED_TOKEN_RECOVER_PASS
+    global SENDED_TOKEN_RECOVER_PASS
+
+    data = request.json
+
+    print(SENDED_TOKEN_RECOVER_PASS[data["email"].replace("@", "")])
+
+
+    if SENDED_TOKEN_RECOVER_PASS[data["email"].replace("@", "")] == data["token"]:
+        AUTHORIZED_TOKEN_RECOVER_PASS = utils.setAuthToken(AUTHORIZED_TOKEN_RECOVER_PASS, data)
+        response = jsonify({200: "OK"}), 200
+
+    else:
+        response = jsonify({"error": True}), 200
+    
+    return response
 
 # Read operation
 @app.route('/api/users/login', methods=['POST'])

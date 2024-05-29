@@ -9,11 +9,12 @@ import { ICatalogue } from '../interfaces/ICatalogue';
 import { DgtaDossierModalComponent } from './dgta-catalogue-list/dgta-dossier-modal/dgta-dossier-modal.component';
 import { DgtaDocumentsModalComponent } from './dgta-home/dgta-home-card/dgta-documents-modal/dgta-documents-modal.component';
 import { DgtaRegisterComponent } from './dgta-register/dgta-register.component';
+import { DgtaRecoverPasswordComponent } from './dgta-recover-password/dgta-recover-password.component';
 
 @Component({
   selector: 'dgta-body',
   standalone: true,
-  imports: [CommonModule, DgtaDocumentsModalComponent, DgtaRegisterComponent, DgtaLoginComponent, DgtaLoadingComponent, DgtaHomeComponent, DgtaDossierModalComponent],
+  imports: [CommonModule, DgtaRecoverPasswordComponent, DgtaDocumentsModalComponent, DgtaRegisterComponent, DgtaLoginComponent, DgtaLoadingComponent, DgtaHomeComponent, DgtaDossierModalComponent],
   providers: [LoadingService, SessionService],
   templateUrl: './dgta-body.component.html',
   styleUrl: './dgta-body.component.scss'
@@ -82,5 +83,11 @@ export class DgtaBodyComponent {
     this.isLoginMode = true
     this.isRegistrationMode = false
     this.isRecoverPassword = false
+  }
+
+  goToRecoverPassword() {
+    this.isLoginMode = false
+    this.isRegistrationMode = false
+    this.isRecoverPassword = true
   }
 }
