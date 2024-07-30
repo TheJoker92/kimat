@@ -64,9 +64,9 @@ class RegexConverter(BaseConverter):
 
 app.url_map.converters['regex'] = RegexConverter
 
-@app.route("/")
-def angular():
-    return send_from_directory("browser", "index.html")
+# @app.route("/")
+# def angular():
+#     return send_from_directory("browser", "index.html")
 
 @app.route("/assets/<regex('.*\.(js|css|avif|scss|jpeg|json|png)'):path>")
 def assets_src(path):
