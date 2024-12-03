@@ -240,7 +240,7 @@ def extract_text_from_pdf(pdf_path):
 
 
 def resource_src(ext, id, basePathAsset):
-    file_path = basePathAsset + id + "/" + id + "." + ext
+    file_path = basePathAsset + "/" + id + "/" + id + "." + ext
     tmp_folder_path = basePathAsset + id + "/tmp"
     
     

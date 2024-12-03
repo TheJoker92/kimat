@@ -111,6 +111,7 @@ def resource_src(ext, id):
 
 
         except Exception as e:
+            print(e)
             return jsonify({"error": True, "msg": e}), 500
         
     AUTHORIZED_TOKEN[data["email"].replace("@", "")] = utils.randomword(10)

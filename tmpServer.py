@@ -25,7 +25,7 @@ cors = CORS(app, origins = ["*"])
 SOLR_URL = "127.0.0.1"
 SOLR_PORT = "8984"
 # Initialize Solr connection
-# solr = pysolr.Solr('https://' + SOLR_URL + ':' + SOLR_PORT + '/solr', always_commit=True, verify=False)
+# 192.168.1.218 = pysolr.Solr('https://' + SOLR_URL + ':' + SOLR_PORT + '/solr', always_commit=True, verify=False)
 BASE_URL = 'https://' + SOLR_URL + ':' + SOLR_PORT + '/solr'
 
 class RegexConverter(BaseConverter):

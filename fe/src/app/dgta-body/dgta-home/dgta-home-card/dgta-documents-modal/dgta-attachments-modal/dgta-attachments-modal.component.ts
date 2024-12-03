@@ -54,6 +54,7 @@ export class DgtaAttachmentsModalComponent {
   ngOnChanges() {
 
     console.log("CHANGE", this.document)
+
   }
               
   ngOnInit() {
@@ -323,7 +324,6 @@ export class DgtaAttachmentsModalComponent {
       next: (response: any) => {
         this.isAuthenticated = !response.error
         this.loadingService.isLoading = false
-
       },
       error: (error: any) => {
         console.error(error)
