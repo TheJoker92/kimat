@@ -125,18 +125,18 @@ export class DgtaHomeCardDossierFormModalComponent {
       let payload: any = {
         parentId: this.catalogue._id,
         title: this.title,
-        topics: JSON.stringify(this.topics),
-        documents: JSON.stringify([]),
-        owners: JSON.stringify(this.owners),
-        history: JSON.stringify([
+        topics: this.topics,
+        documents: [],
+        owners: this.owners,
+        history: [
           {
             _id: "0",
             actionLog: ActionLogEnum.CREATION_CATALOGUE,
             date: new Date().toISOString(),
             user: this.sessionService.user,
           }
-        ]),
-        placement: JSON.stringify([this.place])
+        ],
+        placement: [this.place]
       }
 
       console.log(payload)

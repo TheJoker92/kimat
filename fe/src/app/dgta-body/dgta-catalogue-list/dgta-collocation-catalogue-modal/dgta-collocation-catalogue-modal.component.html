@@ -167,5 +167,6 @@
     </div>
 </div>
 <dgta-update-collocation-catalogue-modal *ngIf="isOpenUpdateCollocationModal" [catalogue]="catalogue"
+    (catalogueE)="onUpdateCatalogue($event)"
     (closeUpdateCollocationModalE)="closeUpdateCollocationModal()"
     (closeAllE)="closeAllModal()"></dgta-update-collocation-catalogue-modal> 

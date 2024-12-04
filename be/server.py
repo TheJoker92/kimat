@@ -246,7 +246,7 @@ def deleteDossier():
     
     return dossiers.delete_dossier(data, client["dossiers"])
 
-@app.route('/api/dossiers/update', methods=['PUT'])
+@app.route('/api/dossiers/update', methods=['POST'])
 def update_dossier():
     print("START CATALOGUE UPDATE")
     data = request.json

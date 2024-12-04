@@ -68,11 +68,15 @@ export class DgtaCollocationCatalogueModalComponent {
   }
 
   getPlacementLogs() {
-    return this.catalogue.placement!.filter((placementLog: any) => placementLog != this.catalogue.placement![this.catalogue.placement!.length -1])
+    return this.catalogue.placement!.filter((placementLog: any) => placementLog != this.catalogue.placement![this.catalogue.placement!.length -1] && placementLog.date)
   }
 
   closeAllModal() {
     this.closeUpdateCollocationModal()
     this.closeCollocationModalE.emit()
+  }
+
+  onUpdateCatalogue(catalogue: any) {
+    this.catalogue = catalogue
   }
 }

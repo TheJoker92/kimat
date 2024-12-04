@@ -8,7 +8,7 @@ import * as rawData from '../assets/enum.json';
 export class HttpService {
 
   // BASE_URL  = "https://127.0.0.1:8000/"
-  BASE_URL = "https://192.168.1.218:8000/"
+  BASE_URL = "https://localhost:8000/"
   // BASE_URL = "http://127.0.0.1:8001/"
   API = "api/"
 

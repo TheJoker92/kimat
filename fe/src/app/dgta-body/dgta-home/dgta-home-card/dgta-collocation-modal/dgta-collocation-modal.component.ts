@@ -67,11 +67,15 @@ export class DgtaCollocationModalComponent {
   }
 
   getPlacementLogs() {
-    return this.dossier.placement!.filter((placementLog: any) => placementLog != this.dossier.placement![this.dossier.placement!.length -1])
+    return this.dossier.placement!.filter((placementLog: any) => placementLog != this.dossier.placement![this.dossier.placement!.length -1] && placementLog.date)
   }
 
   closeAllModal() {
     this.closeUpdateCollocationModal()
     this.closeCollocationModalE.emit()
+  }
+
+  onUpdateDossier(dossier: any) {
+    this.dossier = dossier
   }
 }

@@ -23,6 +23,7 @@ export class DgtaUpdateCollocationCatalogueModalComponent {
   @Input() catalogue: ICatalogue = {}
   @Output() closeUpdateCollocationModalE = new EventEmitter()
   @Output() closeAllE = new EventEmitter()
+  @Output() catalogueE = new EventEmitter()
   
   
   isValidTitle = true
@@ -173,6 +174,7 @@ export class DgtaUpdateCollocationCatalogueModalComponent {
           }
 
           this.catalogue = catalogue
+          this.catalogueE.emit(catalogue)
 
         }
 

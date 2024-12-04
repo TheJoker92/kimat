@@ -109,13 +109,13 @@ export class DgtaCollocationUpdateDocumentComponent {
         "parentId": this.document.parentId,
         "_id": this.document._id,
         "name": this.document.name,
-        "history": JSON.stringify(history),
-        "attachments": JSON.stringify(this.document.attachments),
-        "deviceIds": JSON.stringify(this.document.deviceIds),
-        "states": JSON.stringify(this.document.states),
-        "topics": JSON.stringify(this.document.topics),
-        "placement": JSON.stringify(placement),
-        "owners": JSON.stringify(this.document.owners),
+        "history": history,
+        "attachments": this.document.attachments,
+        "deviceIds": this.document.deviceIds,
+        "states": this.document.states,
+        "topics": this.document.topics,
+        "placement": placement,
+        "owners": this.document.owners,
         "deliberationDate": this.document.deliberationDate
       }
 

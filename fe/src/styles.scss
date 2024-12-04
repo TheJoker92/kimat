@@ -43,7 +43,7 @@ dgta-register {
 }
 
 .front {
-    background-image: URL("https://192.168.1.218:8000/assets/login-form.jpeg");
+    background-image: URL("https://localhost:8000/assets/login-form.jpeg");
 }
 
 button {
@@ -131,7 +131,7 @@ zxing-scanner  {
 }
 
 .checkbox-round:checked {
-    background:URL("https://192.168.1.218:8000/assets/checkbox.png");
+    background:URL("https://localhost:8000/assets/checkbox.png");
     background-size: contain;
     background-repeat: no-repeat;
 }

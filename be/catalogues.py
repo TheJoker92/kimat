@@ -43,8 +43,9 @@ def getCatalogues(data, collection):
         print(data)
 
         query = {}
-        if "id" in data.keys():
-            query["id"] = data["id"]
+        if "_id" in data.keys():
+            query["_id"] = ObjectId(data["_id"])
+            del data["_id"]
         if "title" in data.keys():
             query["title"] = data["title"]
 

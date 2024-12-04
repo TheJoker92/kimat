@@ -168,4 +168,5 @@
 </div>
 <dgta-update-collocation-modal *ngIf="isOpenUpdateCollocationModal" [dossier]="dossier"
     (closeUpdateCollocationModalE)="closeUpdateCollocationModal()"
-    (closeAllE)="closeAllModal()"></dgta-update-collocation-modal> 
+    (closeAllE)="closeAllModal()"
+    (dossierE)="onUpdateDossier($event)"></dgta-update-collocation-modal> 

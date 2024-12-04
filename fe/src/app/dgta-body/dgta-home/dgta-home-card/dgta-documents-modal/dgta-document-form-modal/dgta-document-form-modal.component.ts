@@ -169,13 +169,13 @@ export class DgtaDocumentFormModalComponent {
       let payload: any = {
         "parentId": parentId,
         "name": this.name,
-        "history": JSON.stringify([history]),
-        "attachments": JSON.stringify([this.attachmentPdf]),
-        "deviceIds": JSON.stringify([]),
-        "states": JSON.stringify([state]),
-        "topics": JSON.stringify(this.topics),
-        "placement": JSON.stringify([this.place]),
-        "owners": JSON.stringify(this.owners),
+        "history": [history],
+        "attachments": [this.attachmentPdf],
+        "deviceIds": [],
+        "states": [state],
+        "topics": this.topics,
+        "placement": [this.place],
+        "owners": this.owners,
         "deliberationDate": ""
       }
 

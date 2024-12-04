@@ -22,8 +22,10 @@ export class DgtaUpdateCollocationModalComponent {
   @Input() dossier: IDossier = {}
   @Output() closeUpdateCollocationModalE = new EventEmitter()
   @Output() closeAllE = new EventEmitter()
+  @Output() dossierE = new EventEmitter()
+
   
-  
+
   isValidTitle = true
   isValidTopic = true
   isValidOwner = true
@@ -51,7 +53,7 @@ export class DgtaUpdateCollocationModalComponent {
     this.pullDossier()
   }
 
-  
+
 
   updateDossier() {
     if (this.place.palace) {
@@ -89,7 +91,7 @@ export class DgtaUpdateCollocationModalComponent {
     } else {
       this.isValidPosition = false
     }
-    if (this.isValidPalace && this.isValidFloor &&this.isValidSector && this.isValidRack && this.isValidRoom && this.isValidPosition) {
+    if (this.isValidPalace && this.isValidFloor && this.isValidSector && this.isValidRack && this.isValidRoom && this.isValidPosition) {
 
       this.place["date"] = new Date().toISOString()
 
@@ -111,23 +113,27 @@ export class DgtaUpdateCollocationModalComponent {
       let payload: any = {
         _id: this.dossier._id,
         title: this.dossier.title,
-        topics: JSON.stringify(this.dossier.topics),
-        documents: JSON.stringify([]),
-        owners: JSON.stringify(this.dossier.owners),
-        history: JSON.stringify(history),
-        placement: JSON.stringify(placement),
+        topics: this.dossier.topics,
+        documents: [],
+        owners: this.dossier.owners,
+        history: history,
+        placement: placement,
       }
 
       this.loadingService.isLoading = true
-      this.http.addDossier(payload).subscribe({
+      this.http.updateDossier(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
+
 
           if (response.code == 200) {
             // alert("Hai aggiornato il catalogo")
             // window.location.reload()
             this.step = 2
-          } else {
+            this.pullDossier()
+           }
+            
+            else {
             alert("Errore server. Contattare il supporto.")
           }
         },
@@ -143,20 +149,10 @@ export class DgtaUpdateCollocationModalComponent {
     }
   }
 
-  cancel() {
-    this.closeUpdateCollocationModalE.emit()
-  }
-
-
-  editLocation(label:string, e: any) {
-    this.place[label] = e.target.value
-    console.log(this.place)
-  }
-
   pullDossier() {
     this.loadingService.isLoading = true
 
-    this.http.getDossiers(this.sessionService.terms).subscribe({
+    this.http.getCatalogues(this.sessionService.terms).subscribe({
       next: (response: any) => {
         let dossierArray = response.documents!.filter((dossier: IDossier) => dossier._id == this.dossier._id)
         
@@ -171,6 +167,7 @@ export class DgtaUpdateCollocationModalComponent {
           }
 
           this.dossier = dossier
+          this.dossierE.emit(dossier)
 
         }
 
@@ -183,15 +180,30 @@ export class DgtaUpdateCollocationModalComponent {
     })
   }
 
+  
+
+    
+
+  cancel() {
+    this.closeUpdateCollocationModalE.emit()
+  }
+  
+
+
+  editLocation(label: string, e: any) {
+    this.place[label] = e.target.value
+    console.log(this.place)
+  }
+
   isParsable(inputString: string): boolean {
     try {
-        // Try to parse the string into an object
-        JSON.parse(inputString);
-        return true; // If successful, return true
+      // Try to parse the string into an object
+      JSON.parse(inputString);
+      return true; // If successful, return true
     } catch (error) {
-        return false; // If parsing fails, return false
+      return false; // If parsing fails, return false
     }
-  
+
   }
 
   previousStep() {
