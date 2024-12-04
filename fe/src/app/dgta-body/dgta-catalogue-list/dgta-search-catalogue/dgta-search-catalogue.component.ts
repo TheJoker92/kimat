@@ -57,7 +57,7 @@ export class DgtaSearchCatalogueComponent {
   onCodeResult(result: any) {
     if (this.isUUID(result)) {
       this.sessionService.terms = {
-        "id": result
+        "_id": result
       }
 
       this.getCataloguesE.emit()

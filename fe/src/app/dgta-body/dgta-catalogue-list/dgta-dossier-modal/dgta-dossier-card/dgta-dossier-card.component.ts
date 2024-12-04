@@ -68,12 +68,12 @@ export class DgtaDossierCardComponent {
   }
 
   deleteDossier(dossier: IDossier) {
-    if (dossier.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length == 0) {
+    if (dossier.owners?.filter(owner => owner._id == this.sessionService.user!._id!).length == 0) {
 
       this.dossier = {}
   
       let payload = {
-        id: dossier.id
+        _id: dossier._id
       }
       this.http.deleteDossier(payload).subscribe({
         next: (response: any) => {
@@ -160,7 +160,7 @@ export class DgtaDossierCardComponent {
     if (!this.sessionService.selectedDossiers.includes(dossier)) {
       this.sessionService.selectedDossiers.push(dossier)
     } else {
-      this.sessionService.selectedDossiers = this.sessionService.selectedDossiers.filter((selectedDossier: any) => dossier.id != selectedDossier.id)
+      this.sessionService.selectedDossiers = this.sessionService.selectedDossiers.filter((selectedDossier: any) => dossier._id != selectedDossier._id)
     }
   }
 

@@ -150,17 +150,17 @@ export class DgtaDocumentFormModalComponent {
       alert("Compilare tutti i campi del collocamento")
     } else {
 
-      let parentId = this.dossier.id
+      let parentId = this.dossier._id
 
       let history: ILog = {
-        id: "0",
+        _id: "0",
         date: new Date().toISOString(),
         actionLog: ActionLogEnum.CREATION_DOCUMENT,
         user: this.sessionService.user
       }
 
       let state: IDocumentState = {
-        id: "0",
+        _id: "0",
         stateValue: this.rawData.documentState.acceptance,
         user: this.sessionService.user,
         date: new Date().toISOString()
@@ -239,7 +239,7 @@ export class DgtaDocumentFormModalComponent {
       // this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
       // this.topic = this.allowedTopics[0]
       if (this.owners.includes(owner)) {
-        this.owners = this.owners.filter((addedOwner: any) => addedOwner.id != owner.id)
+        this.owners = this.owners.filter((addedOwner: any) => addedOwner._id != owner._id)
       } else {
         this.owners.push(owner)
       }
@@ -247,12 +247,12 @@ export class DgtaDocumentFormModalComponent {
   }
 
   onSelectOwner(e: any) {
-    this.owner = this.allowedOwners.find((owner: IUser) => owner.id == e.target.value)!
+    this.owner = this.allowedOwners.find((owner: IUser) => owner._id == e.target.value)!
   }
 
 
   deleteOwner(owner: IUser) {
-    this.owners = this.owners.filter((ownerRow: IUser) => ownerRow.id != owner.id)
+    this.owners = this.owners.filter((ownerRow: IUser) => ownerRow._id != owner._id)
 
     this.allowedOwners.push(owner)
 
@@ -267,9 +267,9 @@ export class DgtaDocumentFormModalComponent {
 
     this.http.getUser(payload).subscribe({
       next: (response: any) => {
-        this.allowedOwners = JSON.parse(JSON.stringify(response.users.filter((user: IUser) => user.id != this.sessionService.user!.id)))
+        this.allowedOwners = JSON.parse(JSON.stringify(response.users.filter((user: IUser) => user._id != this.sessionService.user!._id)))
         this.dataUser.owners = JSON.parse(JSON.stringify(response.users))
-        this.owners = response.users.filter((user: IUser) => user.id == this.sessionService.user!.id)
+        this.owners = response.users.filter((user: IUser) => user._id == this.sessionService.user!._id)
 
         this.owner = this.dataUser.owners[0]
       }
@@ -322,17 +322,17 @@ export class DgtaDocumentFormModalComponent {
 
   addDocumentMultipleFirststepSingleAdd(index: number) {
     let file = this.multipleFiles[index]
-    let parentId = this.dossier.id
+    let parentId = this.dossier._id
 
     let history: ILog = {
-      id: "0",
+      _id: "0",
       date: new Date().toISOString(),
       actionLog: ActionLogEnum.CREATION_DOCUMENT,
       user: this.sessionService.user
     }
 
     let state: IDocumentState = {
-      id: "0",
+      _id: "0",
       stateValue: this.rawData.documentState.acceptance,
       user: this.sessionService.user,
       date: new Date().toISOString()
@@ -369,7 +369,7 @@ export class DgtaDocumentFormModalComponent {
           // this.emitterGetDocuments.emit()
 
           let payload = {
-            parentId: this.dossier.id,
+            parentId: this.dossier._id,
             name: file.name.replace(".pdf", "")
           }
 
@@ -444,10 +444,10 @@ export class DgtaDocumentFormModalComponent {
         ext: "pdf",
       }
 
-      let parentId = this.dossier.id
+      let parentId = this.dossier._id
 
       let history: ILog = {
-        id: document.history!.length.toString(),
+        _id: document.history!.length.toString(),
         date: new Date().toISOString(),
         actionLog: ActionLogEnum.UPDATE_DOCUMENT_ATTACHMENT,
         user: this.sessionService.user
@@ -456,7 +456,7 @@ export class DgtaDocumentFormModalComponent {
 
       let payload: any = {
         "parentId": parentId,
-        "id": document.id,
+        "_id": document._id,
         "name": document.name,
         "history": JSON.stringify([history]),
         "attachments": JSON.stringify([attachmentPdf]),
@@ -480,11 +480,11 @@ export class DgtaDocumentFormModalComponent {
               base64: e.target.result.replace("data:application/pdf;base64,", "")
             }
 
-            let parentId = this.dossier.id
+            let parentId = this.dossier._id
 
             let payload: any = {
               "parentId": parentId,
-              "id": document.id,
+              "_id": document._id,
               "name": document.name,
               "history": JSON.stringify(document.history),
               "attachments": JSON.stringify([attachmentPdf]),
@@ -565,7 +565,7 @@ export class DgtaDocumentFormModalComponent {
 
   getOcr(document: IDocument, index: number) {
     let payload = {
-      id: document.id
+      id: document._id
     }
 
     console.log("GET OCR", index, payload)
@@ -626,7 +626,7 @@ export class DgtaDocumentFormModalComponent {
         deliberazioneTemaplateJSON.dataNoDash = "a" + deliberazioneTemaplateJSON.data.replaceAll("-", "")
         let payload: any = {
           "parentId": document.parentId,
-          "id": document.id,
+          "_id": document._id,
           "name": document.name,
           "history": JSON.stringify(document.history),
           "attachments": JSON.stringify({
@@ -879,7 +879,7 @@ export class DgtaDocumentFormModalComponent {
   isAddedOwner(owner: any) {
     let result
 
-    if (this.owners.filter((addedOwner: any) => addedOwner.id == owner.id).length) {
+    if (this.owners.filter((addedOwner: any) => addedOwner._id == owner._id).length) {
       result = true
     }
     return result

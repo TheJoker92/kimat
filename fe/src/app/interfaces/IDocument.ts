@@ -5,7 +5,7 @@ import { IUser } from "./IUser"
 
 export interface IDocument {
     parentId?: string
-    id?: string
+    _id?: string
     attachments?: IAttachment[]
     history?: ILog[]
     creation_date?: string   
@@ -27,7 +27,7 @@ export interface IAttachment{
 }
 
 export interface IDocumentState {
-    id?: string
+    _id?: string
     stateValue?: string
     user?: IUser
     date?: string

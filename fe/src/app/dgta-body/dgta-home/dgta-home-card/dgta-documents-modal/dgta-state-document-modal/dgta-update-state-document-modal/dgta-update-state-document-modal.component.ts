@@ -46,17 +46,17 @@ export class DgtaUpdateStateDocumentModalComponent {
 
     let history = this.document.history!
     history.push({
-      id: this.document.history!.length.toString(),
+      _id: this.document.history!.length.toString(),
       date: new Date().toISOString(),
       user: this.sessionService.user,
-      resourceId: this.document.id,
+      resourceId: this.document._id,
       actionLog: ActionLogEnum.UPDATE_DOCUMENT_STATE
     })
 
     history = JSON.parse(JSON.stringify(history))
 
     let state: IDocumentState = {
-      id: this.states.length.toString(),
+      _id: this.states.length.toString(),
       stateValue: this.stateValue,
       date: new Date().toISOString(),
       user: this.sessionService.user
@@ -66,7 +66,7 @@ export class DgtaUpdateStateDocumentModalComponent {
 
     let payload: any = {
       "parentId": this.document.parentId,
-      "id": this.document.id,
+      "_id": this.document._id,
       "name": this.document.name,
       "history": JSON.stringify(history),
       "attachments": JSON.stringify(this.document.attachments),

@@ -1,5 +1,5 @@
 export interface IDevice {
-    id?: string
+    _id?: string
     state?: string
     vendor?: string
     model?: string

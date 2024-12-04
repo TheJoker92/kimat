@@ -100,27 +100,27 @@ export class DgtaUpdateCollocationCatalogueModalComponent {
 
       let history = this.catalogue.history!
       history.push({
-        id: this.catalogue.history!.length.toString(),
+        _id: this.catalogue.history!.length.toString(),
         date: new Date().toISOString(),
         user: this.sessionService.user,
-        resourceId: this.catalogue.id,
+        resourceId: this.catalogue._id,
         actionLog: ActionLogEnum.UPDATE_CATALOGUE
       })
 
       history = JSON.parse(JSON.stringify(history))
 
       let payload: any = {
-        id: this.catalogue.id,
+        _id: this.catalogue._id,
         title: this.catalogue.title,
-        topics: JSON.stringify(this.catalogue.topics),
-        documents: JSON.stringify([]),
-        owners: JSON.stringify(this.catalogue.owners),
-        history: JSON.stringify(history),
-        placement: JSON.stringify(placement),
+        topics: this.catalogue.topics,
+        documents: [],
+        owners: this.catalogue.owners,
+        history: history,
+        placement: placement,
       }
 
       this.loadingService.isLoading = true
-      this.http.addCatalogue(payload).subscribe({
+      this.http.updateCatalogue(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
 
@@ -128,11 +128,12 @@ export class DgtaUpdateCollocationCatalogueModalComponent {
             // alert("Hai aggiornato il catalogo")
             // window.location.reload()
             this.step = 2
+            this.pullCatalogue()
           } else {
             alert("Errore server. Contattare il supporto.")
           }
         },
-        error: (error) => {
+        error: (error: any) => {
           this.loadingService.isLoading = false
           alert("L'operazione è fallita. Riprova.")
           console.error(error)
@@ -159,7 +160,7 @@ export class DgtaUpdateCollocationCatalogueModalComponent {
 
     this.http.getCatalogues(this.sessionService.terms).subscribe({
       next: (response: any) => {
-        let catalogueArray = response.documents!.filter((catalogue: ICatalogue) => catalogue.id == this.catalogue.id)
+        let catalogueArray = response.documents!.filter((catalogue: ICatalogue) => catalogue._id == this.catalogue._id)
         
         for (let document of catalogueArray) {
           let catalogue: any = {}

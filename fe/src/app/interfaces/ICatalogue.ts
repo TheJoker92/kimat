@@ -4,7 +4,7 @@ import { IPlace } from "./IPlace"
 import { IUser } from "./IUser"
 
 export interface ICatalogue {
-    id?: string 
+    _id?: string
     title?: string
     topics?: string[]
     documents?: IDossier[]

@@ -164,16 +164,16 @@ export class DgtaHomeComponent {
 
   deleteCatalogue(catalogue: ICatalogue) {
 
-    if (catalogue.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length != 0) {
+    if (catalogue.owners?.filter(owner => owner._id == this.sessionService.user!._id!).length != 0) {
   
       let payload = {
-        id: catalogue.id
+        _id: catalogue._id
       }
       this.http.deleteCatalogue(payload).subscribe({
         next: (response: any) => {
           if(response.code == 200) {
             // alert("L'operazione è riuscita")
-            this.sessionService.selectedCatalogues = this.sessionService.selectedCatalogues.filter((selectedCatalogue: any) => selectedCatalogue.id != catalogue.id)
+            this.sessionService.selectedCatalogues = this.sessionService.selectedCatalogues.filter((selectedCatalogue: any) => selectedCatalogue._id != catalogue._id)
             
             if (this.sessionService.selectedCatalogues.length == 0) {
               setTimeout(() => {

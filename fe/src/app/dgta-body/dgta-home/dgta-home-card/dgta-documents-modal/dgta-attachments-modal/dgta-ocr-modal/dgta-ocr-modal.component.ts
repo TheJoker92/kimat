@@ -88,7 +88,7 @@ export class DgtaOcrModalComponent {
 
         let payload: any = {
           "parentId": this.document.parentId,
-          "id": this.document.id,
+          "_id": this.document._id,
           "name": this.document.name,
           "history": JSON.stringify(this.document.history),
           "attachments": JSON.stringify({

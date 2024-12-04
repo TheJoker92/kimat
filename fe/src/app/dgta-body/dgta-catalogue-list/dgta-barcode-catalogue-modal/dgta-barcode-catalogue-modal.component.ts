@@ -31,7 +31,7 @@ export class DgtaBarcodeCatalogueModalComponent {
 
     mywindow.document.write('<html><head>');
     mywindow.document.write('</head><body>');
-    mywindow.document.write(document.getElementById(this.catalogue.id!)!.innerHTML);
+    mywindow.document.write(document.getElementById(this.catalogue._id!)!.innerHTML);
     mywindow.document.write('</body></html>');
 
     mywindow.document.close(); // necessary for IE >= 10

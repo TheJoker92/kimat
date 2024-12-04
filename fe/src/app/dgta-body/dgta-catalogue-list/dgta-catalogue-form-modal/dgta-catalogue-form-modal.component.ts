@@ -107,7 +107,7 @@ export class DgtaCatalogueFormModalComponent {
       // this.allowedTopics = this.allowedTopics.filter((topic: any) => topic != this.topic)
       // this.topic = this.allowedTopics[0]
       if(this.owners.includes(owner)) {
-        this.owners = this.owners.filter((addedOwner: any) => addedOwner.id != owner.id)
+        this.owners = this.owners.filter((addedOwner: any) => addedOwner._id != owner._id)
       } else {
         this.owners.push(owner)
       }
@@ -122,18 +122,18 @@ export class DgtaCatalogueFormModalComponent {
 
       let payload: any = {
         title: this.title,
-        topics: JSON.stringify(this.topics),
-        documents: JSON.stringify([]),
-        owners: JSON.stringify(this.owners),
-        history: JSON.stringify([
+        topics: this.topics,
+        documents: [],
+        owners: this.owners,
+        history: [
           {
-            id: "0",
+            _id: "0",
             actionLog: ActionLogEnum.CREATION_CATALOGUE,
             date: new Date().toISOString(),
             user: this.sessionService.user,
           }
-        ]),
-        placement: JSON.stringify([this.place])
+        ],
+        placement: [this.place]
       }
 
       console.log(payload)
@@ -173,9 +173,9 @@ export class DgtaCatalogueFormModalComponent {
     this.http.getUser(payload).subscribe({
       next: (response: any) => {
         this.allowedOwners = JSON.parse(JSON.stringify(response.users))
-        // this.allowedOwners = JSON.parse(JSON.stringify(response.users.filter((user: IUser) => user.id != this.sessionService.user!.id)))
+        // this.allowedOwners = JSON.parse(JSON.stringify(response.users.filter((user: IUser) => user._id != this.sessionService.user!._id)))
         this.data.owners = JSON.parse(JSON.stringify(response.users))
-        this.owners = response.users.filter((user: IUser) => user.id == this.sessionService.user!.id)
+        this.owners = response.users.filter((user: IUser) => user._id == this.sessionService.user!._id)
 
         this.owner = this.data.owners[0]
       }
@@ -187,21 +187,21 @@ export class DgtaCatalogueFormModalComponent {
   }
 
   // addOwner() {
-  //   if(this.owner && this.owners.filter((owner: IUser) => owner.id == this.owner.id).length) {
+  //   if(this.owner && this.owners.filter((owner: IUser) => owner._id == this.owner._id).length) {
   //     this.owner = this.allowedOwners[0]
   //   }
     
-  //   if (this.allowedOwners.length && this.owner.id) {
+  //   if (this.allowedOwners.length && this.owner._id) {
   //     this.owners.push(this.owner)
 
   //     this.allowedOwners = this.data.owners
   //     for (let owner of this.owners) {
 
-  //       this.allowedOwners = this.allowedOwners.filter((rawOwner: IUser) => rawOwner.id != owner.id)
+  //       this.allowedOwners = this.allowedOwners.filter((rawOwner: IUser) => rawOwner._id != owner._id)
   //     }
 
   //     console.log("ADD ALLOW", this.allowedOwners)
-  //   } else if(!this.owner.id) {
+  //   } else if(!this.owner._id) {
       
   //   } else {
   //     alert("Non ci sono utenti da aggiungere")
@@ -210,12 +210,12 @@ export class DgtaCatalogueFormModalComponent {
   // }
 
   onSelectOwner(e: any) {
-    this.owner = this.allowedOwners.find((owner: IUser) => owner.id == e.target.value)!
+    this.owner = this.allowedOwners.find((owner: IUser) => owner._id == e.target.value)!
   }
 
 
   deleteOwner(owner: IUser) {
-    this.owners = this.owners.filter((ownerRow: IUser) => ownerRow.id != owner.id)
+    this.owners = this.owners.filter((ownerRow: IUser) => ownerRow._id != owner._id)
 
     this.allowedOwners.push(owner)
 
@@ -357,7 +357,7 @@ export class DgtaCatalogueFormModalComponent {
   isAddedOwner(owner: any) {
     let result
 
-    if (this.owners.filter((addedOwner: any) => addedOwner.id == owner.id).length) {
+    if (this.owners.filter((addedOwner: any) => addedOwner._id == owner._id).length) {
       result = true
     }
     return result

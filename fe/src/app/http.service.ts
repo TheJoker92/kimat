@@ -69,6 +69,10 @@ export class HttpService {
     return this.http.post(this.buildURL("dossiers/", this.data.dossier.delete), payload, this.httpOptions)
   }
 
+  updateDossier(payload: any) {
+    return this.http.post(this.buildURL("dossiers/", this.data.dossier.update), payload, this.httpOptions)
+  }
+
 
   /**
    * CATALOGUES
@@ -85,6 +89,10 @@ export class HttpService {
     return this.http.post(this.buildURL("catalogues/", this.data.catalogue.delete), payload, this.httpOptions)
   }
 
+  updateCatalogue(payload: any) {
+    return this.http.post(this.buildURL("catalogues/", this.data.catalogue.update), payload, this.httpOptions)
+  }
+
   
   /**
    * DOCUMENTS
@@ -95,6 +103,10 @@ export class HttpService {
   
   addDocument(payload: any) {
     return this.http.post(this.buildURL("documents/", this.data.document.add), payload, this.httpOptions)
+  }
+
+  updateDocument(payload: any) {
+    return this.http.post(this.buildURL("documents/", this.data.document.update), payload, this.httpOptions)
   }
 
   uploadFile(payload: any) {

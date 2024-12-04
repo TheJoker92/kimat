@@ -15,17 +15,21 @@
         "catalogue": {
             "add": "add",
             "getCatalogues": "getCatalogues",
-            "delete": "delete"
+            "delete": "delete",
+            "update": "update"
         },
         "dossier": {
             "add": "add",
             "getDossiers": "getDossiers",
-            "delete": "delete"
+            "delete": "delete",
+            "update": "update"
+
         },
         "document": {
             "add": "add",
             "getDocuments": "getDocuments",
             "delete": "delete",
+            "update": "update",
             "ocr": "ocr",
             "base64": "base64",
             "getDocumentsByDate": "getDocumentsByDate",

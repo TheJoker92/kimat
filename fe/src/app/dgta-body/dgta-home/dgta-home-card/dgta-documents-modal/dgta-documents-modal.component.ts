@@ -128,7 +128,7 @@ export class DgtaDocumentsModalComponent {
 
   getDocuments(term?: string, dates?: any) {
     let payload: any = {
-      parentId: this.dossier.id
+      parentId: this.dossier._id
     }
 
     if (term) {
@@ -163,7 +163,7 @@ export class DgtaDocumentsModalComponent {
         if (term) {
 
           let payload: any = {
-            parentId: this.dossier.id
+            parentId: this.dossier._id
           }
 
           delete payload["name"]
@@ -186,14 +186,14 @@ export class DgtaDocumentsModalComponent {
 
                 }
 
-                if (this.documents.filter((presentedDocument: IDocument) => document.id == presentedDocument.id).length == 0) {
+                if (this.documents.filter((presentedDocument: IDocument) => document._id == presentedDocument._id).length == 0) {
                   this.documents.push(document)
                 }
 
                 console.log("AAAA", this.documents)
                 this.documents = JSON.parse(JSON.stringify(this.documents))
               }
-              // this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
+              // this.document = this.documents.find((rawDocument: IDocument) => document._id == rawDocument._id)!
 
 
             },
@@ -204,7 +204,7 @@ export class DgtaDocumentsModalComponent {
             }
           })
 
-          // this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
+          // this.document = this.documents.find((rawDocument: IDocument) => document._id == rawDocument._id)!
         }
 
 
@@ -241,10 +241,10 @@ export class DgtaDocumentsModalComponent {
 
     let history = this.document.history!
     history.push({
-      id: this.document.history!.length.toString(),
+      _id: this.document.history!.length.toString(),
       date: new Date().toISOString(),
       user: this.sessionService.user,
-      resourceId: this.document.id,
+      resourceId: this.document._id,
       actionLog: ActionLogEnum.UPDATE_DOCUMENT_LAST_VIEW
     })
 
@@ -252,7 +252,7 @@ export class DgtaDocumentsModalComponent {
 
     let payload: any = {
       "parentId": this.document.parentId,
-      "id": this.document.id,
+      "_id": this.document._id,
       "name": this.document.name,
       "history": JSON.stringify(history),
       "attachments": JSON.stringify(this.document.attachments),
@@ -321,7 +321,7 @@ export class DgtaDocumentsModalComponent {
 
     if (update) {
       console.log("length BEFORE", this.document.placement)
-      this.document = this.documents.find((rawDocument: IDocument) => this.document.id == rawDocument.id)!
+      this.document = this.documents.find((rawDocument: IDocument) => this.document._id == rawDocument._id)!
       console.log("length AFTER", this.document.placement)
       setTimeout(() => {
         this.isOpenCollocationModal = true
@@ -352,18 +352,18 @@ export class DgtaDocumentsModalComponent {
   }
 
   deleteDocument(document: IDocument) {
-    if (document.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length != 0) {
+    if (document.owners?.filter(owner => owner._id == this.sessionService.user!._id!).length != 0) {
 
       this.document = {}
   
       let payload = {
-        id: document.id
+        _id: document._id
       }
       this.http.deleteDocuments(payload).subscribe({
         next: (response: any) => {
           if (response.code == 200) {
             // alert("L'operazione è riuscita")
-            this.sessionService.selectedDocuments = this.sessionService.selectedDocuments.filter((documentSelected: any) => documentSelected.id != document.id)
+            this.sessionService.selectedDocuments = this.sessionService.selectedDocuments.filter((documentSelected: any) => documentSelected._id != document._id)
             
             if (this.sessionService.selectedDocuments.length == 0) {
               this.deactiveSelectMode()
@@ -457,7 +457,7 @@ export class DgtaDocumentsModalComponent {
       }
 
       let payload = {
-        "parentId": this.dossier.id,
+        "parentId": this.dossier._id,
         "dates": dates
       }
 
@@ -514,7 +514,7 @@ export class DgtaDocumentsModalComponent {
         console.log("AAAA", this.documents)
         this.documents = JSON.parse(JSON.stringify(this.documents))
 
-        // this.document = this.documents.find((rawDocument: IDocument) => document.id == rawDocument.id)!
+        // this.document = this.documents.find((rawDocument: IDocument) => document._id == rawDocument._id)!
 
 
       },
@@ -556,7 +556,7 @@ export class DgtaDocumentsModalComponent {
     if (!this.sessionService.selectedDocuments.includes(document)) {
       this.sessionService.selectedDocuments.push(document)
     } else {
-      this.sessionService.selectedDocuments = this.sessionService.selectedDocuments.filter((selectedDocument: any) => document.id != selectedDocument.id)
+      this.sessionService.selectedDocuments = this.sessionService.selectedDocuments.filter((selectedDocument: any) => document._id != selectedDocument._id)
     }
   }
 

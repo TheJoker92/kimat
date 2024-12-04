@@ -69,7 +69,7 @@ export class DgtaAttachmentsModalComponent {
 
   getPdf() {
     // this.loadingService.isLoading = true
-    fetch(this.http.BASE_URL + "pdf/" + this.document.id!, {
+    fetch(this.http.BASE_URL + "pdf/" + this.document._id!, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -154,7 +154,7 @@ export class DgtaAttachmentsModalComponent {
     if (this.isAuthenticated) {
 
       let payload = {
-        id: this.document.id
+        _id: this.document._id
       }
   
       this.loadingService.isLoading = true
@@ -174,7 +174,7 @@ export class DgtaAttachmentsModalComponent {
 
   uploadAttachmentDocument() {
       let payload: any = {
-        "id": this.document.id,
+        "_id": this.document._id,
         "parentId": this.document.parentId,
         "name": this.document.name,
         "history": JSON.stringify(this.document.history),
@@ -218,7 +218,7 @@ export class DgtaAttachmentsModalComponent {
 
           if (response.code == 200) {
             let history: ILog = {
-              id: this.document.history?.length.toString(),
+              _id: this.document.history?.length.toString(),
               date: new Date().toISOString(),
               actionLog: ActionLogEnum.UPDATE_DOCUMENT_ATTACHMENT,
               user: this.sessionService.user
@@ -229,7 +229,7 @@ export class DgtaAttachmentsModalComponent {
             attachmentSolr = JSON.parse(JSON.stringify(attachmentSolr))
       
             let payload: any = {
-              "id": this.document.id,
+              "_id": this.document._id,
               "parentId": this.document.parentId,
               "name": this.document.name,
               "history": JSON.stringify([history]),

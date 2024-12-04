@@ -1,7 +1,7 @@
 import { IUser } from "./IUser"
 
 export interface ILog {
-    id?: string
+    _id?: string
     actionLog?: string
     resourceId?: string
     user?: IUser

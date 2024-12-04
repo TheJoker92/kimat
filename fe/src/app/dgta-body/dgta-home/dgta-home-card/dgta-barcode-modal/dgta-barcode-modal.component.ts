@@ -30,7 +30,7 @@ export class DgtaBarcodeModalComponent {
 
     mywindow.document.write('<html><head>');
     mywindow.document.write('</head><body>');
-    mywindow.document.write(document.getElementById(this.dossier.id!)!.innerHTML);
+    mywindow.document.write(document.getElementById(this.dossier._id!)!.innerHTML);
     mywindow.document.write('</body></html>');
 
     mywindow.document.close(); // necessary for IE >= 10

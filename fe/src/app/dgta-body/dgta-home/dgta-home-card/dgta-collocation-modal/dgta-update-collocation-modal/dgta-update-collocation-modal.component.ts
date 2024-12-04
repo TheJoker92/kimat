@@ -99,17 +99,17 @@ export class DgtaUpdateCollocationModalComponent {
 
       let history = this.dossier.history!
       history.push({
-        id: this.dossier.history!.length.toString(),
+        _id: this.dossier.history!.length.toString(),
         date: new Date().toISOString(),
         user: this.sessionService.user,
-        resourceId: this.dossier.id,
+        resourceId: this.dossier._id,
         actionLog: ActionLogEnum.UPDATE_CATALOGUE
       })
 
       history = JSON.parse(JSON.stringify(history))
 
       let payload: any = {
-        id: this.dossier.id,
+        _id: this.dossier._id,
         title: this.dossier.title,
         topics: JSON.stringify(this.dossier.topics),
         documents: JSON.stringify([]),
@@ -158,7 +158,7 @@ export class DgtaUpdateCollocationModalComponent {
 
     this.http.getDossiers(this.sessionService.terms).subscribe({
       next: (response: any) => {
-        let dossierArray = response.documents!.filter((dossier: IDossier) => dossier.id == this.dossier.id)
+        let dossierArray = response.documents!.filter((dossier: IDossier) => dossier._id == this.dossier._id)
         
         for (let document of dossierArray) {
           let dossier: any = {}

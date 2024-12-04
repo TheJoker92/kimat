@@ -96,10 +96,10 @@ export class DgtaCollocationUpdateDocumentComponent {
 
       let history = this.document.history!
       history.push({
-        id: this.document.history!.length.toString(),
+        _id: this.document.history!.length.toString(),
         date: new Date().toISOString(),
         user: this.sessionService.user,
-        resourceId: this.document.id,
+        resourceId: this.document._id,
         actionLog: ActionLogEnum.UPDATE_DOCUMENT_COLLOCATION
       })
 
@@ -107,7 +107,7 @@ export class DgtaCollocationUpdateDocumentComponent {
 
       let payload: any = {
         "parentId": this.document.parentId,
-        "id": this.document.id,
+        "_id": this.document._id,
         "name": this.document.name,
         "history": JSON.stringify(history),
         "attachments": JSON.stringify(this.document.attachments),

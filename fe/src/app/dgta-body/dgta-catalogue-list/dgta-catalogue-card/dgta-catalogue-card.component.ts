@@ -67,12 +67,12 @@ export class DgtaCatalogueCardComponent {
   }
 
   deleteCatalogue(catalogue: ICatalogue) {
-    if (catalogue.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length == 0) {
+    if (catalogue.owners?.filter(owner => owner._id == this.sessionService.user!._id!).length == 0) {
 
       this.catalogue = {}
   
       let payload = {
-        id: catalogue.id
+        _id: catalogue._id
       }
       this.http.deleteCatalogue(payload).subscribe({
         next: (response: any) => {
@@ -159,7 +159,7 @@ export class DgtaCatalogueCardComponent {
     if (!this.sessionService.selectedCatalogues.includes(catalogue)) {
       this.sessionService.selectedCatalogues.push(catalogue)
     } else {
-      this.sessionService.selectedCatalogues = this.sessionService.selectedCatalogues.filter((selectedCatalogue: any) => catalogue.id != selectedCatalogue.id)
+      this.sessionService.selectedCatalogues = this.sessionService.selectedCatalogues.filter((selectedCatalogue: any) => catalogue._id != selectedCatalogue._id)
     }
   }
 

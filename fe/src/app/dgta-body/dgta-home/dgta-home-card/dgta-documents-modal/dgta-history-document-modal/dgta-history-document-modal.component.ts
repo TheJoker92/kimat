@@ -28,7 +28,7 @@ export class DgtaHistoryDocumentModalComponent {
   constructor(private session: SessionService) { }
 
   ngOnInit() {
-    this.history = this.document.history!.filter((log: ILog) => this.session.user?.role == "admin" || log.user?.id == this.session.user?.id)
+    this.history = this.document.history!.filter((log: ILog) => this.session.user?.role == "admin" || log.user?._id == this.session.user?._id)
     console.log("H", this.history)
   }
 

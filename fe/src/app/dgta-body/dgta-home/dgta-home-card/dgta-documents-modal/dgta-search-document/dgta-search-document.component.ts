@@ -53,7 +53,7 @@ export class DgtaSearchDocumentComponent {
   onCodeResult(result: any) {
     if (this.isUUID(result)) {
       this.getDocumentByIdE.emit({
-        "id": result
+        "_id": result
       })
       this.hideTopicsE.emit()
 

@@ -68,7 +68,7 @@ export class DgtaUploadAttachmentModalComponent {
           ext: "pdf",
           base64: e.target.result.replace("data:application/pdf;base64,", ""),
           device: {
-            id: "0",
+            _id: "0",
             model: "manuale",
             vendor: "manuale"
           },

@@ -92,7 +92,7 @@ export class DgtaDossierModalComponent {
   getDossiers(topic?: string) {
     this.deactiveSelectMode()
 
-    this.sessionService.terms["parentId"] = this.catalogue.id
+    this.sessionService.terms["parentId"] = this.catalogue._id
     
     this.http.getDossiers(this.sessionService.terms).subscribe({
       next: (response: any) => {
@@ -187,16 +187,16 @@ export class DgtaDossierModalComponent {
 
   deleteDossier(dossier: IDossier) {
 
-    if (dossier.owners?.filter(owner => owner.id == this.sessionService.user!.id!).length != 0) {
+    if (dossier.owners?.filter(owner => owner._id == this.sessionService.user!._id!).length != 0) {
   
       let payload = {
-        id: dossier.id
+        _id: dossier._id
       }
       this.http.deleteDossier(payload).subscribe({
         next: (response: any) => {
           if(response.code == 200) {
             // alert("L'operazione è riuscita")
-            this.sessionService.selectedDossiers = this.sessionService.selectedDossiers.filter((selectedDossier: any) => selectedDossier.id != dossier.id)
+            this.sessionService.selectedDossiers = this.sessionService.selectedDossiers.filter((selectedDossier: any) => selectedDossier._id != dossier._id)
             
             if (this.sessionService.selectedDossiers.length == 0) {
               window.location.reload()

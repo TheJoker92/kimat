@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS, cross_origin
 
 import json
-import pysolr
+from pymongo import MongoClient
+
 import requests
 from werkzeug.routing import BaseConverter
 
@@ -50,11 +51,17 @@ app = Flask(__name__, static_folder=flaskstaticFolderPath)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1000 * 1000
 cors = CORS(app, origins = ["*"])
 
-SOLR_URL = "127.0.0.1"
-SOLR_PORT = "8984"
+MONGODB_HOST = "127.0.0.1"
+MONGODB_PORT = "27017"
+
+USERNAME = "kimat"
+PSW = "kimat"
+
+# Crea il client
+client = MongoClient(f"mongodb://{USERNAME}:{PSW}@{MONGODB_HOST}:{MONGODB_PORT}")["kimat"]
+
 # Initialize Solr connection
 # solr = pysolr.Solr('https://' + SOLR_URL + ':' + SOLR_PORT + '/solr', always_commit=True, verify=False)
-BASE_URL = 'https://' + SOLR_URL + ':' + SOLR_PORT + '/solr'
 
 class RegexConverter(BaseConverter):
     def __init__(self, url_map, *items):
@@ -125,7 +132,7 @@ def create_user():
 
     print(data)
     
-    return jsonify(users.create_user(data, BASE_URL)), 200
+    return jsonify(users.create_user(data, client["users"])), 200
 
 @app.route("/api/users/recoverPass", methods=['POST', 'GET'])
 def recoverPass():
@@ -185,14 +192,14 @@ def read_user():
     print("START USER LOGIN")
     data = request.json
     
-    return users.read_user(data, BASE_URL)
+    return users.read_user(data, client["users"])
 
 @app.route('/api/users/getUser', methods=['POST'])
 def get_user():
     print("START GET USER")
     data = request.json
     
-    return users.get_user(data, BASE_URL)
+    return users.get_user(data, client["users"])
 
 
 # Update operation
@@ -201,7 +208,7 @@ def update_user():
     print("START UPDATE USER ")
     data = request.json
 
-    return jsonify(users.update_user(data, BASE_URL)), 200
+    return jsonify(users.update_user(data, client["users"])), 200
 
 
 @app.route('/api/users/updateUserPass', methods=['POST'])
@@ -209,16 +216,16 @@ def update_user_pass():
     print("START UPDATE USER ")
     data = request.json
 
-    return jsonify(users.updateUserPass(data, BASE_URL)), 200
+    return jsonify(users.updateUserPass(data, client["users"])), 200
 
 # Delete operation
-@app.route('/users/delete/<id>', methods=['DELETE'])
-def delete_user(id):
-    try:
-        solr.delete(id=id)
-        return jsonify({'success': 'User deleted successfully'})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 200
+# @app.route('/users/delete/<id>', methods=['DELETE'])
+# def delete_user(id):
+#     try:
+#         solr.delete(id=id)
+#         return jsonify({'success': 'User deleted successfully'})
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 200
 
 
 
@@ -227,31 +234,31 @@ def delete_user(id):
 @app.route('/api/dossiers/add', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def create_dossier():
-    print("START ADD CATALOGUE")
+    print("START ADD DOSSIER")
     data = request.json    
     
-    return jsonify(dossiers.create_dossier(data, BASE_URL)), 200
+    return jsonify(dossiers.create_dossier(data, client["dossiers"])), 200
 
 @app.route('/api/dossiers/delete', methods=['POST'])
 def deleteDossier():
     print("START DELETE CATALOGUE")
     data = request.json
     
-    return dossiers.delete_dossier(data, BASE_URL)
+    return dossiers.delete_dossier(data, client["dossiers"])
 
 @app.route('/api/dossiers/update', methods=['PUT'])
 def update_dossier():
     print("START CATALOGUE UPDATE")
     data = request.json
     
-    return jsonify(dossiers.update_dossier(data, BASE_URL)), 200
+    return jsonify(dossiers.update_dossier(data, client["dossiers"])), 200
 
 @app.route('/api/dossiers/getDossiers', methods=['POST'])
 def getDossiers():
     print("START GET CATALOGUES")
     data = request.json
     
-    return dossiers.getDossiers(data, BASE_URL)
+    return dossiers.getDossiers(data, client["dossiers"])
 
 #CATALOGUE
 # Create operation
@@ -261,28 +268,28 @@ def create_catalogue():
     print("START ADD CATALOGUE")
     data = request.json    
     
-    return jsonify(catalogues.create_catalogue(data, BASE_URL)), 200
+    return jsonify(catalogues.create_catalogue(data, client["catalogues"])), 200
 
 @app.route('/api/catalogues/delete', methods=['POST'])
 def deleteCatalogue():
     print("START DELETE CATALOGUE")
     data = request.json
     
-    return catalogues.delete_catalogue(data, BASE_URL)
+    return catalogues.delete_catalogue(data, client["catalogues"])
 
-@app.route('/api/catalogues/update', methods=['PUT'])
+@app.route('/api/catalogues/update', methods=['POST'])
 def update_catalogue():
     print("START CATALOGUE UPDATE")
     data = request.json
     
-    return jsonify(catalogues.update_catalogue(data, BASE_URL)), 200
+    return jsonify(catalogues.update_catalogue(data, client["catalogues"])), 200
 
 @app.route('/api/catalogues/getCatalogues', methods=['POST'])
 def getCatalogues():
     print("START GET CATALOGUES")
     data = request.json
     
-    return catalogues.getCatalogues(data, BASE_URL)
+    return catalogues.getCatalogues(data, client["catalogues"])
 
 # Documents operation
 # Read operation
@@ -291,7 +298,7 @@ def getDocuments():
     print("START GET DOCUMENTS")
     data = request.json
     
-    return documents.getDocuments(data, BASE_URL)
+    return documents.getDocuments(data, client["documents"])
 
 
 @app.route('/api/documents/add', methods=['POST'])
@@ -300,7 +307,7 @@ def create_document():
     print("START ADD DOCUMENT")
     data = request.json
     
-    return jsonify(documents.create_document(data, BASE_URL)), 200
+    return jsonify(documents.create_document(data, client["documents"])), 200
 
 @app.route('/api/documents/base64', methods=['POST'])
 @cross_origin(supports_credentials=True)
@@ -316,7 +323,7 @@ def massiveUploadFromPapers():
     print("START UPLOAD DOCUMENT DOCUMENT")
     data = request.json
     
-    return jsonify(documents.massiveUploadFromPapers(data, BASE_URL)), 200
+    return jsonify(documents.massiveUploadFromPapers(data, client["documents"])), 200
 
 
 @app.route('/api/documents/delete', methods=['POST'])
@@ -325,7 +332,7 @@ def deleteDocument():
     print("START DELETE DOCUMENT")
     data = request.json
     
-    return documents.deleteDocument(data, BASE_URL)
+    return documents.deleteDocument(data, client["documents"])
 
 
 # Read operation
@@ -335,7 +342,7 @@ def getDocumentsByDate():
     print("START GET DOCUMENTS BY DATE")
     data = request.json
     
-    return documents.getDocumentsByDate(data, BASE_URL)
+    return documents.getDocumentsByDate(data, client["documents"])
 
 # Read operation
 @app.route('/api/documents/getDocumentById', methods=['POST'])
@@ -344,7 +351,7 @@ def getDocumentsById():
     print("START GET DOCUMENTS BY DATE")
     data = request.json
     
-    return jsonify(documents.getDocumentById(data["id"], BASE_URL)), 200
+    return jsonify(documents.getDocumentById(data["id"], client["documents"])), 200
 
 # SECURITY
 @app.route('/api/security/setAuthorizedToken', methods=['POST'])
