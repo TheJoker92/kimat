@@ -305,38 +305,11 @@ def getDocumentsByDate(data, collection):
         
         documents = []
         for date in data["dates"]:
-            query = "parentId%3A" + data["parentId"] + "%0A"
-            query += "deliberationDate%3Aa" + date
+            query = {"parentId": data["parentId"], "deliberationDate": date}                    
         
-
-            print(collection + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
-            
-
-            # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
-            
-            responseRaw = requests.get(collection + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
-            print(responseRaw)
-            # Decode the content from bytes to string and then parse as JSON
-            response_json = json.loads(responseRaw.content.decode('utf-8'))
-            responseRaw = response_json.get('response', {}).get('docs', [])
-            # Now you can access response_docs as a list containing the documents
-            # Do whatever you need to do with response_docs
-
-
-            
-            if len(responseRaw) > 0:
-                for documentRaw in responseRaw:
-                    document = { }
-
-                    keysRaw = list(documentRaw.keys())
-                    for keyRaw in keysRaw:
-
-                        if keyRaw in ["_id", "_version_", "deliberationDate"]:
-                            document[keyRaw] = documentRaw[keyRaw]
-                        else:
-                            document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
-                    
-                    documents.append(document)
+            for document in collection.find(query):  # Convert cursor to a list
+                document["_id"] = str(document["_id"])
+                documents.append(document)
         
         response = {
             "documents": documents
@@ -456,33 +429,17 @@ def getDocumentById(idDocument, collection):
 
         # solr.add([data])
 
-        query = "id%3A" + idDocument + "%0A"
-
-        print(collection + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
-        # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
+        query = {}
+        query["_id"] = ObjectId(idDocument)
         
-        responseRaw = requests.get(collection + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
-        print(responseRaw)
-        # Decode the content from bytes to string and then parse as JSON
-        response_json = json.loads(responseRaw.content.decode('utf-8'))
-        responseRaw = response_json.get('response', {}).get('docs', [])
-        # Now you can access response_docs as a list containing the documents
-        # Do whatever you need to do with response_docs
-        
+        # solr.add([data])
         documents = []
-        if len(responseRaw) > 0:
-            for documentRaw in responseRaw:
-                document = { }
-
-                keysRaw = list(documentRaw.keys())
-                for keyRaw in keysRaw:
-
-                    if keyRaw in ["_id", "_version_", "deliberationDate"]:
-                        document[keyRaw] = documentRaw[keyRaw]
-                    else:
-                        document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
-                
-                documents.append(document)
+        
+        for document in collection.find(query):  # Convert cursor to a list
+            document["_id"] = str(document["_id"])
+            documents.append(document)
+        
+        print(documents)
         
         response = documents[0]
         
