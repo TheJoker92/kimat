@@ -92,9 +92,9 @@ export class DgtaDossierModalComponent {
   getDossiers(topic?: string) {
     this.deactiveSelectMode()
 
-    this.sessionService.terms["parentId"] = this.catalogue._id
+    this.sessionService.termsDossier["parentId"] = this.catalogue._id
     
-    this.http.getDossiers(this.sessionService.terms).subscribe({
+    this.http.getDossiers(this.sessionService.termsDossier).subscribe({
       next: (response: any) => {
 
         this.dossiers = []

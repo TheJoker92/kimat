@@ -3,7 +3,7 @@
     <div class="column-center-spacebetween">
         <div *ngFor="let topic of filteredTopics" class="row-center-space-between">
             <input type="checkbox" class="checkbox-round font-size-15em"
-            (click)="getDocumentByTopic(topic)" [checked]="isAddedTopic(topic)" />
+            (click)="getCatalogueByTopic(topic)" [checked]="isAddedTopic(topic)" />
             {{ topic.name }} {{ numTopics[topic.rawName] }}
         </div>
     </div>

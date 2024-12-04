@@ -46,7 +46,7 @@ export class DgtaTopicCardCatalogueComponent {
 
     this.numTopics["*"] = 0
 
-    if (Object.keys(this.sessionService.terms.topics).length == 0) {
+    if (Object.keys(this.sessionService.termsCatalogue.topics).length == 0) {
       for (let key of Object.keys(this.numTopics)) {
         this.numTopics["*"] += this.numTopics[key]
       }
@@ -80,17 +80,17 @@ export class DgtaTopicCardCatalogueComponent {
 
 
 
-  getDocumentByTopic(topic: any) {
+  getCatalogueByTopic(topic: any) {
 
     if (this.isFiltered) {
-      this.sessionService.terms["topics"] = "*"
+      this.sessionService.termsCatalogue["topics"] = ""
 
       this.isFiltered = false
     } else {
       this.isFiltered = true
 
       this.filteredTopics = this.topics.filter(topic => this.numTopics[topic.rawName])
-      this.sessionService.terms["topics"] = topic.rawName
+      this.sessionService.termsCatalogue["topics"] = topic.rawName
     }
 
 

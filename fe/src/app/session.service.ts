@@ -24,7 +24,9 @@ export class SessionService {
   documentSelected: IDocument | undefined
   pageNavigation: PageEnum[] = [PageEnum.LOGIN]
 
-  terms: any = {}
+  termsCatalogue: any = {}
+  termsDossier: any = {}
+  termsDocument: any = {}
 
   dossier: IDossier = {}
   isOpenOwnersModal: boolean = false

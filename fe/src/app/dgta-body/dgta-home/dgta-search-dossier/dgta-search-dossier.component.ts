@@ -37,14 +37,12 @@ export class DgtaSearchDossierComponent {
   allowedFormats = [4];
 
 
-  constructor(private sessionService: SessionService) {
-
-  }
+  constructor(private sessionService: SessionService) { }
 
 
 
   onSearch(e: any) {
-    this.sessionService.terms = {
+    this.sessionService.termsDossier = {
       "title": e.target.value
     }
 
@@ -55,7 +53,7 @@ export class DgtaSearchDossierComponent {
 
   onCodeResult(result: any) {
     if (this.isUUID(result)) {
-      this.sessionService.terms = {
+      this.sessionService.termsDossier = {
         "_id": result
       }
 
@@ -71,8 +69,9 @@ export class DgtaSearchDossierComponent {
   }
 
   isUUID(str: any) {
-    const UUIDRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    return UUIDRegex.test(str);
+    // const UUIDRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    // return UUIDRegex.test(str);
+    return true
   }
 
 

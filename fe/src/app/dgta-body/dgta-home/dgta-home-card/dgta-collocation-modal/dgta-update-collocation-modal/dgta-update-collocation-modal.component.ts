@@ -152,7 +152,7 @@ export class DgtaUpdateCollocationModalComponent {
   pullDossier() {
     this.loadingService.isLoading = true
 
-    this.http.getCatalogues(this.sessionService.terms).subscribe({
+    this.http.getCatalogues(this.sessionService.termsCatalogue).subscribe({
       next: (response: any) => {
         let dossierArray = response.documents!.filter((dossier: IDossier) => dossier._id == this.dossier._id)
         

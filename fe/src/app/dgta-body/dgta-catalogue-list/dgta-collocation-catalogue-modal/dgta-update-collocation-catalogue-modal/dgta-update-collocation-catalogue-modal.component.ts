@@ -159,7 +159,7 @@ export class DgtaUpdateCollocationCatalogueModalComponent {
   pullCatalogue() {
     this.loadingService.isLoading = true
 
-    this.http.getCatalogues(this.sessionService.terms).subscribe({
+    this.http.getCatalogues(this.sessionService.termsCatalogue).subscribe({
       next: (response: any) => {
         let catalogueArray = response.documents!.filter((catalogue: ICatalogue) => catalogue._id == this.catalogue._id)
         

@@ -45,7 +45,7 @@ export class DgtaSearchCatalogueComponent {
 
 
   onSearch(e: any) {
-    this.sessionService.terms = {
+    this.sessionService.termsCatalogue = {
       "title":e.target.value
     }
 
@@ -56,7 +56,7 @@ export class DgtaSearchCatalogueComponent {
 
   onCodeResult(result: any) {
     if (this.isUUID(result)) {
-      this.sessionService.terms = {
+      this.sessionService.termsCatalogue = {
         "_id": result
       }
 
