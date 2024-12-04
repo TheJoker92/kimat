@@ -1,4 +1,3 @@
-import requests # type: ignore
 import json
 from bson import ObjectId
 
