@@ -309,6 +309,14 @@ def create_document():
     
     return jsonify(documents.create_document(data, client["documents"])), 200
 
+@app.route('/api/documents/update', methods=['POST'])
+def update_document():
+    print("START CATALOGUE UPDATE")
+    data = request.json
+    
+    return jsonify(documents.update_document(data, client["documents"])), 200
+
+
 @app.route('/api/documents/base64', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def upload_document():
@@ -351,7 +359,7 @@ def getDocumentsById():
     print("START GET DOCUMENTS BY DATE")
     data = request.json
     
-    return jsonify(documents.getDocumentById(data["id"], client["documents"])), 200
+    return jsonify(documents.getDocumentById(data["_id"], client["documents"])), 200
 
 # SECURITY
 @app.route('/api/security/setAuthorizedToken', methods=['POST'])

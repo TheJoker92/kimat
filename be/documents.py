@@ -112,8 +112,6 @@ def upload_document(data):
         }
     else:
         try:
-
-            print(data)
             response = {
                 "message": "DATA ADDED",
                 "error": "",
@@ -121,14 +119,13 @@ def upload_document(data):
             }
 
 
-            if (data["attachments"] and len(json.loads(data["attachments"]))):
-                attachmentsObj = json.loads(data["attachments"])
-                                            
+            if (data["attachments"] and len(data["attachments"])):
+                attachmentsObj = data["attachments"]
                 for attachment in attachmentsObj:
                     if len(attachment.keys()):
                         base_folders = "folders"
-                        full_folder_path = base_folders + "/" + data["id"]
-                        full_filename_path = full_folder_path + "/" + data["id"] + "." + attachment["ext"]
+                        full_folder_path = base_folders + "/" + data["_id"]
+                        full_filename_path = full_folder_path + "/" + data["_id"] + "." + attachment["ext"]
                         if not(os.path.exists(full_folder_path)):
                             os.mkdir(full_folder_path) 
 
@@ -161,7 +158,7 @@ def getOcr(data, basePathAsset):
     try:
 
         print(data)
-        id = data["id"]
+        id = data["_id"]
 
         file_path_noext = basePathAsset + id + "/" + id  
         if (os.path.exists(file_path_noext + ".txt")):
@@ -256,7 +253,7 @@ def resource_src(ext, id, basePathAsset):
         merger.close()
 
         data = {
-            "id": id
+            "_id": id
         }
         getOcr(data, basePathAsset)
     else:
@@ -280,7 +277,7 @@ def deleteDocument(data, collection):
                 "error": "",
                 "code": 200
             }
-            
+
             collection.delete_one({"_id": ObjectId(data["_id"])})
 
 
@@ -334,7 +331,7 @@ def getDocumentsByDate(data, collection):
                     keysRaw = list(documentRaw.keys())
                     for keyRaw in keysRaw:
 
-                        if keyRaw in ["id", "_version_", "deliberationDate"]:
+                        if keyRaw in ["_id", "_version_", "deliberationDate"]:
                             document[keyRaw] = documentRaw[keyRaw]
                         else:
                             document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
@@ -368,7 +365,7 @@ def massiveUploadFromPapers(data, collection):
             for attachment in attachmentsObj:
                 if len(attachment.keys()):
                     
-                    full_filename_path = full_folder_path + "/" + data["parentId"] + "/" + data["id"] + "_" + index + "_" + "." + attachment["ext"]
+                    full_filename_path = full_folder_path + "/" + data["parentId"] + "/" + data["_id"] + "_" + index + "_" + "." + attachment["ext"]
                     if not(os.path.exists(full_folder_path)):
                         os.mkdir(full_folder_path) 
 
@@ -382,10 +379,14 @@ def massiveUploadFromPapers(data, collection):
                     data["attachments"] = full_filename_path
 
             file_path_noext = full_folder_path + "/" + data["parentId"]
-            text = extract_massive_text_from_pdf(file_path_noext + ".pdf", collection)
+            text = extract_massive_text_from_pdf(file_path_noext + ".pdf", collection)  
+
+            print("AAAA")
             with open(file_path_noext  + ".txt", 'w') as theFile:
                 theFile.write(text)
                 theFile.close()
+
+            print("BBB")
     except Exception as e:
         response = {
             "message": "",
@@ -415,8 +416,8 @@ def extract_massive_text_from_pdf(pdf_path, collection):
             if index > 0:
             
                 base_folders = "folders"
-                full_folder_path = base_folders + "/" + document["id"]
-                full_filename_path = full_folder_path + "/" + document["id"] + ".pdf"
+                full_folder_path = base_folders + "/" + document["_id"]
+                full_filename_path = full_folder_path + "/" + document["_id"] + ".pdf"
                 if not(os.path.exists(full_folder_path)):
                     os.mkdir(full_folder_path) 
 
@@ -476,7 +477,7 @@ def getDocumentById(idDocument, collection):
                 keysRaw = list(documentRaw.keys())
                 for keyRaw in keysRaw:
 
-                    if keyRaw in ["id", "_version_", "deliberationDate"]:
+                    if keyRaw in ["_id", "_version_", "deliberationDate"]:
                         document[keyRaw] = documentRaw[keyRaw]
                     else:
                         document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
@@ -505,3 +506,39 @@ def sort_alphanumeric_list(lst):
 
     # Sort the list using a custom key function
     return sortedList
+
+
+def update_document(data, collection):
+    print(data)
+    
+    response = {}
+    if not data:
+        response = {
+            "message": "",
+            "error": 'No data provided',
+            "code": 400
+        }
+    else:
+        try:
+            response = {
+                "message": "DATA UPDATED",
+                "error": "",
+                "code": 200
+            }
+
+            # solr.add([data])
+
+            query = {"_id": ObjectId(data["_id"])}
+
+            del data["_id"]
+
+            collection.update_one(query, {"$set": data})
+            # print(f"Status Code: {r.status_code}, Response: {r.json()}")
+        except Exception as e:
+            response = {
+                "message": "",
+                "error": str(e),
+                "code": 500
+            }
+        
+        return response

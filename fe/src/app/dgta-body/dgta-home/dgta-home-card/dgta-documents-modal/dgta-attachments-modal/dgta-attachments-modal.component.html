@@ -45,8 +45,8 @@
         <div *ngIf="srcPdf" class="row-center-left">
             <div class="box-form column-center-left">
                 <div class="file-viewer-container">
-                    <pdf-viewer [src]="srcPdf" [render-text]="true" [original-size]="false"
-                        style="width: 100vw; height: 100vh"></pdf-viewer>
+                    <iframe [src]="srcPdf"
+                        style="width: 100vw; height: 100vh"></iframe>
                 </div>
             </div>
         </div>

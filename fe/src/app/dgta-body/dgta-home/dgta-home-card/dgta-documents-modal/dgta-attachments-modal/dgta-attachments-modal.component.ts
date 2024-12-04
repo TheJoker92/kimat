@@ -11,6 +11,7 @@ import { DgtaOcrModalComponent } from './dgta-ocr-modal/dgta-ocr-modal.component
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpEventType } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'dgta-attachments-modal',
@@ -37,7 +38,7 @@ export class DgtaAttachmentsModalComponent {
   attachmentPdf: any = {}
 
   isOpenUploadAttachmentModal = false
-  srcPdf = ""
+  srcPdf: any
 
   token = ""
 
@@ -49,7 +50,8 @@ export class DgtaAttachmentsModalComponent {
 
   constructor (private http: HttpService,
               private sessionService: SessionService,
-              public loadingService: LoadingService) {}
+              public loadingService: LoadingService,
+              private sanitizer: DomSanitizer) {}
 
   ngOnChanges() {
 
@@ -86,7 +88,7 @@ export class DgtaAttachmentsModalComponent {
         // alert("Il codice inserito è errato. Riprova.")
         // this.isAuthenticated = false
       } else {
-        this.srcPdf = result.base64
+        this.srcPdf = this.sanitizer.bypassSecurityTrustResourceUrl(result.base64)
 
         this.numOfPages = result.numOfPages
       }
@@ -177,13 +179,13 @@ export class DgtaAttachmentsModalComponent {
         "_id": this.document._id,
         "parentId": this.document.parentId,
         "name": this.document.name,
-        "history": JSON.stringify(this.document.history),
-        "attachments": JSON.stringify([this.attachmentPdf]),
-        "deviceIds": JSON.stringify([]),
-        "states": JSON.stringify(this.document.states),
-        "topics": JSON.stringify(this.document.topics),
-        "placement": JSON.stringify(this.document.placement),
-        "owners": JSON.stringify(this.document.owners),
+        "history": this.document.history,
+        "attachments": [this.attachmentPdf],
+        "deviceIds": [],
+        "states": this.document.states,
+        "topics": this.document.topics,
+        "placement": this.document.placement,
+        "owners": this.document.owners,
         "deliberationDate": this.document.deliberationDate
       }
 
@@ -232,20 +234,20 @@ export class DgtaAttachmentsModalComponent {
               "_id": this.document._id,
               "parentId": this.document.parentId,
               "name": this.document.name,
-              "history": JSON.stringify([history]),
-              "attachments": JSON.stringify([attachmentSolr]),
-              "deviceIds": JSON.stringify([]),
-              "states": JSON.stringify(this.document.states),
-              "topics": JSON.stringify(this.document.topics),
-              "placement": JSON.stringify(this.document.placement),
-              "owners": JSON.stringify(this.document.owners),
+              "history": [history],
+              "attachments": [attachmentSolr],
+              "deviceIds": [],
+              "states": this.document.states,
+              "topics": this.document.topics,
+              "placement": this.document.placement,
+              "owners": this.document.owners,
               "deliberationDate": this.document.deliberationDate
             }
       
             console.log(payload)
       
             this.loadingService.isLoading = true
-            this.http.addDocument(payload).subscribe({
+            this.http.updateDocument(payload).subscribe({
               next: (response: any) => {
                 this.loadingService.isLoading = false
       

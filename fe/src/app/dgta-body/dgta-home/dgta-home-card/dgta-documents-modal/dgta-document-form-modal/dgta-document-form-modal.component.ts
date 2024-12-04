@@ -346,13 +346,13 @@ export class DgtaDocumentFormModalComponent {
     let payload: any = {
       "parentId": parentId,
       "name": file.name.replace(".pdf", ""),
-      "history": JSON.stringify([history]),
-      "attachments": JSON.stringify([]),
-      "deviceIds": JSON.stringify([]),
-      "states": JSON.stringify([state]),
-      "topics": JSON.stringify([]),
-      "placement": JSON.stringify([]),
-      "owners": JSON.stringify([this.sessionService.user]),
+      "history": [history],
+      "attachments": [],
+      "deviceIds": [],
+      "states": [state],
+      "topics": [],
+      "placement": [],
+      "owners": [this.sessionService.user],
       "deliberationDate": ""
     }
 
@@ -458,19 +458,19 @@ export class DgtaDocumentFormModalComponent {
         "parentId": parentId,
         "_id": document._id,
         "name": document.name,
-        "history": JSON.stringify([history]),
-        "attachments": JSON.stringify([attachmentPdf]),
-        "deviceIds": JSON.stringify([]),
-        "states": JSON.stringify(document.states),
-        "topics": JSON.stringify(document.topics),
-        "placement": JSON.stringify(document.placement),
-        "owners": JSON.stringify(document.owners),
+        "history": [history],
+        "attachments": [attachmentPdf],
+        "deviceIds": [],
+        "states": document.states,
+        "topics": document.topics,
+        "placement": document.placement,
+        "owners": document.owners,
         "deliberationDate": document.deliberationDate
       }
 
       console.log("SECOND stepSingleAdd", index, payload)
 
-      this.http.addDocument(payload).subscribe({
+      this.http.updateDocument(payload).subscribe({
         next: (response: any) => {
 
           if (response.code == 200) {
@@ -486,13 +486,13 @@ export class DgtaDocumentFormModalComponent {
               "parentId": parentId,
               "_id": document._id,
               "name": document.name,
-              "history": JSON.stringify(document.history),
-              "attachments": JSON.stringify([attachmentPdf]),
-              "deviceIds": JSON.stringify([]),
-              "states": JSON.stringify(document.states),
-              "topics": JSON.stringify(document.topics),
-              "placement": JSON.stringify(document.placement),
-              "owners": JSON.stringify(document.owners),
+              "history": document.history,
+              "attachments": [attachmentPdf],
+              "deviceIds": [],
+              "states": document.states,
+              "topics": document.topics,
+              "placement": document.placement,
+              "owners": document.owners,
               "deliberationDate": document.deliberationDate
             }
 
@@ -510,7 +510,7 @@ export class DgtaDocumentFormModalComponent {
                     console.log(this.multipleFiles)
                     
                     this.loadingService.isLoading = false
-                    if (index < this.multipleFiles.length) {
+                    if (index + 1 < this.multipleFiles.length) {
                       this.addDocumentMultipleFirststepSingleAdd(index + 1)
                     } 
 
@@ -628,16 +628,16 @@ export class DgtaDocumentFormModalComponent {
           "parentId": document.parentId,
           "_id": document._id,
           "name": document.name,
-          "history": JSON.stringify(document.history),
-          "attachments": JSON.stringify({
+          "history": document.history,
+          "attachments": {
             name: document.name,
             ext: "pdf"
-          }),
-          "deviceIds": JSON.stringify([]),
-          "states": JSON.stringify(document.states),
-          "topics": JSON.stringify([deliberazioneTemaplateJSON]),
-          "placement": JSON.stringify(document.placement),
-          "owners": JSON.stringify(document.owners),
+          },
+          "deviceIds": [],
+          "states": document.states,
+          "topics": [deliberazioneTemaplateJSON],
+          "placement": document.placement,
+          "owners": document.owners,
           "deliberationDate": deliberazioneTemaplateJSON.dataNoDash
         }
 

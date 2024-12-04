@@ -30,9 +30,9 @@ def buildMetadataXML(data):
     metadata = {
         "DocumentoInformatico": {
             "IdDoc": {
-                "Impronta": sha256(data["id"].encode("utf-8")),
+                "Impronta": sha256(data["_id"].encode("utf-8")),
                 "Algoritmo": "SHA-256",
-                "Identificativo": data["id"]
+                "Identificativo": data["_id"]
             },
             "ModalitaDiFormazione": DIGITAL_MODE,
             "TipologiaDocumentale": DOCUMENT_TYPE,
@@ -73,25 +73,25 @@ data = {
     "deviceIds": [],
     "history": [
         {
-            "id": "0",
+            "_id": "0",
             "date": "2024-04-05T21:38:25.590Z",
             "actionLog": "crea documento",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
             }
         },
         {
-            "id": "1",
+            "_id": "1",
             "date": "2024-04-07T20:49:02.101Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -100,12 +100,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "2",
+            "_id": "2",
             "date": "2024-04-08T09:42:28.950Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -114,12 +114,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "3",
+            "_id": "3",
             "date": "2024-04-08T14:44:47.938Z",
             "user": {
                 "email": "massimiliano.vender@gmail.com",
                 "firstName": "Massimiliano",
-                "id": "e9b06132-6b25-4824-a0ed-aaa661f6c264",
+                "_id": "e9b06132-6b25-4824-a0ed-aaa661f6c264",
                 "lastName": "Vender",
                 "password": "test",
                 "role": "admin"
@@ -128,12 +128,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "4",
+            "_id": "4",
             "date": "2024-04-08T14:45:21.568Z",
             "user": {
                 "email": "massimiliano.vender@gmail.com",
                 "firstName": "Massimiliano",
-                "id": "e9b06132-6b25-4824-a0ed-aaa661f6c264",
+                "_id": "e9b06132-6b25-4824-a0ed-aaa661f6c264",
                 "lastName": "Vender",
                 "password": "test",
                 "role": "admin"
@@ -142,12 +142,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "5",
+            "_id": "5",
             "date": "2024-04-08T14:46:03.539Z",
             "user": {
                 "email": "massimiliano.vender@gmail.com",
                 "firstName": "Massimiliano",
-                "id": "e9b06132-6b25-4824-a0ed-aaa661f6c264",
+                "_id": "e9b06132-6b25-4824-a0ed-aaa661f6c264",
                 "lastName": "Vender",
                 "password": "test",
                 "role": "admin"
@@ -156,12 +156,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "6",
+            "_id": "6",
             "date": "2024-04-08T15:03:24.596Z",
             "user": {
                 "email": "massimiliano.vender@gmail.com",
                 "firstName": "Massimiliano",
-                "id": "e9b06132-6b25-4824-a0ed-aaa661f6c264",
+                "_id": "e9b06132-6b25-4824-a0ed-aaa661f6c264",
                 "lastName": "Vender",
                 "password": "test",
                 "role": "admin"
@@ -170,12 +170,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "7",
+            "_id": "7",
             "date": "2024-04-09T14:39:52.508Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -184,12 +184,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "8",
+            "_id": "8",
             "date": "2024-04-09T14:53:54.552Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -198,12 +198,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "9",
+            "_id": "9",
             "date": "2024-04-15T14:58:44.341Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -212,12 +212,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "10",
+            "_id": "10",
             "date": "2024-04-16T13:21:48.320Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -226,12 +226,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "11",
+            "_id": "11",
             "date": "2024-04-16T13:27:46.770Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -240,12 +240,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "12",
+            "_id": "12",
             "date": "2024-04-16T13:31:37.138Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -254,12 +254,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "13",
+            "_id": "13",
             "date": "2024-04-16T13:32:11.422Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -268,12 +268,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "14",
+            "_id": "14",
             "date": "2024-04-16T13:35:45.596Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -282,12 +282,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "15",
+            "_id": "15",
             "date": "2024-04-16T13:59:33.692Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -296,12 +296,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "16",
+            "_id": "16",
             "date": "2024-04-16T14:08:01.928Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -310,12 +310,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "17",
+            "_id": "17",
             "date": "2024-04-16T14:56:18.918Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -324,12 +324,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "18",
+            "_id": "18",
             "date": "2024-04-16T14:56:58.901Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -338,12 +338,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "19",
+            "_id": "19",
             "date": "2024-04-16T14:59:37.867Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -352,12 +352,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "20",
+            "_id": "20",
             "date": "2024-04-16T15:03:54.050Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -366,12 +366,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "21",
+            "_id": "21",
             "date": "2024-04-16T15:04:19.932Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -380,12 +380,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "22",
+            "_id": "22",
             "date": "2024-04-16T15:04:38.733Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -394,12 +394,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "23",
+            "_id": "23",
             "date": "2024-04-16T15:11:03.631Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -408,12 +408,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "24",
+            "_id": "24",
             "date": "2024-04-16T15:12:26.213Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -422,12 +422,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "25",
+            "_id": "25",
             "date": "2024-04-16T15:29:38.179Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -436,12 +436,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "26",
+            "_id": "26",
             "date": "2024-04-16T15:29:53.145Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -450,12 +450,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "27",
+            "_id": "27",
             "date": "2024-04-16T15:30:22.328Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -464,12 +464,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "28",
+            "_id": "28",
             "date": "2024-04-16T15:35:32.865Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -478,12 +478,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "29",
+            "_id": "29",
             "date": "2024-04-16T15:51:12.676Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -492,12 +492,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "30",
+            "_id": "30",
             "date": "2024-04-16T15:51:17.244Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -506,12 +506,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "31",
+            "_id": "31",
             "date": "2024-04-16T15:51:42.326Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -520,12 +520,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "32",
+            "_id": "32",
             "date": "2024-04-16T15:51:44.576Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -534,12 +534,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "33",
+            "_id": "33",
             "date": "2024-04-16T15:52:01.610Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -548,12 +548,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "34",
+            "_id": "34",
             "date": "2024-04-16T15:56:29.789Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -562,12 +562,12 @@ data = {
             "actionLog": "ultima visualizzazione"
         },
         {
-            "id": "35",
+            "_id": "35",
             "date": "2024-04-16T15:56:54.757Z",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"
@@ -576,13 +576,13 @@ data = {
             "actionLog": "ultima visualizzazione"
         }
     ],
-    "id": "fa0931b9-333a-498b-a6a4-c04add1b44e0",
+    "_id": "fa0931b9-333a-498b-a6a4-c04add1b44e0",
     "name": "Delibera01-04012006",
     "owners": [
         {
             "email": "demicco.alessandro92@gmail.com",
             "firstName": "Alessandro",
-            "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+            "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
             "lastName": "De Micco",
             "password": "test",
             "role": "support"
@@ -592,12 +592,12 @@ data = {
     "placement": [],
     "states": [
         {
-            "id": "0",
+            "_id": "0",
             "stateValue": "Accettazione",
             "user": {
                 "email": "demicco.alessandro92@gmail.com",
                 "firstName": "Alessandro",
-                "id": "160653e4-8462-4798-90a3-15cbe2f69411",
+                "_id": "160653e4-8462-4798-90a3-15cbe2f69411",
                 "lastName": "De Micco",
                 "password": "test",
                 "role": "support"

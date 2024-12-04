@@ -120,7 +120,7 @@ export class DgtaCollocationUpdateDocumentComponent {
       }
 
       this.loadingService.isLoading = true
-      this.http.addDocument(payload).subscribe({
+      this.http.updateDocument(payload).subscribe({
         next: (response: any) => {
           this.loadingService.isLoading = false
 

@@ -90,21 +90,21 @@ export class DgtaOcrModalComponent {
           "parentId": this.document.parentId,
           "_id": this.document._id,
           "name": this.document.name,
-          "history": JSON.stringify(this.document.history),
-          "attachments": JSON.stringify({
+          "history": this.document.history,
+          "attachments": {
             name: this.document.name,
             ext: "pdf"
-          }),
-          "deviceIds": JSON.stringify([]),
-          "states": JSON.stringify(this.document.states),
-          "topics": JSON.stringify([this.deliberazioneTemaplateJSON]),
-          "placement": JSON.stringify(this.document.placement),
-          "owners": JSON.stringify(this.document.owners),
+          },
+          "deviceIds": [],
+          "states": this.document.states,
+          "topics": [this.deliberazioneTemaplateJSON],
+          "placement": this.document.placement,
+          "owners": this.document.owners,
           "deliberationDate": this.deliberazioneTemaplateJSON.dataNoDash
         }
   
         console.log(payload)
-        this.http.addDocument(payload).subscribe({
+        this.http.updateDocument(payload).subscribe({
           next: (response: any) => {
   
             if (response.code == 200) {
