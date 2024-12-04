@@ -160,7 +160,7 @@ def delete_user(data, collection):
             }
 
 
-            collection.delete_one({"_id": ObjectId(data["_id"])})
+            collection.delete_one({"_id": data["_id"]})
 
             # Now you can access response_docs as a list containing the documents
             # Do whatever you need to do with response_docs

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as rawData from '../assets/enum.json';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,7 @@ export class HttpService {
   }
   
   addDossier(payload: any) {
+    payload["_id"] =  uuidv4()
     return this.http.post(this.buildURL("dossiers/", this.data.dossier.add), payload, this.httpOptions)
   }
 
@@ -82,6 +84,7 @@ export class HttpService {
   }
   
   addCatalogue(payload: any) {
+    payload["_id"] =  uuidv4()
     return this.http.post(this.buildURL("catalogues/", this.data.catalogue.add), payload, this.httpOptions)
   }
 
@@ -102,6 +105,7 @@ export class HttpService {
   }
   
   addDocument(payload: any) {
+    payload["_id"] =  uuidv4()
     return this.http.post(this.buildURL("documents/", this.data.document.add), payload, this.httpOptions)
   }
 

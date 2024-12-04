@@ -1,5 +1,7 @@
 import json
 from bson import ObjectId
+import uuid
+
 
 def create_catalogue(data, collection):    
     response = {}
@@ -16,7 +18,6 @@ def create_catalogue(data, collection):
                 "error": "",
                 "code": 200
             }
-
             
             print(collection.insert_one(data))
 
@@ -43,7 +44,7 @@ def getCatalogues(data, collection):
 
         query = {}
         if "_id" in data.keys():
-            query["_id"] = ObjectId(data["_id"])
+            query["_id"] = data["_id"]
             del data["_id"]
         if "title" in data.keys():
             query["title"] =  { "$regex": data["title"], "$options": "i" }
@@ -92,7 +93,7 @@ def delete_catalogue(data, collection):
                 "code": 200
             }
 
-            collection.delete_one({"_id": ObjectId(data["_id"])})
+            collection.delete_one({"_id": data["_id"]})
 
             # Now you can access response_docs as a list containing the documents
             # Do whatever you need to do with response_docs
@@ -126,7 +127,7 @@ def update_catalogue(data, collection):
 
             # solr.add([data])
 
-            query = {"_id": ObjectId(data["_id"])}
+            query = {"_id": data["_id"]}
 
             del data["_id"]
 

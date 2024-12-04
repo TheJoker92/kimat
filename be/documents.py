@@ -68,7 +68,7 @@ def getDocuments(data, collection):
 
         query = {}
         if "_id" in data.keys():
-            query["_id"] = ObjectId(data["_id"])
+            query["_id"] = data["_id"]
             del data["_id"]
         if "parentId" in data.keys():
             query["parentId"] = data["parentId"]
@@ -277,7 +277,7 @@ def deleteDocument(data, collection):
                 "code": 200
             }
 
-            collection.delete_one({"_id": ObjectId(data["_id"])})
+            collection.delete_one({"_id": data["_id"]})
 
 
         except Exception as e:
@@ -484,7 +484,7 @@ def update_document(data, collection):
 
             # solr.add([data])
 
-            query = {"_id": ObjectId(data["_id"])}
+            query = {"_id": data["_id"]}
 
             del data["_id"]
 

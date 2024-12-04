@@ -43,7 +43,7 @@ def getDossiers(data, collection):
 
         query = {}
         if "_id" in data.keys():
-            query["_id"] = ObjectId(data["_id"])
+            query["_id"] = data["_id"]
             del data["_id"]
         if "parentId" in data.keys():
             query["parentId"] = data["parentId"]
@@ -91,7 +91,7 @@ def delete_dossier(data, collection):
                 "code": 200
             }
 
-            collection.delete_one({"_id": ObjectId(data["_id"])})
+            collection.delete_one({"_id": data["_id"]})
 
             # Now you can access response_docs as a list containing the documents
             # Do whatever you need to do with response_docs
@@ -125,7 +125,7 @@ def update_dossier(data, collection):
 
             # solr.add([data])
 
-            query = {"_id": ObjectId(data["_id"])}
+            query = {"_id": data["_id"]}
 
             del data["_id"]
 

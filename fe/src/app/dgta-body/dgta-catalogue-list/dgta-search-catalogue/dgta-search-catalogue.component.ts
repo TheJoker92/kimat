@@ -49,7 +49,6 @@ export class DgtaSearchCatalogueComponent {
       "title":e.target.value
     }
 
-
     this.getCataloguesE.emit()
     this.hideTopicsE.emit()
   }
