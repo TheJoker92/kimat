@@ -49,15 +49,12 @@ def getDossiers(data, collection):
         if "parentId" in data.keys():
             query["parentId"] = data["parentId"]
         if "title" in data.keys():
-            query["title"] = data["title"]
+            query["title"] = { "$regex": data["title"], "$options": "i" }
 
         
         if "topics" in data.keys():
             query["topics"] = {"$in": [data["topics"]]}
         
-
-        print(str(collection.find(query)) )
-
         # solr.add([data])
         documents = []
         

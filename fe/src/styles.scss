@@ -197,8 +197,8 @@ zxing-scanner  {
 
 .header-table {
     background-color: #236BFE10;
-    padding-right:15px;
-    padding-left:10px;
+    // padding-right:15px;
+    // padding-left:10px;
 }
 
 .overflow {
@@ -262,4 +262,11 @@ progress::-moz-progress-bar {
 
   .white-spacenowrap {
     white-space: nowrap;
+  }
+
+  .container-log {
+    position: absolute;
+    top: 35vh;
+    overflow-y: auto;
+    height:400px;
   }

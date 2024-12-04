@@ -46,7 +46,7 @@ export class DgtaSearchCatalogueComponent {
 
   onSearch(e: any) {
     this.sessionService.terms = {
-      "title": "*" + e.target.value + "*"
+      "title":e.target.value
     }
 
 

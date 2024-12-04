@@ -140,10 +140,10 @@ export class DgtaDocumentsModalComponent {
 
     }
 
-    this.loadingService.isLoading = true
+    // this.loadingService.isLoading = true
     this.http.getDocuments(payload).subscribe({
       next: (response: any) => {
-        this.loadingService.isLoading = false
+        // this.loadingService.isLoading = false
 
         this.documents = []
         for (let documentRaw of response.documents!) {

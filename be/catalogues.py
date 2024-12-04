@@ -47,7 +47,7 @@ def getCatalogues(data, collection):
             query["_id"] = ObjectId(data["_id"])
             del data["_id"]
         if "title" in data.keys():
-            query["title"] = data["title"]
+            query["title"] =  { "$regex": data["title"], "$options": "i" }
 
         
         if "topics" in data.keys():

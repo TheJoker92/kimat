@@ -44,9 +44,9 @@ export class DgtaSearchDocumentComponent {
   // }
 
   onSearch(e: any) {
-    this.sessionService.terms["name"] = "*" + e.target.value + "*"
+    this.sessionService.terms["name"] = e.target.value
 
-    this.getDocumentsE.emit("*" + e.target.value + "*")
+    this.getDocumentsE.emit(e.target.value)
     this.hideTopicsE.emit()
   }
 

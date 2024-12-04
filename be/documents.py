@@ -1,5 +1,6 @@
 import requests # type: ignore
 import json
+from bson import ObjectId
 
 import os
 
@@ -22,7 +23,7 @@ import re
 
 
 
-def create_document(data, BASE_URL):
+def create_document(data, collection):
     response = {}
     if not data:
         response = {
@@ -40,11 +41,9 @@ def create_document(data, BASE_URL):
                 "code": 200
             }
 
-            r = requests.post(BASE_URL + "/documents/update?_=1710697938875&commitWithin=1000&overwrite=true&wt=json", json=[data], verify=False)
+            print(collection.insert_one(data))
 
-            print(r.json())
 
-            return response
         except Exception as e:
 
             print(e)
@@ -56,7 +55,7 @@ def create_document(data, BASE_URL):
     
     return response
 
-def getDocuments(data, BASE_URL):
+def getDocuments(data, collection):
     response = {}
     
     try:
@@ -68,46 +67,28 @@ def getDocuments(data, BASE_URL):
 
         # solr.add([data])
 
-        query = "parentId%3A" + data["parentId"] + "%0A"
+        query = {}
+        if "_id" in data.keys():
+            query["_id"] = ObjectId(data["_id"])
+            del data["_id"]
+        if "parentId" in data.keys():
+            query["parentId"] = data["parentId"]
         if "name" in data.keys():
-            if " " in data["name"]:
-                data["name"] = "(" + data["name"] + ")"
-            query += "name%3A(" + data["name"].replace(" ","%20") + ")"
-            print("A")
+            query["name"] = { "$regex": data["name"], "$options": "i" }
+
         
         if "topics" in data.keys():
-            query += "topics%3A(" + data["topics"] + ")"
+            query["topics"] = {"$in": [data["topics"]]}
         
 
-        print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
         
-
-        # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
-        
-        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
-        print(responseRaw)
-        # Decode the content from bytes to string and then parse as JSON
-        response_json = json.loads(responseRaw.content.decode('utf-8'))
-        responseRaw = response_json.get('response', {}).get('docs', [])
-        # Now you can access response_docs as a list containing the documents
-        # Do whatever you need to do with response_docs
-
-
-        
+        # solr.add([data])
         documents = []
-        if len(responseRaw) > 0:
-            for documentRaw in responseRaw:
-                document = { }
-
-                keysRaw = list(documentRaw.keys())
-                for keyRaw in keysRaw:
-
-                    if keyRaw in ["id", "_version_", "deliberationDate"]:
-                        document[keyRaw] = documentRaw[keyRaw]
-                    else:
-                        document[keyRaw] = documentRaw[keyRaw][0].replace("\\", "")
-                
-                documents.append(document)
+        
+        for document in collection.find(query):  # Convert cursor to a list
+            document["_id"] = str(document["_id"])
+            documents.append(document)
+        print(documents)
         
         response = {
             "documents": documents
@@ -284,7 +265,7 @@ def resource_src(ext, id, basePathAsset):
         }
     return result
 
-def deleteDocument(data, BASE_URL):
+def deleteDocument(data, collection):
     response = {}
     if not data:
         response = {
@@ -299,16 +280,9 @@ def deleteDocument(data, BASE_URL):
                 "error": "",
                 "code": 200
             }
+            
+            collection.delete_one({"_id": ObjectId(data["_id"])})
 
-            payload = "<delete><query>id:\"" + data["id"]+ "\"</query></delete>"
-
-            # solr.add([data])
-            headers = {'Content-type': 'application/xml'}
-            responseRaw = requests.post(BASE_URL + "/documents/update?_=1710934023202&commitWithin=1000&overwrite=true&wt=json", headers=headers, data=payload, verify=False)
-
-            print(responseRaw.content)
-            # Now you can access response_docs as a list containing the documents
-            # Do whatever you need to do with response_docs
 
         except Exception as e:
             response = {
@@ -319,7 +293,7 @@ def deleteDocument(data, BASE_URL):
     
     return response
 
-def getDocumentsByDate(data, BASE_URL):    
+def getDocumentsByDate(data, collection):    
     response = {}
     
     try:
@@ -338,12 +312,12 @@ def getDocumentsByDate(data, BASE_URL):
             query += "deliberationDate%3Aa" + date
         
 
-            print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
+            print(collection + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
             
 
             # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
             
-            responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
+            responseRaw = requests.get(collection + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
             print(responseRaw)
             # Decode the content from bytes to string and then parse as JSON
             response_json = json.loads(responseRaw.content.decode('utf-8'))
@@ -379,7 +353,7 @@ def getDocumentsByDate(data, BASE_URL):
     
     return response
 
-def massiveUploadFromPapers(data, BASE_URL):
+def massiveUploadFromPapers(data, collection):
 
     response = {}
 
@@ -408,7 +382,7 @@ def massiveUploadFromPapers(data, BASE_URL):
                     data["attachments"] = full_filename_path
 
             file_path_noext = full_folder_path + "/" + data["parentId"]
-            text = extract_massive_text_from_pdf(file_path_noext + ".pdf", BASE_URL)
+            text = extract_massive_text_from_pdf(file_path_noext + ".pdf", collection)
             with open(file_path_noext  + ".txt", 'w') as theFile:
                 theFile.write(text)
                 theFile.close()
@@ -421,7 +395,7 @@ def massiveUploadFromPapers(data, BASE_URL):
     
     return response
 
-def extract_massive_text_from_pdf(pdf_path, BASE_URL):
+def extract_massive_text_from_pdf(pdf_path, collection):
     # Convert PDF to image
     pages = convert_from_path(pdf_path,400)
      
@@ -458,7 +432,7 @@ def extract_massive_text_from_pdf(pdf_path, BASE_URL):
                 attachmentBase64 = "data:application/pdf;base64,"
 
             idDocument = text.split("idDocument ")[1]
-            document = getDocumentById(idDocument, BASE_URL)
+            document = getDocumentById(idDocument, collection)
         
         # else:
 
@@ -469,7 +443,7 @@ def extract_massive_text_from_pdf(pdf_path, BASE_URL):
     return text_data
     
 
-def getDocumentById(idDocument, BASE_URL):
+def getDocumentById(idDocument, collection):
     response = {}
     
     try:
@@ -483,10 +457,10 @@ def getDocumentById(idDocument, BASE_URL):
 
         query = "id%3A" + idDocument + "%0A"
 
-        print(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
+        print(collection + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=")
         # select?fq=id%3A3*&fq=name%3ADelibera0*&indent=true&q.op=AND&q=parentId%3A74c3ff78-ee81-4786-ad88-96feb022c926&useParams=
         
-        responseRaw = requests.get(BASE_URL + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
+        responseRaw = requests.get(collection + "/documents/select?indent=true&q.op=AND&q=" + query + "&sort=name_str%20asc&useParams=", verify=False)
         print(responseRaw)
         # Decode the content from bytes to string and then parse as JSON
         response_json = json.loads(responseRaw.content.decode('utf-8'))
