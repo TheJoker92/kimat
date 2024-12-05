@@ -59,6 +59,7 @@ export class HttpService {
    * DOSSIERS
    */
   getDossiers(payload: any) {
+    if(!payload["topics"]) delete payload["topics"]
     return this.http.post(this.buildURL("dossiers/", this.data.dossier.getDossiers), payload)
   }
   
@@ -80,6 +81,7 @@ export class HttpService {
    * CATALOGUES
    */
   getCatalogues(payload: any) {
+    if(!payload["topics"]) delete payload["topics"]
     return this.http.post(this.buildURL("catalogues/", this.data.catalogue.getCatalogues), payload)
   }
   
@@ -101,6 +103,7 @@ export class HttpService {
    * DOCUMENTS
    */
   getDocuments(payload: any) {
+    if(!payload["topics"]) delete payload["topics"]
     return this.http.post(this.buildURL("documents/", this.data.document.getDocuments), payload, this.httpOptions)
   }
   
